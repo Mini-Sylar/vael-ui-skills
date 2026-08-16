@@ -1,0 +1,23 @@
+{
+  "$schema": "https://code.claude.com/schemas/marketplace.schema.json",
+  "name": "vael-ui-skills",
+  "description": "Skill for the vael-ui Vue 3 component library",
+  "owner": {
+    "name": "Mini-Sylar"
+  },
+  "plugins": [
+    {
+      "name": "vael-ui",
+      "description": "Installation, usage, and best practices for the vael-ui Vue component library — the vdom/vapor split, auto-import, theming, and the animation-agnostic contract.",
+      "source": {
+        "type": "url",
+        "url": "https://github.com/Mini-Sylar/vael-ui-skills.git"
+      },
+      "version": "1.0.0",
+      "author": {
+        "name": "Mini-Sylar"
+      },
+      "homepage": "https://github.com/Mini-Sylar/vael-ui-skills"
+    }
+  ]
+}
