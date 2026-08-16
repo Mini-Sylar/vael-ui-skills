@@ -38,6 +38,7 @@ Name | Type | Default | Description
 `modelValue` | `string \| number \| (string \| number)[] \| null \| undefined` | null | 
 `open` | `boolean \| undefined` | false | 
 `query` | `string \| undefined` | "" | 
+`node` | `T \| T[] \| null \| undefined` | null | Mirrors `model`'s value(s) as the full node object(s) — see Tree.vue's own `node` model for the resolution details; TreeSelect just forwards it straight through from the inner Tree.
 
 ## Slots
 
@@ -58,6 +59,7 @@ Name | Type | Description
 `update:open` | `[value: boolean]` | 
 `update:modelValue` | `[value: string \| number \| (string \| number)[] \| null]` | 
 `update:query` | `[value: string]` | 
+`update:node` | `[value: T \| T[] \| null]` | 
 
 ## Exposed
 

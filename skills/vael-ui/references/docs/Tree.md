@@ -23,6 +23,7 @@ Name | Type | Default | Description
 `ui` | `Partial<{ list: UiPartValue; node: UiPartValue; filter: UiPartValue; empty: UiPartValue; chevron: UiPartValue; label: UiPartValue; }> \| undefined` | undefined | 
 `modelValue` | `string \| number \| (string \| number)[] \| null \| undefined` | null | 
 `query` | `string \| undefined` | "" | 
+`node` | `T \| T[] \| null \| undefined` | null | 
 
 ## Slots
 
@@ -40,6 +41,7 @@ Name | Type | Description
 `expand-change` | `[value: string \| number, expanded: boolean]` | 
 `update:modelValue` | `[value: string \| number \| (string \| number)[] \| null]` | 
 `update:query` | `[value: string]` | 
+`update:node` | `[value: T \| T[] \| null]` | 
 
 ## Exposed
 
