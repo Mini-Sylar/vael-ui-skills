@@ -12,6 +12,7 @@ Name | Type | Default | Description
 `orientation` | `"horizontal" \| "vertical" \| undefined` | "horizontal" | 
 `linear` | `boolean \| undefined` | true | Steps ahead of the active one are only clickable once reached (no skipping ahead). Past/current steps stay clickable.
 `clickable` | `boolean \| undefined` | true | `false` renders a pure display/progress indicator — no click handling at all.
+`motionCss` | `boolean \| undefined` | true | Gates the built-in check-mark/number swap transition inside the step circle.
 `ui` | `Partial<{ root: UiPartValue; step: UiPartValue; trigger: UiPartValue; circle: UiPartValue; content: UiPartValue; label: UiPartValue; description: UiPartValue; connector: UiPartValue; }> \| undefined` |  | 
 `modelValue` | `number \| undefined` | 0 | 
 

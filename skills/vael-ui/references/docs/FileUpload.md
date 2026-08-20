@@ -16,6 +16,7 @@ Name | Type | Default | Description
 `maxFiles` | `number \| undefined` |  | 
 `disabled` | `boolean \| undefined` | false | 
 `name` | `string \| undefined` |  | 
+`motionCss` | `boolean \| undefined` | true | Gates the built-in file-row enter/exit transition. `false` skips it entirely — reach for `@item-enter`/`@item-leave` instead if you want a consumer-owned animation (GSAP, motion-v) in its place.
 `ui` | `Partial<{ root: UiPartValue; dropzone: UiPartValue; browse: UiPartValue; list: UiPartValue; item: UiPartValue; remove: UiPartValue; }> \| undefined` |  | 
 `files` | `File[] \| undefined` | [] | 
 
@@ -34,6 +35,8 @@ Name | Type | Description
 `update:files` | `[value: File[]]` | 
 `reject` | `[{ file: File; reason: FileRejectReason; }]` | 
 `add` | `[files: File[]]` | 
+`item-enter` | `[el: Element, done: () => void]` | 
+`item-leave` | `[el: Element, done: () => void]` | 
 
 ## Exposed
 
@@ -42,5 +45,6 @@ Name | Type | Description
 `el` | `HTMLElement \| null` | 
 `dropzoneEl` | `HTMLElement \| null` | 
 `inputEl` | `HTMLInputElement \| null` | 
+`listEl` | `HTMLElement \| null` | 
 `browse` | `() => void` | 
 

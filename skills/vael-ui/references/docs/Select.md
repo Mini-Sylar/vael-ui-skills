@@ -32,6 +32,7 @@ Name | Type | Default | Description
 `forceMount` | `boolean \| undefined` | false | 
 `teleportTo` | `string \| HTMLElement \| undefined` | "body" | 
 `scrollFade` | `boolean \| undefined` | true | 
+`motionCss` | `boolean \| undefined` | true | Gates the built-in chip enter/exit/reposition transition (`multiple` + `display="chip"` only). `false` skips it entirely — reach for `@chip-enter`/`@chip-leave` instead if you want a consumer-owned animation (GSAP, motion-v) in its place.
 `ui` | `Partial<{ trigger: UiPartValue; value: UiPartValue; positioner: UiPartValue; panel: UiPartValue; list: UiPartValue; option: UiPartValue; empty: UiPartValue; }> \| undefined` |  | 
 `modelValue` | `string \| number \| (string \| number)[] \| null \| undefined` | null | 
 `open` | `boolean \| undefined` | false | 
@@ -52,6 +53,8 @@ Name | Type | Description
 `select` | `[item: T]` | 
 `change` | `[value: string \| number \| (string \| number)[] \| null]` | 
 `reach-end` | `[]` | 
+`chip-enter` | `[el: Element, done: () => void]` | 
+`chip-leave` | `[el: Element, done: () => void]` | 
 `update:open` | `[value: boolean]` | 
 `update:modelValue` | `[value: string \| number \| (string \| number)[] \| null]` | 
 

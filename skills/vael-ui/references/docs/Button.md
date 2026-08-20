@@ -10,7 +10,7 @@ import { Button } from 'vael-ui' // or 'vael-ui/vapor'
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-`loading` | `boolean \| "auto" \| undefined` | "auto" | `'auto'` (default): promise-returning `@click` handlers trigger loading automatically. `true`/`false`: fully controlled.
+`loading` | `boolean \| "auto" \| undefined` | false | `false` (default) / `true`: fully controlled. `'auto'`: opt into promise-based loading — `@click` returning a promise drives it, finishing only once the last overlapping promise resolves.
 `disabled` | `boolean \| undefined` | false | 
 `variant` | `ButtonVariant \| undefined` | "primary" | 
 `size` | `ButtonSize \| undefined` | "md" | 

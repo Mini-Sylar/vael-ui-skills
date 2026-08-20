@@ -20,6 +20,7 @@
 - [Textarea](./Textarea.md): A multi-line text field that can auto-grow with its content.
 - [InputNumber](./InputNumber.md): A numeric field with increment/decrement controls and format-aware parsing.
 - [OtpInput](./OtpInput.md): A row of single-character boxes for one-time codes, with paste and auto-advance.
+- [PasswordInput](./PasswordInput.md): A password field with a reveal toggle and a requirements hint.
 - [Checkbox](./Checkbox.md): A tri-state toggle for a single yes/no/indeterminate choice.
 - [Radio](./Radio.md): One option in a mutually-exclusive set, always used inside a RadioGroup.
 - [RadioGroup](./RadioGroup.md): Coordinates a set of Radio buttons so only one can be selected at a time.

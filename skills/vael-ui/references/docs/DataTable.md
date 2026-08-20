@@ -28,6 +28,7 @@ Name | Type | Default | Description
 `lazy` | `boolean \| undefined` | false | `data` is already just the current page — DataTable stops slicing it locally. Pair with `total` (the real across-all-pages count) so `#footer`/`Pagination` math stays correct.
 `total` | `number \| undefined` |  | Real row count across all pages. Only meaningful with `lazy`; falls back to `sortedData.length` (i.e. `data.length`) when unset.
 `virtualize` | `boolean \| { itemSize?: number \| undefined; overscan?: number \| undefined; estimateSize?: number \| undefined; } \| undefined` |  | Windows rendering to the visible rows + overscan, for very large `data`. Requires `scrollHeight`. `true` measures each row's real height (rows may vary, e.g. wrapping `#cell` content or `stackedBreakpoint`); pass an object to tune it.
+`motionCss` | `boolean \| undefined` | true | Gates the built-in row enter/exit/reorder transition (sort, paging, row expansion). `false` skips it entirely — reach for `@row-enter`/`@row-leave` instead if you want a consumer-owned animation (GSAP, motion-v) in its place. No effect while `virtualize` is active: a virtualized list's rows are measured/recycled by height, which a CSS enter/exit transition would fight, so that mode never animates row presence regardless of this prop.
 `page` | `number \| undefined` | 1 | 
 `sort` | `{ field: keyof T \| null; dir: "asc" \| "desc" \| null; } \| undefined` | { field: null, dir: null } | Uncontrolled by default (works exactly as before). Bind `v-model:sort` — required with `manualSort` — to see every header click and know what to refetch.
 
@@ -50,6 +51,8 @@ Name | Type | Description
 `update:selection` | `[rows: T[]]` | 
 `row-click` | `[row: T]` | 
 `reach-start` | `[]` | 
+`row-enter` | `[el: Element, done: () => void]` | 
+`row-leave` | `[el: Element, done: () => void]` | 
 `update:page` | `[value: number]` | 
 `update:sort` | `[value: { field: keyof T \| null; dir: "asc" \| "desc" \| null; }]` | 
 
