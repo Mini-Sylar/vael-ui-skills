@@ -60,5 +60,18 @@ Name | Type | Description
 
 ## Exposed
 
-_None._
+Name | Type | Description
+--- | --- | ---
+`triggerEl` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`panelEl` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`positionerEl` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`listEl` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`placement` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`positionerStyle` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`isClosing` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`open` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`close` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`cancelClose` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`activeIndex` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`scrollToIndex` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
 

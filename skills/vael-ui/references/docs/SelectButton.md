@@ -34,5 +34,8 @@ Name | Type | Description
 
 ## Exposed
 
-_None._
+Name | Type | Description
+--- | --- | ---
+`el` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`indicatorEl` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
 

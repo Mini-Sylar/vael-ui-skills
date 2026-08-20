@@ -47,15 +47,15 @@ Name | Type | Description
 
 Name | Type | Description
 --- | --- | ---
-`listEl` | `HTMLElement \| null` | The `role="tree"` root element.
-`filterInputRef` | `{ el: HTMLElement \| null; inputEl: HTMLInputElement \| null } \| null` | The built-in filter `Input`'s own exposed refs (only meaningful when `filterable` is on).
-`focusFirstRow` | `() => void` | Moves roving-tabindex focus to the first visible row.
-`initRoving` | `() => void` | Re-seeds roving tabindex to the first row — rarely needed directly, since `Tree` already re-seeds itself when the focused row leaves the DOM.
-`expandAll` | `() => void` | Expands every node that has children.
-`collapseAll` | `() => void` | Collapses every expanded node.
-`expandNode` | `(value: string \| number) => void` | Expands a single node by value. No-op if already expanded or the node has no children.
-`collapseNode` | `(value: string \| number) => void` | Collapses a single node by value. No-op if already collapsed.
-`findNode` | `(value: string \| number) => T \| undefined` | Depth-first search for a node by value, scoped to this instance's own `items` — same lookup as the standalone `findTreeNode` export, pre-bound.
-`findParent` | `(value: string \| number) => T \| null` | Depth-first search for a node's parent by the child's value, scoped to this instance's own `items` — pre-bound `findTreeParent`.
-`removeNode` | `(value: string \| number) => boolean` | Removes a node by value (mutates `items`/its nested `children` arrays in place). Returns whether a match was found and removed — pre-bound `removeTreeNode`.
+`listEl` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`filterInputRef` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`focusFirstRow` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`initRoving` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`expandAll` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`collapseAll` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`expandNode` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`collapseNode` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`findNode` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`findParent` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`removeNode` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
 

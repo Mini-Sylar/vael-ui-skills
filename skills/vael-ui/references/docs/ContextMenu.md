@@ -44,5 +44,15 @@ Name | Type | Description
 
 ## Exposed
 
-_None._
+Name | Type | Description
+--- | --- | ---
+`wrapperEl` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`anchorEl` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`panelEl` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`positionerEl` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`listEl` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`isClosing` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`openAt` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`close` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`cancelClose` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
 

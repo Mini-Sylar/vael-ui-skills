@@ -39,5 +39,11 @@ Name | Type | Description
 
 ## Exposed
 
-_None._
+Name | Type | Description
+--- | --- | ---
+`el` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`listEl` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`open` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`close` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`toggle` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
 

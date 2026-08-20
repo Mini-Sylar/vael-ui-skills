@@ -65,21 +65,21 @@ Name | Type | Description
 
 Name | Type | Description
 --- | --- | ---
-`triggerEl` | `HTMLElement \| null` | The trigger button element.
-`panelEl` | `HTMLElement \| null` | The dropdown panel element.
-`positionerEl` | `HTMLElement \| null` | The floating-positioned wrapper around the panel.
-`listEl` | `HTMLElement \| null` | The inner `Tree`'s own `role="tree"` root element.
-`placement` | `Placement` | The panel's resolved floating-ui placement (post auto-flip/shift).
-`positionerStyle` | `Record<string, string>` | Inline styles floating-ui computes for the positioner.
-`isClosing` | `boolean` | True while a `beforeClose` exit animation is in flight.
-`open` | `() => void` | Opens the panel.
-`close` | `() => void` | Closes the panel.
-`cancelClose` | `() => void` | Cancels an in-flight `beforeClose` exit, e.g. if a gesture reopens it mid-close.
-`expandAll` | `() => void` | Expands every node that has children.
-`collapseAll` | `() => void` | Collapses every expanded node.
-`expandNode` | `(value: string \| number) => void` | Expands a single node by value.
-`collapseNode` | `(value: string \| number) => void` | Collapses a single node by value.
-`findNode` | `(value: string \| number) => T \| undefined` | Depth-first search for a node by value, scoped to this instance's own `items`.
-`findParent` | `(value: string \| number) => T \| null` | Depth-first search for a node's parent by the child's value, scoped to this instance's own `items`.
-`removeNode` | `(value: string \| number) => boolean` | Removes a node by value (mutates `items` in place). Returns whether a match was found and removed.
+`triggerEl` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`panelEl` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`positionerEl` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`listEl` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`placement` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`positionerStyle` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`isClosing` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`open` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`close` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`cancelClose` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`expandAll` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`collapseAll` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`expandNode` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`collapseNode` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`findNode` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`findParent` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`removeNode` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
 
