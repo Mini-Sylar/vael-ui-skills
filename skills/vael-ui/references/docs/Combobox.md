@@ -35,7 +35,7 @@ Name | Type | Default | Description
 `teleportTo` | `string \| HTMLElement \| undefined` | "body" | 
 `scrollFade` | `boolean \| undefined` | true | 
 `motionCss` | `boolean \| undefined` | true | Gates the built-in chip enter/exit/reposition transition (`multiple` only). `false` skips it entirely — reach for `@chip-enter`/`@chip-leave` instead if you want a consumer-owned animation (GSAP, motion-v) in its place.
-`ui` | `Partial<{ root: UiPartValue; input: UiPartValue; positioner: UiPartValue; panel: UiPartValue; list: UiPartValue; option: UiPartValue; empty: UiPartValue; }> \| undefined` |  | 
+`ui` | `Partial<{ root: UiPartValue; input: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; list: UiPartValue; option: UiPartValue; empty: UiPartValue; footer: UiPartValue; }> \| undefined` |  | 
 `modelValue` | `string \| number \| (string \| number)[] \| null \| undefined` | null | 
 `query` | `string \| undefined` | "" | 
 `open` | `boolean \| undefined` | false | 
@@ -46,8 +46,10 @@ Name | Type | Description
 --- | --- | ---
 `start` | `any` | 
 `end` | `any` | Renders before the library's own clear/chevron, inside Input's `#end`.
+`header` | `{ count: number; total: number; }` | Above the listbox, inside the popover panel.
 `item` | `{ item: T; active: boolean; selected: boolean; }` | 
 `empty` | `any` | 
+`footer` | `any` | Below the listbox, inside the popover panel.
 
 ## Events
 

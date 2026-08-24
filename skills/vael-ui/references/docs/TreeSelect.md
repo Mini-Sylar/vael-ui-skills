@@ -34,7 +34,7 @@ Name | Type | Default | Description
 `forceMount` | `boolean \| undefined` | false | 
 `teleportTo` | `string \| HTMLElement \| undefined` | "body" | 
 `motionCss` | `boolean \| undefined` | true | `false` skips all built-in motion (row transitions and chevron rotation).
-`ui` | `Partial<{ trigger: UiPartValue; value: UiPartValue; positioner: UiPartValue; panel: UiPartValue; filter: UiPartValue; list: UiPartValue; node: UiPartValue; empty: UiPartValue; }> \| undefined` | undefined | 
+`ui` | `Partial<{ trigger: UiPartValue; value: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; filter: UiPartValue; list: UiPartValue; node: UiPartValue; empty: UiPartValue; footer: UiPartValue; }> \| undefined` | undefined | 
 `modelValue` | `string \| number \| (string \| number)[] \| null \| undefined` | null | 
 `open` | `boolean \| undefined` | false | 
 `query` | `string \| undefined` | "" | 
@@ -45,8 +45,10 @@ Name | Type | Default | Description
 Name | Type | Description
 --- | --- | ---
 `value` | `{ selected: T[]; }` | 
+`header` | `any` | Above the filter input (if `filterable` is on) or the tree itself.
 `node` | `{ node: T; depth: number; expanded: boolean; checked: boolean; indeterminate: boolean; disabled: boolean; toggleExpand: () => void; toggleSelect: () => void; findNode: (value: string \| number) => T \| undefined; findParent: (value: string \| number) => T \| null; removeNode: (value: string \| number) => boolean; }` | Row content override (library owns wrapper & behavior).
 `empty` | `any` | 
+`footer` | `any` | Below the tree.
 
 ## Events
 

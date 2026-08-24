@@ -33,13 +33,16 @@ Name | Type | Default | Description
 `forceMount` | `boolean \| undefined` | false | 
 `teleportTo` | `string \| HTMLElement \| undefined` | "body" | 
 `motionCss` | `boolean \| undefined` | true | `false` skips popover enter/leave AND Calendar's month-slide transition.
-`ui` | `Partial<{ root: UiPartValue; input: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; navButton: UiPartValue; label: UiPartValue; weekdays: UiPartValue; weekday: UiPartValue; grid: UiPartValue; cell: UiPartValue; }> \| undefined` | undefined | 
+`showButtonBar` | `boolean \| undefined` | false | Built-in Today (single mode only) / Clear buttons below the calendar. Ignored — the `#footer` slot always renders instead — once that slot is provided.
+`ui` | `Partial<{ root: UiPartValue; input: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; navButton: UiPartValue; label: UiPartValue; weekdays: UiPartValue; weekday: UiPartValue; grid: UiPartValue; cell: UiPartValue; footer: UiPartValue; }> \| undefined` | undefined | 
 `modelValue` | `Date \| CalendarRange \| null \| undefined` | null | 
 `open` | `boolean \| undefined` | false | 
 
 ## Slots
 
-_None._
+Name | Type | Description
+--- | --- | ---
+`footer` | `any` | Replaces the built-in Today/Clear button bar entirely — shown whenever this slot is provided, regardless of `showButtonBar`.
 
 ## Events
 
