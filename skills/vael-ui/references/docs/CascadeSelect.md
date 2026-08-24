@@ -27,7 +27,7 @@ Name | Type | Default | Description
 `forceMount` | `boolean \| undefined` | false | 
 `teleportTo` | `string \| HTMLElement \| undefined` | "body" | 
 `scrollFade` | `boolean \| undefined` | true | 
-`ui` | `Partial<{ trigger: UiPartValue; value: UiPartValue; positioner: UiPartValue; panel: UiPartValue; }> \| undefined` | undefined | 
+`ui` | `Partial<{ trigger: UiPartValue; value: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; footer: UiPartValue; }> \| undefined` | undefined | 
 `modelValue` | `string \| number \| null \| undefined` | null | 
 `open` | `boolean \| undefined` | false | 
 
@@ -36,8 +36,10 @@ Name | Type | Default | Description
 Name | Type | Description
 --- | --- | ---
 `value` | `{ selected: T \| null; path: CascadeSelectPath; }` | Trigger content override — receives the resolved leaf item and its root-to-leaf path.
+`header` | `any` | Above the row list — forwarded to the underlying Menu's own `#header`.
 `item` | `{ item: T; hasChildren: boolean; }` | Row content override, any level — keeps the row's expand/select behavior.
 `empty` | `any` | Replaces the localized "no options" row shown when `items` is empty.
+`footer` | `any` | Below the row list — forwarded to the underlying Menu's own `#footer`.
 
 ## Events
 

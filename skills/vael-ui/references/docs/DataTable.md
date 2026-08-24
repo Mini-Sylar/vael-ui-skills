@@ -29,8 +29,11 @@ Name | Type | Default | Description
 `total` | `number \| undefined` |  | Real row count across all pages. Only meaningful with `lazy`; falls back to `sortedData.length` (i.e. `data.length`) when unset.
 `virtualize` | `boolean \| { itemSize?: number \| undefined; overscan?: number \| undefined; estimateSize?: number \| undefined; } \| undefined` |  | Windows rendering to the visible rows + overscan, for very large `data`. Requires `scrollHeight`. `true` measures each row's real height (rows may vary, e.g. wrapping `#cell` content or `stackedBreakpoint`); pass an object to tune it.
 `motionCss` | `boolean \| undefined` | true | Gates the built-in row enter/exit/reorder transition (sort, paging, row expansion). `false` skips it entirely — reach for `@row-enter`/`@row-leave` instead if you want a consumer-owned animation (GSAP, motion-v) in its place. No effect while `virtualize` is active: a virtualized list's rows are measured/recycled by height, which a CSS enter/exit transition would fight, so that mode never animates row presence regardless of this prop.
+`reorderableColumns` | `boolean \| undefined` | false | Drag column headers to reorder them. Pair with `v-model:columnOrder` to control or persist the order.
+`columnGripVisibility` | `"hover" \| "always" \| undefined` | "always" | `'always'` (default): the drag grip is always shown, so a reorderable column reads as such at a glance. `'hover'`: fades in on hover/focus instead, matching the resize handle's own restraint — reach for this once a table has enough reorderable columns that permanent grips would clutter the header.
 `page` | `number \| undefined` | 1 | 
 `sort` | `{ field: keyof T \| null; dir: "asc" \| "desc" \| null; } \| undefined` | { field: null, dir: null } | Uncontrolled by default (works exactly as before). Bind `v-model:sort` — required with `manualSort` — to see every header click and know what to refetch.
+`columnOrder` | `(keyof T)[] \| undefined` | [] | Empty means "follow the DOM" (pre-reordering behavior); once a drag sets it, it outranks DOM order so the onUpdated resort below doesn't undo it.
 
 ## Slots
 
@@ -51,10 +54,12 @@ Name | Type | Description
 `update:selection` | `[rows: T[]]` | 
 `row-click` | `[row: T]` | 
 `reach-start` | `[]` | 
+`column-reorder` | `[order: (keyof T)[]]` | 
 `row-enter` | `[el: Element, done: () => void]` | 
 `row-leave` | `[el: Element, done: () => void]` | 
 `update:page` | `[value: number]` | 
 `update:sort` | `[value: { field: keyof T \| null; dir: "asc" \| "desc" \| null; }]` | 
+`update:columnOrder` | `[value: (keyof T)[]]` | 
 
 ## Exposed
 

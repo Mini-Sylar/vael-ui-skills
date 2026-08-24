@@ -19,3 +19,8 @@
 - [useColorScheme](./useColorScheme.md): Drives `document.documentElement.dataset.theme` from a `system` / `light` / `dark` mode.
 - [useNumberFormat](./useNumberFormat.md): Locale-aware number formatting and parsing, both directions kept perfectly in sync.
 - [useFieldControl](./useFieldControl.md): Wires a custom form control into the nearest `<Field>`: id/label association, `aria-describedby`/`aria-invalid`/`aria-required`, and reporting focus/filled state so Field can move a floating label or flip `data-filled`.
+
+## Drag & Drop
+
+- [useSortable](./useSortable.md): The spring-driven drag-to-reorder engine behind `<Sortable>`, `<Tree>`'s nested reorder, and `<DataTable>`'s column reorder — pointer and keyboard drive the same grabbed state, and all ordering/nesting decisions live in pure, independently-tested functions.
+- [useSortableGroup](./useSortableGroup.md): Cross-container drag — the primitive a Kanban-style board is built from, not a component.

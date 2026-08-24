@@ -17,6 +17,12 @@ Name | Type | Default | Description
 `filterPlaceholder` | `string \| undefined` | "Search..." | 
 `emptyText` | `string \| undefined` | "No results found" | 
 `motionCss` | `boolean \| undefined` | true | `false` skips all built-in motion (row transitions, chevron rotation, and cross-folder move).
+`reorderable` | `boolean \| undefined` | false | Drag rows to reorder and to nest, VS Code style: drop on a row's middle to move INTO it, on an edge to place beside it.
+`canNestInto` | `((node: T) => boolean) \| undefined` | undefined | Which rows accept children. Defaults to any row that already has some — pass your own to let empty folders take drops.
+`reorderSiblings` | `boolean \| undefined` | true | `false` drops the sibling-reorder mode entirely — dragging only ever offers moving INTO a folder, with no indicator at all when hovering a row that can't hold children.
+`canDrop` | `((details: SortableDropDetails) => boolean) \| undefined` | undefined | Structural veto re-run while dragging; `false` marks the target invalid.
+`beforeDrop` | `((details: SortableDropDetails) => boolean \| Promise<boolean>) \| undefined` | undefined | Async gate at drop time — return `false` (or a promise of it) to cancel. Composes with `confirmAction().result`.
+`autoExpandDelay` | `number \| undefined` | 600 | Hovering a collapsed row this long opens it mid-drag.
 `expandOnRowClick` | `boolean \| undefined` | false | When true, clicking anywhere on a folder row also toggles its expansion, not just the chevron — it still selects too (unless `selectableFolders` is off), so picking the folder itself (without opening it to reach a file inside) still works. Off by default since it changes what a plain row click does.
 `stickyScroll` | `boolean \| undefined` | false | When true, each expanded ancestor's row pins to the top of the list as its own children scroll past, VS Code-style, so deeply nested content never loses its folder context. Uses native `position: sticky` — each row is a real, nested DOM level, not a JS-measured overlay.
 `id` | `string \| undefined` | undefined | Id for the role="tree" list element. Auto-generated if omitted.
@@ -39,6 +45,8 @@ Name | Type | Description
 `select` | `[node: T]` | 
 `change` | `[value: string \| number \| (string \| number)[] \| null]` | 
 `expand-change` | `[value: string \| number, expanded: boolean]` | 
+`reorder` | `[value: string \| number, to: DropPosition]` | 
+`drop-error` | `[error: unknown, details: SortableDropDetails]` | 
 `update:modelValue` | `[value: string \| number \| (string \| number)[] \| null]` | 
 `update:query` | `[value: string]` | 
 `update:node` | `[value: T \| T[] \| null]` | 
@@ -58,4 +66,6 @@ Name | Type | Description
 `findNode` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
 `findParent` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
 `removeNode` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`isReordering` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`cancelReorder` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
 

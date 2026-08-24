@@ -22,7 +22,7 @@ Name | Type | Default | Description
 `forceMount` | `boolean \| undefined` | false | When true, presence is v-show-driven and owned by the consumer (e.g. AnimatePresence).
 `teleportTo` | `string \| HTMLElement \| undefined` | "body" | CSS selector or an actual DOM element — same contract as Vue's own Teleport `to`.
 `scrollFade` | `boolean \| undefined` | true | Masks the panel's top/bottom edge as its content scrolls under it, signaling there's more.
-`ui` | `Partial<{ positioner: UiPartValue; panel: UiPartValue; }> \| undefined` |  | Per-instance part-class/style overrides.
+`ui` | `Partial<{ positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Per-instance part-class/style overrides.
 `open` | `boolean \| undefined` | false | Whether the menu is open.
 
 ## Slots
@@ -30,8 +30,10 @@ Name | Type | Default | Description
 Name | Type | Description
 --- | --- | ---
 `trigger` | `{ open: boolean; }` | Co-located trigger markup — Menu wires the click and anchors to it; render just the button.
+`header` | `any` | Above the item list, outside its scroll region — stays put while `items` scrolls underneath.
 `item` | `{ item: T; }` | Override one data-driven row's content while keeping its behavior.
-`default` | `{ close: () => void; open: boolean; isClosing: boolean; cancelClose: () => void; panelEl: HTMLElement \| null; placement: string; }` | Fully custom menu content — render your own role="menuitem" markup; `items` is ignored.
+`default` | `{ close: () => void; open: boolean; isClosing: boolean; cancelClose: () => void; panelEl: HTMLElement \| null; placement: string; maxHeight: number \| null; }` | Fully custom menu content — render your own role="menuitem" markup; `items` is ignored.
+`footer` | `any` | Below the item list, outside its scroll region — stays put while `items` scrolls above it.
 
 ## Events
 

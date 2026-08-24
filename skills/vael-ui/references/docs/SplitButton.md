@@ -26,7 +26,7 @@ Name | Type | Default | Description
 `forceMount` | `boolean \| undefined` |  | 
 `teleportTo` | `string \| HTMLElement \| undefined` |  | 
 `scrollFade` | `boolean \| undefined` | undefined | 
-`ui` | `Partial<{ root: UiPartValue; main: UiPartValue; trigger: UiPartValue; positioner: UiPartValue; panel: UiPartValue; }> \| undefined` |  | 
+`ui` | `Partial<{ root: UiPartValue; main: UiPartValue; trigger: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; footer: UiPartValue; }> \| undefined` |  | 
 `open` | `boolean \| undefined` | false | 
 
 ## Slots
@@ -34,7 +34,9 @@ Name | Type | Default | Description
 Name | Type | Description
 --- | --- | ---
 `default` | `any` | Main action button content.
+`header` | `any` | Forwarded to the dropdown Menu's own `#header`.
 `item` | `{ item: T; }` | Override one dropdown row's content while keeping its behavior — forwarded to Menu's own `#item`.
+`footer` | `any` | Forwarded to the dropdown Menu's own `#footer`.
 
 ## Events
 

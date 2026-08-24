@@ -24,7 +24,7 @@ Name | Type | Default | Description
 `forceMount` | `boolean \| undefined` | false | When true, presence is v-show-driven and owned by the consumer (e.g. AnimatePresence).
 `teleportTo` | `string \| HTMLElement \| undefined` | "body" | CSS selector or an actual DOM element — same contract as Vue's own Teleport `to`.
 `scrollFade` | `boolean \| undefined` | true | Masks the panel's top/bottom edge as its content scrolls under it, signaling there's more.
-`ui` | `Partial<{ positioner: UiPartValue; panel: UiPartValue; }> \| undefined` |  | Per-instance part-class/style overrides.
+`ui` | `Partial<{ positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Per-instance part-class/style overrides.
 `open` | `boolean \| undefined` | false | Whether the menu is open.
 
 ## Slots
@@ -32,7 +32,9 @@ Name | Type | Default | Description
 Name | Type | Description
 --- | --- | ---
 `default` | `{ open: boolean; }` | Arbitrary wrapped content — a card, a table row, an image. Right-click (or long-press on touch) opens the menu; ordinary interaction with it is untouched.
+`header` | `any` | Forwarded to Menu's own `#header`.
 `item` | `{ item: T; }` | Override one data-driven row's content while keeping its behavior.
+`footer` | `any` | Forwarded to Menu's own `#footer`.
 
 ## Events
 

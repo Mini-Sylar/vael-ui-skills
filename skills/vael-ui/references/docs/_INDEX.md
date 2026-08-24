@@ -31,6 +31,7 @@
 - [DatePicker](./DatePicker.md): A text field paired with a calendar popover for picking a date or range.
 - [Calendar](./Calendar.md): A month grid for picking a single date, multiple dates, or a range.
 - [FileUpload](./FileUpload.md): A drop zone and file list for picking files, with validation and progress.
+- [Rating](./Rating.md): Click, drag, or use arrow keys to pick a value on a row of stars, with optional half-step precision.
 
 ## Selection
 
@@ -78,6 +79,7 @@
 - [Tag](./Tag.md): A compact label for categorizing or annotating an item inline.
 - [Chip](./Chip.md): A removable, compact token for selected filters, tags, or multi-select values.
 - [Kbd](./Kbd.md): Styles a keyboard shortcut so it reads like a physical key.
+- [Timeline](./Timeline.md): An ordered list of steps connected by a line, agnostic to what each step actually contains.
 
 ## Layout & Structure
 
@@ -92,3 +94,4 @@
 - [SwipeToReveal](./SwipeToReveal.md): Swipe an item to reveal actions underneath it, like a native mobile list row.
 - [PullToRefresh](./PullToRefresh.md): A pull-down gesture at the top of a scroll container that triggers a refresh.
 - [Dock](./Dock.md): A macOS-style row of icons that magnify as the pointer approaches them.
+- [Sortable](./Sortable.md): A drag-to-reorder list with a real keyboard path, not just a pointer one.
