@@ -34,7 +34,11 @@ Name | Type | Default | Description
 `teleportTo` | `string \| HTMLElement \| undefined` | "body" | 
 `motionCss` | `boolean \| undefined` | true | `false` skips popover enter/leave AND Calendar's month-slide transition.
 `showButtonBar` | `boolean \| undefined` | false | Built-in Today (single mode only) / Clear buttons below the calendar. Ignored — the `#footer` slot always renders instead — once that slot is provided.
-`ui` | `Partial<{ root: UiPartValue; input: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; navButton: UiPartValue; label: UiPartValue; weekdays: UiPartValue; weekday: UiPartValue; grid: UiPartValue; cell: UiPartValue; footer: UiPartValue; }> \| undefined` | undefined | 
+`showTime` | `boolean \| undefined` | false | Adds an hour/minute row below the calendar. `single` selection mode only — a range's two endpoints each having their own time isn't supported here. Keeps the popover open on a date pick instead of auto-closing, since there's still time left to set.
+`timeOnly` | `boolean \| undefined` | false | Hides the calendar entirely — just the time row. Implies `showTime`.
+`hourFormat` | `"12" \| "24" \| undefined` | undefined | `'12'` adds an AM/PM toggle; `'24'` doesn't. Default: resolved from `locale` (or the runtime default) via `Intl`'s own `hour12` resolution — an explicit value always wins.
+`minuteStep` | `number \| undefined` | 1 | Minute increment for the arrow-key/stepper-button adjustments. Default: 1.
+`ui` | `Partial<{ root: UiPartValue; input: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; navButton: UiPartValue; label: UiPartValue; weekdays: UiPartValue; weekday: UiPartValue; grid: UiPartValue; cell: UiPartValue; time: UiPartValue; footer: UiPartValue; }> \| undefined` | undefined | 
 `modelValue` | `Date \| CalendarRange \| null \| undefined` | null | 
 `open` | `boolean \| undefined` | false | 
 
