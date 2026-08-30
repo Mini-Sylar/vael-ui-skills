@@ -30,7 +30,7 @@ Name | Type | Default | Description
 `alignOffset` | `number \| undefined` | 0 | 
 `closeOnEsc` | `boolean \| undefined` | true | 
 `closeOnOutside` | `boolean \| undefined` | true | 
-`beforeClose` | `((done: () => void) => void) \| undefined` |  | 
+`beforeClose` | `((done: () => void) => void) \| undefined` |  | Defers closing (animation gate pattern): called when close is requested, call `done()` to proceed.
 `forceMount` | `boolean \| undefined` | false | 
 `teleportTo` | `string \| HTMLElement \| undefined` | "body" | 
 `scrollFade` | `boolean \| undefined` | true | 

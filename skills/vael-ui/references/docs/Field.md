@@ -15,7 +15,7 @@ Name | Type | Default | Description
 `error` | `string \| undefined` |  | Error message; renders with `role="alert"`.
 `required` | `boolean \| undefined` |  | 
 `disabled` | `boolean \| undefined` |  | 
-`labelPlacement` | `"top" \| "float" \| "inset" \| undefined` | "top" | 
+`labelPlacement` | `"top" \| "float" \| "inset" \| undefined` | "top" | `'top'` stacks above the control; `'float'` overlays on the edge (animates up on focus/fill); `'inset'` overlays inside the control.
 `ui` | `Partial<{ root: UiPartValue; label: UiPartValue; control: UiPartValue; description: UiPartValue; error: UiPartValue; }> \| undefined` |  | 
 
 ## Slots

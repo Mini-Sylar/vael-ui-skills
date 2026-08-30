@@ -22,16 +22,16 @@ Name | Type | Default | Description
 `display` | `"text" \| "count" \| "chip" \| undefined` | "chip" | `multiple` only: how the trigger renders multiple selections. `'chip'` (default) shows removable chips; `'text'` shows comma-joined labels; `'count'` shows a "N selected" summary. Single-select ignores this prop.
 `virtualize` | `boolean \| SelectVirtualizeConfig \| undefined` | undefined | `true`/`false` forces virtualization on/off; an object also tunes `itemSize`/`overscan`. Default: auto-virtualizes past 100 items.
 `name` | `string \| undefined` |  | Renders hidden `<input>`(s) so a plain `<form>` post still carries the selection — repeated `name` when `multiple`.
-`side` | `Side \| undefined` | "bottom" | 
-`align` | `Align \| undefined` | "start" | 
-`sideOffset` | `number \| undefined` | 8 | 
-`alignOffset` | `number \| undefined` | 0 | 
-`closeOnEsc` | `boolean \| undefined` | true | 
-`closeOnOutside` | `boolean \| undefined` | true | 
-`beforeClose` | `((done: () => void) => void) \| undefined` |  | 
-`forceMount` | `boolean \| undefined` | false | 
-`teleportTo` | `string \| HTMLElement \| undefined` | "body" | 
-`scrollFade` | `boolean \| undefined` | true | 
+`side` | `Side \| undefined` | "bottom" | Which side of the trigger the panel opens on.
+`align` | `Align \| undefined` | "start" | How the panel aligns against the trigger along that side.
+`sideOffset` | `number \| undefined` | 8 | Gap between the trigger and the panel, in pixels.
+`alignOffset` | `number \| undefined` | 0 | Shifts the panel along the alignment axis, in pixels.
+`closeOnEsc` | `boolean \| undefined` | true | Escape key closes the panel.
+`closeOnOutside` | `boolean \| undefined` | true | Clicking outside the panel closes it.
+`beforeClose` | `((done: () => void) => void) \| undefined` |  | Custom exit animation; call `done()` when it's complete. Delays the actual close/unmount until then.
+`forceMount` | `boolean \| undefined` | false | When true, presence is v-show-driven and owned by the consumer (e.g. AnimatePresence).
+`teleportTo` | `string \| HTMLElement \| undefined` | "body" | CSS selector or an actual DOM element — same contract as Vue's own Teleport `to`.
+`scrollFade` | `boolean \| undefined` | true | Masks the panel's top/bottom edge as its content scrolls under it, signaling there's more.
 `maxPanelHeight` | `number \| undefined` |  | Caps the panel's height at this many pixels even when the viewport has room for more — the option list scrolls internally past it instead of the panel growing indefinitely. Omitted keeps today's behavior (only the viewport limits it).
 `motionCss` | `boolean \| undefined` | true | Gates the built-in chip enter/exit/reposition transition (`multiple` + `display="chip"` only). `false` skips it entirely — reach for `@chip-enter`/`@chip-leave` instead if you want a consumer-owned animation (GSAP, motion-v) in its place.
 `filter` | `SelectFilter<T> \| undefined` | undefined | Shows a built-in search box at the top of the panel. `undefined` (default): no box — most lists are short enough that one is just noise. `true`: box + built-in diacritic/case- insensitive label match against `items`. A function: box + your own sync match against the same `items`. `false`: box, but Select does no matching of its own — pair with `v-model:query` and swap `items` yourself (debounced API search, server-side paging). Virtualization already reacts to whatever `items` ends up being, so a remote result set re-virtualizes for free.

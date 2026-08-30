@@ -11,7 +11,7 @@ import { Collapsible } from 'vael-ui' // or 'vael-ui/vapor'
 Name | Type | Default | Description
 --- | --- | --- | ---
 `disabled` | `boolean \| undefined` | false | 
-`motionCss` | `boolean \| undefined` | true | 
+`motionCss` | `boolean \| undefined` | true | `false` skips transitions; use exposed `panelEl` for custom motion.
 `ui` | `Partial<{ root: UiPartValue; trigger: UiPartValue; panel: UiPartValue; }> \| undefined` |  | 
 `open` | `boolean \| undefined` | false | 
 

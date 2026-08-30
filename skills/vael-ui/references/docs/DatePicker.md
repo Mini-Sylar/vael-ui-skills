@@ -29,7 +29,7 @@ Name | Type | Default | Description
 `alignOffset` | `number \| undefined` | 0 | 
 `closeOnEsc` | `boolean \| undefined` | true | 
 `closeOnOutside` | `boolean \| undefined` | true | 
-`beforeClose` | `((done: () => void) => void) \| undefined` | undefined | 
+`beforeClose` | `((done: () => void) => void) \| undefined` | undefined | Defers closing (animation gate pattern): called when close is requested, call `done()` to proceed.
 `forceMount` | `boolean \| undefined` | false | 
 `teleportTo` | `string \| HTMLElement \| undefined` | "body" | 
 `motionCss` | `boolean \| undefined` | true | `false` skips popover enter/leave AND Calendar's month-slide transition.

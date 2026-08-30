@@ -10,7 +10,7 @@ Name | Type | Default | Description
 --- | --- | --- | ---
 `items` | `readonly T[]` |  | 
 `placeholder` | `string \| undefined` |  | 
-`filter` | `((item: T, query: string) => boolean) \| undefined` |  | 
+`filter` | `((item: T, query: string) => boolean) \| undefined` |  | Custom filter function; replaces the default label/keywords match. Omit to use the built-in filter.
 `shortcut` | `string \| undefined` |  | Global shortcut that toggles `open`, e.g. `'mod+k'` (`mod` = Cmd on Mac, Ctrl elsewhere). Unset by default — nothing listens until you opt in.
 `closeOnSelect` | `boolean \| undefined` | true | 
 `size` | `DialogSize \| undefined` | "lg" | 

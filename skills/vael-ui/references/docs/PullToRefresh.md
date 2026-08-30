@@ -11,8 +11,8 @@ import { PullToRefresh } from 'vael-ui' // or 'vael-ui/vapor'
 Name | Type | Default | Description
 --- | --- | --- | ---
 `onRefresh` | `() => void \| Promise<void>` |  | 
-`threshold` | `number \| undefined` |  | 
-`maxPull` | `number \| undefined` |  | 
+`threshold` | `number \| undefined` |  | How far to pull (in pixels) before the refresh triggers.
+`maxPull` | `number \| undefined` |  | Maximum pull distance (in pixels) allowed before clamping.
 `scrollEl` | `HTMLElement \| { el: HTMLElement \| null; } \| null \| undefined` |  | Detects gestures on this element instead of the root. Defaults to the root.
 `ui` | `Partial<{ root: UiPartValue; zone: UiPartValue; indicator: UiPartValue; bubble: UiPartValue; label: UiPartValue; }> \| undefined` |  | 
 

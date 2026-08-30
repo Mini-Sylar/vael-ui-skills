@@ -11,8 +11,8 @@ import { OtpInput } from 'vael-ui' // or 'vael-ui/vapor'
 Name | Type | Default | Description
 --- | --- | --- | ---
 `length` | `number \| undefined` | 6 | 
-`type` | `"numeric" \| "alphanumeric" \| undefined` | "numeric" | 
-`mask` | `boolean \| undefined` | false | 
+`type` | `"numeric" \| "alphanumeric" \| undefined` | "numeric" | Restricts input to digits only or alphanumeric.
+`mask` | `boolean \| undefined` | false | Shows a bullet instead of the entered character in every filled cell.
 `disabled` | `boolean \| undefined` | false | 
 `invalid` | `boolean \| undefined` | false | 
 `size` | `"md" \| "sm" \| "lg" \| undefined` | "md" | 
