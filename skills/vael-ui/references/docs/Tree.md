@@ -10,7 +10,7 @@ import { Tree } from 'vael-ui' // or 'vael-ui/vapor'
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-`items` | `readonly T[]` |  | 
+`items` | `readonly T[]` |  | The tree data — `TreeNode` (`value`, `label`, optional `children`) or your own extension of it.
 `selectionMode` | `TreeSelectionMode \| undefined` | "single" | `'single'`: clicking replaces the selection. `'multiple'`: clicking toggles that node only. `'checkbox'`: checkboxes with cascading parent/child toggles.
 `selectableFolders` | `boolean \| undefined` | true | `false` keeps a node with children out of the selection entirely — click, keyboard Enter/Space, and expandOnRowClick's own select-on-expand all skip it, only a leaf can become the value. Has no effect in `selectionMode="checkbox"`, which already only ever puts leaves in the model. Default: true (a folder can be selected like any other node).
 `filterable` | `boolean \| undefined` | true | Shows a built-in label search box atop the tree, auto-expanding ancestors of any match. Default: on.
@@ -23,6 +23,7 @@ Name | Type | Default | Description
 `canDrop` | `((details: SortableDropDetails) => boolean) \| undefined` | undefined | Structural veto re-run while dragging; `false` marks the target invalid.
 `beforeDrop` | `((details: SortableDropDetails) => boolean \| Promise<boolean>) \| undefined` | undefined | Async gate at drop time — return `false` (or a promise of it) to cancel. Composes with `confirmAction().result`.
 `autoExpandDelay` | `number \| undefined` | 600 | Hovering a collapsed row this long opens it mid-drag.
+`previewMode` | `"element" \| "clone" \| undefined` | "clone" | `'clone'` (default): a floating copy follows the cursor, real row hidden until drop — the built-in behavior since before this prop existed. `'element'` moves the real row itself instead, so there's only one instance of it on screen; safe here since a tree row is a plain element, not a `<table>` row.
 `expandOnRowClick` | `boolean \| undefined` | false | When true, clicking anywhere on a folder row also toggles its expansion, not just the chevron — it still selects too (unless `selectableFolders` is off), so picking the folder itself (without opening it to reach a file inside) still works. Off by default since it changes what a plain row click does.
 `stickyScroll` | `boolean \| undefined` | false | When true, each expanded ancestor's row pins to the top of the list as its own children scroll past, VS Code-style, so deeply nested content never loses its folder context. Uses native `position: sticky` — each row is a real, nested DOM level, not a JS-measured overlay.
 `id` | `string \| undefined` | undefined | Id for the role="tree" list element. Auto-generated if omitted.
@@ -44,9 +45,9 @@ Name | Type | Description
 --- | --- | ---
 `select` | `[node: T]` | 
 `change` | `[value: string \| number \| (string \| number)[] \| null]` | 
+`drop-error` | `[error: unknown, details: SortableDropDetails]` | 
 `expand-change` | `[value: string \| number, expanded: boolean]` | 
 `reorder` | `[value: string \| number, to: DropPosition]` | 
-`drop-error` | `[error: unknown, details: SortableDropDetails]` | 
 `update:modelValue` | `[value: string \| number \| (string \| number)[] \| null]` | 
 `update:query` | `[value: string]` | 
 `update:node` | `[value: T \| T[] \| null]` | 

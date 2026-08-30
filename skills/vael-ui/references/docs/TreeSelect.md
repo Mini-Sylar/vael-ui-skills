@@ -33,6 +33,7 @@ Name | Type | Default | Description
 `beforeClose` | `((done: () => void) => void) \| undefined` | undefined | 
 `forceMount` | `boolean \| undefined` | false | 
 `teleportTo` | `string \| HTMLElement \| undefined` | "body" | 
+`maxPanelHeight` | `number \| undefined` |  | Caps the panel's height at this many pixels even when the viewport has room for more — the tree scrolls internally past it instead of the panel growing indefinitely. Omitted keeps today's behavior (only the viewport limits it).
 `motionCss` | `boolean \| undefined` | true | `false` skips all built-in motion (row transitions and chevron rotation).
 `ui` | `Partial<{ trigger: UiPartValue; value: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; filter: UiPartValue; list: UiPartValue; node: UiPartValue; empty: UiPartValue; footer: UiPartValue; }> \| undefined` | undefined | 
 `modelValue` | `string \| number \| (string \| number)[] \| null \| undefined` | null | 

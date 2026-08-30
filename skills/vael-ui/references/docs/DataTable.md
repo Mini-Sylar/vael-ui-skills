@@ -10,7 +10,7 @@ import { DataTable } from 'vael-ui' // or 'vael-ui/vapor'
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-`data` | `T[]` |  | 
+`data` | `T[]` |  | Row objects. Column content is read from these via each `<Column>`'s `field`.
 `rowKey` | `keyof T \| ((row: T) => string \| number)` |  | Stable row identity — a key on `T`, or a function for composite/derived keys.
 `loading` | `boolean \| undefined` | false | Shows the `#loading` slot instead of rows/empty state.
 `selectable` | `boolean \| undefined` | false | Adds a leading checkbox/radio column wired to the `selected` state.
@@ -21,7 +21,7 @@ Name | Type | Default | Description
 `size` | `"md" \| "sm" \| "lg" \| undefined` | "md" | Row-density variant.
 `stripedRows` | `boolean \| undefined` | false | Alternating row background via CSS (selected > hover > stripe precedence).
 `showGridlines` | `boolean \| undefined` | false | Adds inline-end border to every cell.
-`resizableColumns` | `boolean \| undefined` | false | Enables resize drag handle on every column header.
+`resizableColumns` | `boolean \| undefined` | false | Adds a drag handle to every column header's edge for resizing.
 `frozenColumns` | `number \| undefined` | 0 | Freezes the first N columns sticky-left against horizontal scroll.
 `rows` | `number \| undefined` |  | Rows per page. Default: all rows render. Set: internal slicing; pair with `v-model:page`. Also the page-size divisor for `lazy`'s `total`.
 `manualSort` | `boolean \| undefined` | false | `data` is already sorted server-side — DataTable stops sorting it locally and only reflects `v-model:sort`, so a header click tells you what to refetch instead of re-sorting what you gave it.
@@ -31,6 +31,9 @@ Name | Type | Default | Description
 `motionCss` | `boolean \| undefined` | true | Gates the built-in row enter/exit/reorder transition (sort, paging, row expansion). `false` skips it entirely — reach for `@row-enter`/`@row-leave` instead if you want a consumer-owned animation (GSAP, motion-v) in its place. No effect while `virtualize` is active: a virtualized list's rows are measured/recycled by height, which a CSS enter/exit transition would fight, so that mode never animates row presence regardless of this prop.
 `reorderableColumns` | `boolean \| undefined` | false | Drag column headers to reorder them. Pair with `v-model:columnOrder` to control or persist the order.
 `columnGripVisibility` | `"hover" \| "always" \| undefined` | "always" | `'always'` (default): the drag grip is always shown, so a reorderable column reads as such at a glance. `'hover'`: fades in on hover/focus instead, matching the resize handle's own restraint — reach for this once a table has enough reorderable columns that permanent grips would clutter the header.
+`canDrop` | `((details: SortableDropDetails) => boolean) \| undefined` | undefined | Structural veto re-run while a column drags; `false` marks the target invalid. A pinned column is already protected regardless of this.
+`beforeDrop` | `((details: SortableDropDetails) => boolean \| Promise<boolean>) \| undefined` | undefined | Async gate at drop time for a column reorder — return `false` (or a promise of it) to cancel. Composes with `confirmAction().result` for a confirm-before-move dialog.
+`previewMode` | `"element" \| "clone" \| undefined` | "clone" | `'clone'` (default): a floating copy of the dragged column header follows the cursor, the real `<th>` hidden until drop. `'element'` moves the real header cell itself instead — **don't use this**: a `<th>`'s `:style` binding is keyed by column index, and lifting the real element out to `position: fixed` mid-drag corrupts that binding badly enough that a column can be lost from the DOM entirely on drop. Kept only for interface symmetry with `Sortable`/`Tree`, where it's safe.
 `page` | `number \| undefined` | 1 | 
 `sort` | `{ field: keyof T \| null; dir: "asc" \| "desc" \| null; } \| undefined` | { field: null, dir: null } | Uncontrolled by default (works exactly as before). Bind `v-model:sort` — required with `manualSort` — to see every header click and know what to refetch.
 `columnOrder` | `(keyof T)[] \| undefined` | [] | Empty means "follow the DOM" (pre-reordering behavior); once a drag sets it, it outranks DOM order so the onUpdated resort below doesn't undo it.
@@ -57,6 +60,7 @@ Name | Type | Description
 `column-reorder` | `[order: (keyof T)[]]` | 
 `row-enter` | `[el: Element, done: () => void]` | 
 `row-leave` | `[el: Element, done: () => void]` | 
+`drop-error` | `[error: unknown, details: SortableDropDetails]` | 
 `update:page` | `[value: number]` | 
 `update:sort` | `[value: { field: keyof T \| null; dir: "asc" \| "desc" \| null; }]` | 
 `update:columnOrder` | `[value: (keyof T)[]]` | 

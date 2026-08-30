@@ -22,6 +22,7 @@ Name | Type | Default | Description
 `forceMount` | `boolean \| undefined` | false | When true, presence is v-show-driven and owned by the consumer (e.g. AnimatePresence).
 `teleportTo` | `string \| HTMLElement \| undefined` | "body" | CSS selector or an actual DOM element — same contract as Vue's own Teleport `to`.
 `scrollFade` | `boolean \| undefined` | true | Masks the panel's top/bottom edge as its content scrolls under it, signaling there's more.
+`maxPanelHeight` | `number \| undefined` |  | Caps the panel's height at this many pixels even when the viewport has room for more — the item list scrolls internally past it instead of the panel growing indefinitely. Omitted keeps today's behavior (only the viewport limits it).
 `ui` | `Partial<{ positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Per-instance part-class/style overrides.
 `open` | `boolean \| undefined` | false | Whether the menu is open.
 

@@ -34,6 +34,7 @@ Name | Type | Default | Description
 `forceMount` | `boolean \| undefined` | false | 
 `teleportTo` | `string \| HTMLElement \| undefined` | "body" | 
 `scrollFade` | `boolean \| undefined` | true | 
+`maxPanelHeight` | `number \| undefined` |  | Caps the panel's height at this many pixels even when the viewport has room for more — the option list scrolls internally past it instead of the panel growing indefinitely. Omitted keeps today's behavior (only the viewport limits it).
 `motionCss` | `boolean \| undefined` | true | Gates the built-in chip enter/exit/reposition transition (`multiple` only). `false` skips it entirely — reach for `@chip-enter`/`@chip-leave` instead if you want a consumer-owned animation (GSAP, motion-v) in its place.
 `ui` | `Partial<{ root: UiPartValue; input: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; list: UiPartValue; option: UiPartValue; empty: UiPartValue; footer: UiPartValue; }> \| undefined` |  | 
 `modelValue` | `string \| number \| (string \| number)[] \| null \| undefined` | null | 
