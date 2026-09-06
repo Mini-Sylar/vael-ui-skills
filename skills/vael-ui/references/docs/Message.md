@@ -18,7 +18,7 @@ Name | Type | Default | Description
 `forceMount` | `boolean \| undefined` | false | When true, presence is v-show-driven and owned by the consumer (e.g. AnimatePresence).
 `showIcon` | `boolean \| undefined` | true | 
 `role` | `"status" \| "alert" \| undefined` |  | Defaults to `alert` for `error`/`warning`, `status` otherwise.
-`ui` | `Partial<{ root: UiPartValue; icon: UiPartValue; content: UiPartValue; title: UiPartValue; description: UiPartValue; close: UiPartValue; }> \| undefined` |  | 
+`ui` | `Partial<{ root: UiPartValue; icon: UiPartValue; content: UiPartValue; title: UiPartValue; description: UiPartValue; actions: UiPartValue; close: UiPartValue; }> \| undefined` |  | 
 `open` | `boolean \| undefined` | true | 
 
 ## Slots

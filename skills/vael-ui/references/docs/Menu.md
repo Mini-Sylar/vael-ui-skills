@@ -32,7 +32,7 @@ Name | Type | Description
 --- | --- | ---
 `trigger` | `{ open: boolean; }` | Co-located trigger markup — Menu wires the click and anchors to it; render just the button.
 `header` | `any` | Above the item list, outside its scroll region — stays put while `items` scrolls underneath.
-`item` | `{ item: T; }` | Override one data-driven row's content while keeping its behavior.
+`item` | `{ item: T; }` | Override one data-driven row's content while keeping its behavior. Forwarded automatically into nested submenus, so a custom row keeps applying at every depth instead of reverting to the default row past the first level.
 `default` | `{ close: () => void; open: boolean; isClosing: boolean; cancelClose: () => void; panelEl: HTMLElement \| null; placement: string; maxHeight: number \| null; }` | Fully custom menu content — render your own role="menuitem" markup; `items` is ignored.
 `footer` | `any` | Below the item list, outside its scroll region — stays put while `items` scrolls above it.
 

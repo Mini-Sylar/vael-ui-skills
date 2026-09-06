@@ -13,7 +13,7 @@ Name | Type | Default | Description
 `variant` | `"primary" \| "danger" \| "muted" \| "success" \| "warning" \| "info" \| undefined` | "muted" | 
 `size` | `"md" \| "sm" \| undefined` | "md" | 
 `pill` | `boolean \| undefined` | false | Fully pill-rounded instead of the default small label corners.
-`ui` | `Partial<{ root: UiPartValue; icon: UiPartValue; }> \| undefined` |  | 
+`ui` | `Partial<{ root: UiPartValue; icon: UiPartValue; label: UiPartValue; }> \| undefined` |  | 
 
 ## Slots
 

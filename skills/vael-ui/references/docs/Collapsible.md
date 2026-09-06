@@ -12,7 +12,7 @@ Name | Type | Default | Description
 --- | --- | --- | ---
 `disabled` | `boolean \| undefined` | false | 
 `motionCss` | `boolean \| undefined` | true | `false` skips transitions; use exposed `panelEl` for custom motion.
-`ui` | `Partial<{ root: UiPartValue; trigger: UiPartValue; panel: UiPartValue; }> \| undefined` |  | 
+`ui` | `Partial<{ root: UiPartValue; trigger: UiPartValue; panel: UiPartValue; body: UiPartValue; }> \| undefined` |  | 
 `open` | `boolean \| undefined` | false | 
 
 ## Slots

@@ -28,7 +28,7 @@ Name | Type | Default | Description
 `scrollTarget` | `DOMTarget \| undefined` |  | Element whose scrolling is locked while open. Defaults to `container`. Pass the inner scroller when the container itself doesn't scroll - an absolutely-positioned panel scrolls away with its container's content.
 `scrollFade` | `boolean \| undefined` | true | Masks the panel's top/bottom edge as its content scrolls under it, signaling there's more.
 `maximizable` | `boolean \| undefined` | false | Adds a maximize/restore toggle to the header, filling the viewport when active.
-`ui` | `Partial<{ overlay: UiPartValue; panel: UiPartValue; header: UiPartValue; title: UiPartValue; description: UiPartValue; body: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Per-instance part-class/style overrides.
+`ui` | `Partial<{ overlay: UiPartValue; panel: UiPartValue; header: UiPartValue; title: UiPartValue; description: UiPartValue; body: UiPartValue; footer: UiPartValue; maximize: UiPartValue; close: UiPartValue; }> \| undefined` |  | Per-instance part-class/style overrides.
 `open` | `boolean \| undefined` | false | Whether the dialog is open.
 `maximized` | `boolean \| undefined` | false | Whether the panel currently fills the viewport. Self-managed by the built-in toggle unless the consumer binds it.
 

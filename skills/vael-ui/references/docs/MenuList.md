@@ -18,7 +18,7 @@ Name | Type | Default | Description
 
 Name | Type | Description
 --- | --- | ---
-`item` | `{ item: T; }` | Override one row's content while keeping its behavior. Fires for selectable rows and group labels.
+`item` | `{ item: T; isGroup: boolean; }` | Override one row's content while keeping its behavior. Fires for selectable rows and group labels alike — `isGroup` tells which: a `true` row is inert (its own `items` rendered as children beneath it, not a click target) rather than selectable.
 
 ## Events
 
