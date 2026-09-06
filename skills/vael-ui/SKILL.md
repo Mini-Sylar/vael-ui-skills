@@ -7,7 +7,7 @@ metadata:
   version: 1.0.0
 ---
 
-# vael-ui `vael-ui@0.3.1`
+# vael-ui `vael-ui@0.3.2`
 
 Vue 3 component library. 62 components across Setup, Actions, Forms & Inputs, Selection, Overlays, Navigation & Menus, Feedback, Data Display, Layout & Structure, and Gestures, plus 11 standalone composables.
 
