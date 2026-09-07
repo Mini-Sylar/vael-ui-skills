@@ -4,7 +4,7 @@ description: Use whenever writing, editing, or debugging Vue 3 code that imports
 license: MIT
 metadata:
   author: Mini-Sylar
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 # vael-ui `vael-ui@0.3.4`
