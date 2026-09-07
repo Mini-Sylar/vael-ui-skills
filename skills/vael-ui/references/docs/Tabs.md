@@ -20,7 +20,7 @@ Name | Type | Default | Description
 
 Name | Type | Description
 --- | --- | ---
-`default` | `{ active: T; focused: T; select: (item: T) => void; items: T[]; itemProps: (item: T) => { role: "tab"; class: string; style: UiPartStyle \| undefined; 'data-tab-value': string; 'aria-selected': boolean; tabindex: 0 \| -1; onClick: () => void; }; indicatorProps: (variant?: "background" \| "underline" \| undefined) => { class: string; style: Record<string, string \| undefined>; }; }` | Render `role="tab"` elements and optionally a sliding indicator. `itemProps(item)` returns a11y/behavior wiring for one tab — spread via v-bind. `indicatorProps(variant)` does the same for the optional sliding highlight (`'background'` default, or `'underline'`) — bind it on a sibling element of the tab buttons. `focused` tracks roving tabindex (diverges from `active` in `manual` mode).
+`default` | `{ active: T; focused: T; select: (item: T) => void; items: T[]; itemProps: (item: T) => { role: "tab"; class: string; style: StyleValue; 'data-tab-value': string; 'aria-selected': boolean; tabindex: 0 \| -1; onClick: () => void; }; indicatorProps: (variant?: "background" \| "underline" \| undefined) => { class: string; style: Record<string, string \| undefined>; }; }` | Render `role="tab"` elements and optionally a sliding indicator. `itemProps(item)` returns a11y/behavior wiring for one tab — spread via v-bind. `indicatorProps(variant)` does the same for the optional sliding highlight (`'background'` default, or `'underline'`) — bind it on a sibling element of the tab buttons. `focused` tracks roving tabindex (diverges from `active` in `manual` mode).
 
 ## Events
 

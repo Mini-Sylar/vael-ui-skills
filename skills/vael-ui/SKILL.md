@@ -7,9 +7,9 @@ metadata:
   version: 1.0.0
 ---
 
-# vael-ui `vael-ui@0.3.2`
+# vael-ui `vael-ui@0.3.4`
 
-Vue 3 component library. 62 components across Setup, Actions, Forms & Inputs, Selection, Overlays, Navigation & Menus, Feedback, Data Display, Layout & Structure, and Gestures, plus 11 standalone composables.
+Vue 3 component library. 66 components across Setup, Actions, Forms & Inputs, Selection, Overlays, Navigation & Menus, Feedback, Data Display, Layout & Structure, and Gestures, plus 13 standalone composables.
 
 **References:** [Component index](./references/docs/_INDEX.md) · [Composable index](./references/composables/_INDEX.md) · [Animation integration](./references/guides/animation-integration.md) · [Auto import](./references/guides/auto-import.md) · [Styling & CSS variables](./references/guides/styling-and-layers.md)
 
@@ -26,7 +26,7 @@ Before writing code, check a component's own reference file for its exact curren
 npm install vael-ui vue   # or pnpm/yarn/bun
 ```
 
-Requires Vue `^3.5.0`. The Vapor build (`vael-ui/vapor`) requires Vue `^3.6.0` and `createVaporApp`. Vapor is still pre-1.0 in Vue itself, so **pin an exact prerelease version** (e.g. `3.6.0-rc.4`), not a floating `rc`/`beta` dist-tag, to avoid a compiler/runtime mismatch between what vael-ui's Vapor build was compiled against and what's actually installed. If Vapor components render with no styles, or throw errors specifically inside `<Transition>`-wrapped components, check this first.
+Requires Vue `^3.5.0`. The Vapor build (`vael-ui/vapor`) requires Vue `^3.6.0` and `createVaporApp`. Vapor is still pre-1.0 in Vue itself, so **pin an exact prerelease version** (e.g. `3.6.0-rc.7`), not a floating `rc`/`beta` dist-tag, to avoid a compiler/runtime mismatch between what vael-ui's Vapor build was compiled against and what's actually installed. If Vapor components render with no styles, or throw errors specifically inside `<Transition>`-wrapped components, check this first.
 
 A Nuxt module ships as `vael-ui/nuxt`. Add it to `modules` in `nuxt.config.ts` instead of manual imports.
 
@@ -34,6 +34,7 @@ Auto-import via `unplugin-vue-components` is the recommended setup instead of im
 
 ## API Changes
 
+- `0.3.4` — **`SwipeToReveal`:** actions now go in `#leading-actions` / `#trailing-actions` (one slot for a single-edge row, both for two). The generic `#actions` slot and the `side` prop are removed — migrate `#actions` → `#trailing-actions`, and `side="leading"` + `#actions` → `#leading-actions`. New: `progress` slot prop / `leadingProgress` · `trailingProgress` exposed / `--ui-swipe-reveal-progress` CSS var (0 → 1 per edge), and a `revealScale` grow-in that's on by default (`:reveal-scale="false"` to opt out).
 - `0.2.x`: added a `vapor` package export condition, letting a whole project resolve bare `import { X } from 'vael-ui'` to the Vapor build via `resolve.conditions`/`customConditions`, instead of importing from the `/vapor` subpath everywhere. See [Auto import](./references/guides/auto-import.md#one-shared-import-no-vapor-subpath).
 - Pre-`0.2.0`: CSS wasn't split per component. Only relevant if pinned to an old version.
 

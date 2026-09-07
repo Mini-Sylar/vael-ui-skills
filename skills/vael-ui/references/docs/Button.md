@@ -20,8 +20,8 @@ Name | Type | Default | Description
 `block` | `boolean \| undefined` | false | Stretch to container's full inline size.
 `type` | `"button" \| "submit" \| "reset" \| undefined` | "button" | 
 `as` | `string \| undefined` | "button" | Root tag (e.g. `as="a"` for a link styled as button).
-`badgePlacement` | `"top-end" \| "top-start" \| "bottom-start" \| "bottom-end" \| undefined` | "top-end" | Where the `#badge` slot wrapper sits relative to the button.
-`ui` | `Partial<{ root: UiPartValue; leading: UiPartValue; trailing: UiPartValue; content: UiPartValue; label: UiPartValue; badge: UiPartValue; }> \| undefined` |  | `leading`/`trailing` wrap the matching slots and carry the default gap to the label — zero it there instead of margin-hacking the slot content. `content`/`label` reach the default-slot wrapper and the label itself (`content > label`, `label` is `display: inline-block` by default — override for e.g. an icon-above-label stacked layout).
+`badgePlacement` | `"top-start" \| "top-end" \| "bottom-start" \| "bottom-end" \| undefined` |  | Where the `#badge` slot sits (default `top-end`). Setting it also reserves the wrapper up front, so a `v-if`'d `#badge` keeps a stable DOM position before the first badge appears.
+`ui` | `Partial<{ root: UiPartValue; leading: UiPartValue; trailing: UiPartValue; content: UiPartValue; label: UiPartValue; badge: UiPartValue; }> \| undefined` |  | 
 
 ## Slots
 

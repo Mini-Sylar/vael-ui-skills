@@ -12,7 +12,7 @@ Name | Type | Default | Description
 --- | --- | --- | ---
 `side` | `DrawerSide \| undefined` | "right" | Which viewport edge the panel slides in from.
 `size` | `DialogSize \| undefined` | "md" | Panel width: sm 22rem / md 28rem / lg 38rem.
-`ui` | `Partial<{ overlay: UiPartValue; panel: UiPartValue; header: UiPartValue; title: UiPartValue; description: UiPartValue; body: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Per-instance part-class/style overrides.
+`ui` | `Partial<{ overlay: UiPartValue; panel: UiPartValue; header: UiPartValue; title: UiPartValue; description: UiPartValue; body: UiPartValue; footer: UiPartValue; maximize: UiPartValue; close: UiPartValue; }> \| undefined` |  | Per-instance part-class/style overrides.
 `closeOnEsc` | `boolean \| undefined` | true | Escape key closes the panel.
 `beforeClose` | `((done: () => void) => void) \| undefined` |  | Custom exit animation; call `done()` when it's complete. Delays the actual close/unmount until then.
 `forceMount` | `boolean \| undefined` | false | When true, presence is v-show-driven and owned by the consumer (e.g. AnimatePresence).

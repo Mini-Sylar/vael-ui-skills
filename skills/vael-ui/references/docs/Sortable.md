@@ -20,6 +20,7 @@ Name | Type | Default | Description
 `group` | `SortableGroupHandle \| undefined` | undefined | Shares drag sessions with other `<Sortable>`s/`useSortable()` lists passed the same handle — from `useSortableGroup()`. Lets an item cross between them.
 `groupId` | `string \| number \| undefined` | undefined | This list's identity within `group`. Auto-assigned if omitted.
 `previewMode` | `"element" \| "clone" \| undefined` |  | `group` only — how a drag looks once it leaves this list for a sibling one. `'element'` (default): the real dragged item lifts and keeps moving, so there's only ever one instance of it on screen. `'clone'`: a separate floating copy, for content that can't tolerate leaving its normal layout.
+`touchDragDelay` | `number \| undefined` |  | Ms a touch pointer must hold a row still before a drag starts. Skip this unless `#item`/`#handle` content is also tappable for something else — the built-in handle alone never needs it. Default `0`.
 `ui` | `Partial<{ root: UiPartValue; item: UiPartValue; handle: UiPartValue; }> \| undefined` | undefined | 
 `items` | `T[] \| undefined` | [] | The list, in order. Reassigned to a new array on a committed drop — bind with `v-model:items`.
 

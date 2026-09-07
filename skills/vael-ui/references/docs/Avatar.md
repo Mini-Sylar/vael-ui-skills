@@ -15,7 +15,7 @@ Name | Type | Default | Description
 `name` | `string \| undefined` |  | 
 `size` | `"md" \| "sm" \| "lg" \| undefined` | "md" | 
 `shape` | `"circle" \| "square" \| undefined` | "circle" | 
-`badgePlacement` | `"top-end" \| "top-start" \| "bottom-start" \| "bottom-end" \| undefined` | "bottom-end" | 
+`badgePlacement` | `"top-start" \| "top-end" \| "bottom-start" \| "bottom-end" \| undefined` | "bottom-end" | 
 `ui` | `Partial<{ root: UiPartValue; image: UiPartValue; fallback: UiPartValue; badge: UiPartValue; }> \| undefined` |  | 
 
 ## Slots
