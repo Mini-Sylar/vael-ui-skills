@@ -10,8 +10,8 @@ import { Separator } from 'vael-ui' // or 'vael-ui/vapor'
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-`orientation` | `"horizontal" \| "vertical" \| undefined` | "horizontal" | 
-`ui` | `Partial<{ root: UiPartValue; line: UiPartValue; text: UiPartValue; }> \| undefined` |  | 
+`orientation` | `"horizontal" \| "vertical" \| undefined` | `'horizontal'` | Draws a horizontal or vertical line.
+`ui` | `Partial<{ root: UiPartValue; line: UiPartValue; text: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 
 ## Slots
 
@@ -27,5 +27,5 @@ _None._
 
 Name | Type | Description
 --- | --- | ---
-`el` | `HTMLElement \| null` | 
+`el` | `HTMLElement \| null` | Root element. 
 

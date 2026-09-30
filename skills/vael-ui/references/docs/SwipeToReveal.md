@@ -10,39 +10,39 @@ import { SwipeToReveal } from 'vael-ui' // or 'vael-ui/vapor'
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-`disabled` | `boolean \| undefined` | false | 
-`motionCss` | `boolean \| undefined` | true | `false` disables the built-in release/settle transition entirely (via `data-motion="off"`) — reach for this if you're driving the settle with your own spring/GSAP timeline instead. Has no effect on the drag itself, which is already transform-only with no transition.
-`revealScale` | `number \| boolean \| undefined` | true | Grow the actions panel in from its own edge as the swipe reveals it, settling to full size. On by default; `false` opts out (e.g. when driving the panel with your own timeline), a number (0–1) sets the closed-state scale. The raw 0→1 reveal progress is always on the `progress` slot prop and the `--ui-swipe-reveal-progress` custom property for driving your own effects.
-`ui` | `Partial<{ root: UiPartValue; content: UiPartValue; actions: UiPartValue; }> \| undefined` | undefined | 
-`open` | `boolean \| undefined` | false | 
+`disabled` | `boolean \| undefined` | `false` | Blocks swiping. `reveal()`, `close()` and `v-model:open` still work.
+`motionCss` | `boolean \| undefined` | `true` | Plays the built-in release and settle transition. Set `false` to drive the settle yourself.
+`revealScale` | `number \| boolean \| undefined` | `true` | Grows the actions panel in from its edge as it opens. A number from 0 to 1 sets the starting scale. `false` turns it off.
+`ui` | `Partial<{ root: UiPartValue; content: UiPartValue; actions: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`open` | `boolean \| undefined` | `false` | Whether an action panel is open. Setting it `true` opens the trailing edge, or the leading one if it's the only edge.
 
 ## Slots
 
 Name | Type | Description
 --- | --- | ---
-`default` | `{ open: boolean; openSide: SwipeRevealSide \| null; reveal: (side?: SwipeRevealSide \| undefined) => void; close: () => void; }` | 
-`leading-actions` | `{ open: boolean; close: () => void; progress: number; }` | Leading-edge (left, LTR) actions. `progress` is 0 → 1 as this edge is revealed.
-`trailing-actions` | `{ open: boolean; close: () => void; progress: number; }` | Trailing-edge (right, LTR) actions. `progress` is 0 → 1 as this edge is revealed.
+`default` | `{ open: boolean; openSide: SwipeRevealSide \| null; reveal: (side?: SwipeRevealSide \| undefined) => void; close: () => void; }` | Row content that slides to reveal the actions.
+`leading-actions` | `{ open: boolean; close: () => void; progress: number; }` | Leading-edge actions (left in LTR). `progress` goes from 0 to 1 as this edge opens.
+`trailing-actions` | `{ open: boolean; close: () => void; progress: number; }` | Trailing-edge actions (right in LTR). `progress` goes from 0 to 1 as this edge opens.
 
 ## Events
 
 Name | Type | Description
 --- | --- | ---
-`update:open` | `[value: boolean]` | 
-`change` | `[open: boolean, side: SwipeRevealSide \| null]` | 
+`update:open` | `[value: boolean]` | Fires when `open` changes (`v-model:open`).
+`change` | `[open: boolean, side: SwipeRevealSide \| null]` | Fires once per settled interaction, with `open` and the open edge (or `null`).
 
 ## Exposed
 
 Name | Type | Description
 --- | --- | ---
-`el` | `HTMLElement \| null` | 
-`contentEl` | `HTMLElement \| null` | 
-`leadingActionsEl` | `HTMLElement \| null` | 
-`trailingActionsEl` | `HTMLElement \| null` | 
-`isDragging` | `boolean` | 
-`openSide` | `SwipeRevealSide \| null` | 
-`leadingProgress` | `number` | 0 → 1 reveal progress for each edge — live during a drag, settled after.
-`trailingProgress` | `number` | 
-`reveal` | `(side?: SwipeRevealSide \| undefined) => void` | 
-`close` | `() => void` | 
+`el` | `HTMLElement \| null` | Root element.
+`contentEl` | `HTMLElement \| null` | Sliding content element.
+`leadingActionsEl` | `HTMLElement \| null` | Leading actions panel (null without `#leading-actions`).
+`trailingActionsEl` | `HTMLElement \| null` | Trailing actions panel (null without `#trailing-actions`).
+`isDragging` | `boolean` | Whether you're swiping. Taps don't count.
+`openSide` | `SwipeRevealSide \| null` | Which edge is open, or `null` when closed.
+`leadingProgress` | `number` | Reveal progress of the leading edge, from 0 to 1. Live during a drag, settled after.
+`trailingProgress` | `number` | Reveal progress of the trailing edge, from 0 to 1. Live during a drag, settled after.
+`reveal` | `(side?: SwipeRevealSide \| undefined) => void` | Opens an edge. Without `side`, it opens the trailing edge, or the leading one if it's the only edge.
+`close` | `() => void` | Closes the open edge. 
 

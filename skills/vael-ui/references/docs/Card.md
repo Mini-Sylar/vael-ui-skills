@@ -10,19 +10,19 @@ import { Card } from 'vael-ui' // or 'vael-ui/vapor'
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-`title` | `string \| undefined` |  | Default header title; ignored when `#header` is used.
-`description` | `string \| undefined` |  | Default header description; ignored when `#header` is used.
-`as` | `string \| undefined` | "div" | Root tag — `'a'`/`'button'` for a fully interactive card.
-`interactive` | `boolean \| undefined` | false | Hover/press affordance. Implied (always on) when `as` is `'a'` or `'button'`.
-`ui` | `Partial<{ root: UiPartValue; header: UiPartValue; title: UiPartValue; description: UiPartValue; body: UiPartValue; footer: UiPartValue; }> \| undefined` |  | 
+`title` | `string \| undefined` |  | Default header title; the `#header` slot replaces it.
+`description` | `string \| undefined` |  | Default header description; the `#header` slot replaces it.
+`as` | `string \| undefined` | `'div'` | Root tag; use `'a'` or `'button'` for a fully interactive card.
+`interactive` | `boolean \| undefined` | `false` | Adds a hover and press affordance. Always on when `as` is `'a'` or `'button'`.
+`ui` | `Partial<{ root: UiPartValue; header: UiPartValue; title: UiPartValue; description: UiPartValue; body: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 
 ## Slots
 
 Name | Type | Description
 --- | --- | ---
-`default` | `any` | 
+`default` | `any` | Card body content.
 `header` | `any` | Replaces the default title/description header.
-`footer` | `any` | 
+`footer` | `any` | Footer content; the footer renders only when this slot is used.
 
 ## Events
 
@@ -32,5 +32,5 @@ _None._
 
 Name | Type | Description
 --- | --- | ---
-`el` | `HTMLElement \| null` | 
+`el` | `HTMLElement \| null` | Root element. 
 

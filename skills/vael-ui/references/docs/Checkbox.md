@@ -10,36 +10,36 @@ import { Checkbox } from 'vael-ui' // or 'vael-ui/vapor'
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-`label` | `string \| undefined` |  | 
-`value` | `string \| number \| undefined` |  | Only meaningful alongside an array model — checked reflects membership.
-`indeterminate` | `boolean \| undefined` | false | Property, not attribute.
-`disabled` | `boolean \| undefined` | false | 
-`invalid` | `boolean \| undefined` | false | 
-`size` | `"md" \| "sm" \| undefined` | "md" | 
-`name` | `string \| undefined` |  | 
-`motionCss` | `boolean \| undefined` | true | `false` skips built-in transitions; use exposed `boxEl`/`checkEl` to drive animation instead.
-`ui` | `Partial<{ root: UiPartValue; box: UiPartValue; label: UiPartValue; }> \| undefined` |  | 
-`modelValue` | `boolean \| unknown[] \| undefined` | false | Checked state. Bind an array instead to toggle this checkbox's `value` prop in/out of it (checkbox-group pattern).
+`label` | `string \| undefined` |  | Label text; the default slot replaces it.
+`value` | `string \| number \| undefined` |  | Value added to an array model when checked. Checked state reflects its membership.
+`indeterminate` | `boolean \| undefined` | `false` | Shows the mixed (indeterminate) state, which takes precedence over checked.
+`disabled` | `boolean \| undefined` | `false` | Disables the checkbox and blocks interaction.
+`invalid` | `boolean \| undefined` | `false` | Shows the invalid state. A surrounding `Field` in error sets it too.
+`size` | `"md" \| "sm" \| undefined` | `'md'` | Control size.
+`name` | `string \| undefined` |  | Native `name` for form submission.
+`motionCss` | `boolean \| undefined` | `true` | `false` skips built-in transitions; animate the exposed `boxEl`/`checkEl` yourself.
+`ui` | `Partial<{ root: UiPartValue; box: UiPartValue; label: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`modelValue` | `boolean \| unknown[] \| undefined` | `false` | Checked state. Bind an array to add or remove this checkbox's `value` in it (checkbox group).
 
 ## Slots
 
 Name | Type | Description
 --- | --- | ---
-`default` | `any` | Inline label content; overrides the `label` prop text entirely.
+`default` | `any` | Label content; replaces the `label` text.
 
 ## Events
 
 Name | Type | Description
 --- | --- | ---
-`update:modelValue` | `[value: boolean \| unknown[]]` | 
-`change` | `[checked: boolean]` | 
+`update:modelValue` | `[value: boolean \| unknown[]]` | Fires when `modelValue` changes (`v-model`).
+`change` | `[checked: boolean]` | Fires when you toggle the checkbox, with its new checked state.
 
 ## Exposed
 
 Name | Type | Description
 --- | --- | ---
-`el` | `HTMLElement \| null` | 
-`inputEl` | `HTMLInputElement \| null` | 
-`boxEl` | `HTMLElement \| null` | 
-`checkEl` | `SVGElement \| null` | 
+`el` | `HTMLElement \| null` | Root element.
+`inputEl` | `HTMLInputElement \| null` | Native checkbox input.
+`boxEl` | `HTMLElement \| null` | Visual box element.
+`checkEl` | `SVGElement \| null` | Check-mark SVG element. 
 

@@ -19,7 +19,7 @@ Name | Type | Default | Description
 
 Name | Type | Description
 --- | --- | ---
-`default` | `{}` | 
+`default` | `any` | App content that receives these settings.
 
 ## Events
 

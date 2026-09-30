@@ -10,15 +10,15 @@ import { Skeleton } from 'vael-ui' // or 'vael-ui/vapor'
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-`variant` | `"text" \| "rect" \| "circle" \| undefined` | "text" | `text` (default): 1em-tall rounded line. `circle`: round, aspect-ratio 1. `rect`: `--ui-radius` corners, sized by content or `ui.root`.
-`animated` | `boolean \| undefined` | true | 
-`ui` | `Partial<{ root: UiPartValue; }> \| undefined` |  | 
+`variant` | `"text" \| "rect" \| "circle" \| undefined` | `'text'` | `'text'`: a `1em`-tall rounded line. `'circle'`: round, with `aspect-ratio: 1`. `'rect'`: `--ui-radius` corners; content or `ui.root` sets its size.
+`animated` | `boolean \| undefined` | `true` | Shows the shimmer animation.
+`ui` | `Partial<{ root: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 
 ## Slots
 
 Name | Type | Description
 --- | --- | ---
-`default` | `{}` | 
+`default` | `any` | Placeholder content that sizes the skeleton; it renders hidden.
 
 ## Events
 
@@ -28,5 +28,5 @@ _None._
 
 Name | Type | Description
 --- | --- | ---
-`el` | `HTMLElement \| null` | 
+`el` | `HTMLElement \| null` | Root element. 
 

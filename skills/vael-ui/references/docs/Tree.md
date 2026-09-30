@@ -10,64 +10,65 @@ import { Tree } from 'vael-ui' // or 'vael-ui/vapor'
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-`items` | `readonly T[]` |  | The tree data — `TreeNode` (`value`, `label`, optional `children`) or your own extension of it.
-`selectionMode` | `TreeSelectionMode \| undefined` | "single" | `'single'`: clicking replaces the selection. `'multiple'`: clicking toggles that node only. `'checkbox'`: checkboxes with cascading parent/child toggles.
-`selectableFolders` | `boolean \| undefined` | true | `false` keeps a node with children out of the selection entirely — click, keyboard Enter/Space, and expandOnRowClick's own select-on-expand all skip it, only a leaf can become the value. Has no effect in `selectionMode="checkbox"`, which already only ever puts leaves in the model. Default: true (a folder can be selected like any other node).
-`filterable` | `boolean \| undefined` | true | Shows a built-in label search box atop the tree, auto-expanding ancestors of any match. Default: on.
-`filterPlaceholder` | `string \| undefined` | "Search..." | 
-`emptyText` | `string \| undefined` | "No results found" | 
-`motionCss` | `boolean \| undefined` | true | `false` skips all built-in motion (row transitions, chevron rotation, and cross-folder move).
-`reorderable` | `boolean \| undefined` | false | Drag rows to reorder and to nest, VS Code style: drop on a row's middle to move INTO it, on an edge to place beside it.
-`canNestInto` | `((node: T) => boolean) \| undefined` | undefined | Which rows accept children. Defaults to any row that already has some — pass your own to let empty folders take drops.
-`reorderSiblings` | `boolean \| undefined` | true | `false` drops the sibling-reorder mode entirely — dragging only ever offers moving INTO a folder, with no indicator at all when hovering a row that can't hold children.
-`canDrop` | `((details: SortableDropDetails) => boolean) \| undefined` | undefined | Structural veto re-run while dragging; `false` marks the target invalid.
-`beforeDrop` | `((details: SortableDropDetails) => boolean \| Promise<boolean>) \| undefined` | undefined | Async gate at drop time — return `false` (or a promise of it) to cancel. Composes with `confirmAction().result`.
-`autoExpandDelay` | `number \| undefined` | 600 | Hovering a collapsed row this long opens it mid-drag.
-`previewMode` | `"element" \| "clone" \| undefined` | "clone" | `'clone'` (default): a floating copy follows the cursor, real row hidden until drop — the built-in behavior since before this prop existed. `'element'` moves the real row itself instead, so there's only one instance of it on screen; safe here since a tree row is a plain element, not a `<table>` row.
-`touchDragDelay` | `number \| undefined` | 150 | Ms a touch pointer must hold a row still before a drag starts — a row is also tap-to-select/expand here, so touch needs a hold to tell the two apart; mouse/pen are unaffected. Default `150`.
-`expandOnRowClick` | `boolean \| undefined` | false | When true, clicking anywhere on a folder row also toggles its expansion, not just the chevron — it still selects too (unless `selectableFolders` is off), so picking the folder itself (without opening it to reach a file inside) still works. Off by default since it changes what a plain row click does.
-`stickyScroll` | `boolean \| undefined` | false | When true, each expanded ancestor's row pins to the top of the list as its own children scroll past, VS Code-style, so deeply nested content never loses its folder context. Uses native `position: sticky` — each row is a real, nested DOM level, not a JS-measured overlay.
-`id` | `string \| undefined` | undefined | Id for the role="tree" list element. Auto-generated if omitted.
-`ui` | `Partial<{ list: UiPartValue; node: UiPartValue; filter: UiPartValue; empty: UiPartValue; chevron: UiPartValue; label: UiPartValue; }> \| undefined` | undefined | 
-`modelValue` | `string \| number \| (string \| number)[] \| null \| undefined` | null | 
-`query` | `string \| undefined` | "" | 
-`node` | `T \| T[] \| null \| undefined` | null | 
+`items` | `readonly T[]` |  | Tree data: `TreeNode` objects (`value`, `label`, optional `children`) or your own extension of them.
+`selectionMode` | `TreeSelectionMode \| undefined` | `'single'` | `'single'`: a click replaces the selection. `'multiple'`: a click toggles that node only. `'checkbox'`: checkboxes with cascading parent/child toggles.
+`selectableFolders` | `boolean \| undefined` | `true` | `false` makes folders unselectable, so only leaves can become the value. No effect in `selectionMode="checkbox"`, which only puts leaves in the model.
+`filterable` | `boolean \| undefined` | `true` | Shows a built-in label search box above the tree and expands the ancestors of any match.
+`filterPlaceholder` | `string \| undefined` | `'Search...'` | Placeholder and accessible label for the filter box.
+`emptyText` | `string \| undefined` | `'No results found'` | Text shown when no rows are visible (empty `items` or no filter matches).
+`motionCss` | `boolean \| undefined` | `true` | `false` skips all built-in motion (row transitions, chevron rotation and cross-folder moves).
+`forceMount` | `boolean \| undefined` | `false` | Keeps collapsed folders' children mounted (`v-show` plus `data-state`) so you can animate expand/collapse yourself instead of using the built-in transition.
+`reorderable` | `boolean \| undefined` | `false` | Lets you drag rows to reorder and nest them, VS Code style. Drop on a row's middle to move into it, or on an edge to place beside it.
+`canNestInto` | `((node: T) => boolean) \| undefined` |  | Which rows accept dropped children. Unset, any row that already has children does; pass your own to let empty folders take drops.
+`reorderSiblings` | `boolean \| undefined` | `true` | `false` turns off sibling reordering, so dragging only moves rows into a folder. Rows that can't hold children show no indicator.
+`canDrop` | `((details: SortableDropDetails) => boolean) \| undefined` |  | Structural check that runs as you drag; returning `false` marks the target invalid.
+`beforeDrop` | `((details: SortableDropDetails) => boolean \| Promise<boolean>) \| undefined` |  | Async check at drop time; return `false` (or a promise of it) to cancel. Works with `confirmAction().result`.
+`autoExpandDelay` | `number \| undefined` | `600` | How long, in ms, you hover a collapsed row mid-drag before it opens.
+`previewMode` | `"element" \| "clone" \| undefined` | `'clone'` | Drag preview: `'clone'` shows a floating copy while the real row hides until drop; `'element'` moves the real row itself.
+`touchDragDelay` | `number \| undefined` | `150` | How long, in ms, a touch pointer must hold a row still before a drag starts. The hold tells a drag apart from a tap to select or expand. Mouse and pen are unaffected.
+`expandOnRowClick` | `boolean \| undefined` | `false` | Clicking anywhere on a folder row toggles it, as well as the chevron. The click still selects the folder unless `selectableFolders` is `false`.
+`stickyScroll` | `boolean \| undefined` | `false` | Pins each expanded ancestor row to the top of the list while its children scroll past, VS Code-style.
+`id` | `string \| undefined` |  | Id for the `role="tree"` list element. Auto-generated when omitted.
+`ui` | `Partial<{ list: UiPartValue; node: UiPartValue; filter: UiPartValue; empty: UiPartValue; chevron: UiPartValue; label: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`modelValue` | `string \| number \| (string \| number)[] \| null \| undefined` | `null` | Selected value: one value in `'single'` mode, an array in `'multiple'`, leaf values in `'checkbox'`.
+`query` | `string \| undefined` | `''` | Filter box text.
+`node` | `T \| T[] \| null \| undefined` | `null` | Selected node object(s), resolved from `v-model` against `items`. Read-only in effect: the value model overwrites any writes.
 
 ## Slots
 
 Name | Type | Description
 --- | --- | ---
-`node` | `{ node: T; depth: number; expanded: boolean; checked: boolean; indeterminate: boolean; disabled: boolean; toggleExpand: () => void; toggleSelect: () => void; findNode: (value: string \| number) => T \| undefined; findParent: (value: string \| number) => T \| null; removeNode: (value: string \| number) => boolean; }` | Row content (inside the library's role="treeitem" wrapper). findNode/findParent/removeNode are shorthand for findTreeNode/findTreeParent/removeTreeNode bound to this instance's own `items`, for the common case of looking up a sibling/parent/self without importing them.
-`empty` | `any` | Replaces the default empty-state row shown when nothing survives the filter.
+`node` | `{ node: T; depth: number; expanded: boolean; checked: boolean; indeterminate: boolean; disabled: boolean; toggleExpand: () => void; toggleSelect: () => void; findNode: (value: string \| number) => T \| undefined; findParent: (value: string \| number) => T \| null; removeNode: (value: string \| number) => boolean; }` | Row content inside the `role="treeitem"` wrapper. `findNode`/`findParent`/`removeNode` are `findTreeNode`/`findTreeParent`/`removeTreeNode` bound to this tree's `items`.
+`empty` | `any` | Replaces the empty-state row shown when no rows are visible.
 
 ## Events
 
 Name | Type | Description
 --- | --- | ---
-`select` | `[node: T]` | 
-`change` | `[value: string \| number \| (string \| number)[] \| null]` | 
-`drop-error` | `[error: unknown, details: SortableDropDetails]` | 
-`expand-change` | `[value: string \| number, expanded: boolean]` | 
-`reorder` | `[value: string \| number, to: DropPosition]` | 
-`update:modelValue` | `[value: string \| number \| (string \| number)[] \| null]` | 
-`update:query` | `[value: string]` | 
-`update:node` | `[value: T \| T[] \| null]` | 
+`select` | `[node: T]` | Fires when you select or toggle a node.
+`change` | `[value: string \| number \| (string \| number)[] \| null]` | Fires when you change the selection, with the new model value.
+`drop-error` | `[error: unknown, details: SortableDropDetails]` | Fires when `beforeDrop` throws or rejects, after the move is reverted.
+`expand-change` | `[value: string \| number, expanded: boolean]` | Fires when a single node expands or collapses. Filter auto-expansion, `expandAll` and `collapseAll` don't fire it.
+`reorder` | `[value: string \| number, to: DropPosition]` | Fires after `items` has been reordered in place.
+`update:modelValue` | `[value: string \| number \| (string \| number)[] \| null]` | Fires when `modelValue` changes (`v-model`).
+`update:query` | `[value: string]` | Fires when `query` changes (`v-model:query`).
+`update:node` | `[value: T \| T[] \| null]` | Fires when `node` changes (`v-model:node`).
 
 ## Exposed
 
 Name | Type | Description
 --- | --- | ---
-`listEl` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
-`filterInputRef` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
-`focusFirstRow` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
-`initRoving` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
-`expandAll` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
-`collapseAll` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
-`expandNode` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
-`collapseNode` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
-`findNode` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
-`findParent` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
-`removeNode` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
-`isReordering` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
-`cancelReorder` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`listEl` | `HTMLElement \| null` | The `role="tree"` list element.
+`filterInputRef` | `{ el: HTMLElement \| null; inputEl: HTMLInputElement \| null; } \| null` | The filter box's Input instance (null when `filterable` is off).
+`focusFirstRow` | `() => void` | Focuses the first visible row.
+`initRoving` | `() => void` | Makes the first visible row the tab stop without focusing it.
+`expandAll` | `() => void` | Expands every folder.
+`collapseAll` | `() => void` | Collapses every folder.
+`expandNode` | `(value: string \| number) => void` | Expands the node with this value, e.g. after adding a child to it.
+`collapseNode` | `(value: string \| number) => void` | Collapses the node with this value.
+`findNode` | `(value: string \| number) => T \| undefined` | Finds a node in `items` by value.
+`findParent` | `(value: string \| number) => T \| null` | Finds a node's parent in `items` by value (null at the root).
+`removeNode` | `(value: string \| number) => boolean` | Removes a node from `items` in place; returns whether one was found.
+`isReordering` | `boolean` | `true` while a row is held, by pointer or keyboard.
+`cancelReorder` | `() => void` | Aborts an in-flight reorder and springs every row back into place.
 

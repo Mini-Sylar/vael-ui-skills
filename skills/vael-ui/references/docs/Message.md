@@ -10,16 +10,16 @@ import { Message } from 'vael-ui' // or 'vael-ui/vapor'
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-`title` | `string \| undefined` |  | 
-`variant` | `MessageVariant \| undefined` | "default" | Color variant — sets the icon and border.
-`appearance` | `"default" \| "bare" \| undefined` | "default" | `bare` drops the border/background/padding — icon + colored text only, for inline use (e.g. form field validation) instead of a standalone banner.
-`closable` | `boolean \| undefined` | false | Renders the built-in dismiss button.
-`beforeClose` | `((done: () => void) => void) \| undefined` |  | Called before the model flips to false. Call `done()` to actually close.
-`forceMount` | `boolean \| undefined` | false | When true, presence is v-show-driven and owned by the consumer (e.g. AnimatePresence).
-`showIcon` | `boolean \| undefined` | true | 
-`role` | `"status" \| "alert" \| undefined` |  | Defaults to `alert` for `error`/`warning`, `status` otherwise.
-`ui` | `Partial<{ root: UiPartValue; icon: UiPartValue; content: UiPartValue; title: UiPartValue; description: UiPartValue; actions: UiPartValue; close: UiPartValue; }> \| undefined` |  | 
-`open` | `boolean \| undefined` | true | 
+`title` | `string \| undefined` |  | Bold heading above the default slot content.
+`variant` | `MessageVariant \| undefined` | `'default'` | Color variant; sets the icon and border.
+`appearance` | `"default" \| "bare" \| undefined` | `'default'` | `'bare'` drops the border, background and padding, leaving only the icon and colored text. Use it inline, such as for form field validation, instead of as a standalone banner.
+`closable` | `boolean \| undefined` | `false` | Renders the built-in dismiss button.
+`beforeClose` | `((done: () => void) => void) \| undefined` |  | Custom exit animation; call `done()` to finish closing. The model stays `true` until you do.
+`forceMount` | `boolean \| undefined` | `false` | Keeps it mounted, toggled with `v-show`, so you can own the enter/exit animation.
+`showIcon` | `boolean \| undefined` | `true` | Shows the leading status icon (or the `#icon` slot).
+`role` | `"status" \| "alert" \| undefined` |  | Defaults to `'alert'` for `'error'` and `'warning'`, `'status'` otherwise.
+`ui` | `Partial<{ root: UiPartValue; icon: UiPartValue; content: UiPartValue; title: UiPartValue; description: UiPartValue; actions: UiPartValue; close: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`open` | `boolean \| undefined` | `true` | Whether the message is shown.
 
 ## Slots
 
@@ -33,15 +33,15 @@ Name | Type | Description
 
 Name | Type | Description
 --- | --- | ---
-`open-change` | `[value: boolean, details: MessageOpenChangeDetails]` | 
-`update:open` | `[value: boolean]` | 
+`open-change` | `[value: boolean, details: MessageOpenChangeDetails]` | Fires before the model flips to false; `details.cancel()` vetoes the close.
+`update:open` | `[value: boolean]` | Fires when `open` changes (`v-model:open`).
 
 ## Exposed
 
 Name | Type | Description
 --- | --- | ---
-`el` | `HTMLElement \| null` | 
-`close` | `() => void` | 
-`isClosing` | `boolean` | 
-`cancelClose` | `() => void` | 
+`el` | `HTMLElement \| null` | Root element (null while closed unless `forceMount`).
+`close` | `() => void` | Closes the message, running `@open-change` and `beforeClose` first.
+`isClosing` | `boolean` | `true` while a `beforeClose` close is pending.
+`cancelClose` | `() => void` | Cancels a close pending in `beforeClose` and keeps the message open. 
 

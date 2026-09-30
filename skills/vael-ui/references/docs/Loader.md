@@ -10,9 +10,9 @@ import { Loader } from 'vael-ui' // or 'vael-ui/vapor'
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-`size` | `string \| undefined` |  | Any CSS length. Sets the root's font-size — the ring is sized in `em`, so it scales with it.
-`label` | `string \| undefined` |  | Renders role="status" with visually-hidden text as the accessible name. Omit to make the loader aria-hidden.
-`ui` | `Partial<{ root: UiPartValue; }> \| undefined` |  | 
+`size` | `string \| undefined` |  | Any CSS length. Sets the root's `font-size`, and the `em`-based ring scales with it.
+`label` | `string \| undefined` |  | Renders `role="status"` with visually hidden text as the accessible name. Omit it to make the loader `aria-hidden`.
+`ui` | `Partial<{ root: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 
 ## Slots
 
@@ -26,5 +26,5 @@ _None._
 
 Name | Type | Description
 --- | --- | ---
-`el` | `HTMLElement \| null` | 
+`el` | `HTMLElement \| null` | Root element. 
 

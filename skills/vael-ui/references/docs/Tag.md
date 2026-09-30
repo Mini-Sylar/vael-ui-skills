@@ -10,17 +10,17 @@ import { Tag } from 'vael-ui' // or 'vael-ui/vapor'
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-`variant` | `"primary" \| "danger" \| "muted" \| "success" \| "warning" \| "info" \| undefined` | "muted" | 
-`size` | `"md" \| "sm" \| undefined` | "md" | 
-`pill` | `boolean \| undefined` | false | Fully pill-rounded instead of the default small label corners.
-`ui` | `Partial<{ root: UiPartValue; icon: UiPartValue; label: UiPartValue; }> \| undefined` |  | 
+`variant` | `"primary" \| "danger" \| "muted" \| "success" \| "warning" \| "info" \| undefined` | `'muted'` | Color variant.
+`size` | `"md" \| "sm" \| undefined` | `'md'` | Text size and padding.
+`pill` | `boolean \| undefined` | `false` | Fully pill-rounded instead of the default small label corners.
+`ui` | `Partial<{ root: UiPartValue; icon: UiPartValue; label: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 
 ## Slots
 
 Name | Type | Description
 --- | --- | ---
-`default` | `any` | 
-`icon` | `any` | A small leading glyph (a dot, a checkmark) — sized to match the text, not a full icon box.
+`default` | `any` | Tag label.
+`icon` | `any` | Small leading glyph, such as a dot or checkmark, sized to match the text rather than a full icon box.
 
 ## Events
 
@@ -30,5 +30,5 @@ _None._
 
 Name | Type | Description
 --- | --- | ---
-`el` | `HTMLElement \| null` | 
+`el` | `HTMLElement \| null` | Root element. 
 

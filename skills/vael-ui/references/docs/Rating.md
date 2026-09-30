@@ -10,16 +10,16 @@ import { Rating } from 'vael-ui' // or 'vael-ui/vapor'
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-`max` | `number \| undefined` | 5 | 
-`allowHalf` | `boolean \| undefined` | false | Half-star precision, for both pointer and keyboard (arrow keys step by 0.5).
-`readonly` | `boolean \| undefined` | false | 
-`disabled` | `boolean \| undefined` | false | 
-`size` | `"md" \| "sm" \| "lg" \| undefined` | "md" | 
-`name` | `string \| undefined` |  | Falls through to a hidden `<input>` → plain `<form>` participation.
+`max` | `number \| undefined` | `5` | Number of stars, which is also the highest rating.
+`allowHalf` | `boolean \| undefined` | `false` | Half-star precision, for both pointer and keyboard (arrow keys step by `0.5`).
+`readonly` | `boolean \| undefined` | `false` | Shows the rating but ignores pointer and keyboard input. Stays focusable.
+`disabled` | `boolean \| undefined` | `false` | Disables the rating and blocks interaction.
+`size` | `"md" \| "sm" \| "lg" \| undefined` | `'md'` | Control size.
+`name` | `string \| undefined` |  | Native `name` for form submission, via a hidden input.
 `valueText` | `((value: number) => string) \| undefined` |  | Drives `aria-valuetext`. Defaults to the `rating.valueText` message ("{value} of {max}").
-`motionCss` | `boolean \| undefined` | true | Gates the fill-sweep + commit-pop animation.
-`ui` | `Partial<{ root: UiPartValue; item: UiPartValue; }> \| undefined` |  | 
-`modelValue` | `number \| undefined` | 0 | 
+`motionCss` | `boolean \| undefined` | `true` | `false` skips the built-in fill-sweep and commit-pop animations.
+`ui` | `Partial<{ root: UiPartValue; item: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`modelValue` | `number \| undefined` | `0` | Current rating; `0` means unrated.
 
 ## Slots
 
@@ -29,12 +29,12 @@ _None._
 
 Name | Type | Description
 --- | --- | ---
-`update:modelValue` | `[value: number]` | 
+`update:modelValue` | `[value: number]` | Fires when `modelValue` changes (`v-model`).
 
 ## Exposed
 
 Name | Type | Description
 --- | --- | ---
-`el` | `HTMLElement \| null` | 
-`itemEls` | `HTMLElement[] \| null` | 
+`el` | `HTMLElement \| null` | Root element.
+`itemEls` | `HTMLElement[] \| null` | Star elements, one per star. 
 

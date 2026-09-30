@@ -10,40 +10,40 @@ import { SpeedDial } from 'vael-ui' // or 'vael-ui/vapor'
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-`items` | `readonly T[]` |  | 
-`direction` | `SpeedDialDirection \| undefined` | "up" | 
-`openOn` | `SpeedDialTriggerMode \| undefined` | "click" | `hover` only activates on real hover-capable pointers; click always works too.
-`disabled` | `boolean \| undefined` | false | 
-`closeOnSelect` | `boolean \| undefined` | true | Selecting an action closes the dial; `false` keeps it open.
-`ariaLabel` | `string \| undefined` | "Actions" | Accessible name for both the trigger button and the action `role="menu"`.
-`radius` | `number \| undefined` | 96 | Arc radius (px) for `direction="quarter-circle"` — ignored otherwise.
-`motionCss` | `boolean \| undefined` | true | Gates the built-in action fan-out/fan-in transition. `false` skips it entirely — reach for `@action-enter`/`@action-leave` instead if you want a consumer-owned animation (a spring, a staggered GSAP timeline) in its place.
-`ui` | `Partial<{ root: UiPartValue; trigger: UiPartValue; action: UiPartValue; }> \| undefined` |  | 
-`open` | `boolean \| undefined` | false | 
+`items` | `readonly T[]` |  | Actions to fan out, one icon button each.
+`direction` | `SpeedDialDirection \| undefined` | `'up'` | Which way the actions fan out from the trigger. `'quarter-circle'` lays them on an arc of `radius`.
+`openOn` | `SpeedDialTriggerMode \| undefined` | `'click'` | What opens the dial. `'hover'` only responds to hover-capable pointers; click always works too.
+`disabled` | `boolean \| undefined` | `false` | Disables the trigger and blocks interaction.
+`closeOnSelect` | `boolean \| undefined` | `true` | Closes the dial when you select an action; `false` keeps it open.
+`ariaLabel` | `string \| undefined` | `'Actions'` | Accessible name for both the trigger button and the action `role="menu"`.
+`radius` | `number \| undefined` | `96` | Arc radius in pixels. Only applies when `direction` is `'quarter-circle'`.
+`motionCss` | `boolean \| undefined` | `true` | Plays the built-in fan-out and fan-in transition. Set `false` to animate actions yourself via `@action-enter` and `@action-leave`.
+`ui` | `Partial<{ root: UiPartValue; trigger: UiPartValue; action: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`open` | `boolean \| undefined` | `false` | Whether the actions are shown.
 
 ## Slots
 
 Name | Type | Description
 --- | --- | ---
-`icon` | `{ open: boolean; }` | 
-`item` | `{ item: T; index: number; }` | 
+`icon` | `{ open: boolean; }` | Replaces the trigger's plus icon.
+`item` | `{ item: T; index: number; }` | Custom content for each action button. Unset, the button shows the item's `icon`.
 
 ## Events
 
 Name | Type | Description
 --- | --- | ---
-`select` | `[item: T]` | 
-`action-enter` | `[el: Element, done: () => void]` | 
-`action-leave` | `[el: Element, done: () => void]` | 
-`update:open` | `[value: boolean]` | 
+`select` | `[item: T]` | Fires when you click an action.
+`action-enter` | `[el: Element, done: () => void]` | Fires when an action's fan-out transition starts. Call `done()` when finished. Only fires when `motionCss` is `false`.
+`action-leave` | `[el: Element, done: () => void]` | Fires when an action's fan-in transition starts, as with `@action-enter`.
+`update:open` | `[value: boolean]` | Fires when `open` changes (`v-model:open`).
 
 ## Exposed
 
 Name | Type | Description
 --- | --- | ---
-`el` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
-`listEl` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
-`open` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
-`close` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
-`toggle` | `unknown` | Type inference unavailable — vue-component-meta cannot resolve defineExpose on this generic component.
+`el` | `HTMLElement \| null` | Root element.
+`listEl` | `HTMLElement \| null` | Action list element (`role="menu"`).
+`open` | `() => void` | Shows the actions. No-op while `disabled`.
+`close` | `() => void` | Hides the actions.
+`toggle` | `() => void` | Shows or hides the actions. No-op while `disabled`.
 

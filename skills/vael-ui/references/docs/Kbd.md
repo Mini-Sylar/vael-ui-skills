@@ -10,13 +10,13 @@ import { Kbd } from 'vael-ui' // or 'vael-ui/vapor'
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-`ui` | `Partial<{ root: UiPartValue; }> \| undefined` |  | 
+`ui` | `Partial<{ root: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 
 ## Slots
 
 Name | Type | Description
 --- | --- | ---
-`default` | `{}` | 
+`default` | `any` | Key or shortcut text, e.g. `⌘` or `Esc`.
 
 ## Events
 
@@ -26,5 +26,5 @@ _None._
 
 Name | Type | Description
 --- | --- | ---
-`el` | `HTMLElement \| null` | 
+`el` | `HTMLElement \| null` | Root element. 
 
