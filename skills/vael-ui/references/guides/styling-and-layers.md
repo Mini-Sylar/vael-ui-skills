@@ -72,3 +72,54 @@ Each semantic color (`danger`/`success`/`warning`/`info`) also has its own `-hov
 | `--ui-duration-toast-exit` | `200ms` | Duration for toast exit. |
 | `--ui-ease-toast` | `ease` | Easing for toast transitions. |
 | `--ui-toast-offset` | `1rem` | Edge offset for the toast stack. |
+
+## Advanced: joining your own control to a Field
+
+Not needed for everyday use; only for custom controls that should plug into a Field's joined cells.
+
+A Field's `attached` label and `#prepend`/`#append` cells join the control's bordered frame. vael-ui's own controls mark that frame with `data-ui-frame`. Add the same attribute to your own control and it joins too. Give it the control's size (`sm`, `md` or `lg`) and the cells match its corner radius and font size.
+
+```vue
+<Field label="Handle">
+  <template #prepend>@</template>
+  <input class="my-input" data-ui-frame="md" />
+</Field>
+```
+
+Field's join rules are in `@layer ui-components`, so if your control's own styles are unlayered, they win. In that case, flatten the corners and recolor the border yourself with the attributes Field sets on its root:
+
+```css
+/* unlayered, so Field's own join rules can't reach .my-input */
+.ui-field[data-join-start] .my-input {
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
+.ui-field[data-join-end] .my-input {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+.ui-field[data-focused] .my-input {
+  border-color: var(--ui-primary);
+}
+```
+
+Give a control inside a cell its own `aria-label`. It stands alone, so the Field's label doesn't name it.
+
+### Field attributes (advanced)
+
+| Attribute | Set when |
+| --- | --- |
+| `data-ui-frame` | On your control's bordered element, not on Field. Optional value: sm, md or lg. |
+| `data-join-start` | A cell or an attached label sits on the control's start edge. |
+| `data-join-end` | A cell or an attached label sits on the control's end edge. |
+| `data-focused` | The control has focus. |
+| `data-invalid` | The Field has an error. |
+| `data-attached` | Field draws the label as a joined cell. |
+
+### Field variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--ui-field-cell-bg` | `var(--ui-muted)` | Background of joined cells: an attached label, #prepend and #append. |
+| `--ui-field-cell-color` | `var(--ui-text-muted)` | Text color of joined cells. |
+| `--ui-field-label-width` | `max-content` | Width of a start/end label. Set it on a parent to line up a whole form. |

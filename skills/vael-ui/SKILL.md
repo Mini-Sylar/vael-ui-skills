@@ -7,7 +7,7 @@ metadata:
   version: 1.0.2
 ---
 
-# vael-ui `vael-ui@0.4.0`
+# vael-ui `vael-ui@0.4.3`
 
 Vue 3 component library. 66 components across Setup, Actions, Forms & Inputs, Selection, Overlays, Navigation & Menus, Feedback, Data Display, Layout & Structure, and Gestures, plus 13 standalone composables.
 
@@ -26,7 +26,7 @@ Before writing code, check a component's own reference file for its exact curren
 npm install vael-ui vue   # or pnpm/yarn/bun
 ```
 
-Requires Vue `^3.5.0`. The Vapor build (`vael-ui/vapor`) requires Vue `^3.6.0` and `createVaporApp`. Vapor is still pre-1.0 in Vue itself, so **pin an exact prerelease version** (e.g. `3.6.0-rc.10`, the version `vael-ui@0.4.0` is compiled against), not a floating `rc`/`beta` dist-tag, to avoid a compiler/runtime mismatch between what vael-ui's Vapor build was compiled against and what's actually installed. If Vapor components render with no styles, or throw errors specifically inside `<Transition>`-wrapped components, check this first.
+Requires Vue `^3.5.0`. The Vapor build (`vael-ui/vapor`) requires Vue `^3.6.0` and `createVaporApp`. Vapor is still pre-1.0 in Vue itself, so **pin an exact prerelease version** (e.g. `3.6.0-rc.10`, the version `vael-ui@0.4.3` is compiled against), not a floating `rc`/`beta` dist-tag, to avoid a compiler/runtime mismatch between what vael-ui's Vapor build was compiled against and what's actually installed. If Vapor components render with no styles, or throw errors specifically inside `<Transition>`-wrapped components, check this first.
 
 A Nuxt module ships as `vael-ui/nuxt`. Add it to `modules` in `nuxt.config.ts` instead of manual imports.
 
@@ -34,6 +34,7 @@ Auto-import via `unplugin-vue-components` is the recommended setup instead of im
 
 ## API Changes
 
+- `0.4.3`: **New on `Field`:** `labelPlacement` takes `'start'`/`'end'` for labels beside the control, with `labelWidth` to line up a column of fields and `labelAlign` for the text. `attached` joins a side label to the control as one box. `#prepend`/`#append` add cells to any control: text and icons share a segment, and each control in a cell (a Select, a Button) gets its own, divided. Give controls in a cell an `aria-label`, since the Field's label doesn't name them. Cell colors come from `--ui-field-cell-bg`/`--ui-field-cell-color`.
 - `0.4.0`: **Behaviour changes:** `Select`, `Combobox` and `TreeSelect` panels now cap at `maxPanelHeight` 320 by default (`Infinity` restores full height). `DatePicker` opens on click, ArrowDown, Enter or Space, no longer on focus. Popovers, menus and pickers return focus to their trigger when they close. `PasswordInput` routes `class`/`style` to its wrapper and other attributes to the input. With `motionCss: false`, `Collapsible` and `Accordion` write no inline height, and closed panels are `inert`. `ConfigProvider` always renders its `display: contents` wrapper. **New:** `Dock` `grow` (magnified items change real size and the dock grows with them; the transform-based magnification stays the default), `Stepper` `#indicator` slot, `Tabs` `idBase` plus `panelProps(value)` for wiring `role="tabpanel"`, `Menu` `openPath`, keyboard row selection in `DataTable` `selectionMode="row"`, and the `--ui-danger-solid` token for solid danger fills.
 - `0.3.11`: **`Combobox`:** with `allowCustom`, clicking away no longer commits the typed text; set `commit-on-blur` for the old behavior. A `Create "…"` row now offers the typed text (customize with `#create`, hide with `:create-option="false"`), `@create` receives `{ reason, cancel }`, and the new `tab-behavior` prop (`'select'` or `'create'`) decides what Tab does.
 - `0.3.8`: **`Calendar`** has a `#day` scoped slot for custom day content. **`Tree`** has a `forceMount` prop for driving the collapse animation yourself.
