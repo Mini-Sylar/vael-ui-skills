@@ -20,6 +20,7 @@ Name | Type | Default | Description
 `closeOnOverlay` | `boolean \| undefined` | `true` | Clicking the overlay closes the panel. Has no effect when `modal` is `false`, since there's no overlay.
 `beforeClose` | `((done: () => void) => void) \| undefined` |  | Custom exit animation; call `done()` to finish closing. Forwarded to the underlying Dialog.
 `forceMount` | `boolean \| undefined` | `false` | Keeps it mounted, toggled with `v-show`, so you can own the enter/exit animation. Forwarded to the underlying Dialog.
+`motionCss` | `boolean \| undefined` | `true` | The results list eases to its new height as you type. `false` turns that off and hands each appearing and disappearing row to `@item-enter`/`@item-leave` instead.
 `teleportTo` | `string \| undefined` |  | Teleport target: a CSS selector. Takes precedence over `container`.
 `container` | `DOMTarget \| undefined` |  | Scopes the palette to one element instead of the viewport. Forwarded to the underlying Dialog.
 `scrollTarget` | `DOMTarget \| undefined` |  | Element whose scrolling locks while the palette is open, if different from `container`. Forwarded to the underlying Dialog.
@@ -40,6 +41,8 @@ Name | Type | Description
 --- | --- | ---
 `open-change` | `[value: boolean, details: DialogOpenChangeDetails]` | Fires before the palette closes, with the reason; `details.cancel()` keeps it open.
 `select` | `[item: T]` | Fires when you pick an enabled item by click or Enter.
+`item-enter` | `[el: Element, done: () => void]` | Fires as a row appears while you type, only while `motionCss` is `false`. Run your own animation, then call `done()`.
+`item-leave` | `[el: Element, done: () => void]` | Same as `@item-enter`, for a row disappearing.
 `update:open` | `[value: boolean]` | Fires when `open` changes (`v-model:open`).
 `update:query` | `[value: string]` | Fires when `query` changes (`v-model:query`).
 

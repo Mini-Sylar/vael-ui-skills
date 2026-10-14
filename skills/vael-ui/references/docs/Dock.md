@@ -37,5 +37,6 @@ Name | Type | Description
 Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
+`itemEls` | `() => HTMLButtonElement[]` | The item buttons, in order, to animate yourself (with `:magnify="false"` to turn the built-in magnification off).
 `remeasure` | `() => void` | Re-measures item positions for magnification, after a layout change the dock can't detect. 
 

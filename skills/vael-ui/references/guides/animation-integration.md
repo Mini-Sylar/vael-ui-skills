@@ -1,6 +1,14 @@
 # Bring your own animation
 
-Every component that animates ships a plain CSS transition, but exposes a real escape hatch to drive it with GSAP, motion-v, or nothing at all. Check a component's own [props/slots/exposed reference](../docs/_INDEX.md) for which of these it has; not every component has all three.
+Every component that animates ships a plain CSS transition, and each one lets you take over: drive it with GSAP, motion-v, or nothing at all. Which hooks you get depends on what the component does.
+
+## Which hooks does a component have?
+
+- **Opens and closes** (Dialog, Popover, Tooltip, Menu, Select, DatePicker): `forceMount`, `beforeClose(done)` and an exposed `panelEl`. `forceMount` already turns the CSS transition off.
+- **Changes in place** (Calendar, Checkbox, Radio, Collapsible, Pagination, PullToRefresh): `motionCss` turns the transition off, and exposed elements let you animate it yourself.
+- **Items that come and go** (CommandPalette, Timeline, FileUpload): `motionCss` plus `@item-enter` and `@item-leave`.
+
+A component's own [props/slots/exposed reference](../docs/_INDEX.md) lists exactly what it has.
 
 ## `motionCss`
 

@@ -14,7 +14,7 @@ Name | Type | Default | Description
 `collapsible` | `boolean \| undefined` | `true` | Whether the last open item can close, leaving none open.
 `motionCss` | `boolean \| undefined` | `true` | `false` skips transitions; use exposed `panelEl`/`open` for custom motion.
 `ui` | `Partial<{ root: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
-`value` | `string \| string[] \| null \| undefined` | `null` | Open item's `value`, or an array of them with `multiple`.
+`value` | `V \| undefined` | `null` | Open item's `value` (a `string`, or a union of your item values), or an array of them with `multiple`. `V` takes the type you bind, and `@change` hands the same type back.
 
 ## Slots
 
@@ -26,8 +26,8 @@ Name | Type | Description
 
 Name | Type | Description
 --- | --- | ---
-`change` | `[value: string \| string[] \| null]` | Fires when an item opens or closes, with the new value.
-`update:value` | `[value: string \| string[] \| null]` | Fires when `value` changes (`v-model:value`).
+`change` | `[value: V]` | Fires when an item opens or closes, with the new value.
+`update:value` | `[value: V \| undefined]` | Fires when `value` changes (`v-model:value`).
 
 ## Exposed
 

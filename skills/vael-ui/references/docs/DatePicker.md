@@ -21,6 +21,8 @@ Name | Type | Default | Description
 `disabledDates` | `CalendarDisabledDates \| undefined` |  | List of unavailable dates, or a predicate function. Matching compares calendar days and ignores time.
 `locale` | `string \| undefined` |  | BCP-47 locale for the input text, month and weekday names, and the week start day.
 `firstDayOfWeek` | `number \| undefined` |  | `0` (Sunday) to `6` (Saturday). Unset, it derives from `locale` and falls back to Monday.
+`months` | `number \| undefined` | `1` | How many months the panel shows side by side, for picking a range at a glance.
+`closeOnSelect` | `boolean \| undefined` | `true` | Closes the panel once a date (or a range's end) is picked. `false` keeps it open, for an apply button in `#footer` or trying a few dates; outside clicks and Escape still close it.
 `formatOptions` | `Intl.DateTimeFormatOptions \| undefined` |  | `Intl.DateTimeFormat` options for the input text. Unset, the format follows `view`, `showTime` and `timeOnly`.
 `name` | `string \| undefined` |  | Renders a hidden `<input>` that mirrors the selection as `YYYY-MM-DD` for form posts.
 `side` | `Side \| undefined` | `'bottom'` | Which side of the trigger the panel opens on.
@@ -46,6 +48,8 @@ Name | Type | Default | Description
 
 Name | Type | Description
 --- | --- | ---
+`day` | `{ date: Date; isCurrentMonth: boolean; isToday: boolean; isSelected: boolean; isDisabled: boolean; }` | Custom content inside each day cell, the same as Calendar's `#day`. The cell keeps its own click, keyboard and aria wiring.
+`label` | `{ label: string; date: Date; level: CalendarView; }` | Custom content for the panel's month and year heading, the same as Calendar's `#label`.
 `footer` | `any` | Replaces the built-in Today/Clear button bar. It renders whenever you provide it, regardless of `showButtonBar`.
 
 ## Events

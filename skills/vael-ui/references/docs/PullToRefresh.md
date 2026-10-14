@@ -14,6 +14,7 @@ Name | Type | Default | Description
 `threshold` | `number \| undefined` |  | How far you pull, in pixels, before the refresh triggers.
 `maxPull` | `number \| undefined` |  | Maximum pull distance in pixels; the pull stops growing past it.
 `scrollEl` | `HTMLElement \| { el: HTMLElement \| null; } \| null \| undefined` |  | Existing scroll container to detect pulls on. Unset, the root itself scrolls.
+`motionCss` | `boolean \| undefined` | `true` | `false` skips the settle and indicator transitions; animate the `#indicator` slot or exposed `zoneEl` yourself. The live pull still tracks your finger.
 `ui` | `Partial<{ root: UiPartValue; zone: UiPartValue; indicator: UiPartValue; bubble: UiPartValue; label: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 
 ## Slots
@@ -32,6 +33,7 @@ _None._
 Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
+`zoneEl` | `HTMLElement \| null` | The pull zone above the content; its height follows the pull.
 `state` | `PullToRefreshState` | Current phase: `'idle'`, `'pulling'`, `'ready'`, `'loading'` or `'done'`.
 `progress` | `number` | Pull distance as a fraction of `threshold`, from 0 to 1.
 `refresh` | `() => Promise<void>` | Starts a refresh without a pull. No-op while one is already running. 

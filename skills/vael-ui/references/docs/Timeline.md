@@ -32,8 +32,8 @@ Name | Type | Description
 
 Name | Type | Description
 --- | --- | ---
-`item-enter` | `[el: Element, done: () => void]` | Fires when an item enters, only while `motionCss` is `false`. Run your own animation, then call `done()`.
-`item-leave` | `[el: Element, done: () => void]` | Same as `@item-enter`, for an item leaving.
+`item-enter` | `[el: Element, done: () => void, parts: TimelineItemParts]` | Fires when an item enters, only while `motionCss` is `false`. Run your own animation, then call `done()`. `parts` holds the step's marker, connectors, content and opposite elements.
+`item-leave` | `[el: Element, done: () => void, parts: TimelineItemParts]` | Same as `@item-enter`, for an item leaving.
 
 ## Exposed
 

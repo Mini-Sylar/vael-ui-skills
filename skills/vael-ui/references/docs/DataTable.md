@@ -23,6 +23,7 @@ Name | Type | Default | Description
 `showGridlines` | `boolean \| undefined` | `false` | Adds an inline-end border to every cell.
 `resizableColumns` | `boolean \| undefined` | `false` | Adds a drag handle to every column header's edge for resizing.
 `frozenColumns` | `number \| undefined` | `0` | Pins the first N columns to the left while the table scrolls horizontally.
+`scrollFade` | `boolean \| undefined` | `true` | Fades the edges that have more to scroll to, so it's clear the table scrolls.
 `rows` | `number \| undefined` |  | Rows per page. Unset, all rows render. Set, the table slices rows; pair it with `v-model:page`. With `lazy`, it also divides `total` into pages.
 `manualSort` | `boolean \| undefined` | `false` | Marks `data` as sorted on the server. DataTable stops sorting locally and only updates `v-model:sort`. A header click then tells you what to refetch.
 `lazy` | `boolean \| undefined` | `false` | Marks `data` as the current page only, so DataTable stops slicing it. Pair it with `total` so `#footer` and Pagination math stays correct.

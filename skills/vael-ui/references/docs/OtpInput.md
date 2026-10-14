@@ -17,7 +17,8 @@ Name | Type | Default | Description
 `invalid` | `boolean \| undefined` | `false` | Standalone override; ORed with the nearest Field's `error` state.
 `size` | `"md" \| "sm" \| "lg" \| undefined` | `'md'` | Control size.
 `name` | `string \| undefined` |  | Native `name` on the input, for plain `<form>` submission.
-`ui` | `Partial<{ root: UiPartValue; input: UiPartValue; cell: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`groups` | `number \| number[] \| undefined` |  | Splits the cells into groups with a separator between them: a group size (`3` for `123-456`), or each group's size (`[3, 4]`).
+`ui` | `Partial<{ root: UiPartValue; input: UiPartValue; cell: UiPartValue; separator: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `modelValue` | `string \| undefined` | `''` | Entered code.
 
 ## Slots
@@ -25,6 +26,7 @@ Name | Type | Default | Description
 Name | Type | Description
 --- | --- | ---
 `cell` | `{ char: string \| null; index: number; active: boolean; filled: boolean; }` | Custom content for one cell.
+`separator` | `{ index: number; }` | Replaces the dash between groups. `index` counts separators from 0.
 
 ## Events
 

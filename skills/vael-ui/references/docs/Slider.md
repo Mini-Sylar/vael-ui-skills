@@ -23,7 +23,10 @@ Name | Type | Default | Description
 
 ## Slots
 
-_None._
+Name | Type | Description
+--- | --- | ---
+`thumb` | `{ value: number; index: number; percent: number; active: boolean; dragging: boolean; }` | Content inside each thumb, such as a value bubble or an icon. The thumb keeps its role and keyboard handling.
+`track` | `{ values: number[]; percents: number[]; dragging: boolean; }` | Content inside the track, under the thumbs, such as ticks or an inline label.
 
 ## Events
 
@@ -38,5 +41,6 @@ Name | Type | Description
 `el` | `HTMLElement \| null` | Root element.
 `trackEl` | `HTMLElement \| null` | Track element.
 `fillEl` | `HTMLElement \| null` | Filled portion of the track.
-`thumbEls` | `HTMLElement[] \| null` | Thumb elements, one per value (two in range mode). 
+`thumbEls` | `HTMLElement[] \| null` | Thumb elements, one per value (two in range mode).
+`dragging` | `boolean` | `true` while a thumb is being dragged. 
 

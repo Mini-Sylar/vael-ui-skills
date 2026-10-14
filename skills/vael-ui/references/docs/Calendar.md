@@ -17,6 +17,7 @@ Name | Type | Default | Description
 `disabledDates` | `CalendarDisabledDates \| undefined` |  | List of unavailable dates, or a predicate function. Matching compares calendar days and ignores time.
 `locale` | `string \| undefined` |  | BCP-47 locale for month and weekday names and the week start day. Unset, it uses the runtime default.
 `firstDayOfWeek` | `number \| undefined` |  | `0` (Sunday) to `6` (Saturday). Unset, it derives from `locale` and falls back to Monday.
+`months` | `number \| undefined` | `1` | How many months to show side by side, for picking a range at a glance. They move together and wrap onto separate rows when there isn't room.
 `motionCss` | `boolean \| undefined` | `true` | `false` skips the month-navigation slide transition.
 `ui` | `Partial<{ root: UiPartValue; header: UiPartValue; navButton: UiPartValue; label: UiPartValue; weekdays: UiPartValue; weekday: UiPartValue; grid: UiPartValue; cell: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `modelValue` | `Date \| CalendarRange \| null \| undefined` | `null` | Selected date, or `{ start, end }` in `range` mode.
@@ -25,6 +26,7 @@ Name | Type | Default | Description
 
 Name | Type | Description
 --- | --- | ---
+`label` | `{ label: string; date: Date; level: CalendarView; }` | Custom content for the month and year heading (defaults to its text). The heading keeps its own click-to-pick-month/year, keyboard and aria wiring. With `months`, each month's label.
 `day` | `{ date: Date; isCurrentMonth: boolean; isToday: boolean; isSelected: boolean; isDisabled: boolean; }` | Custom content inside each day cell (defaults to the day number). The cell keeps its own click, keyboard and aria wiring.
 
 ## Events

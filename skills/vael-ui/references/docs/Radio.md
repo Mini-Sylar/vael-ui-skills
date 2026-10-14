@@ -14,6 +14,7 @@ Name | Type | Default | Description
 `label` | `string \| undefined` |  | Label text; the default slot replaces it.
 `disabled` | `boolean \| undefined` |  | Disables this radio. The parent RadioGroup's `disabled` also disables it.
 `description` | `string \| undefined` |  | Secondary line under the label.
+`motionCss` | `boolean \| undefined` | `true` | `false` skips built-in transitions; animate the exposed `controlEl`/`dotEl` yourself.
 `ui` | `Partial<{ root: UiPartValue; control: UiPartValue; label: UiPartValue; description: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 
 ## Slots
@@ -31,5 +32,7 @@ _None._
 Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
-`inputEl` | `HTMLInputElement \| null` | Native radio input. 
+`inputEl` | `HTMLInputElement \| null` | Native radio input.
+`controlEl` | `HTMLElement \| null` | The circle that fills when selected.
+`dotEl` | `HTMLElement \| null` | The dot inside it. 
 
