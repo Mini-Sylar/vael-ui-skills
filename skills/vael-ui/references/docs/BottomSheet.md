@@ -20,7 +20,9 @@ Name | Type | Default | Description
 `closeOnOverlay` | `boolean \| undefined` | `true` | Closes the sheet when you click the overlay.
 `modal` | `boolean \| undefined` | `true` | `false` disables the overlay, scroll lock and focus trap, so the page behind stays interactive.
 `closeOnHistoryBack` | `boolean \| undefined` | `false` | Pushes a history entry on open, so the mobile back gesture or button closes the sheet. The page doesn't navigate away.
-`beforeClose` | `((done: () => void) => void) \| undefined` |  | Custom exit animation; call `done()` to finish closing. Runs for every close path.
+`beforeClose` | `((done: () => void) => void) \| undefined` |  | Runs before closing; call `done()` to finish. If your animation already moved the sheet off screen, it closes at once. Otherwise the built-in slide-out plays.
+`teleportTo` | `string \| undefined` |  | Teleport target: a CSS selector. Wins over `container` either way.
+`container` | `DOMTarget \| undefined` |  | Element to contain the sheet in, instead of the viewport. Snap points use its height.
 `ui` | `Partial<{ overlay: UiPartValue; panel: UiPartValue; handleZone: UiPartValue; handle: UiPartValue; header: UiPartValue; title: UiPartValue; close: UiPartValue; content: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `open` | `boolean \| undefined` | `false` | Whether the sheet is open.
 
@@ -42,9 +44,11 @@ Name | Type | Description
 Name | Type | Description
 --- | --- | ---
 `panelEl` | `HTMLElement \| null` | Panel element (null while closed).
+`overlayEl` | `HTMLElement \| null` | Backdrop element. `null` when `modal` is `false`.
 `activeSnap` | `string \| null` | `id` of the snap point the sheet rests at.
 `isDragging` | `boolean` | Whether you're dragging the sheet.
 `isClosing` | `boolean` | Whether a close is in progress (the exit animation or `beforeClose` hasn't finished).
 `close` | `() => void` | Closes the sheet with its slide-out animation.
-`cancelClose` | `() => void` | Cancels a close pending in `beforeClose` and keeps the sheet open. 
+`cancelClose` | `() => void` | Cancels a close pending in `beforeClose` and keeps the sheet open.
+`releaseVelocity` | `number` | Drag speed at release in px/ms, positive toward closed. Read it in `beforeClose` to carry a flick on. `0` when something other than a drag closed the sheet. 
 

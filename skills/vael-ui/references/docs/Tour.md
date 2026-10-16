@@ -24,6 +24,7 @@ Name | Type | Default | Description
 `scrollTarget` | `DOMTarget \| undefined` |  | Element to scroll-lock while open. Defaults to `container`, then `document.body`.
 `forceMount` | `boolean \| undefined` | `false` | Keeps it mounted, toggled with `v-show`, so you can own the enter/exit animation.
 `beforeClose` | `((done: () => void) => void) \| undefined` |  | Custom exit animation; call `done()` to finish closing.
+`motionCss` | `boolean \| undefined` | `true` | The spotlight's glide between steps. `false` turns it off so you can animate `spotlightEl` yourself. For open and close, use `forceMount` and `beforeClose`.
 `ui` | `Partial<{ spotlight: UiPartValue; positioner: UiPartValue; panel: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `open` | `boolean \| undefined` | `false` | Whether the tour is open.
 `step` | `number \| undefined` | `0` | Current step index; resets to the first step whenever the tour opens.
@@ -39,7 +40,7 @@ Name | Type | Description
 Name | Type | Description
 --- | --- | ---
 `open-change` | `[value: boolean, details: PopoverOpenChangeDetails]` | Fires when a close is requested; call `details.cancel()` to keep the tour open.
-`step-change` | `[details: TourStepChangeDetails<T>]` | Fires after the tour moves to another step, including the first step when it opens.
+`step-change` | `[details: TourStepChangeDetails<T>]` | Fires after moving to a step, including the first. The new step renders by the next frame.
 `skip` | `[details: TourEndDetails<T>]` | Fires when the tour ends early: the Skip button, Escape, or the step's target disappearing.
 `finish` | `[details: TourEndDetails<T>]` | Fires when the tour advances past the last step.
 `update:open` | `[value: boolean]` | Fires when `open` changes (`v-model:open`).
@@ -52,6 +53,8 @@ Name | Type | Description
 `id` | `() => string \| undefined` | Returns the tour's `id` prop.
 `targetEl` | `HTMLElement \| null` | Current step's target element.
 `panelEl` | `HTMLElement \| null` | Callout panel element (`null` while closed).
+`positionerEl` | `HTMLElement \| null` | Positioning wrapper around the callout panel (`null` while closed).
+`spotlightEl` | `HTMLElement \| null` | Dimmed overlay with the cutout (`null` while closed).
 `isClosing` | `boolean` | `true` while a `beforeClose` close is pending.
 `close` | `() => void \| undefined` | Closes the tour, running `@open-change` and `beforeClose` first.
 `cancelClose` | `() => void \| undefined` | Cancels a close pending in `beforeClose` and keeps the tour open.

@@ -54,6 +54,7 @@ Name | Type | Description
 Name | Type | Description
 --- | --- | ---
 `panelEl` | `HTMLElement \| null` | Panel element (`null` while closed).
+`overlayEl` | `HTMLElement \| null` | Backdrop element. `null` while closed or when `modal` is `false`. With `forceMount`, an inline `opacity` on it replaces the built-in fade.
 `isClosing` | `boolean` | `true` while a `beforeClose` close is pending.
 `close` | `() => void` | Closes the dialog, running `@open-change` and `beforeClose` first.
 `cancelClose` | `() => void` | Cancels a close pending in `beforeClose` and keeps the dialog open.

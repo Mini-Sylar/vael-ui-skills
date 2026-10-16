@@ -17,7 +17,7 @@ Name | Type | Default | Description
 `closeOnSelect` | `boolean \| undefined` | `true` | Closes the dial when you select an action; `false` keeps it open.
 `ariaLabel` | `string \| undefined` | `'Actions'` | Accessible name for both the trigger button and the action `role="menu"`.
 `radius` | `number \| undefined` | `96` | Arc radius in pixels. Only applies when `direction` is `'quarter-circle'`.
-`motionCss` | `boolean \| undefined` | `true` | Plays the built-in fan-out and fan-in transition. Set `false` to animate actions yourself via `@action-enter` and `@action-leave`.
+`motionCss` | `boolean \| undefined` | `true` | Built-in transitions for the actions and the icon. `false` hands actions to `@action-enter` and `@action-leave`, and turns the icon instantly.
 `ui` | `Partial<{ root: UiPartValue; trigger: UiPartValue; action: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `open` | `boolean \| undefined` | `false` | Whether the actions are shown.
 
@@ -43,6 +43,7 @@ Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
 `listEl` | `HTMLElement \| null` | Action list element (`role="menu"`).
+`iconEl` | `HTMLElement \| null` | Trigger icon wrapper. Turns 45deg while open.
 `open` | `() => void` | Shows the actions. No-op while `disabled`.
 `close` | `() => void` | Hides the actions.
 `toggle` | `() => void` | Shows or hides the actions. No-op while `disabled`.

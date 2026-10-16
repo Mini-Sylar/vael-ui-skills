@@ -54,6 +54,7 @@ Name | Type | Description
 Name | Type | Description
 --- | --- | ---
 `panelEl` | `HTMLElement \| null` | Panel element (null while closed).
+`overlayEl` | `HTMLElement \| null` | Backdrop element. `null` while closed or when `modal` is `false`.
 `isClosing` | `boolean` | `true` while a `beforeClose` close is pending.
 `close` | `() => void \| undefined` | Closes the drawer, running `beforeClose` first.
 `cancelClose` | `() => void \| undefined` | Cancels a close pending in `beforeClose` and keeps the drawer open. 
