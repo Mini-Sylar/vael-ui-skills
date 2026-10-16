@@ -20,8 +20,8 @@ Name | Type | Default | Description
 `motionCss` | `boolean \| undefined` | `true` | `false` skips the built-in springs, so rows snap to their new slots. Use it when you drive the motion yourself.
 `group` | `SortableGroupHandle \| undefined` |  | Handle from `useSortableGroup()`. Lists that share it, `<Sortable>` or `useSortable()`, let items cross between them.
 `groupId` | `string \| number \| undefined` |  | This list's identity within `group`. Unset, Sortable assigns one.
-`previewMode` | `"element" \| "clone" \| undefined` |  | `group` only: what follows the pointer once a drag leaves this list. `'element'` moves the real item; `'clone'` floats a copy, for content that can't leave its layout.
-`touchDragDelay` | `number \| undefined` |  | Milliseconds a touch must hold a row still before a drag starts. Unset, drags start at once. Set it only when `#item` or `#handle` content is also tappable; the built-in handle never needs it.
+`previewMode` | `"element" \| "clone" \| undefined` | `'element'` | `group` only: what follows the pointer once a drag leaves this list. `'element'` moves the real item; `'clone'` floats a copy, for content that can't leave its layout.
+`touchDragDelay` | `number \| undefined` | `0` | Milliseconds a touch must hold a row still before a drag starts. Unset, drags start at once. Set it only when `#item` or `#handle` content is also tappable; the built-in handle never needs it.
 `ui` | `Partial<{ root: UiPartValue; item: UiPartValue; handle: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `items` | `T[] \| undefined` | `[]` | The list, in order. Sortable assigns a new array when a drop commits, so bind it with `v-model:items`.
 

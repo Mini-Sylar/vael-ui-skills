@@ -20,7 +20,7 @@ Name | Type | Default | Description
 `block` | `boolean \| undefined` | `false` | Stretches the button to its container's full inline size.
 `type` | `"button" \| "submit" \| "reset" \| undefined` | `'button'` | Native `type` attribute; applied only when `as` is `'button'`.
 `as` | `string \| undefined` | `'button'` | Root tag, such as `as="a"` for a link styled as a button.
-`badgePlacement` | `"top-start" \| "top-end" \| "bottom-start" \| "bottom-end" \| undefined` |  | Where the `#badge` slot sits (`'top-end'` when unset). Setting it reserves the wrapper up front, so a `v-if`'d `#badge` keeps a stable DOM position.
+`badgePlacement` | `"top-start" \| "top-end" \| "bottom-start" \| "bottom-end" \| undefined` | `'top-end'` | Where the `#badge` slot sits. Setting it reserves the wrapper up front, so a `v-if`'d `#badge` keeps a stable DOM position.
 `ui` | `Partial<{ root: UiPartValue; leading: UiPartValue; trailing: UiPartValue; content: UiPartValue; label: UiPartValue; badge: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 
 ## Slots
