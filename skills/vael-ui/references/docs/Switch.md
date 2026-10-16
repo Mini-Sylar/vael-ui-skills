@@ -13,7 +13,7 @@ Name | Type | Default | Description
 `label` | `string \| undefined` |  | Label text; the default slot replaces it.
 `disabled` | `boolean \| undefined` | `false` | Disables the switch and blocks interaction.
 `invalid` | `boolean \| undefined` | `false` | Shows the invalid state. A surrounding `Field` in error sets it too.
-`size` | `"md" \| "sm" \| undefined` | `'md'` | Control size.
+`size` | `"sm" \| "md" \| undefined` | `'md'` | Control size.
 `name` | `string \| undefined` |  | Native `name` for form submission.
 `motionCss` | `boolean \| undefined` | `true` | `false` skips built-in transitions; animate the exposed `trackEl`/`thumbEl` yourself.
 `ui` | `Partial<{ root: UiPartValue; track: UiPartValue; thumb: UiPartValue; label: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.

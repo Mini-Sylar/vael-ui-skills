@@ -14,6 +14,8 @@ A component's own [props/slots/exposed reference](../docs/_INDEX.md) lists exact
 
 `false` disables the built-in CSS transition. The component still changes state instantly, leaving the DOM ready for you to animate yourself.
 
+On a `ConfigProvider`, `:motion-css="false"` means "no animation" for everything inside: panels snap open and closed, and toasts and list rows leave straight away, with no events to handle. Set it on the component itself when you want to take over its animation.
+
 ## `forceMount`
 
 Keeps content mounted while closed instead of removing it on `v-if`. Pair with `<AnimatePresence>` and the default slot's `isClosing` flag to own exit timing yourself.

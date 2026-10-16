@@ -24,7 +24,7 @@ Name | Type | Default | Description
 `controls` | `boolean \| undefined` | `true` | Shows the increment and decrement buttons.
 `stepperPosition` | `"split" \| "end" \| undefined` | `'end'` | `'end'` stacks a +/- column after the value; `'split'` puts one full-height button on each side.
 `allowEmpty` | `boolean \| undefined` | `true` | When `false`, blurring an empty field sets the value to `min ?? 0` instead of `null`.
-`size` | `"md" \| "sm" \| "lg" \| undefined` | `'md'` | Control size.
+`size` | `"sm" \| "md" \| "lg" \| undefined` | `'md'` | Control size.
 `disabled` | `boolean \| undefined` | `false` | Disables the input and blocks interaction. A disabled parent Field also disables it.
 `readonly` | `boolean \| undefined` | `false` | Makes the value read-only while keeping it focusable and selectable.
 `invalid` | `boolean \| undefined` | `false` | Standalone override; ORed with the nearest Field's `error` state.

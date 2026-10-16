@@ -10,7 +10,7 @@ import { PasswordInput } from 'vael-ui' // or 'vael-ui/vapor'
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-`size` | `"md" \| "sm" \| "lg" \| undefined` | `'md'` | Control size.
+`size` | `"sm" \| "md" \| "lg" \| undefined` | `'md'` | Control size.
 `disabled` | `boolean \| undefined` | `false` | Disables the input and reveal toggle. A disabled parent Field also disables it.
 `readonly` | `boolean \| undefined` | `false` | Makes the value read-only while keeping it focusable and selectable.
 `invalid` | `boolean \| undefined` | `false` | Standalone override; ORed with the nearest Field's `error` state.

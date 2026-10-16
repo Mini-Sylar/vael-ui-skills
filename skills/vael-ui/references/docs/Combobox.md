@@ -16,7 +16,7 @@ Name | Type | Default | Description
 `maxLabels` | `number \| undefined` |  | `multiple` only: how many chips show before the rest collapse into a "+N" chip. Unset, all show.
 `disabled` | `boolean \| undefined` | `false` | Disables the input and blocks interaction.
 `invalid` | `boolean \| undefined` | `false` | Marks the field invalid. ORed with the nearest Field's `error` state.
-`size` | `"md" \| "sm" \| "lg" \| undefined` | `'md'` | Input size.
+`size` | `"sm" \| "md" \| "lg" \| undefined` | `'md'` | Input size.
 `loading` | `boolean \| undefined` | `false` | Shows a spinner in place of an empty list, or below the rows while more load.
 `clearable` | `boolean \| undefined` | `false` | Shows a clear button once there's a selection or typed text; clearing empties both.
 `virtualize` | `boolean \| SelectVirtualizeConfig \| undefined` |  | `true`/`false` forces virtualization on/off; an object also tunes `itemSize`/`overscan`. Unset, it auto-virtualizes past 100 items.

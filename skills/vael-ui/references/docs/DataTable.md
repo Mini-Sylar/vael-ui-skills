@@ -18,7 +18,7 @@ Name | Type | Default | Description
 `single` | `boolean \| undefined` | `false` | Limits selection to one row. In `'checkbox'` mode, the selection column renders Radio buttons.
 `scrollHeight` | `string \| undefined` |  | CSS length, such as `'400px'` or `'60vh'`. When set, the body scrolls under a sticky header.
 `stackedBreakpoint` | `string \| undefined` |  | CSS length, such as `'640px'`. Below this viewport width, rows switch to a stacked card layout.
-`size` | `"md" \| "sm" \| "lg" \| undefined` | `'md'` | Row-density variant.
+`size` | `"sm" \| "md" \| "lg" \| undefined` | `'md'` | Row-density variant.
 `stripedRows` | `boolean \| undefined` | `false` | Alternates row backgrounds. Selected and hover backgrounds win over stripes.
 `showGridlines` | `boolean \| undefined` | `false` | Adds an inline-end border to every cell.
 `resizableColumns` | `boolean \| undefined` | `false` | Adds a drag handle to every column header's edge for resizing.

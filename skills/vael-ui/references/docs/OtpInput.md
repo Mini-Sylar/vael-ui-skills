@@ -15,7 +15,7 @@ Name | Type | Default | Description
 `mask` | `boolean \| undefined` | `false` | Shows a bullet instead of the entered character in every filled cell.
 `disabled` | `boolean \| undefined` | `false` | Disables the input and blocks interaction. A disabled parent Field also disables it.
 `invalid` | `boolean \| undefined` | `false` | Standalone override; ORed with the nearest Field's `error` state.
-`size` | `"md" \| "sm" \| "lg" \| undefined` | `'md'` | Control size.
+`size` | `"sm" \| "md" \| "lg" \| undefined` | `'md'` | Control size.
 `name` | `string \| undefined` |  | Native `name` on the input, for plain `<form>` submission.
 `groups` | `number \| number[] \| undefined` |  | Splits the cells into groups with a separator between them: a group size (`3` for `123-456`), or each group's size (`[3, 4]`).
 `ui` | `Partial<{ root: UiPartValue; input: UiPartValue; cell: UiPartValue; separator: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.

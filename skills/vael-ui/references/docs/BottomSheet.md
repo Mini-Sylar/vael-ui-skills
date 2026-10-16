@@ -14,7 +14,7 @@ Name | Type | Default | Description
 `snapPoints` | `SheetSnapPoint[] \| undefined` |  | Snap points, ordered smallest to largest. Unset, the sheet snaps at 60% and 92% of viewport height, or fills it when `fullScreen` is set.
 `initialSnap` | `string \| undefined` |  | `id` of the snap point to open at. Unset, the sheet opens at the first (smallest).
 `dismissible` | `boolean \| undefined` | `true` | Dragging past the smallest snap point closes the sheet.
-`width` | `"md" \| "sm" \| "lg" \| "full" \| undefined` | `'full'` | Panel width: `'full'` spans edge to edge; `'sm'`, `'md'` and `'lg'` cap and center it.
+`width` | `"sm" \| "md" \| "lg" \| "full" \| undefined` | `'full'` | Panel width: `'full'` spans edge to edge; `'sm'`, `'md'` and `'lg'` cap and center it.
 `fullScreen` | `boolean \| undefined` | `false` | Uses a single snap point that covers the full viewport height. Shorthand for `[{ id: 'full', height: 1 }]` snap points.
 `closeOnEsc` | `boolean \| undefined` | `true` | Closes the sheet when you press Escape.
 `closeOnOverlay` | `boolean \| undefined` | `true` | Closes the sheet when you click the overlay.

@@ -13,7 +13,7 @@ Name | Type | Default | Description
 `label` | `string \| undefined` |  | Label text. Also names the remove button, so pass it even when using the default slot.
 `removable` | `boolean \| undefined` | `false` | Shows a remove button that fires `@remove`.
 `disabled` | `boolean \| undefined` | `false` | Disables the remove button.
-`size` | `"md" \| "sm" \| undefined` | `'md'` | Chip size.
+`size` | `"sm" \| "md" \| undefined` | `'md'` | Chip size.
 `ui` | `Partial<{ root: UiPartValue; label: UiPartValue; remove: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 
 ## Slots

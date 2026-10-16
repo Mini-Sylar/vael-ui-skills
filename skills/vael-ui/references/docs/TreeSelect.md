@@ -17,7 +17,7 @@ Name | Type | Default | Description
 `disabled` | `boolean \| undefined` | `false` | Disables the trigger and blocks interaction.
 `clearable` | `boolean \| undefined` | `false` | Shows a clear button once something is selected.
 `invalid` | `boolean \| undefined` | `false` | Marks the field invalid. ORed with the nearest Field's `error` state.
-`size` | `"md" \| "sm" \| "lg" \| undefined` | `'md'` | Trigger size.
+`size` | `"sm" \| "md" \| "lg" \| undefined` | `'md'` | Trigger size.
 `filterable` | `boolean \| undefined` | `true` | Shows the built-in label search box atop the panel, auto-expanding ancestors of any match. `false` removes it entirely.
 `filterPlaceholder` | `string \| undefined` | `'Search...'` | Placeholder for the search box.
 `emptyText` | `string \| undefined` | `'No results found'` | Text shown when no nodes match the search or `items` is empty.

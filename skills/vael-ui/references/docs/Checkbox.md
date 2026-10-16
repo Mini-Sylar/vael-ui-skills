@@ -15,7 +15,7 @@ Name | Type | Default | Description
 `indeterminate` | `boolean \| undefined` | `false` | Shows the mixed (indeterminate) state, which takes precedence over checked.
 `disabled` | `boolean \| undefined` | `false` | Disables the checkbox and blocks interaction.
 `invalid` | `boolean \| undefined` | `false` | Shows the invalid state. A surrounding `Field` in error sets it too.
-`size` | `"md" \| "sm" \| undefined` | `'md'` | Control size.
+`size` | `"sm" \| "md" \| undefined` | `'md'` | Control size.
 `name` | `string \| undefined` |  | Native `name` for form submission.
 `motionCss` | `boolean \| undefined` | `true` | `false` skips built-in transitions; animate the exposed `boxEl`/`checkEl` yourself.
 `ui` | `Partial<{ root: UiPartValue; box: UiPartValue; label: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.

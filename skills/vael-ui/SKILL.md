@@ -7,7 +7,7 @@ metadata:
   version: 1.0.2
 ---
 
-# vael-ui `vael-ui@0.4.5`
+# vael-ui `vael-ui@0.4.6`
 
 Vue 3 component library. 66 components across Setup, Actions, Forms & Inputs, Selection, Overlays, Navigation & Menus, Feedback, Data Display, Layout & Structure, and Gestures, plus 13 standalone composables.
 
@@ -26,7 +26,7 @@ Before writing code, check a component's own reference file for its exact curren
 npm install vael-ui vue   # or pnpm/yarn/bun
 ```
 
-Requires Vue `^3.5.0`. The Vapor build (`vael-ui/vapor`) requires Vue `^3.6.0` and `createVaporApp`. Vapor is still pre-1.0 in Vue itself, so **pin an exact prerelease version** (e.g. `3.6.0-rc.11`, the version `vael-ui@0.4.5` is compiled against), not a floating `rc`/`beta` dist-tag, to avoid a compiler/runtime mismatch between what vael-ui's Vapor build was compiled against and what's actually installed. If Vapor components render with no styles, or throw errors specifically inside `<Transition>`-wrapped components, check this first.
+Requires Vue `^3.5.0`. The Vapor build (`vael-ui/vapor`) requires Vue `^3.6.0` and `createVaporApp`. Vapor is still pre-1.0 in Vue itself, so **pin an exact prerelease version** (e.g. `3.6.0-rc.11`, the version `vael-ui@0.4.6` is compiled against), not a floating `rc`/`beta` dist-tag, to avoid a compiler/runtime mismatch between what vael-ui's Vapor build was compiled against and what's actually installed. If Vapor components render with no styles, or throw errors specifically inside `<Transition>`-wrapped components, check this first.
 
 The Vapor build also server-renders (Nuxt, Vite SSR, static sites): server runtimes get an SSR build of the same components automatically, and the browser hydrates it as Vapor, so the same `vael-ui/vapor` import works everywhere.
 
@@ -36,6 +36,7 @@ Auto-import via `unplugin-vue-components` is the recommended setup instead of im
 
 ## API Changes
 
+- `0.4.6`: **New on `ConfigProvider`:** `size` (`'sm' | 'md' | 'lg'`) sets the default size of every button, form control and table inside, and `:motion-css="false"` makes everything inside change instantly (panels still open and close, toasts and list rows still leave). A component's own `size` / `motionCss` wins, and a component's own `motion-css="false"` still hands animation to its events. Pass `useI18n()` as `i18n` and its current `locale` formats `Calendar`, `DatePicker` and `InputNumber`; vue-i18n no longer warns about `uiKit` keys you haven't translated, and an app that translated some but not all gets one dev-only warning per locale listing the missing ones. `theme.fontSize` sets component text size. **Typography:** all component text, form fields included, follows your `html` font size. **New `preventFocusZoom()`:** call it once in `main.ts` so iPhones don't zoom into fields under 16px. **Behaviour change:** form fields on touch screens no longer jump to 16px (`--ui-touch-font-size` now defaults to `0px`); call `preventFocusZoom()`, or set `--ui-touch-font-size: 16px` for the old behaviour. **Fix:** `InputNumber` redraws when `locale`, `currency` or `mode` changes.
 - `0.4.5`: **Vapor:** `vael-ui/vapor` now server-renders and hydrates as Vapor. **Nuxt:** `vaelUi: { variant: 'vapor' }` (Nuxt 4.6+) registers `vael-ui/vapor` and turns on `vue.vapor`; add `vite: { vue: { features: { vapor: true } } }` to compile your own `<script setup>` as Vapor too (`features.vapor` in `@vitejs/plugin-vue` 6.0.8+ does the same outside Nuxt). **`Calendar` / `DatePicker`:** `months` (e.g. `:months="2"`) shows months side by side and stacks them on narrow screens; new `#label` slot for the month and year heading; `DatePicker` gets the same `#day` slot as `Calendar` and a `closeOnSelect` prop (`false` keeps the panel open after picking). Switching between days, months and years now zooms, and there is no dead space between days. **`Accordion`:** `v-model:value` and `@change` take the type you bind (`'a' | 'b'`, or an array of it with `multiple`). **`CommandPalette`:** the results list eases to its height as you type; `motionCss: false` hands rows to `@item-enter` / `@item-leave`. **`Slider`:** `#thumb` and `#track` slots. **`OtpInput`:** `groups` with a `#separator`. **`DataTable`:** edges fade while more can scroll (`scrollFade: false` turns it off). **`Timeline`:** `@item-enter` / `@item-leave` receive a third `parts` argument with the step's elements. **New `motionCss` on `Radio`, `Pagination` and `PullToRefresh`**, with exposed `controlEl`/`dotEl`, `indicatorEl`/`labelsEl`/`listEl` and `zoneEl`; `Dock` exposes `itemEls()` (use `:magnify="false"` to turn its magnification off). **Fixes:** registering a component globally under its own name (`app.component('Button', Button)`) no longer recurses, and `nativeTag()` is exported for your own `as`-prop components. On touch screens form controls use at least 16px text (`--ui-touch-font-size`, `0px` turns it off).
 - `0.4.4`: **New on `Toaster`:** `expand` keeps the stack open as a list; timers keep running, and hover still pauses them. **New `toast()` option:** `pinned: true` shows that toast in its own section beside the stack, where newer toasts can't cover it, and it doesn't count toward `maxVisible`. Pair it with `duration: Infinity` for a notice that stays until someone closes it. **New `toast()` option:** `id: 'verify-email'` updates that toast in place when shown again, and `toast.dismiss('verify-email')` closes it, so you don't need to store the returned number. `ToastEntry.id` is now `number | string` (`ToastId`). Toasts queued past `maxVisible` now keep their full time until they show.
 - `0.4.3`: **New on `Field`:** `labelPlacement` takes `'start'`/`'end'` for labels beside the control, with `labelWidth` to line up a column of fields and `labelAlign` for the text. `attached` joins a side label to the control as one box. `#prepend`/`#append` add cells to any control: text and icons share a segment, and each control in a cell (a Select, a Button) gets its own, divided. Give controls in a cell an `aria-label`, since the Field's label doesn't name them. Cell colors come from `--ui-field-cell-bg`/`--ui-field-cell-color`.
@@ -71,12 +72,14 @@ Auto-import via `unplugin-vue-components` is the recommended setup instead of im
 - **Theme app-wide via `ConfigProvider`, override per-instance via the `ui` prop.** Every component accepts a `ui` prop shaped like its internal part names; a part's value is either a plain class string or `{ class, style }` for cases a class alone can't express.
 
   ```vue
-  <ConfigProvider :theme="{ primary: '#6d28d9', radius: '8px' }">
+  <ConfigProvider :theme="{ primary: '#6d28d9', radius: '8px' }" size="sm">
     <App />
   </ConfigProvider>
 
   <Dialog :ui="{ panel: 'my-custom-panel-class' }" />
   ```
+
+  `size` and `motionCss` on `ConfigProvider` are app-wide defaults; set them once there instead of on every component. Pass `i18n` (your `useI18n()`) and its locale formats dates and numbers too.
 
   `ui` part classes concatenate with internal classes by default (no dedup). Inject a real class merger (e.g. `tailwind-merge`'s `twMerge`) via `ConfigProvider` if the project uses Tailwind and needs conflicting utilities to resolve correctly.
 

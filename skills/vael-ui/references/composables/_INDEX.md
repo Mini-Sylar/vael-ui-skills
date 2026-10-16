@@ -19,6 +19,7 @@
 - [useColorScheme](./useColorScheme.md): Drives `document.documentElement.dataset.theme` from a `system` / `light` / `dark` mode.
 - [useNumberFormat](./useNumberFormat.md): Locale-aware number formatting and parsing, both directions kept perfectly in sync.
 - [useFieldControl](./useFieldControl.md): Wires a custom form control into the nearest `<Field>`: id/label association, `aria-describedby`/`aria-invalid`/`aria-required`, and reporting focus/filled state so Field can move a floating label or flip `data-filled`.
+- [preventFocusZoom](./preventFocusZoom.md): Stops iOS zooming into form fields under 16px by adding `maximum-scale=1` on iOS only; call it once in `main.ts`.
 
 ## Drag & Drop
 

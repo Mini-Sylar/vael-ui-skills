@@ -13,7 +13,7 @@ Name | Type | Default | Description
 `min` | `number \| undefined` | `0` | Lowest allowed value.
 `max` | `number \| undefined` | `100` | Highest allowed value.
 `step` | `number \| undefined` | `1` | Increment the value snaps to; arrow keys move one step, Page Up/Down ten.
-`size` | `"md" \| "sm" \| "lg" \| undefined` | `'md'` | Control size.
+`size` | `"sm" \| "md" \| "lg" \| undefined` | `'md'` | Control size.
 `disabled` | `boolean \| undefined` | `false` | Disables the knob and blocks interaction.
 `invalid` | `boolean \| undefined` | `false` | Shows the invalid state. A surrounding `Field` in error sets it too.
 `name` | `string \| undefined` |  | Native `name` for form submission, via a hidden input.

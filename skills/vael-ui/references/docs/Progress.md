@@ -14,7 +14,7 @@ Name | Type | Default | Description
 `max` | `number \| undefined` | `100` | Value that counts as complete; Progress clamps `value` to `0`–`max`.
 `label` | `string \| undefined` |  | Accessible label for the progress bar.
 `variant` | `"primary" \| "danger" \| "success" \| "warning" \| "info" \| undefined` | `'primary'` | Fill color variant.
-`size` | `"md" \| "sm" \| undefined` | `'md'` | Track thickness.
+`size` | `"sm" \| "md" \| undefined` | `'md'` | Track thickness.
 `ui` | `Partial<{ root: UiPartValue; track: UiPartValue; fill: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 
 ## Slots

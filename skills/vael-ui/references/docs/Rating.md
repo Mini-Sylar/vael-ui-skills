@@ -14,7 +14,7 @@ Name | Type | Default | Description
 `allowHalf` | `boolean \| undefined` | `false` | Half-star precision, for both pointer and keyboard (arrow keys step by `0.5`).
 `readonly` | `boolean \| undefined` | `false` | Shows the rating but ignores pointer and keyboard input. Stays focusable.
 `disabled` | `boolean \| undefined` | `false` | Disables the rating and blocks interaction.
-`size` | `"md" \| "sm" \| "lg" \| undefined` | `'md'` | Control size.
+`size` | `"sm" \| "md" \| "lg" \| undefined` | `'md'` | Control size.
 `name` | `string \| undefined` |  | Native `name` for form submission, via a hidden input.
 `valueText` | `((value: number) => string) \| undefined` |  | Drives `aria-valuetext`. Defaults to the `rating.valueText` message ("{value} of {max}").
 `motionCss` | `boolean \| undefined` | `true` | `false` skips the built-in fill-sweep and commit-pop animations.

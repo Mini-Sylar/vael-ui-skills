@@ -15,7 +15,7 @@ Name | Type | Default | Description
 `step` | `number \| undefined` | `1` | Value change per arrow key or per `degreesPerStep` of rotation. Page Up/Down move ten steps.
 `degreesPerStep` | `number \| undefined` |  | Degrees of pointer rotation per `step` of value change. Unset, uses 15.
 `showValue` | `boolean \| undefined` | `true` | Shows the current value in the center of the dial.
-`size` | `"md" \| "sm" \| "lg" \| undefined` | `'md'` | Control size.
+`size` | `"sm" \| "md" \| "lg" \| undefined` | `'md'` | Control size.
 `disabled` | `boolean \| undefined` | `false` | Disables the dial and blocks interaction.
 `invalid` | `boolean \| undefined` | `false` | Shows the invalid state. A surrounding `Field` in error sets it too.
 `name` | `string \| undefined` |  | Native `name` for form submission, via a hidden input.

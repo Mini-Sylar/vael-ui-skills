@@ -15,7 +15,7 @@ Name | Type | Default | Description
 `multiple` | `boolean \| undefined` | `false` | Lets you select several items. The model becomes an array and the panel stays open on pick.
 `disabled` | `boolean \| undefined` | `false` | Disables the trigger and blocks interaction.
 `invalid` | `boolean \| undefined` | `false` | Marks the field invalid. ORed with the nearest Field's `error` state.
-`size` | `"md" \| "sm" \| "lg" \| undefined` | `'md'` | Trigger size.
+`size` | `"sm" \| "md" \| "lg" \| undefined` | `'md'` | Trigger size.
 `loading` | `boolean \| undefined` | `false` | Shows a spinner in place of an empty list, or below the rows while more load.
 `clearable` | `boolean \| undefined` | `false` | Shows a clear button once something is selected.
 `maxLabels` | `number \| undefined` |  | `multiple` only: how many chips show before the rest collapse into a "+N" chip. Unset, all show.

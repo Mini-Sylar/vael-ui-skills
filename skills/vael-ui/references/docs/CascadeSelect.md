@@ -15,7 +15,7 @@ Name | Type | Default | Description
 `disabled` | `boolean \| undefined` | `false` | Disables the trigger and keeps the panel from opening. A disabled parent Field also disables it.
 `clearable` | `boolean \| undefined` | `false` | Shows a clear button in the trigger while a value is selected.
 `invalid` | `boolean \| undefined` | `false` | Standalone override; ORed with the nearest Field's `error` state.
-`size` | `"md" \| "sm" \| "lg" \| undefined` | `'md'` | Control size.
+`size` | `"sm" \| "md" \| "lg" \| undefined` | `'md'` | Control size.
 `name` | `string \| undefined` |  | When set, renders an `<input type="hidden">` with this name that mirrors the leaf value, for plain `<form>` posts.
 `side` | `Side \| undefined` | `'bottom'` | Which side of the trigger the panel opens on.
 `align` | `Align \| undefined` | `'start'` | How the panel aligns against the trigger along that side.

@@ -11,7 +11,7 @@ import { Tag } from 'vael-ui' // or 'vael-ui/vapor'
 Name | Type | Default | Description
 --- | --- | --- | ---
 `variant` | `"primary" \| "danger" \| "muted" \| "success" \| "warning" \| "info" \| undefined` | `'muted'` | Color variant.
-`size` | `"md" \| "sm" \| undefined` | `'md'` | Text size and padding.
+`size` | `"sm" \| "md" \| undefined` | `'md'` | Text size and padding.
 `pill` | `boolean \| undefined` | `false` | Fully pill-rounded instead of the default small label corners.
 `ui` | `Partial<{ root: UiPartValue; icon: UiPartValue; label: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 

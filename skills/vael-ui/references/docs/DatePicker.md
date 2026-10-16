@@ -15,7 +15,7 @@ Name | Type | Default | Description
 `placeholder` | `string \| undefined` |  | Text shown in the input when nothing is selected.
 `disabled` | `boolean \| undefined` | `false` | Disables the input and keeps the panel from opening. A disabled parent Field also disables it.
 `invalid` | `boolean \| undefined` | `false` | Standalone override; ORed with the nearest Field's `error` state.
-`size` | `"md" \| "sm" \| "lg" \| undefined` | `'md'` | Input size.
+`size` | `"sm" \| "md" \| "lg" \| undefined` | `'md'` | Input size.
 `minDate` | `Date \| undefined` |  | Earliest selectable date (inclusive); the calendar disables earlier days, months and years.
 `maxDate` | `Date \| undefined` |  | Latest selectable date (inclusive); the calendar disables later days, months and years.
 `disabledDates` | `CalendarDisabledDates \| undefined` |  | List of unavailable dates, or a predicate function. Matching compares calendar days and ignores time.
