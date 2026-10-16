@@ -26,7 +26,7 @@ Before writing code, check a component's own reference file for its exact curren
 npm install vael-ui vue   # or pnpm/yarn/bun
 ```
 
-Requires Vue `^3.5.0`. The Vapor build (`vael-ui/vapor`) requires Vue `^3.6.0` and `createVaporApp`. Vapor is still pre-1.0 in Vue itself, so **pin an exact prerelease version** (e.g. `3.6.0-rc.11`, the version `vael-ui@0.4.6` is compiled against), not a floating `rc`/`beta` dist-tag, to avoid a compiler/runtime mismatch between what vael-ui's Vapor build was compiled against and what's actually installed. If Vapor components render with no styles, or throw errors specifically inside `<Transition>`-wrapped components, check this first.
+Requires Vue `^3.5.0`. The Vapor build (`vael-ui/vapor`) requires Vue `^3.6.0` and `createVaporApp`. Vapor is still pre-1.0 in Vue itself, so **pin an exact prerelease version** (e.g. `3.6.0-rc.12`, the version `vael-ui@0.4.6` is compiled against), not a floating `rc`/`beta` dist-tag, to avoid a compiler/runtime mismatch between what vael-ui's Vapor build was compiled against and what's actually installed. If Vapor components render with no styles, or throw errors specifically inside `<Transition>`-wrapped components, check this first.
 
 The Vapor build also server-renders (Nuxt, Vite SSR, static sites): server runtimes get an SSR build of the same components automatically, and the browser hydrates it as Vapor, so the same `vael-ui/vapor` import works everywhere.
 
