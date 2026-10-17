@@ -37,4 +37,5 @@ Name | Type | Description
 `el` | `HTMLElement \| null` | Root element.
 `circleEls` | `HTMLElement[]` | Step circle elements, in order. A circle remounts when its step becomes clickable.
 `connectorEls` | `HTMLElement[]` | Connector elements, one fewer than steps. Set `--ui-stepper-fill` (0 to 1) to drive a fill.
+`labelEls` | `HTMLElement[]` | Step label elements, in order. Empty when the `item` slot replaces them.
 

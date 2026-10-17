@@ -36,6 +36,7 @@ Name | Type | Description
 `onStepChange` | `(details: TourStepChangeDetails) => void` | Fires after a step change settles, including the first step (reason: 'open'). details: { index, step, reason, previousIndex, previousStep, id }.
 `onSkip` | `(details: TourEndDetails) => void` | Fires when skip() is called. details: { index, step, id }.
 `onFinish` | `(details: TourEndDetails) => void` | Fires when next() is called on the last step. details: { index, step, id }.
+`close` | `() => void` | How finishing and skipping close the tour. Defaults to setting open to false; pass your own to run a custom exit first.
 
 ## Returns
 
