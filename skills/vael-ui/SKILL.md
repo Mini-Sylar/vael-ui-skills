@@ -28,15 +28,72 @@ npm install vael-ui vue   # or pnpm/yarn/bun
 
 Requires Vue `^3.5.0`. The Vapor build (`vael-ui/vapor`) requires Vue `^3.6.0` and `createVaporApp`. Vapor is still pre-1.0 in Vue itself, so **pin an exact prerelease version** (e.g. `3.6.0-rc.12`, the version `vael-ui@0.4.7` is compiled against), not a floating `rc`/`beta` dist-tag, to avoid a compiler/runtime mismatch between what vael-ui's Vapor build was compiled against and what's actually installed. If Vapor components render with no styles, or throw errors specifically inside `<Transition>`-wrapped components, check this first.
 
-The Vapor build also server-renders (Nuxt, Vite SSR, static sites): server runtimes get an SSR build of the same components automatically, and the browser hydrates it as Vapor, so the same `vael-ui/vapor` import works everywhere.
+A floating range such as `^3.5.0` can resolve to Vue 3.5, which has no Vapor at all. Install with `npm install vue@3.6.0-rc.12 --save-exact`.
 
-A Nuxt module ships as `vael-ui/nuxt`. Add it to `modules` in `nuxt.config.ts` instead of manual imports. Set `vaelUi: { variant: 'vapor' }` (Nuxt 4.6+) to use the Vapor build; the module turns on Nuxt's `vue.vapor` for you.
+A minimal Vapor app:
+
+```ts
+// main.ts
+import { createVaporApp } from 'vue'
+import App from './App.vue'
+
+createVaporApp(App).mount('#app')
+```
+
+```vue
+<!-- App.vue -->
+<script setup vapor lang="ts">
+import { Button, Toaster, toast } from 'vael-ui/vapor'
+</script>
+
+<template>
+  <Toaster />
+  <Button @click="toast('Saved')">Save</Button>
+</template>
+```
+
+To compile every `<script setup>` SFC in the app as Vapor without the per-file `vapor` attribute, use `vue({ features: { vapor: true } })` (`@vitejs/plugin-vue` 6.0.8+). vael-ui never uses the Options API, so `optionsAPI: false` in `features` is safe for the library and drops that code from the bundle, as long as the app's own components don't use it.
+
+Components set no font of their own (`font: inherit`), so set a `font-family` on `body`, or text renders in the browser's default serif.
 
 Auto-import via `unplugin-vue-components` is the recommended setup instead of importing every component by hand. See [Auto import](./references/guides/auto-import.md).
 
+### Server rendering
+
+Both builds server-render and hydrate (Nuxt, Vite SSR, static sites). `vael-ui/vapor` resolves to an SSR build on the server automatically and hydrates as Vapor in the browser. For plain Vite SSR:
+
+- Set `ssr: { noExternal: ['vael-ui'] }`. Every component imports its own CSS, which Node can't load if the package stays external.
+- Overlays, Toaster and TooltipHost teleport to `body`, so inject `ctx.teleports` into the HTML template, or hydration mismatches:
+
+  ```js
+  const ctx = {}
+  const appHtml = await renderToString(app, ctx)
+  const html = template
+    .replace('<!--app-html-->', appHtml)
+    .replace('<!--teleports-->', ctx.teleports?.body ?? '') // <!--teleports--> sits right before </body>
+  ```
+
+### Nuxt
+
+A Nuxt module ships as `vael-ui/nuxt`. Add it to `modules` in `nuxt.config.ts` and it registers every component (only components). Set `vaelUi: { variant: 'vapor' }` (Nuxt 4.6+, Vue 3.6 pinned) to use the Vapor build; the module turns on Nuxt's `vue.vapor` for you. Nuxt handles `noExternal` and teleports itself. You still:
+
+- mount `<TooltipHost />`, `<DialogHost />`, `<PopoverHost />` and `<Toaster />` once in `app.vue`;
+- import composables (`toast`, `openDialog`, `confirmAction`, ...) from `'vael-ui'` (or `'vael-ui/vapor'` with the Vapor variant);
+- register directives in a plugin:
+
+  ```ts
+  // plugins/vael-ui.ts
+  import { vTooltip, vScrollMask } from 'vael-ui'
+
+  export default defineNuxtPlugin((nuxtApp) => {
+    nuxtApp.vueApp.directive('tooltip', vTooltip)
+    nuxtApp.vueApp.directive('scroll-mask', vScrollMask)
+  })
+  ```
+
 ## API Changes
 
-- `0.4.7`: **Dialog, Drawer, Popover, Tooltip** animate in when already open on first render (`:open="true"`, inside a `v-if`, or from `openDialog()`/`confirmAction()`, where only the exit animated before). A toast sent before its Toaster mounts animates in too. **openDialog:** the handle and `useDialogRef()` expose the backdrop as `overlayEl`, like `<Dialog>`'s own. **Stepper** exposes `labelEls`, and labels fade to their new color with the circle. **Tour:** Skip and Done now run `beforeClose`, so a custom exit plays however the tour closes.
+- `0.4.7`: **Vapor:** `vael-ui/vapor` works without the `vapor` resolve condition (before, `toast()`/`openDialog()`/`openPopover()`/`confirmAction()` showed nothing there); the Vapor build reuses the regular build's composables and CSS, so mixed apps load one copy. **ConfigProvider** `theme` renders its `<style>` in place, so SSR/Nuxt hydration no longer replaces head tags. **New:** `vael-ui/layers.css` (layer order for Tailwind v4 without loading all CSS); `onOpenChange` option on `openDialog()`/`openPopover()`; `overlayEl` on the `openDialog()` handle and `useDialogRef()`; Stepper `labelEls`. **Dependencies:** `@vueuse/core` 12 to 15 accepted. **DataTable/Tree** load the drag engine only when `reorderableColumns`/`reorderable` is on (DataTable ~16.8 KB gz initial instead of 22; a press made while it loads is held and replayed). **Animation:** Dialog, Drawer, Popover, Tooltip, Select, Combobox, DatePicker, TreeSelect, Menu, SpeedDial and early toasts animate in when already open on first render. **Fixes:** confirmAction can't be dismissed while an async `onConfirm` runs; Select/Combobox/DatePicker/TreeSelect put `id`/`aria-*`/`data-*` on the focusable control; tooltips add to `aria-describedby` instead of replacing it; v-tooltip text updates while open; Escape inside a Dialog closes a tooltip first; changing `side`/`align`/offsets moves an open panel; nested `closeOnHistoryBack` dialogs close one at a time; Escape ending an IME composition doesn't close overlays; Tour Skip/Done run `beforeClose`, arrow keys in a highlighted input stay in the input; toasts arriving while hovered wait; Collapsible honours long `--ui-duration-enter`; DataTable/Tree clean up a drag cut short by unmount; `openDialog()`/`openPopover()` closed in the same tick settle.
 - `0.4.6`: **New on `ConfigProvider`:** `size` (`'sm' | 'md' | 'lg'`) sets the default size of every button, form control and table inside, and `:motion-css="false"` makes everything inside change instantly (panels still open and close, toasts and list rows still leave). A component's own `size` / `motionCss` wins, and a component's own `motion-css="false"` still hands animation to its events. Pass `useI18n()` as `i18n` and its current `locale` formats `Calendar`, `DatePicker` and `InputNumber`; vue-i18n no longer warns about `uiKit` keys you haven't translated, and an app that translated some but not all gets one dev-only warning per locale listing the missing ones. `theme.fontSize` sets component text size. **Typography:** all component text, form fields included, follows your `html` font size. **New `preventFocusZoom()`:** call it once in `main.ts` so iPhones don't zoom into fields under 16px. **Behaviour change:** form fields on touch screens no longer jump to 16px (`--ui-touch-font-size` now defaults to `0px`); call `preventFocusZoom()`, or set `--ui-touch-font-size: 16px` for the old behaviour. **Fix:** `InputNumber` redraws when `locale`, `currency` or `mode` changes. **New in the animation hand-off:** Dialog, Drawer and BottomSheet expose the backdrop as `overlayEl` (with `forceMount`, an inline `opacity` replaces the built-in fade). BottomSheet takes `container` and `teleportTo` like Drawer, and exposes `releaseVelocity` for continuing a flick in `beforeClose`; when your `beforeClose` already moved the sheet off screen, `done()` closes it at once. Stepper exposes `circleEls`/`connectorEls` and its fill reads `--ui-stepper-fill`. SpeedDial exposes `iconEl`. Tour exposes `spotlightEl`/`positionerEl` and takes `motionCss` (`false` turns off the spotlight glide). Stepper's and SpeedDial's `motion-css="false"` now covers every built-in transition. **Toaster:** `<Toaster name="editor">` plus `toast('…', { toaster: 'editor' })` targets one Toaster; untargeted toasts go to the unnamed one. **Drawer** now passes `flush` and `maximizable` through. A ConfigProvider's `motion-css="false"` also reaches teleported overlays.
 - `0.4.5`: **Vapor:** `vael-ui/vapor` now server-renders and hydrates as Vapor. **Nuxt:** `vaelUi: { variant: 'vapor' }` (Nuxt 4.6+) registers `vael-ui/vapor` and turns on `vue.vapor`; add `vite: { vue: { features: { vapor: true } } }` to compile your own `<script setup>` as Vapor too (`features.vapor` in `@vitejs/plugin-vue` 6.0.8+ does the same outside Nuxt). **`Calendar` / `DatePicker`:** `months` (e.g. `:months="2"`) shows months side by side and stacks them on narrow screens; new `#label` slot for the month and year heading; `DatePicker` gets the same `#day` slot as `Calendar` and a `closeOnSelect` prop (`false` keeps the panel open after picking). Switching between days, months and years now zooms, and there is no dead space between days. **`Accordion`:** `v-model:value` and `@change` take the type you bind (`'a' | 'b'`, or an array of it with `multiple`). **`CommandPalette`:** the results list eases to its height as you type; `motionCss: false` hands rows to `@item-enter` / `@item-leave`. **`Slider`:** `#thumb` and `#track` slots. **`OtpInput`:** `groups` with a `#separator`. **`DataTable`:** edges fade while more can scroll (`scrollFade: false` turns it off). **`Timeline`:** `@item-enter` / `@item-leave` receive a third `parts` argument with the step's elements. **New `motionCss` on `Radio`, `Pagination` and `PullToRefresh`**, with exposed `controlEl`/`dotEl`, `indicatorEl`/`labelsEl`/`listEl` and `zoneEl`; `Dock` exposes `itemEls()` (use `:magnify="false"` to turn its magnification off). **Fixes:** registering a component globally under its own name (`app.component('Button', Button)`) no longer recurses, and `nativeTag()` is exported for your own `as`-prop components. On touch screens form controls use at least 16px text (`--ui-touch-font-size`, `0px` turns it off).
 - `0.4.4`: **New on `Toaster`:** `expand` keeps the stack open as a list; timers keep running, and hover still pauses them. **New `toast()` option:** `pinned: true` shows that toast in its own section beside the stack, where newer toasts can't cover it, and it doesn't count toward `maxVisible`. Pair it with `duration: Infinity` for a notice that stays until someone closes it. **New `toast()` option:** `id: 'verify-email'` updates that toast in place when shown again, and `toast.dismiss('verify-email')` closes it, so you don't need to store the returned number. `ToastEntry.id` is now `number | string` (`ToastId`). Toasts queued past `maxVisible` now keep their full time until they show.
@@ -52,7 +109,7 @@ Auto-import via `unplugin-vue-components` is the recommended setup instead of im
 
 ## Best Practices
 
-- **Pick vdom or vapor per-project, don't mix them.** `import { Button } from 'vael-ui'` (vdom, works with `createApp`) and `import { Button } from 'vael-ui/vapor'` (works with `createVaporApp`) export identical names/props/composables; only the compiled implementation differs. Using vdom imports with `createVaporApp` (or vice versa) breaks.
+- **Pick one build for a new project.** `import { Button } from 'vael-ui'` (vdom, works with `createApp`) and `import { Button } from 'vael-ui/vapor'` (works with `createVaporApp`) export identical names/props/composables; only the compiled implementation differs. Using vdom imports with `createVaporApp` (or vice versa) without the interop plugin breaks.
 
   ```ts
   // vdom
@@ -62,6 +119,15 @@ Auto-import via `unplugin-vue-components` is the recommended setup instead of im
   // vapor
   import { createVaporApp } from 'vue'
   import { Button } from 'vael-ui/vapor'
+  ```
+
+  Mixing is for migrating an existing vdom app to Vapor a few components at a time: keep `createApp`, add Vue's `vaporInteropPlugin`, and import from `'vael-ui/vapor'` inside the components marked `<script setup vapor>`.
+
+  ```ts
+  import { createApp, vaporInteropPlugin } from 'vue'
+  import App from './App.vue'
+
+  createApp(App).use(vaporInteropPlugin).mount('#app')
   ```
 
 - **Don't fight the default transition with CSS.** If a component isn't animating the way an app needs, reach for `motionCss={false}` + `forceMount` + `beforeClose` (see [Animation integration](./references/guides/animation-integration.md)) before trying to override built-in transition timing via selector specificity.
@@ -113,7 +179,9 @@ Auto-import via `unplugin-vue-components` is the recommended setup instead of im
 
 ## Common mistakes
 
-- Importing from `vael-ui` while using `createVaporApp` (or the reverse).
+- Importing from `vael-ui` while using `createVaporApp` (or the reverse) without `vaporInteropPlugin`.
+- Using `resolve: { conditions: ['vapor'] }` alone. It replaces Vite's default conditions; spread `defaultClientConditions` / `defaultServerConditions` (see [Auto import](./references/guides/auto-import.md#one-shared-import-no-vapor-subpath)).
+- Registering `v-tooltip` without mounting `<TooltipHost />`: the tooltip never shows and nothing warns.
 - Using a floating `vue@rc`/`vue@beta` dist-tag with Vapor instead of an exact pinned prerelease version. Causes compiler/runtime mismatches that surface as confusing runtime errors, especially around `<Transition>`.
 - Assuming `ui` prop values dedupe against internal classes automatically. They don't unless a class merger is configured.
 - Reaching for `vael-ui/style.css` (the full, untreeshaken bundle) by default. Per-component CSS already loads automatically via each component's own JS import; only use the full bundle if there's a specific reason to.

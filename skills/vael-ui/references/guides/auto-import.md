@@ -30,9 +30,9 @@ vael-ui ships two builds from the same source: the regular VDOM build and a Vapo
 VaelUiResolver({ variant: 'vapor' })
 ```
 
-Pick whichever the app actually renders with; mixing the two in one app isn't supported (aside from Vue's own vdom/vapor interop for gradual migration, which is a separate, more advanced setup).
+Pick whichever the app actually renders with. The resolver imports every component from one build. (A vdom app migrating to Vapor with `vaporInteropPlugin` imports its Vapor components from `vael-ui/vapor` by hand.)
 
-Known gap: the resolver doesn't currently scan `<script setup vapor>` blocks for auto-import candidates the way it scans plain `<script setup>`. If a component silently isn't auto-importing inside a vapor-marked SFC, that's this limitation, not a misconfiguration.
+In a Vapor template, unplugin-vue-components only finds components that sit inside another component's slot (the Vapor compiler references top-level ones through `createAssetComponent`, which it doesn't scan for yet). Import top-level ones by hand, such as `<Toaster>`, `<DialogHost>` and `<ConfigProvider>`.
 
 ## One shared import, no `/vapor` subpath
 
@@ -40,10 +40,15 @@ If an editor's auto-import keeps suggesting `vael-ui` instead of `vael-ui/vapor`
 
 ```ts
 // vite.config.ts
+import { defaultClientConditions, defaultServerConditions } from 'vite'
+
 export default defineConfig({
-  resolve: { conditions: ['vapor'] },
+  resolve: { conditions: [...defaultClientConditions, 'vapor'] },
+  ssr: { resolve: { conditions: [...defaultServerConditions, 'vapor'] } },
 })
 ```
+
+Spread Vite's defaults. A bare `conditions: ['vapor']` replaces them, and other packages can then resolve the wrong file.
 
 ```jsonc
 // tsconfig.json
