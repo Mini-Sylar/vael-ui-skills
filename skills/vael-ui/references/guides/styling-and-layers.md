@@ -35,7 +35,7 @@ Every color, radius, shadow, and motion value reads from a CSS custom property. 
 | `--ui-border-strong` | `#d4d4d8` | Stronger border color for emphasized edges. |
 | `--ui-overlay` | `rgb(0 0 0 / 0.4)` | Backdrop color behind modals and dialogs. |
 
-Each semantic color (`danger`/`success`/`warning`/`info`) also has its own `-hover` and `-contrast` variants, same pattern as `primary` above. Dark mode redefines the same variable names under `:root:not([data-theme="light"])`/`[data-theme="dark"]`; it never introduces new ones.
+Each semantic color (`danger`/`success`/`warning`/`info`) also has its own `-hover` and `-contrast` variants, same pattern as `primary` above. Dark mode redefines the same variable names under `:root:not([data-theme="light"])`/`[data-theme="dark"]`, and adds three dark-only tokens: `--ui-danger-solid` and `--ui-info-solid` (fills for solid danger buttons and info badges, where the lighter dark-mode color is too light under white text) and `--ui-info-text` (info as text, a touch lighter). Components fall back to the base color in light mode. In dark mode `--ui-success-contrast` is `#18181b`, so success badges use dark text.
 
 ### Shape
 

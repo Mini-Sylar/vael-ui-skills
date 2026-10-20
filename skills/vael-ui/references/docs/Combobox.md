@@ -1,6 +1,6 @@
 # Combobox
 
-A searchable dropdown that also accepts free text, so autocomplete and tagging are one component.
+A searchable dropdown that also accepts free text, so autocomplete and tagging are one component. Takes the same option groups as Select.
 
 ```ts
 import { Combobox } from 'vael-ui' // or 'vael-ui/vapor'
@@ -10,7 +10,7 @@ import { Combobox } from 'vael-ui' // or 'vael-ui/vapor'
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-`items` | `readonly T[]` |  | Options to choose from.
+`items` | `readonly (T \| SelectGroupData<T>)[]` |  | Options to choose from. Put `{ label, items }` entries among them to show options under a group label, the same as Select.
 `placeholder` | `string \| undefined` |  | Text shown in the input while it's empty.
 `multiple` | `boolean \| undefined` | `false` | Lets you select several items. The model becomes an array, the panel stays open on pick, and selections show as removable chips.
 `maxLabels` | `number \| undefined` |  | `multiple` only: how many chips show before the rest collapse into a "+N" chip. Unset, all show.
@@ -25,6 +25,7 @@ Name | Type | Default | Description
 `allowCustom` | `boolean \| undefined` | `false` | Lets typed text that isn't an item become the value, after a cancelable `@create`. Add it to `items` yourself if it should become a real option.
 `createOption` | `boolean \| undefined` | `true` | `allowCustom` only: appends a `Create "…"` row whenever the typed text isn't already an item's label. Customize it with `#create`.
 `commitOnBlur` | `boolean \| undefined` | `false` | `allowCustom` only: leaving the field with uncommitted text commits it (reason `'blur'`). When `false`, the text reverts instead.
+`revertOnBlur` | `boolean \| undefined` | `true` | Leaving the field puts back the selected item's label, dropping half-typed text. Set `false` for a search box, so what you typed stays when you click away. Escape still clears it.
 `tabBehavior` | `ComboboxTabBehavior \| undefined` |  | What Tab commits before focus moves on. `'select'`: the highlighted row, once you type or move the highlight with the keyboard. `'create'` (`allowCustom` only): the typed text, or the item it names.
 `openOnFocus` | `boolean \| undefined` |  | Opens the panel on focus, before you type. Unset means on; set `false` to require typing first.
 `side` | `Side \| undefined` | `'bottom'` | Which side of the input the panel opens on.
@@ -38,8 +39,8 @@ Name | Type | Default | Description
 `teleportTo` | `string \| HTMLElement \| undefined` | `'body'` | Teleport target: a CSS selector or element.
 `scrollFade` | `boolean \| undefined` | `true` | Masks the panel's top/bottom edge as its content scrolls under it, signaling there's more.
 `maxPanelHeight` | `number \| undefined` | `320` | Caps the panel height in pixels; the list scrolls past it. The viewport limits it too, so pass `Infinity` to fill the available space.
-`motionCss` | `boolean \| undefined` | `true` | `false` skips the built-in chip transitions (`multiple` only); animate them yourself via `@chip-enter`/`@chip-leave`.
-`ui` | `Partial<{ root: UiPartValue; input: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; list: UiPartValue; option: UiPartValue; empty: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`motionCss` | `boolean \| undefined` | `true` | `false` skips the built-in motion: the list easing to its new height as you search, the clear button, and chip transitions (`multiple`), which you can animate yourself via `@chip-enter`/`@chip-leave`.
+`ui` | `Partial<{ root: UiPartValue; input: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; list: UiPartValue; option: UiPartValue; group: UiPartValue; groupLabel: UiPartValue; empty: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `modelValue` | `string \| number \| (string \| number)[] \| null \| undefined` | `null` | Selected value, or an array of values when `multiple`.
 `query` | `string \| undefined` | `''` | Input text. Holds the selected label in single mode; clears after each pick when `multiple`.
 `open` | `boolean \| undefined` | `false` | Whether the panel is open.
@@ -51,7 +52,8 @@ Name | Type | Description
 `start` | `any` | Content before the input text, after any chips.
 `end` | `any` | Content before the built-in clear button and chevron, inside Input's `#end`.
 `header` | `{ count: number; total: number; }` | Content above the listbox, inside the popover panel. `count` and `total` support a result-count readout.
-`item` | `{ item: T; index: number; active: boolean; selected: boolean; query: string; }` | Custom row content for each option. `query` is the trimmed typed text, for highlighting the match.
+`item` | `{ item: T; index: number; active: boolean; selected: boolean; query: string; group?: SelectGroupSlotData<T> \| undefined; }` | Custom row content for each option. `query` is the trimmed typed text, for highlighting the match.
+`group-label` | `{ group: SelectGroupSlotData<T>; items: T[]; }` | Custom content for a group's label. `group` is the object you passed, with your own fields; `items` are its options still showing. Screen readers read this content as the group's name.
 `create` | `{ query: string; active: boolean; }` | Content of the `allowCustom` Create row.
 `empty` | `any` | Replaces the text shown when no items match.
 `footer` | `any` | Content below the listbox, inside the popover panel.
@@ -67,8 +69,8 @@ Name | Type | Description
 `chip-enter` | `[el: Element, done: () => void]` | Fires instead of the built-in CSS transition when `motionCss` is `false`. Call `done()` once your enter animation finishes.
 `chip-leave` | `[el: Element, done: () => void]` | Same as `@chip-enter`, for a chip's removal.
 `create` | `[query: string, details: ComboboxCreateDetails]` | Fires before the typed text commits as a custom value. Call `details.cancel()` to veto it, for validation or an async create that sets the model itself.
-`update:open` | `[value: boolean]` | Fires when `open` changes (`v-model:open`).
 `update:modelValue` | `[value: string \| number \| (string \| number)[] \| null]` | Fires when `modelValue` changes (`v-model`).
+`update:open` | `[value: boolean]` | Fires when `open` changes (`v-model:open`).
 `update:query` | `[value: string]` | Fires when `query` changes (`v-model:query`).
 
 ## Exposed

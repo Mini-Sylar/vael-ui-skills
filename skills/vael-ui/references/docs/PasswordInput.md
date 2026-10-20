@@ -16,7 +16,7 @@ Name | Type | Default | Description
 `invalid` | `boolean \| undefined` | `false` | Standalone override; ORed with the nearest Field's `error` state.
 `placeholder` | `string \| undefined` |  | Text shown while the input is empty.
 `name` | `string \| undefined` |  | Native `name` on the input, for plain `<form>` submission.
-`autocomplete` | `string \| undefined` |  | `'current-password'` for a login form, `'new-password'` for signup, reset or change forms. Set it yourself; only the screen's context determines which one fits.
+`autocomplete` | `string \| undefined` |  | Tells password managers what this field is. Defaults to `'new-password'` when the field shows requirements (`rules` or `#hint`), so the phone offers a strong password, and to `'current-password'` otherwise, so a saved one fills in. Set it for a case that reads otherwise, like a sign-up form without rules.
 `revealable` | `boolean \| undefined` | `true` | `false` hides the reveal toggle, for forms that must never show the password in plain text.
 `rules` | `PasswordRule[] \| undefined` |  | Requirement checks (`{ label, test }`) for the hint checklist and the `#hint` slot's `results`. There are no built-in rules; without `rules` or `#hint`, the hint doesn't render.
 `hintPlacement` | `"inline" \| "none" \| "popover" \| undefined` | `'popover'` | Where the requirements hint renders. `'none'` disables it outright.

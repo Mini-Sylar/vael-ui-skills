@@ -46,6 +46,7 @@ Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
 `isGrabbed` | `boolean` | Whether an item is held, by pointer or keyboard.
+`isSettling` | `boolean` | Whether rows are still gliding into place after a drop or cancel. The root also carries `data-settling` then. A list that clips its overflow only while something is held would cut a row off mid-glide, so keep the clipping off while this is true too.
 `isValidDrop` | `boolean` | `false` while hovering a target that `canDrop` rejected.
 `isPending` | `boolean` | Whether an async `beforeDrop` is still deciding.
 `isForeignDropTarget` | `boolean` | `group` only: whether a drag from another list is hovering this one.

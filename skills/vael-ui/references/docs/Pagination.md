@@ -6,6 +6,10 @@ Page-number controls for splitting a long list or table across pages.
 import { Pagination } from 'vael-ui' // or 'vael-ui/vapor'
 ```
 
+## Notes
+
+The page-size select is named by the `uiKit.pagination.pageSize` message ("Rows per page").
+
 ## Props
 
 Name | Type | Default | Description

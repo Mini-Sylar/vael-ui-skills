@@ -6,6 +6,10 @@ Drag a handle (or two, for a range) along a track to pick a numeric value.
 import { Slider } from 'vael-ui' // or 'vael-ui/vapor'
 ```
 
+## Notes
+
+`aria-label`, `aria-labelledby` and `aria-describedby` go on the `role="slider"` thumb, not the wrapper; a surrounding `Field` label works too. In range mode each thumb is named after the label plus the `uiKit.slider.minimum` / `uiKit.slider.maximum` messages, e.g. "Price Minimum" and "Price Maximum".
+
 ## Props
 
 Name | Type | Default | Description

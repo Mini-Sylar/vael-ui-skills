@@ -18,6 +18,7 @@ Name | Type | Default | Description
 `locale` | `string \| undefined` |  | BCP-47 locale for month and weekday names and the week start day. Unset, it uses the runtime default.
 `firstDayOfWeek` | `number \| undefined` |  | `0` (Sunday) to `6` (Saturday). Unset, it derives from `locale` and falls back to Monday.
 `months` | `number \| undefined` | `1` | How many months to show side by side, for picking a range at a glance. They move together and wrap onto separate rows when there isn't room.
+`showYearButtons` | `boolean \| undefined` | `false` | Adds « and » beside the month arrows to jump a year at a time, handy for ranges that span years. Only in the day view; the month and year grids already step by years.
 `motionCss` | `boolean \| undefined` | `true` | `false` skips the month-navigation slide transition.
 `ui` | `Partial<{ root: UiPartValue; header: UiPartValue; navButton: UiPartValue; label: UiPartValue; weekdays: UiPartValue; weekday: UiPartValue; grid: UiPartValue; cell: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `modelValue` | `Date \| CalendarRange \| null \| undefined` | `null` | Selected date, or `{ start, end }` in `range` mode.

@@ -6,6 +6,10 @@ A menu that opens at the pointer on right-click, replacing the native browser me
 import { ContextMenu } from 'vael-ui' // or 'vael-ui/vapor'
 ```
 
+## Notes
+
+Keyboard users open the menu with Shift+F10 or the Menu key, which fire `contextmenu` on the focused element. Make the wrapped target focusable (`tabindex="0"`) and give it an accessible name.
+
 ## Props
 
 Name | Type | Default | Description

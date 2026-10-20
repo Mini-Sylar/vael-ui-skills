@@ -6,6 +6,10 @@ A collapsible, indented list for hierarchical data with single or multi-selectio
 import { Tree } from 'vael-ui' // or 'vael-ui/vapor'
 ```
 
+## Notes
+
+Rows update from reactive state, so a custom `#node` slot should read reactive values (props, refs, computeds), not plain variables captured from the parent.
+
 ## Props
 
 Name | Type | Default | Description
@@ -16,7 +20,7 @@ Name | Type | Default | Description
 `filterable` | `boolean \| undefined` | `true` | Shows a built-in label search box above the tree and expands the ancestors of any match.
 `filterPlaceholder` | `string \| undefined` | `'Search...'` | Placeholder and accessible label for the filter box.
 `emptyText` | `string \| undefined` | `'No results found'` | Text shown when no rows are visible (empty `items` or no filter matches).
-`motionCss` | `boolean \| undefined` | `true` | `false` skips all built-in motion (row transitions, chevron rotation and cross-folder moves).
+`motionCss` | `boolean \| undefined` | `true` | `false` skips all built-in motion (row transitions, chevron rotation, cross-folder moves and the list easing to its new height as you search).
 `forceMount` | `boolean \| undefined` | `false` | Keeps collapsed folders' children mounted (`v-show` plus `data-state`) so you can animate expand/collapse yourself instead of using the built-in transition.
 `reorderable` | `boolean \| undefined` | `false` | Lets you drag rows to reorder and nest them, VS Code style. Drop on a row's middle to move into it, or on an edge to place beside it.
 `canNestInto` | `((node: T) => boolean) \| undefined` |  | Which rows accept dropped children. Unset, any row that already has children does; pass your own to let empty folders take drops.
@@ -38,7 +42,7 @@ Name | Type | Default | Description
 
 Name | Type | Description
 --- | --- | ---
-`node` | `{ node: T; depth: number; expanded: boolean; checked: boolean; indeterminate: boolean; disabled: boolean; toggleExpand: () => void; toggleSelect: () => void; findNode: (value: string \| number) => T \| undefined; findParent: (value: string \| number) => T \| null; removeNode: (value: string \| number) => boolean; }` | Row content inside the `role="treeitem"` wrapper. `findNode`/`findParent`/`removeNode` are `findTreeNode`/`findTreeParent`/`removeTreeNode` bound to this tree's `items`.
+`node` | `{ node: T; depth: number; expanded: boolean; checked: boolean; indeterminate: boolean; disabled: boolean; toggleExpand: () => void; toggleSelect: () => void; findNode: (value: string \| number) => T \| undefined; findParent: (value: string \| number) => T \| null; removeNode: (value: string \| number) => boolean; }` | Row content inside the `role="treeitem"` wrapper. `findNode`/`findParent`/`removeNode` are `findTreeNode`/`findTreeParent`/`removeTreeNode` bound to this tree's `items`. Read reactive state here; plain variables won't update the rows.
 `empty` | `any` | Replaces the empty-state row shown when no rows are visible.
 
 ## Events

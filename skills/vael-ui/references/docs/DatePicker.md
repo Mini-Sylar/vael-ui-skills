@@ -36,6 +36,7 @@ Name | Type | Default | Description
 `teleportTo` | `string \| HTMLElement \| undefined` | `'body'` | Teleport target: a CSS selector or element.
 `motionCss` | `boolean \| undefined` | `true` | `false` skips both the popover enter/leave and Calendar's month-slide transitions.
 `showButtonBar` | `boolean \| undefined` | `false` | Shows built-in Today (`single` mode only) and Clear buttons below the calendar. Has no effect once you provide the `#footer` slot, which renders instead.
+`showYearButtons` | `boolean \| undefined` | `false` | Adds « and » beside the month arrows to jump a year at a time. See Calendar's `showYearButtons`.
 `showTime` | `boolean \| undefined` | `false` | Adds an hour/minute row below the calendar (`single` mode only). Picking a date then keeps the panel open so you can set the time.
 `timeOnly` | `boolean \| undefined` | `false` | Hides the calendar and shows only the time row. Implies `showTime`.
 `hourFormat` | `"12" \| "24" \| undefined` |  | `'12'` adds an AM/PM toggle; `'24'` doesn't. Unset, it follows `locale` (or the runtime default) through `Intl`'s `hour12` resolution.
@@ -56,9 +57,9 @@ Name | Type | Description
 
 Name | Type | Description
 --- | --- | ---
+`update:modelValue` | `[value: Date \| CalendarRange \| null]` | Fires when `modelValue` changes (`v-model`).
 `open-change` | `[value: boolean, details: PopoverOpenChangeDetails]` | Fires when a close is requested; call `details.cancel()` to keep the panel open.
 `update:open` | `[value: boolean]` | Fires when `open` changes (`v-model:open`).
-`update:modelValue` | `[value: Date \| CalendarRange \| null]` | Fires when `modelValue` changes (`v-model`).
 `change` | `[value: Date \| CalendarRange \| null]` | Fires when you pick a date, time or range endpoint, or use Today or Clear.
 `month-change` | `[value: Date]` | Fires when the calendar's displayed month changes.
 

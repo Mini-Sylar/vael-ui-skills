@@ -6,6 +6,10 @@ A data grid with sorting, selection, resizing, and virtualization, composed from
 import { DataTable } from 'vael-ui' // or 'vael-ui/vapor'
 ```
 
+## Notes
+
+For more than a few hundred rows, turn on `virtualize` (it needs `scrollHeight`). It keeps sorting, selection and scrolling fast. Row move animation turns off on its own above 150 rows. While `loading` is on, screen readers hear the `uiKit.dataTable.loading` message.
+
 ## Props
 
 Name | Type | Default | Description

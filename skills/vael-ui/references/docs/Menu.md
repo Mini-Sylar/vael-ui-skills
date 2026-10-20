@@ -1,9 +1,18 @@
 # Menu
 
-A dropdown list of actions opened from a trigger, with full keyboard navigation.
+A dropdown list of actions opened from a trigger, with full keyboard navigation. Submenu panels share the `ui` prop and carry `data-level` (`1`, `2`, …) for styling one level.
 
 ```ts
 import { Menu } from 'vael-ui' // or 'vael-ui/vapor'
+```
+
+## Notes
+
+Set `checked` on a `MenuItemData` row to make it a toggle: any boolean renders it as `role="menuitemcheckbox"` with `aria-checked`, and `true` adds a trailing check mark (outside the `#item` slot, so custom rows keep it). Menu doesn't flip the value; update it in `@select` and add `keepOpen` to toggle several in a row. Rows without `checked` render as plain `role="menuitem"` actions.
+
+```ts
+const items = ref([{ label: 'Bold', value: 'bold', checked: true, keepOpen: true }])
+function onSelect(item) { item.checked = !item.checked }
 ```
 
 ## Props

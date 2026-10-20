@@ -1,6 +1,6 @@
 # Button
 
-A clickable action with variants, sizes, loading states, and icon slots built in.
+A clickable action with variants, sizes, loading states, and icon slots built in. `v-model:pressed` makes it a toggle.
 
 ```ts
 import { Button } from 'vael-ui' // or 'vael-ui/vapor'
@@ -21,7 +21,9 @@ Name | Type | Default | Description
 `type` | `"button" \| "submit" \| "reset" \| undefined` | `'button'` | Native `type` attribute; applied only when `as` is `'button'`.
 `as` | `string \| undefined` | `'button'` | Root tag, such as `as="a"` for a link styled as a button.
 `badgePlacement` | `"top-start" \| "top-end" \| "bottom-start" \| "bottom-end" \| undefined` | `'top-end'` | Where the `#badge` slot sits. Setting it reserves the wrapper up front, so a `v-if`'d `#badge` keeps a stable DOM position.
+`value` | `string \| number \| undefined` |  | In a `ButtonGroup` with a `v-model`, what this button turns on and off. Still the native `value` attribute, for a submit button in a form. Style the on state with `[aria-pressed='true']`, or Tailwind's `aria-pressed:`.
 `ui` | `Partial<{ root: UiPartValue; leading: UiPartValue; trailing: UiPartValue; content: UiPartValue; label: UiPartValue; badge: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`pressed` | `boolean \| undefined` |  | Opt-in standalone toggle: `v-model:pressed` turns it on and off and sets `aria-pressed`. Style the on state with `[aria-pressed='true']`, or Tailwind's `aria-pressed:`.
 
 ## Slots
 
@@ -35,7 +37,9 @@ Name | Type | Description
 
 ## Events
 
-_None._
+Name | Type | Description
+--- | --- | ---
+`update:pressed` | `[value: boolean \| undefined]` | Fires when `pressed` changes (`v-model:pressed`).
 
 ## Exposed
 

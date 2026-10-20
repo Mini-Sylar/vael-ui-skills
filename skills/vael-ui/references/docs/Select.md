@@ -1,6 +1,6 @@
 # Select
 
-A dropdown for picking one or more values from a list, with search and virtualization.
+A dropdown for picking one or more values from a list, with search, option groups and virtualization.
 
 ```ts
 import { Select } from 'vael-ui' // or 'vael-ui/vapor'
@@ -10,7 +10,7 @@ import { Select } from 'vael-ui' // or 'vael-ui/vapor'
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-`items` | `readonly T[]` |  | Options to choose from.
+`items` | `readonly (T \| SelectGroupData<T>)[]` |  | Options to choose from. Put `{ label, items }` entries among them to show options under a group label, like `<optgroup>`.
 `placeholder` | `string \| undefined` |  | Text shown in the trigger while nothing is selected.
 `multiple` | `boolean \| undefined` | `false` | Lets you select several items. The model becomes an array and the panel stays open on pick.
 `disabled` | `boolean \| undefined` | `false` | Disables the trigger and blocks interaction.
@@ -33,10 +33,10 @@ Name | Type | Default | Description
 `teleportTo` | `string \| HTMLElement \| undefined` | `'body'` | Teleport target: a CSS selector or element.
 `scrollFade` | `boolean \| undefined` | `true` | Masks the panel's top/bottom edge as its content scrolls under it, signaling there's more.
 `maxPanelHeight` | `number \| undefined` | `320` | Caps the panel height in pixels; the list scrolls past it. The viewport limits it too, so pass `Infinity` to fill the available space.
-`motionCss` | `boolean \| undefined` | `true` | `false` skips the built-in chip transitions (`multiple` only); animate them yourself via `@chip-enter`/`@chip-leave`.
+`motionCss` | `boolean \| undefined` | `true` | `false` skips the built-in motion: the list easing to its new height as you search, the clear button, and chip transitions (`multiple`), which you can animate yourself via `@chip-enter`/`@chip-leave`.
 `filter` | `SelectFilter<T> \| undefined` |  | Adds a search box to the panel. `true` matches labels ignoring case and accents, a function matches your way, `false` leaves filtering to you via `v-model:query`.
 `filterPlaceholder` | `string \| undefined` | `'Search...'` | Placeholder for the search box.
-`ui` | `Partial<{ trigger: UiPartValue; value: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; filter: UiPartValue; list: UiPartValue; option: UiPartValue; empty: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`ui` | `Partial<{ trigger: UiPartValue; value: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; filter: UiPartValue; list: UiPartValue; option: UiPartValue; group: UiPartValue; groupLabel: UiPartValue; empty: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `modelValue` | `string \| number \| (string \| number)[] \| null \| undefined` | `null` | Selected value, or an array of values when `multiple`.
 `query` | `string \| undefined` | `''` | Search box text. Clears when the panel closes.
 `open` | `boolean \| undefined` | `false` | Whether the panel is open.
@@ -49,7 +49,8 @@ Name | Type | Description
 `header` | `{ count: number; total: number; }` | Content above the filter input (when `filter` is on) or the listbox. `count` and `total` support a result-count readout.
 `filter` | `{ query: string; onKeydown: (event: KeyboardEvent) => void; }` | Replaces the built-in filter row. Bind your input to `v-model:query`; pass keys to `onKeydown` to keep arrow/Home/End/Enter list navigation.
 `filter-icon` | `any` | Replaces only the built-in filter row's leading icon and keeps its Input frame.
-`item` | `{ item: T; active: boolean; selected: boolean; }` | Custom row content for each option.
+`item` | `{ item: T; index: number; active: boolean; selected: boolean; group?: SelectGroupSlotData<T> \| undefined; }` | Custom row content for each option. `group` is the group it sits in, if any.
+`group-label` | `{ group: SelectGroupSlotData<T>; items: T[]; }` | Custom content for a group's label. `group` is the object you passed, with your own fields; `items` are its options still showing. Screen readers read this content as the group's name.
 `empty` | `any` | Replaces the text shown when no items match.
 `footer` | `any` | Content below the listbox, such as a "create new" or "view all" action.
 
@@ -63,8 +64,8 @@ Name | Type | Description
 `reach-end` | `[]` | Fires when the list's last rows render, for loading more. Re-arms when the item count changes.
 `chip-enter` | `[el: Element, done: () => void]` | Fires instead of the built-in CSS transition when `motionCss` is `false`. Call `done()` once your enter animation finishes.
 `chip-leave` | `[el: Element, done: () => void]` | Same as `@chip-enter`, for a chip's removal.
-`update:open` | `[value: boolean]` | Fires when `open` changes (`v-model:open`).
 `update:modelValue` | `[value: string \| number \| (string \| number)[] \| null]` | Fires when `modelValue` changes (`v-model`).
+`update:open` | `[value: boolean]` | Fires when `open` changes (`v-model:open`).
 `update:query` | `[value: string]` | Fires when `query` changes (`v-model:query`).
 
 ## Exposed

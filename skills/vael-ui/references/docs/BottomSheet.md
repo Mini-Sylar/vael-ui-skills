@@ -16,6 +16,7 @@ Name | Type | Default | Description
 `dismissible` | `boolean \| undefined` | `true` | Dragging past the smallest snap point closes the sheet.
 `width` | `"sm" \| "md" \| "lg" \| "full" \| undefined` | `'full'` | Panel width: `'full'` spans edge to edge; `'sm'`, `'md'` and `'lg'` cap and center it.
 `fullScreen` | `boolean \| undefined` | `false` | Uses a single snap point that covers the full viewport height. Shorthand for `[{ id: 'full', height: 1 }]` snap points.
+`scrollFade` | `boolean \| undefined` | `true` | Fades the content's top and bottom edges while there's more to scroll, like Dialog.
 `closeOnEsc` | `boolean \| undefined` | `true` | Closes the sheet when you press Escape.
 `closeOnOverlay` | `boolean \| undefined` | `true` | Closes the sheet when you click the overlay.
 `modal` | `boolean \| undefined` | `true` | `false` disables the overlay, scroll lock and focus trap, so the page behind stays interactive.

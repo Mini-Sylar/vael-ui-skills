@@ -6,6 +6,10 @@ A row of single-character boxes for one-time codes, with paste and auto-advance.
 import { OtpInput } from 'vael-ui' // or 'vael-ui/vapor'
 ```
 
+## Notes
+
+`aria-label`, `aria-labelledby` and `aria-describedby` go on the hidden native `<input>` that takes the typing, not the wrapper; a surrounding `Field` label works too.
+
 ## Props
 
 Name | Type | Default | Description
@@ -16,6 +20,8 @@ Name | Type | Default | Description
 `disabled` | `boolean \| undefined` | `false` | Disables the input and blocks interaction. A disabled parent Field also disables it.
 `invalid` | `boolean \| undefined` | `false` | Standalone override; ORed with the nearest Field's `error` state.
 `size` | `"sm" \| "md" \| "lg" \| undefined` | `'md'` | Control size.
+`variant` | `"cells" \| "field" \| undefined` | `'cells'` | `'field'` draws one box around the whole code, like a phone's verification field, instead of a box per cell.
+`placeholder` | `string \| undefined` |  | One character shown in each empty cell, such as `0` or `•`.
 `name` | `string \| undefined` |  | Native `name` on the input, for plain `<form>` submission.
 `groups` | `number \| number[] \| undefined` |  | Splits the cells into groups with a separator between them: a group size (`3` for `123-456`), or each group's size (`[3, 4]`).
 `ui` | `Partial<{ root: UiPartValue; input: UiPartValue; cell: UiPartValue; separator: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.

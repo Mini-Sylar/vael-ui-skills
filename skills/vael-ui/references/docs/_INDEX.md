@@ -20,6 +20,8 @@
 - [Textarea](./Textarea.md): A multi-line text field that can auto-grow with its content.
 - [InputNumber](./InputNumber.md): A numeric field with increment/decrement controls and format-aware parsing.
 - [OtpInput](./OtpInput.md): A row of single-character boxes for one-time codes, with paste and auto-advance.
+- [Editable](./Editable.md): Text that turns into an input when clicked and saves on Enter or blur, for renaming in place.
+- [ColorPicker](./ColorPicker.md): A color swatch that opens a picker: a saturation and brightness plane, a hue slider, a hex field, an eyedropper where the browser has one, and optional presets.
 - [PasswordInput](./PasswordInput.md): A password field with a reveal toggle and a requirements hint.
 - [Checkbox](./Checkbox.md): A tri-state toggle for a single yes/no/indeterminate choice.
 - [Radio](./Radio.md): One option in a mutually-exclusive set, always used inside a RadioGroup.

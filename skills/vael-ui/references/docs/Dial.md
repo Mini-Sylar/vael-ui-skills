@@ -6,6 +6,10 @@ A circular drag control for picking a numeric value, like a volume knob.
 import { Dial } from 'vael-ui' // or 'vael-ui/vapor'
 ```
 
+## Notes
+
+`aria-label`, `aria-labelledby` and `aria-describedby` go on the focusable `role="slider"` dial, not the wrapper; a surrounding `Field` label works too.
+
 ## Props
 
 Name | Type | Default | Description

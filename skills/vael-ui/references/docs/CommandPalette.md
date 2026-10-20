@@ -24,7 +24,7 @@ Name | Type | Default | Description
 `teleportTo` | `string \| undefined` |  | Teleport target: a CSS selector. Takes precedence over `container`.
 `container` | `DOMTarget \| undefined` |  | Scopes the palette to one element instead of the viewport. Forwarded to the underlying Dialog.
 `scrollTarget` | `DOMTarget \| undefined` |  | Element whose scrolling locks while the palette is open, if different from `container`. Forwarded to the underlying Dialog.
-`ui` | `Partial<{ panel: UiPartValue; input: UiPartValue; list: UiPartValue; groupLabel: UiPartValue; item: UiPartValue; empty: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`ui` | `Partial<{ panel: UiPartValue; input: UiPartValue; list: UiPartValue; groupLabel: UiPartValue; item: UiPartValue; empty: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `open` | `boolean \| undefined` | `false` | Whether the palette is open.
 `query` | `string \| undefined` | `''` | Search text. Resets to empty each time the palette opens.
 
@@ -32,8 +32,10 @@ Name | Type | Default | Description
 
 Name | Type | Description
 --- | --- | ---
-`item` | `{ item: T; index: number; active: boolean; select: () => void; }` | Custom row content for each item; call `select()` to pick it.
+`item` | `{ item: T; index: number; active: boolean; group: string \| undefined; select: () => void; }` | Custom row content for each item; call `select()` to pick it. `group` is its group's name.
+`group-label` | `{ group: string; items: T[]; }` | Custom content for a group's heading. `group` is its name; `items` are its items still showing.
 `empty` | `any` | Replaces the localized "no results" row shown when nothing matches.
+`footer` | `{ activeItem: T \| undefined; query: string; }` | A strip under the list, such as key hints. `activeItem` is the highlighted item, if any.
 
 ## Events
 
@@ -56,6 +58,7 @@ Name | Type | Description
 `cancelClose` | `() => void \| undefined` | Cancels a close pending in `beforeClose` and keeps the palette open.
 `inputEl` | `HTMLInputElement \| null` | Search input element (null while closed).
 `listEl` | `HTMLElement \| null` | Results list element (null while closed).
-`filteredItems` | `readonly T[]` | Items matching the current query, in `items` order.
+`filteredItems` | `T[]` | Items matching the current query, in `items` order.
 `activeIndex` | `number` | Index of the highlighted item in `filteredItems` (`-1` when none).
+`activeItem` | `T \| undefined` | The highlighted item, for acting on it from your own keys (copy, open in a new tab).
 

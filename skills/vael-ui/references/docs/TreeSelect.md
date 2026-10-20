@@ -34,7 +34,7 @@ Name | Type | Default | Description
 `forceMount` | `boolean \| undefined` | `false` | Keeps it mounted, toggled with `v-show`, so you can own the enter/exit animation.
 `teleportTo` | `string \| HTMLElement \| undefined` | `'body'` | Teleport target: a CSS selector or element.
 `maxPanelHeight` | `number \| undefined` | `320` | Caps the panel height in pixels; the tree scrolls past it. The viewport limits it too, so pass `Infinity` to fill the available space.
-`motionCss` | `boolean \| undefined` | `true` | `false` skips all built-in motion (row transitions and chevron rotation).
+`motionCss` | `boolean \| undefined` | `true` | `false` skips all built-in motion (row transitions, chevron rotation, the panel and list easing to a new height, and the clear button).
 `ui` | `Partial<{ trigger: UiPartValue; value: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; filter: UiPartValue; list: UiPartValue; node: UiPartValue; empty: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `modelValue` | `string \| number \| (string \| number)[] \| null \| undefined` | `null` | Selected value, or an array of values outside `'single'` mode.
 `open` | `boolean \| undefined` | `false` | Whether the panel is open.
@@ -59,8 +59,8 @@ Name | Type | Description
 `select` | `[node: T]` | Fires when you pick or toggle a node.
 `change` | `[value: string \| number \| (string \| number)[] \| null]` | Fires when you change the selection, including clear.
 `expand-change` | `[value: string \| number, expanded: boolean]` | Fires when a node expands or collapses, except during filter-driven auto-expansion.
-`update:open` | `[value: boolean]` | Fires when `open` changes (`v-model:open`).
 `update:modelValue` | `[value: string \| number \| (string \| number)[] \| null]` | Fires when `modelValue` changes (`v-model`).
+`update:open` | `[value: boolean]` | Fires when `open` changes (`v-model:open`).
 `update:query` | `[value: string]` | Fires when `query` changes (`v-model:query`).
 `update:node` | `[value: T \| T[] \| null]` | Fires when `node` changes (`v-model:node`).
 
