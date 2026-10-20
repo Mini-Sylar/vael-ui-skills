@@ -15,6 +15,7 @@ Name | Type | Default | Description
 `variant` | `ButtonVariant \| undefined` | `'primary'` | Visual style of the button.
 `size` | `ButtonSize \| undefined` | `'md'` | Button size.
 `loader` | `ButtonLoaderPlacement \| undefined` | `'overlay'` | `'overlay'` centers the loader over the fading content; `'inline'` slides a spinner in at the start.
+`loaderType` | `LoaderType \| undefined` | `'ring'` | The loading animation. Unset, it follows the nearest ConfigProvider's `loaderType`.
 `icon` | `boolean \| undefined` | `false` | Renders a square icon-only button; pair it with an `aria-label`.
 `pill` | `boolean \| undefined` | `false` | Gives the button a fully rounded pill shape.
 `block` | `boolean \| undefined` | `false` | Stretches the button to its container's full inline size.

@@ -16,11 +16,12 @@ Name | Type | Default | Description
 `canDrop` | `((details: SortableDropDetails) => boolean) \| undefined` |  | Runs repeatedly while you drag; return `false` to mark the target invalid. Keep it cheap.
 `beforeDrop` | `((details: SortableDropDetails) => boolean \| Promise<boolean>) \| undefined` |  | Async check at drop time. Return `false`, or a promise of `false`, to cancel. Pairs with `confirmAction().result`.
 `autoScroll` | `boolean \| undefined` | `true` | Scrolls the list, any scrollable ancestor, or the page while a drag nears its edge.
+`restrictToList` | `boolean \| undefined` | `false` | For lists in a `group`: keeps the dragged row inside the part of the list it's over that's on screen, so it never hangs past a fixed-height column. Leave it off for lists that grow with their rows.
 `disabled` | `boolean \| undefined` | `false` | Turns off dragging, so rows stay static.
 `motionCss` | `boolean \| undefined` | `true` | `false` skips the built-in springs, so rows snap to their new slots. Use it when you drive the motion yourself.
 `group` | `SortableGroupHandle \| undefined` |  | Handle from `useSortableGroup()`. Lists that share it, `<Sortable>` or `useSortable()`, let items cross between them.
 `groupId` | `string \| number \| undefined` |  | This list's identity within `group`. Unset, Sortable assigns one.
-`previewMode` | `"element" \| "clone" \| undefined` | `'element'` | `group` only: what follows the pointer once a drag leaves this list. `'element'` moves the real item; `'clone'` floats a copy, for content that can't leave its layout.
+`previewMode` | `"element" \| "clone" \| undefined` | `'element'` | What follows the pointer. `'element'` moves the real item; `'clone'` floats a copy from the start of the drag, for content that can't leave its layout. The original is the placeholder: it moves to where the row will land and carries `data-sortable-source` (hidden by default; style it to show it dimmed or outlined).
 `touchDragDelay` | `number \| undefined` | `0` | Milliseconds a touch must hold a row still before a drag starts. Unset, drags start at once. Set it only when `#item` or `#handle` content is also tappable; the built-in handle never needs it.
 `ui` | `Partial<{ root: UiPartValue; item: UiPartValue; handle: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `items` | `T[] \| undefined` | `[]` | The list, in order. Sortable assigns a new array when a drop commits, so bind it with `v-model:items`.

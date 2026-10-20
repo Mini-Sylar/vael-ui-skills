@@ -21,6 +21,7 @@ Name | Type | Default | Description
 `theme` | `UiTheme \| undefined` |  | Auto-derives colors and applies radius and component font size. Injects a scoped `<style>` tag.
 `size` | `"sm" \| "md" \| "lg" \| undefined` |  | Default size for buttons, form controls and tables inside. A component's own `size` wins.
 `motionCss` | `boolean \| undefined` |  | `false` makes every component inside change instantly, with no built-in transitions, e.g. for screenshot tests. Panels still open and close and toasts still leave; a component's own `motionCss` wins.
+`loaderType` | `LoaderType \| undefined` | `'ring'` | Animation for every loader inside: Loader, Button's loading state, list loading rows, loading toasts and PullToRefresh. A component's own `type` or `loaderType` wins.
 
 ## Slots
 
