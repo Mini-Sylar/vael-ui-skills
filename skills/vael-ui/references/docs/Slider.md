@@ -46,5 +46,5 @@ Name | Type | Description
 `trackEl` | `HTMLElement \| null` | Track element.
 `fillEl` | `HTMLElement \| null` | Filled portion of the track.
 `thumbEls` | `HTMLElement[] \| null` | Thumb elements, one per value (two in range mode).
-`dragging` | `boolean` | `true` while a thumb is being dragged. 
+`dragging` | `boolean` | `true` while a thumb is being dragged.
 

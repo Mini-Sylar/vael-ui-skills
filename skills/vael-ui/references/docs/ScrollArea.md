@@ -43,5 +43,5 @@ Name | Type | Description
 `scrollToTop` | `(options?: Omit<ScrollToOptions, "top"> \| undefined) => void` | Smooth-scrolls to the top.
 `scrollToBottom` | `(options?: Omit<ScrollToOptions, "top"> \| undefined) => void` | Smooth-scrolls to the bottom.
 `scrollToStart` | `(options?: Omit<ScrollToOptions, "left"> \| undefined) => void` | Smooth-scrolls to the left edge.
-`scrollToEnd` | `(options?: Omit<ScrollToOptions, "left"> \| undefined) => void` | Smooth-scrolls to the right edge. 
+`scrollToEnd` | `(options?: Omit<ScrollToOptions, "left"> \| undefined) => void` | Smooth-scrolls to the right edge.
 

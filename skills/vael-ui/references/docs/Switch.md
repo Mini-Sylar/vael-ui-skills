@@ -38,5 +38,5 @@ Name | Type | Description
 `el` | `HTMLElement \| null` | Root element.
 `inputEl` | `HTMLInputElement \| null` | Native checkbox input (`role="switch"`).
 `trackEl` | `HTMLElement \| null` | Track element.
-`thumbEl` | `HTMLElement \| null` | Thumb element. 
+`thumbEl` | `HTMLElement \| null` | Thumb element.
 

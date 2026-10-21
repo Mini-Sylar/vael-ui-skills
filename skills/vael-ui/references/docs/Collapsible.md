@@ -33,5 +33,5 @@ Name | Type | Description
 Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
-`panelEl` | `HTMLElement \| null` | Panel element, always mounted. 
+`panelEl` | `HTMLElement \| null` | Panel element, always mounted.
 

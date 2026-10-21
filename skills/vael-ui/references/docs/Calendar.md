@@ -46,5 +46,5 @@ Name | Type | Description
 `gridEl` | `HTMLElement \| null` | Day grid element (`null` while the month or year grid shows).
 `goToPreviousMonth` | `() => void` | Steps back one page: a month, or a year or 12 years in the month and year grids.
 `goToNextMonth` | `() => void` | Steps forward one page: a month, or a year or 12 years in the month and year grids.
-`focusDay` | `(day: Date) => void` | Moves keyboard focus to the given day, switching months if needed. Does nothing unless `view` is `'date'`. 
+`focusDay` | `(day: Date) => void` | Moves keyboard focus to the given day, switching months if needed. Does nothing unless `view` is `'date'`.
 

@@ -47,5 +47,5 @@ Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
 `inputEl` | `HTMLInputElement \| null` | Invisible native `<input>` that receives typing and paste.
-`cellEls` | `HTMLElement[] \| null` | Cell elements, one per character slot. 
+`cellEls` | `HTMLElement[] \| null` | Cell elements, one per character slot.
 

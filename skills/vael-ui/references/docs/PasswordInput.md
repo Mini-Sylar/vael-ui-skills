@@ -55,5 +55,5 @@ Name | Type | Description
 `visible` | `boolean` | Whether the password is shown as plain text (writable).
 `hintPanelEl` | `HTMLElement \| null` | Hint popover panel element (null while closed or in `'inline'` mode).
 `closeHint` | `() => void` | Closes the hint popover, running `beforeClose` if set.
-`cancelCloseHint` | `() => void` | Aborts a pending `beforeClose` exit and keeps the hint popover open. 
+`cancelCloseHint` | `() => void` | Aborts a pending `beforeClose` exit and keeps the hint popover open.
 

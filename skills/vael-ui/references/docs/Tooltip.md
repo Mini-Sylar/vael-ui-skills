@@ -50,5 +50,5 @@ Name | Type | Description
 `isClosing` | `boolean` | `true` while a `beforeClose` close is pending.
 `show` | `() => void` | Opens the tooltip immediately, skipping `openDelay`; revives it if it's mid-close.
 `hide` | `() => void` | Closes the tooltip, running `@open-change` and `beforeClose` first.
-`cancelClose` | `() => void` | Cancels a close pending in `beforeClose` and keeps the tooltip open. 
+`cancelClose` | `() => void` | Cancels a close pending in `beforeClose` and keeps the tooltip open.
 

@@ -41,5 +41,5 @@ Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
 `dialEl` | `HTMLElement \| null` | Focusable dial element (`role="slider"`).
-`indicatorEl` | `HTMLElement \| null` | Pointer mark that rotates with the value. 
+`indicatorEl` | `HTMLElement \| null` | Pointer mark that rotates with the value.
 

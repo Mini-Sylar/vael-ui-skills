@@ -43,5 +43,5 @@ Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
 `dialEl` | `HTMLElement \| null` | Focusable dial element (`role="slider"`).
-`ticksEl` | `SVGGElement \| null` | SVG group holding the tick marks. 
+`ticksEl` | `SVGGElement \| null` | SVG group holding the tick marks.
 

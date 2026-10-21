@@ -68,5 +68,5 @@ _None._
 Name | Type | Description
 --- | --- | ---
 `panelEl` | `HTMLElement \| null` | Panel element, always mounted.
-`open` | `boolean` | Whether the item is open. 
+`open` | `boolean` | Whether the item is open.
 

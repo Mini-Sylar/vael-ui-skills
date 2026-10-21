@@ -37,5 +37,5 @@ Name | Type | Description
 Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
-`imgEl` | `HTMLImageElement \| null` | Image element (null without `src`). 
+`imgEl` | `HTMLImageElement \| null` | Image element (null without `src`).
 

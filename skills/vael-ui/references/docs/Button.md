@@ -48,5 +48,5 @@ Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element (the button itself, even when a badge wrapper is rendered).
 `loading` | `boolean` | Whether the button is loading, from the `loading` prop or `'auto'` tracking.
-`run` | `<T>(fn: () => T \| Promise<T>) => Promise<T>` | Runs `fn` with the loading state shown until it settles. 
+`run` | `<T>(fn: () => T \| Promise<T>) => Promise<T>` | Runs `fn` with the loading state shown until it settles.
 

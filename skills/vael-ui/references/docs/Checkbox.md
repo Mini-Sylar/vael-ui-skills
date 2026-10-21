@@ -41,5 +41,5 @@ Name | Type | Description
 `el` | `HTMLElement \| null` | Root element.
 `inputEl` | `HTMLInputElement \| null` | Native checkbox input.
 `boxEl` | `HTMLElement \| null` | Visual box element.
-`checkEl` | `SVGElement \| null` | Check-mark SVG element. 
+`checkEl` | `SVGElement \| null` | Check-mark SVG element.
 

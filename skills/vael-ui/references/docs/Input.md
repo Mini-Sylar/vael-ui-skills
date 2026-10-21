@@ -37,5 +37,5 @@ Name | Type | Description
 Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element (the frame around the input).
-`inputEl` | `HTMLInputElement \| null` | Native `<input>` element. 
+`inputEl` | `HTMLInputElement \| null` | Native `<input>` element.
 

@@ -34,5 +34,5 @@ Name | Type | Description
 `el` | `HTMLElement \| null` | Root element.
 `inputEl` | `HTMLInputElement \| null` | Native radio input.
 `controlEl` | `HTMLElement \| null` | The circle that fills when selected.
-`dotEl` | `HTMLElement \| null` | The dot inside it. 
+`dotEl` | `HTMLElement \| null` | The dot inside it.
 

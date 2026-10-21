@@ -43,5 +43,5 @@ Name | Type | Description
 `el` | `HTMLElement \| null` | Root element (null while closed unless `forceMount`).
 `close` | `() => void` | Closes the message, running `@open-change` and `beforeClose` first.
 `isClosing` | `boolean` | `true` while a `beforeClose` close is pending.
-`cancelClose` | `() => void` | Cancels a close pending in `beforeClose` and keeps the message open. 
+`cancelClose` | `() => void` | Cancels a close pending in `beforeClose` and keeps the message open.
 

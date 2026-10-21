@@ -47,5 +47,5 @@ Name | Type | Description
 `dropzoneEl` | `HTMLElement \| null` | Dropzone element.
 `inputEl` | `HTMLInputElement \| null` | Native file input.
 `listEl` | `HTMLElement \| null` | File list element (`null` until the first file is added).
-`browse` | `() => void` | Opens the native file picker (no-op while disabled). 
+`browse` | `() => void` | Opens the native file picker (no-op while disabled).
 

@@ -76,5 +76,5 @@ Name | Type | Description
 `isClosing` | `boolean` | `true` while a `beforeClose` close is pending.
 `open` | `() => void` | Opens the panel unless disabled.
 `close` | `() => void` | Closes the panel, running `@open-change` and `beforeClose` first.
-`cancelClose` | `() => void` | Cancels a close pending in `beforeClose` and keeps the panel open. 
+`cancelClose` | `() => void` | Cancels a close pending in `beforeClose` and keeps the panel open.
 

@@ -50,5 +50,5 @@ Name | Type | Description
 `positionerStyle` | `Record<string, string>` | Computed position styles applied to the positioner.
 `isClosing` | `boolean` | `true` while a `beforeClose` close is pending.
 `close` | `() => void` | Closes the panel, running `@open-change` and `beforeClose` first.
-`cancelClose` | `() => void` | Cancels a close pending in `beforeClose` and keeps the panel open. 
+`cancelClose` | `() => void` | Cancels a close pending in `beforeClose` and keeps the panel open.
 

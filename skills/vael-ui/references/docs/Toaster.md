@@ -37,5 +37,5 @@ Name | Type | Description
 
 Name | Type | Description
 --- | --- | ---
-`toasterEl` | `HTMLElement \| null` | The toast list (`<ol>`) element, inside the live region. 
+`toasterEl` | `HTMLElement \| null` | The toast list (`<ol>`) element, inside the live region.
 

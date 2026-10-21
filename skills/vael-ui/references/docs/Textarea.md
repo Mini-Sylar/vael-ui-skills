@@ -41,5 +41,5 @@ Name | Type | Description
 Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element (the frame around the textarea).
-`textareaEl` | `HTMLTextAreaElement \| null` | Native `<textarea>` element. 
+`textareaEl` | `HTMLTextAreaElement \| null` | Native `<textarea>` element.
 

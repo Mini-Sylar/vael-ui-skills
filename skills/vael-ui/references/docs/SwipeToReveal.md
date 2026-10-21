@@ -44,5 +44,5 @@ Name | Type | Description
 `leadingProgress` | `number` | Reveal progress of the leading edge, from 0 to 1. Live during a drag, settled after.
 `trailingProgress` | `number` | Reveal progress of the trailing edge, from 0 to 1. Live during a drag, settled after.
 `reveal` | `(side?: SwipeRevealSide \| undefined) => void` | Opens an edge. Without `side`, it opens the trailing edge, or the leading one if it's the only edge.
-`close` | `() => void` | Closes the open edge. 
+`close` | `() => void` | Closes the open edge.
 

@@ -36,5 +36,5 @@ Name | Type | Description
 Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
-`itemEls` | `HTMLElement[] \| null` | Star elements, one per star. 
+`itemEls` | `HTMLElement[] \| null` | Star elements, one per star.
 

@@ -58,5 +58,5 @@ Name | Type | Description
 `isClosing` | `boolean` | `true` while a `beforeClose` close is pending.
 `close` | `() => void` | Closes the dialog, running `@open-change` and `beforeClose` first.
 `cancelClose` | `() => void` | Cancels a close pending in `beforeClose` and keeps the dialog open.
-`maximized` | `boolean` | Whether the panel is maximized. 
+`maximized` | `boolean` | Whether the panel is maximized.
 

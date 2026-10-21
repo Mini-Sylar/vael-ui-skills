@@ -38,5 +38,5 @@ Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
 `handleEl` | `HTMLElement \| null` | Drag handle element.
-`isDragging` | `boolean` | Whether you're dragging the handle with a pointer. 
+`isDragging` | `boolean` | Whether you're dragging the handle with a pointer.
 

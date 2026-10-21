@@ -36,5 +36,5 @@ Name | Type | Description
 `zoneEl` | `HTMLElement \| null` | The pull zone above the content; its height follows the pull.
 `state` | `PullToRefreshState` | Current phase: `'idle'`, `'pulling'`, `'ready'`, `'loading'` or `'done'`.
 `progress` | `number` | Pull distance as a fraction of `threshold`, from 0 to 1.
-`refresh` | `() => Promise<void>` | Starts a refresh without a pull. No-op while one is already running. 
+`refresh` | `() => Promise<void>` | Starts a refresh without a pull. No-op while one is already running.
 

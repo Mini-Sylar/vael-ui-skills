@@ -53,5 +53,5 @@ Name | Type | Description
 `el` | `HTMLElement \| null` | Root element (the frame around the input).
 `inputEl` | `HTMLInputElement \| null` | Native `<input>` element.
 `increment` | `() => void` | Adds one `step`, clamped to `max`. No-op when disabled or read-only.
-`decrement` | `() => void` | Subtracts one `step`, clamped to `min`. No-op when disabled or read-only. 
+`decrement` | `() => void` | Subtracts one `step`, clamped to `min`. No-op when disabled or read-only.
 

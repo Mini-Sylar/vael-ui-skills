@@ -31,5 +31,5 @@ _None._
 
 Name | Type | Description
 --- | --- | ---
-`el` | `HTMLElement \| null` | Root element. 
+`el` | `HTMLElement \| null` | Root element.
 

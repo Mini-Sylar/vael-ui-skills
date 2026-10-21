@@ -51,5 +51,5 @@ Name | Type | Description
 `isClosing` | `boolean` | Whether a close is in progress (the exit animation or `beforeClose` hasn't finished).
 `close` | `() => void` | Closes the sheet with its slide-out animation.
 `cancelClose` | `() => void` | Cancels a close pending in `beforeClose` and keeps the sheet open.
-`releaseVelocity` | `number` | Drag speed at release in px/ms, positive toward closed. Read it in `beforeClose` to carry a flick on. `0` when something other than a drag closed the sheet. 
+`releaseVelocity` | `number` | Drag speed at release in px/ms, positive toward closed. Read it in `beforeClose` to carry a flick on. `0` when something other than a drag closed the sheet.
 
