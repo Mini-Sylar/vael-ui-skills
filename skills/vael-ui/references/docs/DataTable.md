@@ -77,6 +77,7 @@ Name | Type | Description
 Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
+`highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between body rows. With `motionCss: false` it moves at once, for your own animation.
 
 ## Column
 

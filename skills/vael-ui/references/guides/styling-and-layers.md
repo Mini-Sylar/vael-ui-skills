@@ -65,6 +65,10 @@ Each semantic color (`danger`/`success`/`warning`/`info`) also has its own `-hov
 | `--ui-duration-drawer` | `500ms` | Duration for drawer/sheet slide transitions. |
 | `--ui-duration-press` | `160ms` | Duration for press/tap feedback. |
 | `--ui-duration-enter` | `200ms` | Duration for enter/open transitions. |
+| `--ui-duration-indicator` | `120ms` | How long the sliding hover highlight in lists and menus takes to glide to the next row. |
+| `--ui-duration-indicator-wide` | `200ms` | The same for wide rows (MenuList, Tree, DataTable), which move as a heavier slab. |
+| `--ui-ease-indicator` | `var(--ui-ease-out)` | The sliding highlight's easing. |
+| `--ui-indicator-bg` | `var(--ui-muted)` | The sliding highlight's colour. Set it instead of a row `:hover` background, which would paint over it. |
 | `--ui-duration-exit` | `150ms` | Duration for exit/close transitions. |
 | `--ui-duration-tooltip` | `125ms` | Duration for tooltip open. |
 | `--ui-duration-tooltip-exit` | `100ms` | Duration for tooltip close. |

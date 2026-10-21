@@ -37,6 +37,7 @@ Name | Type | Description
 Name | Type | Description
 --- | --- | ---
 `update:modelValue` | `[value: number \| [number, number]]` | Fires when `modelValue` changes (`v-model`).
+`change` | `[value: number \| [number, number]]` | Fires with the final value when you release a thumb or press a key, like a native range input's `change`. `v-model` updates on every move.
 
 ## Exposed
 

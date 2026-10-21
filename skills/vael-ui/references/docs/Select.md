@@ -76,6 +76,7 @@ Name | Type | Description
 `panelEl` | `HTMLElement \| null` | Panel element (null while closed).
 `positionerEl` | `HTMLElement \| null` | Positioning wrapper around the panel (null while closed).
 `listEl` | `HTMLElement \| null` | Scrollable listbox element (null while closed).
+`highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between options (null while closed). With `motionCss: false` it moves at once, for your own animation.
 `filterInputRef` | `{ el: HTMLElement \| null; inputEl: HTMLInputElement \| null; } \| null` | Built-in search Input instance (null without `filter`, with a `#filter` slot, or while closed).
 `placement` | `Placement` | Resolved placement after flipping, e.g. `'bottom-start'`.
 `positionerStyle` | `Record<string, string>` | Inline positioning styles applied to the positioner.

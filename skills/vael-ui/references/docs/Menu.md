@@ -63,6 +63,7 @@ Name | Type | Description
 `panelEl` | `HTMLElement \| null` | Panel element (null while closed).
 `positionerEl` | `HTMLElement \| null` | Positioning wrapper around the panel (null while closed).
 `listEl` | `HTMLElement \| null` | Item list element (null while closed).
+`highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between rows (null while closed). Under a ConfigProvider with `motionCss: false` it moves at once, for your own animation.
 `placement` | `Placement` | Resolved placement after flipping, e.g. `'bottom-start'`.
 `positionerStyle` | `Record<string, string>` | Inline positioning style applied to the positioner.
 `isClosing` | `boolean` | `true` while a `beforeClose` close is pending.

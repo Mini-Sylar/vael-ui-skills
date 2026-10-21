@@ -10,7 +10,7 @@
       "name": "vael-ui",
       "description": "Installation, usage, and best practices for the vael-ui Vue component library — the vdom/vapor split, auto-import, theming, and the animation-agnostic contract.",
       "source": "./",
-      "version": "1.2.0",
+      "version": "1.3.0",
       "author": {
         "name": "Mini-Sylar"
       },

@@ -58,6 +58,7 @@ Name | Type | Description
 `cancelClose` | `() => void \| undefined` | Cancels a close pending in `beforeClose` and keeps the palette open.
 `inputEl` | `HTMLInputElement \| null` | Search input element (null while closed).
 `listEl` | `HTMLElement \| null` | Results list element (null while closed).
+`highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between items (null while closed). With `motionCss: false` it moves at once, for your own animation.
 `filteredItems` | `T[]` | Items matching the current query, in `items` order.
 `activeIndex` | `number` | Index of the highlighted item in `filteredItems` (`-1` when none).
 `activeItem` | `T \| undefined` | The highlighted item, for acting on it from your own keys (copy, open in a new tab).

@@ -32,10 +32,10 @@ Name | Type | Description
 
 Name | Type | Description
 --- | --- | ---
+`add` | `[files: File[]]` | Fires with the files accepted from a pick or drop.
 `remove` | `[file: File]` | Fires when you remove a file from the list.
 `update:files` | `[value: File[]]` | Fires when `files` changes (`v-model:files`).
 `reject` | `[{ file: File; reason: FileRejectReason; }]` | Fires for each file that `accept`, `maxSize` or `maxFiles` rejects, with the reason.
-`add` | `[files: File[]]` | Fires with the files accepted from a pick or drop.
 `item-enter` | `[el: Element, done: () => void]` | Fires when a file row enters, with the `(el, done)` transition hook. Only when `motionCss` is `false`.
 `item-leave` | `[el: Element, done: () => void]` | Same as `item-enter`, for a row's exit.
 

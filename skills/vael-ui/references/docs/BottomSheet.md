@@ -46,7 +46,7 @@ Name | Type | Description
 --- | --- | ---
 `panelEl` | `HTMLElement \| null` | Panel element (null while closed).
 `overlayEl` | `HTMLElement \| null` | Backdrop element. `null` when `modal` is `false`.
-`activeSnap` | `string \| null` | `id` of the snap point the sheet rests at.
+`activeSnap` | `string \| null` | `id` of the snap point the sheet rests at. Set it to move the sheet there.
 `isDragging` | `boolean` | Whether you're dragging the sheet.
 `isClosing` | `boolean` | Whether a close is in progress (the exit animation or `beforeClose` hasn't finished).
 `close` | `() => void` | Closes the sheet with its slide-out animation.

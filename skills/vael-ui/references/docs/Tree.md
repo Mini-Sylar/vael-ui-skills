@@ -63,6 +63,7 @@ Name | Type | Description
 Name | Type | Description
 --- | --- | ---
 `listEl` | `HTMLElement \| null` | The `role="tree"` list element.
+`highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between rows. With `motionCss: false` it moves at once, for your own animation.
 `filterInputRef` | `{ el: HTMLElement \| null; inputEl: HTMLInputElement \| null; } \| null` | The filter box's Input instance (null when `filterable` is off).
 `focusFirstRow` | `() => void` | Focuses the first visible row.
 `initRoving` | `() => void` | Makes the first visible row the tab stop without focusing it.

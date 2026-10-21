@@ -31,4 +31,6 @@ Name | Type | Description
 Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
+`indicatorEl` | `HTMLElement \| null` | The current page's indicator, sliding between rows (null when no row is the current page).
+`highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between rows. Under a ConfigProvider with `motionCss: false` it moves at once, for your own animation.
 

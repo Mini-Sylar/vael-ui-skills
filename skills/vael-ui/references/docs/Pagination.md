@@ -39,5 +39,6 @@ Name | Type | Description
 --- | --- | ---
 `listEl` | `HTMLElement \| null` | The page-number list.
 `indicatorEl` | `HTMLElement \| null` | The sliding highlight behind the current page.
+`highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between buttons. With `motionCss: false` it moves at once, for your own animation.
 `labelsEl` | `HTMLElement \| null` | The page numbers in the contrast color, clipped to the indicator.
 

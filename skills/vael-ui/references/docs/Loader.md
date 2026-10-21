@@ -14,7 +14,7 @@ Name | Type | Default | Description
 --- | --- | --- | ---
 `size` | `string \| undefined` |  | Any CSS length. Sets the root's `font-size`, and the `em`-based ring scales with it.
 `label` | `string \| undefined` |  | Renders `role="status"` with visually hidden text as the accessible name. Omit it to make the loader `aria-hidden`.
-`type` | `'ring' \| 'dots' \| 'bars' \| 'comet' \| 'dither' \| undefined` | `'ring'` | The animation: `'ring'`, `'dots'`, `'bars'`, `'comet'` or `'dither'`. Unset, it follows the nearest ConfigProvider's `loaderType`.
+`type` | `LoaderSource \| undefined` | `'ring'` | The animation: `'ring'`, `'dots'`, `'bars'`, `'comet'` or `'dither'`, or your own component in the same 1em box. Unset, it follows the nearest ConfigProvider's `loaderType`.
 `ui` | `Partial<{ root: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 
 ## Slots

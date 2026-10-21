@@ -4,7 +4,7 @@ description: Use whenever writing, editing, reviewing or debugging Vue code that
 license: MIT
 metadata:
   author: Mini-Sylar
-  version: 1.2.0
+  version: 1.3.0
 ---
 
 # vael-ui `vael-ui@0.5.0`
@@ -95,7 +95,7 @@ A Nuxt module ships as `vael-ui/nuxt`. Add it to `modules` in `nuxt.config.ts` a
 
 Code written against an older vael-ui (or remembered from one) can break on these. The [changelog](./references/guides/changelog.md) has every release in full.
 
-- `0.5.0`: **Button colours** come from `--ui-button-bg` / `--ui-button-border` on a `::before` layer; a `background` or `border` set on the button is now hidden under it (see [Button](./references/docs/Button.md)). **Sortable**'s root is a `.ui-sortable` div with the `<ul>` inside as `.ui-sortable-list`, so selectors that assumed the root was the list need updating. New: `Editable`, `ColorPicker`, Progress rings/gauges/segments, Loader `type`, Sortable `preview-mode="clone"` and `restrict-to-list`.
+- `0.5.0`: **List hover** in Select, Combobox, CommandPalette, Menu, Tree, MenuList, DataTable, Pagination, Tabs, SelectButton, Toolbar and Calendar is one sliding `.ui-indicator`, not a background on each row; a row `:hover` background you added paints over it, so set `--ui-indicator-bg` instead. **Button colours** come from `--ui-button-bg` / `--ui-button-border` on a `::before` layer; a `background` or `border` set on the button is now hidden under it (see [Button](./references/docs/Button.md)). **Sortable**'s root is a `.ui-sortable` div with the `<ul>` inside as `.ui-sortable-list`, so selectors that assumed the root was the list need updating. New: `Editable`, `ColorPicker`, Progress rings/gauges/segments, Loader `type`, Sortable `preview-mode="clone"` and `restrict-to-list`.
 - `0.4.8`: with two months, a month picked from the second month's name lands second.
 - `0.4.6`: form fields on touch screens no longer jump to 16px; call `preventFocusZoom()` once, or set `--ui-touch-font-size: 16px`.
 - `0.4.0`: Select/Combobox/TreeSelect panels cap at `maxPanelHeight` 320; DatePicker opens on click/ArrowDown/Enter/Space, not on focus; popovers return focus to their trigger; `PasswordInput` sends `class`/`style` to its wrapper; `ConfigProvider` always renders its `display: contents` wrapper.
@@ -145,6 +145,16 @@ Code written against an older vael-ui (or remembered from one) can break on thes
 
   `ui` part classes concatenate with internal classes by default (no dedup). Inject a real class merger (e.g. `tailwind-merge`'s `twMerge`) via `ConfigProvider` if the project uses Tailwind and needs conflicting utilities to resolve correctly.
 
+- **Tune motion app-wide on `ConfigProvider`, not per component.** `indicator` sets how every sliding indicator moves (hover highlights and Tabs, SelectButton, MenuList selections): `'glide'` (default), `'instant'`, or a spring `{ damping, response }` where damping below 1 overshoots. `motion-css="false"` makes everything instant. `loader-type` sets every spinner, and takes your own component or a render function (`() => h(MySpinner, props)`) as well as `'ring' | 'dots' | 'bars' | 'comet' | 'dither'`. For the timing alone, set `--ui-duration-indicator` / `--ui-duration-indicator-wide` / `--ui-ease-indicator`.
+
+  ```vue
+  <ConfigProvider :indicator="{ damping: 0.55, response: 0.3 }" :loader-type="MySpinner">
+    <App />
+  </ConfigProvider>
+  ```
+
+- **Give your own lists the same sliding highlight with `useHoverIndicator`**, and build custom spring motion with `createSpring` / `useSpringValue` (the engine the components use). See the [composable index](./references/composables/_INDEX.md), which also lists the headless engines behind components (`useTabs`, `useMenu`, `useListbox`, `useSlider`, …).
+
 - **Check the [component index](./references/docs/_INDEX.md) before building UI by hand.** Gauges and donut charts (`Progress type="circle"`), stacked usage bars (`Progress` with segments), spinners (`Loader`, or `Button` `loading`), inline rename (`Editable`), colour pickers, boards (`Sortable` + `useSortableGroup`), tours, OTP fields, swipe actions and pull-to-refresh all ship. A hand-drawn SVG or a custom drag handler usually means a component was missed.
 
 - **Prefer imperative composables over manual `v-model` juggling for one-off flows.** `confirmAction()`, `openDialog()`/`openPopover()`, and `toast()` all return real Promises/imperative handles. See the [composable index](./references/composables/_INDEX.md).
@@ -192,6 +202,7 @@ Code written against an older vael-ui (or remembered from one) can break on thes
 - Using `resolve: { conditions: ['vapor'] }` alone. It replaces Vite's default conditions; spread `defaultClientConditions` / `defaultServerConditions` (see [Auto import](./references/guides/auto-import.md#one-shared-import-no-vapor-subpath)).
 - Registering `v-tooltip` without mounting `<TooltipHost />`: the tooltip never shows and nothing warns.
 - Using a floating `vue@rc`/`vue@beta` dist-tag with Vapor instead of an exact pinned prerelease version. Causes compiler/runtime mismatches that surface as confusing runtime errors, especially around `<Transition>`.
+- Styling a list row's `:hover` background in a vael-ui list (Menu, Select, Tree, DataTable, …): it paints over the sliding highlight. Set `--ui-indicator-bg`.
 - Setting `background` or `border` on a Button (they vanish under its `::before` layer since 0.5.0); use `--ui-button-bg` / `--ui-button-border`.
 - Adding `:aria-pressed` and a click handler to make a toggle; `v-model:pressed` does both.
 - Assuming `ui` prop values dedupe against internal classes automatically. They don't unless a class merger is configured.

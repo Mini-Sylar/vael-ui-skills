@@ -32,4 +32,5 @@ _None._
 Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
+`highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between buttons. Under a ConfigProvider with `motionCss: false` it moves at once, for your own animation.
 

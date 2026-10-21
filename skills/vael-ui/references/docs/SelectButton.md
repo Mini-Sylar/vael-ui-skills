@@ -38,4 +38,5 @@ Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
 `indicatorEl` | `HTMLElement \| null` | Sliding selection indicator (single mode only; `null` with `multiple`).
+`highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between options. Under a ConfigProvider with `motionCss: false` it moves at once, for your own animation.
 

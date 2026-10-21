@@ -35,6 +35,7 @@ Name | Type | Description
 Name | Type | Description
 --- | --- | ---
 `listEl` | `HTMLElement \| null` | Tab list (root) element.
+`highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between tabs. Under a ConfigProvider with `motionCss: false` it moves at once, for your own animation.
 `tabId` | `(item: T) => string` | The id a tab carries.
 `panelId` | `(item: T) => string` | The id a tab's panel should carry.
 `panelProps` | `(item: T) => { id: string; role: "tabpanel"; 'aria-labelledby': string; tabindex: 0; }` | `id`, `role="tabpanel"`, `aria-labelledby` and `tabindex` for a panel you render.

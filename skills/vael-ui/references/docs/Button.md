@@ -29,7 +29,7 @@ Name | Type | Default | Description
 `variant` | `'primary' \| 'secondary' \| 'outline' \| 'ghost' \| 'link' \| 'text' \| 'danger' \| undefined` | `'primary'` | Visual style of the button.
 `size` | `'sm' \| 'md' \| 'lg' \| undefined` | `'md'` | Button size.
 `loader` | `'overlay' \| 'inline' \| undefined` | `'overlay'` | `'overlay'` centers the loader over the fading content; `'inline'` slides a spinner in at the start.
-`loaderType` | `'ring' \| 'dots' \| 'bars' \| 'comet' \| 'dither' \| undefined` | `'ring'` | The loading animation. Unset, it follows the nearest ConfigProvider's `loaderType`.
+`loaderType` | `LoaderSource \| undefined` | `'ring'` | The loading animation: a built-in name, or your own component. Unset, it follows the nearest ConfigProvider's `loaderType`.
 `icon` | `boolean \| undefined` | `false` | Renders a square icon-only button; pair it with an `aria-label`.
 `pill` | `boolean \| undefined` | `false` | Gives the button a fully rounded pill shape.
 `block` | `boolean \| undefined` | `false` | Stretches the button to its container's full inline size.

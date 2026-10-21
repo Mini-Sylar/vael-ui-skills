@@ -21,7 +21,8 @@ Name | Type | Default | Description
 `theme` | `UiTheme \| undefined` |  | Auto-derives colors and applies radius and component font size. Injects a scoped `<style>` tag.
 `size` | `"sm" \| "md" \| "lg" \| undefined` |  | Default size for buttons, form controls and tables inside. A component's own `size` wins.
 `motionCss` | `boolean \| undefined` |  | `false` makes every component inside change instantly, with no built-in transitions, e.g. for screenshot tests. Panels still open and close and toasts still leave; a component's own `motionCss` wins.
-`loaderType` | `'ring' \| 'dots' \| 'bars' \| 'comet' \| 'dither' \| undefined` | `'ring'` | Animation for every loader inside: Loader, Button's loading state, list loading rows, loading toasts and PullToRefresh. A component's own `type` or `loaderType` wins.
+`loaderType` | `LoaderSource \| undefined` | `'ring'` | Animation for every loader inside: Loader, Button's loading state, list loading rows, loading toasts and PullToRefresh. A built-in name, or your own component (or render function), drawn in the same 1em box. A component's own `type` or `loaderType` wins.
+`indicator` | `IndicatorMode \| undefined` | `'glide'` | How every sliding indicator inside moves: the hover highlight in lists and menus, and the selection in Tabs, SelectButton, Pagination and MenuList. `'glide'`, `'instant'`, or a spring such as `{ damping: 0.55, response: 0.3 }` (below 1, damping overshoots). `motionCss: false` still makes them instant.
 
 ## Slots
 
