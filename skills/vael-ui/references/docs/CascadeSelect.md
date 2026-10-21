@@ -30,8 +30,8 @@ Name | Type | Default | Description
 `invalid` | `boolean \| undefined` | `false` | Standalone override; ORed with the nearest Field's `error` state.
 `size` | `"sm" \| "md" \| "lg" \| undefined` | `'md'` | Control size.
 `name` | `string \| undefined` |  | Renders hidden inputs so a plain `<form>` post carries the selection.
-`side` | `Side \| undefined` | `'bottom'` | Which side of the trigger the panel opens on.
-`align` | `Align \| undefined` | `'start'` | How the panel aligns against the trigger along that side.
+`side` | `'top' \| 'right' \| 'bottom' \| 'left' \| undefined` | `'bottom'` | Which side of the trigger the panel opens on.
+`align` | `'start' \| 'end' \| 'center' \| undefined` | `'start'` | How the panel aligns against the trigger along that side.
 `sideOffset` | `number \| undefined` | `8` | Gap between the trigger and the panel, in pixels.
 `alignOffset` | `number \| undefined` | `0` | Shifts the panel along the alignment axis, in pixels.
 `closeOnEsc` | `boolean \| undefined` | `true` | Escape key closes the panel.

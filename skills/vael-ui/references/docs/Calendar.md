@@ -10,8 +10,8 @@ import { Calendar } from 'vael-ui' // or 'vael-ui/vapor'
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-`selectionMode` | `CalendarSelectionMode \| undefined` | `'single'` | `'range'` picks a start then an end; clicking before the start restarts the range.
-`view` | `CalendarView \| undefined` | `'date'` | What a click selects: a day, a month (its 1st) or a year (January 1st).
+`selectionMode` | `'single' \| 'range' \| undefined` | `'single'` | `'range'` picks a start then an end; clicking before the start restarts the range.
+`view` | `'date' \| 'month' \| 'year' \| undefined` | `'date'` | What a click selects: a day, a month (its 1st) or a year (January 1st).
 `minDate` | `Date \| undefined` |  | Earliest selectable date (inclusive); the calendar disables earlier days, months and years.
 `maxDate` | `Date \| undefined` |  | Latest selectable date (inclusive); the calendar disables later days, months and years.
 `disabledDates` | `CalendarDisabledDates \| undefined` |  | List of unavailable dates, or a predicate function. Matching compares calendar days and ignores time.

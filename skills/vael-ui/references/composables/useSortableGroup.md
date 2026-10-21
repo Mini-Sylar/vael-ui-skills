@@ -12,6 +12,8 @@ Name | Type | Description
 `onDropError` | `(error: unknown, details: GroupDropDetails) => void` | beforeDrop threw or rejected; the move is already reverted by the time this fires.
 `motionCss` | `MaybeRefOrGetter<boolean>` | false skips the springs for the ghost gap opened in a foreign column while hovering it.
 
+`from`/`to` are `GroupDropPosition`: `{ groupId: string | number; index: number }`, where `to.index` is the slot in the target list the item lands at. `canDrop`/`beforeDrop`/`onDropError` get `GroupDropDetails`: `{ value, from, to }`. Both types are exported from `'vael-ui'`.
+
 ## Returns
 
 Name | Type | Description

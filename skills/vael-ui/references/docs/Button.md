@@ -6,16 +6,30 @@ A clickable action with variants, sizes, loading states, and icon slots built in
 import { Button } from 'vael-ui' // or 'vael-ui/vapor'
 ```
 
+**Colour a Button with its variables, not `background`/`border`.** Since 0.5.0 the box is painted by a `::before` layer (contents sit in `.ui-button-inner`), so a `background` or `border` set on the button itself is hidden under it. Set `--ui-button-bg` and `--ui-button-border` instead; text colour is plain `color`. Change the look on hover by setting the variable again under `:hover`. The layer draws a 1px `--ui-button-border` border, so a dashed or thicker one goes there too (`border-style`, `border-width` on `::before`):
+
+```css
+.publish {
+  --ui-button-bg: #16a34a;
+  --ui-button-border: #166534;
+  color: white;
+}
+.publish:hover { --ui-button-bg: #15803d; }
+.publish::before { border-style: dashed; }
+```
+
+**Toggles.** `v-model:pressed` makes one Button a toggle (a row of them is a `ButtonGroup` with a `v-model`). A `ghost`, `outline` or `secondary` toggle already looks pressed when it's on. For your own on-state look, bind a class from the same value (`:class="{ starred }"`); to style every toggle at once, target `[aria-pressed='true']`, which Button sets for you. Don't add `:aria-pressed` or a click handler yourself.
+
 ## Props
 
 Name | Type | Default | Description
 --- | --- | --- | ---
 `loading` | `boolean \| "auto" \| undefined` | `false` | `true` and `false` set the loading state directly. With `'auto'`, the button stays loading until every overlapping promise your `@click` handler returns settles.
 `disabled` | `boolean \| undefined` | `false` | Disables the button and blocks interaction.
-`variant` | `ButtonVariant \| undefined` | `'primary'` | Visual style of the button.
-`size` | `ButtonSize \| undefined` | `'md'` | Button size.
-`loader` | `ButtonLoaderPlacement \| undefined` | `'overlay'` | `'overlay'` centers the loader over the fading content; `'inline'` slides a spinner in at the start.
-`loaderType` | `LoaderType \| undefined` | `'ring'` | The loading animation. Unset, it follows the nearest ConfigProvider's `loaderType`.
+`variant` | `'primary' \| 'secondary' \| 'outline' \| 'ghost' \| 'link' \| 'text' \| 'danger' \| undefined` | `'primary'` | Visual style of the button.
+`size` | `'sm' \| 'md' \| 'lg' \| undefined` | `'md'` | Button size.
+`loader` | `'overlay' \| 'inline' \| undefined` | `'overlay'` | `'overlay'` centers the loader over the fading content; `'inline'` slides a spinner in at the start.
+`loaderType` | `'ring' \| 'dots' \| 'bars' \| 'comet' \| 'dither' \| undefined` | `'ring'` | The loading animation. Unset, it follows the nearest ConfigProvider's `loaderType`.
 `icon` | `boolean \| undefined` | `false` | Renders a square icon-only button; pair it with an `aria-label`.
 `pill` | `boolean \| undefined` | `false` | Gives the button a fully rounded pill shape.
 `block` | `boolean \| undefined` | `false` | Stretches the button to its container's full inline size.

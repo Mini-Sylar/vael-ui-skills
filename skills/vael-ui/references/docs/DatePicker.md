@@ -10,8 +10,8 @@ import { DatePicker } from 'vael-ui' // or 'vael-ui/vapor'
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-`selectionMode` | `CalendarSelectionMode \| undefined` | `'single'` | `'range'` picks a start then an end; clicking before the start restarts the range.
-`view` | `CalendarView \| undefined` | `'date'` | What a click selects: a day, a month (its 1st) or a year (January 1st).
+`selectionMode` | `'single' \| 'range' \| undefined` | `'single'` | `'range'` picks a start then an end; clicking before the start restarts the range.
+`view` | `'date' \| 'month' \| 'year' \| undefined` | `'date'` | What a click selects: a day, a month (its 1st) or a year (January 1st).
 `placeholder` | `string \| undefined` |  | Text shown in the input when nothing is selected.
 `disabled` | `boolean \| undefined` | `false` | Disables the input and keeps the panel from opening. A disabled parent Field also disables it.
 `invalid` | `boolean \| undefined` | `false` | Standalone override; ORed with the nearest Field's `error` state.
@@ -25,8 +25,8 @@ Name | Type | Default | Description
 `closeOnSelect` | `boolean \| undefined` | `true` | Closes the panel once a date (or a range's end) is picked. `false` keeps it open, for an apply button in `#footer` or trying a few dates; outside clicks and Escape still close it.
 `formatOptions` | `Intl.DateTimeFormatOptions \| undefined` |  | `Intl.DateTimeFormat` options for the input text. Unset, the format follows `view`, `showTime` and `timeOnly`.
 `name` | `string \| undefined` |  | Renders a hidden `<input>` that mirrors the selection as `YYYY-MM-DD` for form posts.
-`side` | `Side \| undefined` | `'bottom'` | Which side of the trigger the panel opens on.
-`align` | `Align \| undefined` | `'start'` | How the panel aligns against the trigger along that side.
+`side` | `'top' \| 'right' \| 'bottom' \| 'left' \| undefined` | `'bottom'` | Which side of the trigger the panel opens on.
+`align` | `'start' \| 'end' \| 'center' \| undefined` | `'start'` | How the panel aligns against the trigger along that side.
 `sideOffset` | `number \| undefined` | `8` | Gap between the trigger and the panel, in pixels.
 `alignOffset` | `number \| undefined` | `0` | Shifts the panel along the alignment axis, in pixels.
 `closeOnEsc` | `boolean \| undefined` | `true` | Escape key closes the panel.

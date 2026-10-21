@@ -11,7 +11,7 @@ import { Toaster } from 'vael-ui' // or 'vael-ui/vapor'
 Name | Type | Default | Description
 --- | --- | --- | ---
 `name` | `string \| undefined` |  | Shows only toasts sent to this name. Without one, it shows toasts that have no `toaster`.
-`position` | `ToasterPosition \| undefined` | `'bottom-right'` | Screen corner or edge the toasts stack from.
+`position` | `'bottom-right' \| 'top-left' \| 'top-center' \| 'top-right' \| 'bottom-left' \| 'bottom-center' \| undefined` | `'bottom-right'` | Screen corner or edge the toasts stack from.
 `maxVisible` | `number \| undefined` | `4` | Max toasts shown at once. Extra toasts wait off-screen, timers paused, until a slot opens.
 `expand` | `boolean \| undefined` | `false` | Keeps the stack open as a list, so every toast stays readable. Timers keep running, and hover or focus still pauses them.
 `gap` | `number \| undefined` | `10` | Spacing between stacked cards, in pixels.

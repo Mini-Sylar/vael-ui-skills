@@ -12,8 +12,8 @@ Name | Type | Default | Description
 --- | --- | --- | ---
 `min` | `number \| undefined` | `0` | Smallest size in pixels.
 `max` | `number \| undefined` | `Infinity` | Largest size in pixels.
-`direction` | `ResizeDirection \| undefined` | `'horizontal'` | Axis the panel resizes along: `'horizontal'` sets its width, `'vertical'` its height.
-`edge` | `ResizeEdge \| undefined` | `'end'` | Which edge the handle sits on. `'start'` flips the drag so moving toward the panel grows it.
+`direction` | `'horizontal' \| 'vertical' \| undefined` | `'horizontal'` | Axis the panel resizes along: `'horizontal'` sets its width, `'vertical'` its height.
+`edge` | `'start' \| 'end' \| undefined` | `'end'` | Which edge the handle sits on. `'start'` flips the drag so moving toward the panel grows it.
 `disabled` | `boolean \| undefined` | `false` | Disables dragging and keyboard resizing, and removes the handle from the tab order.
 `ariaLabel` | `string \| undefined` | `'Resize'` | Accessible label for the handle.
 `ui` | `Partial<{ root: UiPartValue; handle: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.

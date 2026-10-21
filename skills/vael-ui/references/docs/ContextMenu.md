@@ -18,8 +18,8 @@ Name | Type | Default | Description
 `disabled` | `boolean \| undefined` | `false` | Disables both the right-click and long-press triggers.
 `longPress` | `boolean \| undefined` | `true` | Adds a touch long-press trigger alongside the native `contextmenu` event.
 `longPressDelay` | `number \| undefined` | `500` | How long you hold a touch press, in ms, before the menu opens.
-`side` | `Side \| undefined` | `'bottom'` | Which side of the cursor point the panel opens on.
-`align` | `Align \| undefined` | `'start'` | How the panel aligns against the cursor point along that side.
+`side` | `'top' \| 'right' \| 'bottom' \| 'left' \| undefined` | `'bottom'` | Which side of the cursor point the panel opens on.
+`align` | `'start' \| 'end' \| 'center' \| undefined` | `'start'` | How the panel aligns against the cursor point along that side.
 `sideOffset` | `number \| undefined` | `2` | Gap between the cursor point and the panel, in pixels.
 `alignOffset` | `number \| undefined` | `0` | Shifts the panel along the alignment axis, in pixels.
 `closeOnEsc` | `boolean \| undefined` | `true` | Escape key closes the panel.

@@ -11,8 +11,8 @@ import { Popover } from 'vael-ui' // or 'vael-ui/vapor'
 Name | Type | Default | Description
 --- | --- | --- | ---
 `triggerEl` | `TriggerRef` |  | External trigger ref: a raw element or a component that exposes `el`. Use `#trigger` if the trigger can live here.
-`side` | `Side \| undefined` | `'bottom'` | Which side of the trigger the panel opens on.
-`align` | `Align \| undefined` | `'center'` | How the panel aligns against the trigger along that side.
+`side` | `'top' \| 'right' \| 'bottom' \| 'left' \| undefined` | `'bottom'` | Which side of the trigger the panel opens on.
+`align` | `'start' \| 'end' \| 'center' \| undefined` | `'center'` | How the panel aligns against the trigger along that side.
 `sideOffset` | `number \| undefined` | `8` | Gap between the trigger and the panel, in pixels.
 `alignOffset` | `number \| undefined` | `0` | Shifts the panel along the alignment axis, in pixels.
 `closeOnEsc` | `boolean \| undefined` | `true` | Escape key closes the panel.

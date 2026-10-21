@@ -12,7 +12,7 @@ Name | Type | Default | Description
 --- | --- | --- | ---
 `items` | `readonly T[]` |  | Tree data: nodes with `value`, `label` and optional `children`.
 `placeholder` | `string \| undefined` |  | Text shown in the trigger while nothing is selected.
-`selectionMode` | `TreeSelectionMode \| undefined` | `'single'` | `'single'`: a click replaces the selection and closes the panel. `'multiple'`: a click toggles that node only. `'checkbox'`: checkboxes with cascading parent/child toggles.
+`selectionMode` | `'multiple' \| 'single' \| 'checkbox' \| undefined` | `'single'` | `'single'`: a click replaces the selection and closes the panel. `'multiple'`: a click toggles that node only. `'checkbox'`: checkboxes with cascading parent/child toggles.
 `selectableFolders` | `boolean \| undefined` | `true` | `false` makes folders unselectable, so only leaves can become the value. No effect in `'checkbox'` mode, which puts only leaves in the model.
 `disabled` | `boolean \| undefined` | `false` | Disables the trigger and blocks interaction.
 `clearable` | `boolean \| undefined` | `false` | Shows a clear button once something is selected.
@@ -24,8 +24,8 @@ Name | Type | Default | Description
 `expandOnRowClick` | `boolean \| undefined` | `false` | Clicking a folder row also toggles its expansion, not only the chevron. The click still selects the row unless `selectableFolders` is `false`.
 `stickyScroll` | `boolean \| undefined` | `false` | Pins each expanded ancestor's row to the top of the panel while its children scroll past, VS Code-style. Nested rows keep their folder context in view.
 `name` | `string \| undefined` |  | Renders hidden `<input>`(s) so a plain `<form>` post carries the selection, repeating `name` outside `'single'` mode.
-`side` | `Side \| undefined` | `'bottom'` | Which side of the trigger the panel opens on.
-`align` | `Align \| undefined` | `'start'` | How the panel aligns against the trigger along that side.
+`side` | `'top' \| 'right' \| 'bottom' \| 'left' \| undefined` | `'bottom'` | Which side of the trigger the panel opens on.
+`align` | `'start' \| 'end' \| 'center' \| undefined` | `'start'` | How the panel aligns against the trigger along that side.
 `sideOffset` | `number \| undefined` | `8` | Gap between the trigger and the panel, in pixels.
 `alignOffset` | `number \| undefined` | `0` | Shifts the panel along the alignment axis, in pixels.
 `closeOnEsc` | `boolean \| undefined` | `true` | Escape key closes the panel.

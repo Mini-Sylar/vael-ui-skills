@@ -11,8 +11,8 @@ import { SpeedDial } from 'vael-ui' // or 'vael-ui/vapor'
 Name | Type | Default | Description
 --- | --- | --- | ---
 `items` | `readonly T[]` |  | Actions to fan out, one icon button each.
-`direction` | `SpeedDialDirection \| undefined` | `'up'` | Which way the actions fan out from the trigger. `'quarter-circle'` lays them on an arc of `radius`.
-`openOn` | `SpeedDialTriggerMode \| undefined` | `'click'` | What opens the dial. `'hover'` only responds to hover-capable pointers; click always works too.
+`direction` | `'right' \| 'left' \| 'up' \| 'down' \| 'quarter-circle' \| undefined` | `'up'` | Which way the actions fan out from the trigger. `'quarter-circle'` lays them on an arc of `radius`.
+`openOn` | `'click' \| 'hover' \| undefined` | `'click'` | What opens the dial. `'hover'` only responds to hover-capable pointers; click always works too.
 `disabled` | `boolean \| undefined` | `false` | Disables the trigger and blocks interaction.
 `closeOnSelect` | `boolean \| undefined` | `true` | Closes the dial when you select an action; `false` keeps it open.
 `ariaLabel` | `string \| undefined` | `'Actions'` | Accessible name for both the trigger button and the action `role="menu"`.

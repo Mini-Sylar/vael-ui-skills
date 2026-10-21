@@ -22,8 +22,8 @@ Name | Type | Default | Description
 `display` | `"text" \| "count" \| "chip" \| undefined` | `'chip'` | `multiple` only: `'chip'` shows removable chips, `'text'` comma-joined labels, `'count'` an "N selected" summary.
 `virtualize` | `boolean \| SelectVirtualizeConfig \| undefined` |  | `true`/`false` forces virtualization on/off; an object also tunes `itemSize`/`overscan`. Unset, it auto-virtualizes past 100 items.
 `name` | `string \| undefined` |  | Renders hidden `<input>`(s) so a plain `<form>` post carries the selection, repeating `name` when `multiple`.
-`side` | `Side \| undefined` | `'bottom'` | Which side of the trigger the panel opens on.
-`align` | `Align \| undefined` | `'start'` | How the panel aligns against the trigger along that side.
+`side` | `'top' \| 'right' \| 'bottom' \| 'left' \| undefined` | `'bottom'` | Which side of the trigger the panel opens on.
+`align` | `'start' \| 'end' \| 'center' \| undefined` | `'start'` | How the panel aligns against the trigger along that side.
 `sideOffset` | `number \| undefined` | `8` | Gap between the trigger and the panel, in pixels.
 `alignOffset` | `number \| undefined` | `0` | Shifts the panel along the alignment axis, in pixels.
 `closeOnEsc` | `boolean \| undefined` | `true` | Escape key closes the panel.

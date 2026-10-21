@@ -13,8 +13,8 @@ Name | Type | Default | Description
 `filter` | `((item: T, query: string) => boolean) \| undefined` |  | Custom filter function; replaces the default label/keywords match. Omit to use the built-in filter.
 `shortcut` | `string \| undefined` |  | Global shortcut that toggles `open`, such as `'mod+k'` (`mod` is Cmd on Mac, Ctrl elsewhere). Nothing listens until you set it.
 `closeOnSelect` | `boolean \| undefined` | `true` | Closes the palette after an item is selected.
-`size` | `DialogSize \| undefined` | `'lg'` | Panel width, as in Dialog.
-`position` | `DialogPosition \| undefined` | `'top'` | Where the panel anchors in the viewport. `'top'` matches the Spotlight/Raycast convention; `'center'` feels more like a Dialog.
+`size` | `'sm' \| 'md' \| 'lg' \| undefined` | `'lg'` | Panel width, as in Dialog.
+`position` | `'top' \| 'right' \| 'bottom' \| 'left' \| 'center' \| undefined` | `'top'` | Where the panel anchors in the viewport. `'top'` matches the Spotlight/Raycast convention; `'center'` feels more like a Dialog.
 `modal` | `boolean \| undefined` | `true` | `false` disables the overlay, scroll lock and focus trap. Escape-to-close and layer stacking still apply.
 `closeOnEsc` | `boolean \| undefined` | `true` | Escape key closes the panel.
 `closeOnOverlay` | `boolean \| undefined` | `true` | Clicking the overlay closes the panel. Has no effect when `modal` is `false`, since there's no overlay.

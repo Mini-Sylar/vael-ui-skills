@@ -11,8 +11,8 @@ import { Tooltip } from 'vael-ui' // or 'vael-ui/vapor'
 Name | Type | Default | Description
 --- | --- | --- | ---
 `triggerEl` | `TriggerRef` |  | External trigger ref: a raw element or a component that exposes `el`.
-`side` | `Side \| undefined` | `'top'` | Which side of the trigger the tooltip opens on.
-`align` | `Align \| undefined` | `'center'` | How the tooltip aligns against the trigger along that side.
+`side` | `'top' \| 'right' \| 'bottom' \| 'left' \| undefined` | `'top'` | Which side of the trigger the tooltip opens on.
+`align` | `'start' \| 'end' \| 'center' \| undefined` | `'center'` | How the tooltip aligns against the trigger along that side.
 `sideOffset` | `number \| undefined` | `8` | Gap between the trigger and the tooltip, in pixels.
 `alignOffset` | `number \| undefined` | `0` | Shifts the tooltip along the alignment axis, in pixels.
 `openDelay` | `number \| undefined` | `400` | Delay before a cold open, in milliseconds. Warm-group opens (another tooltip visible or recently hidden) are instant.

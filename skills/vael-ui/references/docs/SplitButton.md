@@ -11,13 +11,13 @@ import { SplitButton } from 'vael-ui' // or 'vael-ui/vapor'
 Name | Type | Default | Description
 --- | --- | --- | ---
 `items` | `readonly MenuEntry<T>[]` |  | Dropdown rows, in the same shape as Menu's `items`.
-`variant` | `ButtonVariant \| undefined` | `'primary'` | Visual style of both buttons.
-`size` | `ButtonSize \| undefined` | `'md'` | Size of both buttons.
+`variant` | `'primary' \| 'secondary' \| 'outline' \| 'ghost' \| 'link' \| 'text' \| 'danger' \| undefined` | `'primary'` | Visual style of both buttons.
+`size` | `'sm' \| 'md' \| 'lg' \| undefined` | `'md'` | Size of both buttons.
 `disabled` | `boolean \| undefined` | `false` | Disables both buttons and blocks interaction.
 `loading` | `boolean \| "auto" \| undefined` | `'auto'` | Forwarded to the main action Button only.
 `triggerLabel` | `string \| undefined` |  | `aria-label` for the chevron button; uses the localized "More actions" when unset.
-`side` | `Side \| undefined` |  | Which side of the trigger the panel opens on.
-`align` | `Align \| undefined` |  | How the panel aligns against the trigger along that side.
+`side` | `'top' \| 'right' \| 'bottom' \| 'left' \| undefined` |  | Which side of the trigger the panel opens on.
+`align` | `'start' \| 'end' \| 'center' \| undefined` |  | How the panel aligns against the trigger along that side.
 `sideOffset` | `number \| undefined` |  | Gap between the trigger and the panel, in pixels.
 `alignOffset` | `number \| undefined` |  | Shifts the panel along the alignment axis, in pixels.
 `closeOnEsc` | `boolean \| undefined` |  | Escape key closes the panel.

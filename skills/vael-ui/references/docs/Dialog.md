@@ -12,8 +12,8 @@ Name | Type | Default | Description
 --- | --- | --- | ---
 `title` | `string \| undefined` |  | Renders the default header and wires `aria-labelledby` automatically.
 `description` | `string \| undefined` |  | Muted line under the title; wires `aria-describedby` automatically.
-`size` | `DialogSize \| undefined` | `'md'` | Panel width: `'sm'` is 22rem, `'md'` is 28rem, `'lg'` is 38rem.
-`position` | `DialogPosition \| undefined` | `'center'` | Where the panel anchors in the viewport.
+`size` | `'sm' \| 'md' \| 'lg' \| undefined` | `'md'` | Panel width: `'sm'` is 22rem, `'md'` is 28rem, `'lg'` is 38rem.
+`position` | `'top' \| 'right' \| 'bottom' \| 'left' \| 'center' \| undefined` | `'center'` | Where the panel anchors in the viewport.
 `role` | `"dialog" \| "alertdialog" \| undefined` | `'dialog'` | Use `'alertdialog'` for urgent messages that need a response, such as confirmations. Screen readers announce it more assertively.
 `initialFocus` | `(() => HTMLElement \| null \| undefined) \| undefined` |  | Returns the element to focus on open; return `null` or `undefined` to focus the first focusable element.
 `showClose` | `boolean \| undefined` | `true` | Shows the built-in close button (×). Hide it when the footer carries the only sensible actions.

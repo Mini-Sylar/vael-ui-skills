@@ -10,8 +10,8 @@ import { Drawer } from 'vael-ui' // or 'vael-ui/vapor'
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-`side` | `DrawerSide \| undefined` | `'right'` | Which viewport edge the panel slides in from.
-`size` | `DialogSize \| undefined` | `'md'` | Panel width: `'sm'` is 22rem, `'md'` is 28rem, `'lg'` is 38rem.
+`side` | `'top' \| 'right' \| 'bottom' \| 'left' \| undefined` | `'right'` | Which viewport edge the panel slides in from.
+`size` | `'sm' \| 'md' \| 'lg' \| undefined` | `'md'` | Panel width: `'sm'` is 22rem, `'md'` is 28rem, `'lg'` is 38rem.
 `ui` | `Partial<{ overlay: UiPartValue; panel: UiPartValue; header: UiPartValue; title: UiPartValue; description: UiPartValue; body: UiPartValue; footer: UiPartValue; maximize: UiPartValue; close: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `closeOnEsc` | `boolean \| undefined` | `true` | Escape key closes the panel.
 `beforeClose` | `((done: () => void) => void) \| undefined` |  | Custom exit animation; call `done()` to finish closing.

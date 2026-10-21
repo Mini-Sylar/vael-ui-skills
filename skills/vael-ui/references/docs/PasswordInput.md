@@ -21,8 +21,8 @@ Name | Type | Default | Description
 `rules` | `PasswordRule[] \| undefined` |  | Requirement checks (`{ label, test }`) for the hint checklist and the `#hint` slot's `results`. There are no built-in rules; without `rules` or `#hint`, the hint doesn't render.
 `hintPlacement` | `"inline" \| "none" \| "popover" \| undefined` | `'popover'` | Where the requirements hint renders. `'none'` disables it outright.
 `motionCss` | `boolean \| undefined` | `true` | `false` skips the hint's enter/exit transition. Inline mode only.
-`side` | `Side \| undefined` |  | Which side of the input the hint appears on, in both `'popover'` and `'inline'` mode. Inline defaults to `'bottom'`.
-`align` | `Align \| undefined` |  | How the hint aligns against the input along that side, in both `'popover'` and `'inline'` mode. Inline defaults to `'start'`.
+`side` | `'top' \| 'right' \| 'bottom' \| 'left' \| undefined` |  | Which side of the input the hint appears on, in both `'popover'` and `'inline'` mode. Inline defaults to `'bottom'`.
+`align` | `'start' \| 'end' \| 'center' \| undefined` |  | How the hint aligns against the input along that side, in both `'popover'` and `'inline'` mode. Inline defaults to `'start'`.
 `sideOffset` | `number \| undefined` |  | Gap between the input and the hint popover, in pixels. Popover mode only.
 `alignOffset` | `number \| undefined` |  | Shifts the hint popover along the alignment axis, in pixels. Popover mode only.
 `teleportTo` | `string \| HTMLElement \| undefined` |  | Teleport target for the hint popover: a CSS selector or element. Popover mode only.

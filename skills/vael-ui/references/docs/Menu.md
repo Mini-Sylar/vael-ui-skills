@@ -21,8 +21,8 @@ Name | Type | Default | Description
 --- | --- | --- | ---
 `items` | `readonly MenuEntry<T>[] \| undefined` |  | Data-driven rows. Ignored when the default slot renders custom markup instead.
 `triggerEl` | `TriggerRef` |  | External ref for a trigger that can't live in the `#trigger` slot.
-`side` | `Side \| undefined` | `'bottom'` | Which side of the trigger the panel opens on.
-`align` | `Align \| undefined` | `'start'` | How the panel aligns against the trigger along that side.
+`side` | `'top' \| 'right' \| 'bottom' \| 'left' \| undefined` | `'bottom'` | Which side of the trigger the panel opens on.
+`align` | `'start' \| 'end' \| 'center' \| undefined` | `'start'` | How the panel aligns against the trigger along that side.
 `sideOffset` | `number \| undefined` | `8` | Gap between the trigger and the panel, in pixels.
 `alignOffset` | `number \| undefined` | `0` | Shifts the panel along the alignment axis, in pixels.
 `closeOnEsc` | `boolean \| undefined` | `true` | Escape key closes the panel.

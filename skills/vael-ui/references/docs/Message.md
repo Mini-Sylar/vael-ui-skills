@@ -11,7 +11,7 @@ import { Message } from 'vael-ui' // or 'vael-ui/vapor'
 Name | Type | Default | Description
 --- | --- | --- | ---
 `title` | `string \| undefined` |  | Bold heading above the default slot content.
-`variant` | `MessageVariant \| undefined` | `'default'` | Color variant; sets the icon and border.
+`variant` | `'success' \| 'warning' \| 'info' \| 'error' \| 'default' \| undefined` | `'default'` | Color variant; sets the icon and border.
 `appearance` | `"default" \| "bare" \| undefined` | `'default'` | `'bare'` drops the border, background and padding, leaving only the icon and colored text. Use it inline, such as for form field validation, instead of as a standalone banner.
 `closable` | `boolean \| undefined` | `false` | Renders the built-in dismiss button.
 `beforeClose` | `((done: () => void) => void) \| undefined` |  | Custom exit animation; call `done()` to finish closing. The model stays `true` until you do.

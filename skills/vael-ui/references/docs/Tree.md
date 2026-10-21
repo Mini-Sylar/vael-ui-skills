@@ -15,7 +15,7 @@ Rows update from reactive state, so a custom `#node` slot should read reactive v
 Name | Type | Default | Description
 --- | --- | --- | ---
 `items` | `readonly T[]` |  | Tree data: `TreeNode` objects (`value`, `label`, optional `children`) or your own extension of them.
-`selectionMode` | `TreeSelectionMode \| undefined` | `'single'` | `'single'`: a click replaces the selection. `'multiple'`: a click toggles that node only. `'checkbox'`: checkboxes with cascading parent/child toggles.
+`selectionMode` | `'multiple' \| 'single' \| 'checkbox' \| undefined` | `'single'` | `'single'`: a click replaces the selection. `'multiple'`: a click toggles that node only. `'checkbox'`: checkboxes with cascading parent/child toggles.
 `selectableFolders` | `boolean \| undefined` | `true` | `false` makes folders unselectable, so only leaves can become the value. No effect in `selectionMode="checkbox"`, which only puts leaves in the model.
 `filterable` | `boolean \| undefined` | `true` | Shows a built-in label search box above the tree and expands the ancestors of any match.
 `filterPlaceholder` | `string \| undefined` | `'Search...'` | Placeholder and accessible label for the filter box.

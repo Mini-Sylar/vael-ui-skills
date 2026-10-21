@@ -26,10 +26,10 @@ Name | Type | Default | Description
 `createOption` | `boolean \| undefined` | `true` | `allowCustom` only: appends a `Create "…"` row whenever the typed text isn't already an item's label. Customize it with `#create`.
 `commitOnBlur` | `boolean \| undefined` | `false` | `allowCustom` only: leaving the field with uncommitted text commits it (reason `'blur'`). When `false`, the text reverts instead.
 `revertOnBlur` | `boolean \| undefined` | `true` | Leaving the field puts back the selected item's label, dropping half-typed text. Set `false` for a search box, so what you typed stays when you click away. Escape still clears it.
-`tabBehavior` | `ComboboxTabBehavior \| undefined` |  | What Tab commits before focus moves on. `'select'`: the highlighted row, once you type or move the highlight with the keyboard. `'create'` (`allowCustom` only): the typed text, or the item it names.
+`tabBehavior` | `'select' \| 'create' \| undefined` |  | What Tab commits before focus moves on. `'select'`: the highlighted row, once you type or move the highlight with the keyboard. `'create'` (`allowCustom` only): the typed text, or the item it names.
 `openOnFocus` | `boolean \| undefined` |  | Opens the panel on focus, before you type. Unset means on; set `false` to require typing first.
-`side` | `Side \| undefined` | `'bottom'` | Which side of the input the panel opens on.
-`align` | `Align \| undefined` | `'start'` | How the panel aligns against the input along that side.
+`side` | `'top' \| 'right' \| 'bottom' \| 'left' \| undefined` | `'bottom'` | Which side of the input the panel opens on.
+`align` | `'start' \| 'end' \| 'center' \| undefined` | `'start'` | How the panel aligns against the input along that side.
 `sideOffset` | `number \| undefined` | `8` | Gap between the input and the panel, in pixels.
 `alignOffset` | `number \| undefined` | `0` | Shifts the panel along the alignment axis, in pixels.
 `closeOnEsc` | `boolean \| undefined` | `true` | Escape key closes the panel (and reverts uncommitted typing).
