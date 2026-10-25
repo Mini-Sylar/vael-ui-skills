@@ -3,7 +3,7 @@
 vael-ui's spring engine: the physics behind Sortable, Tree and DataTable reordering, and behind every sliding indicator set to spring mode. A spring has no duration. You give it a target, and it moves there from where it is now, at the speed it already has. That makes every animation interruptible: call `set()` mid-flight and the value turns toward the new target with no jump. `useSpringValue` gives you a ref to bind in a template. `createSpring` writes each frame through a callback instead, so a value that drives a style never re-renders a component. `stepSpring` is the pure integrator step under both, for tests and plots. One shared `requestAnimationFrame` loop drives every moving spring, and it stops scheduling frames once they all rest.
 
 ```ts
-import { useSpringValue, createSpring, stepSpring } from 'vael-ui' // or 'vael-ui/vapor'
+import { useSpringValue, createSpring, stepSpring } from 'vael-ui/motion' // either build
 ```
 
 ## Parameters

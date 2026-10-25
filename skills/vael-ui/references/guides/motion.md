@@ -9,7 +9,7 @@ Each component's reference file ends with a **Motion** section: its motion type,
 ## Contents
 
 - [Units](#units)
-- [The API by task](#the-api-by-task): [turn it off](#turn-it-off), [retime with a spring](#retime-with-a-spring), [change a part's values](#change-a-parts-values), [states](#states), [entrances on any component](#entrances-on-any-component), [lists](#lists), [overlays](#overlays), [your elements inside an overlay](#your-elements-inside-an-overlay), [`v-animate`](#v-animate), [hooks for GSAP or motion](#hooks-for-gsap-or-motion), [callbacks](#callbacks), [indicators](#indicators), [your own engine](#your-own-engine), [app-wide styles](#app-wide-styles), [`useMotion`](#usemotion-for-your-own-components), [testing](#testing), [server rendering](#server-rendering), [what never animates](#what-never-animates), [debugging](#debugging)
+- [The API by task](#the-api-by-task): [turn it off](#turn-it-off), [retime with a spring](#retime-with-a-spring), [change a part's values](#change-a-parts-values), [states](#states), [entrances on any component](#entrances-on-any-component), [lists](#lists), [overlays](#overlays), [your elements inside an overlay](#your-elements-inside-an-overlay), [`v-animate`](#v-animate), [from code](#from-code), [scroll](#scroll), [hooks for GSAP or motion](#hooks-for-gsap-or-motion), [callbacks](#callbacks), [indicators](#indicators), [your own engine](#your-own-engine), [app-wide styles](#app-wide-styles), [`useMotion`](#usemotion-for-your-own-components), [testing](#testing), [server rendering](#server-rendering), [what never animates](#what-never-animates), [debugging](#debugging)
 - [Motion that feels right](#motion-that-feels-right)
 - [Common mistakes](#common-mistakes)
 
@@ -71,7 +71,7 @@ On a component, a `duration` and `easing` work the same way: `:motion="{ duratio
 For your own CSS or `element.animate()`, `springEasing(spring)` turns a spring into a `linear()` easing and its settle time in ms:
 
 ```ts
-import { springEasing } from 'vael-ui'
+import { springEasing } from 'vael-ui/motion'
 
 const { easing, duration } = springEasing({ damping: 0.8, response: 0.35 })
 el.animate([{ transform: 'translateY(8px)' }, { transform: 'none' }], { duration, easing })
@@ -349,7 +349,7 @@ const motion: DialogMotion<'summary' | 'rows'> = {
 
 ```vue
 <script setup lang="ts">
-import { vAnimate } from 'vael-ui'
+import { vAnimate } from 'vael-ui/motion'
 </script>
 
 <template>
@@ -373,21 +373,24 @@ Modifiers: an entrance (`.fade`, `.rise`, `.drop`, `.pop`, `.blur`, or a preset 
 | `spring`, or `duration` + `easing` | its timing |
 | `delay` | seconds, before its entrance and before a `layout` slide (it holds its old place meanwhile) |
 | `stagger` | siblings under the same `v-animate:name`, in page order: `true` (the 40ms token), `'end'`, `'center'`, `'edges'`, seconds, or `(index, count) => seconds` |
-| `states` | looks held while hovered (a mouse), pressed (`active`) or focused: `{ hover: { scale: 1.03 }, active: { scale: 0.97 } }` |
+| `states` | looks held while hovered (a mouse), pressed (`active`), focused, or in view (`inView`): `{ hover: { scale: 1.03 }, inView: { opacity: 1 } }` |
 | `when: 'visible'` | waits until it scrolls into view, once |
+| `viewport` | when it counts as in view, for `when: 'visible'` and `states.inView`: `{ amount: 'some' \| 'all' \| 0–1, margin: '0px 0px -20% 0px', once: true }` |
 | `replay` | plays `initial` again whenever this value changes |
+| `onStart` | `(el) => …` as its entrance starts moving, after any `delay`, `after` or scroll into view |
 | `onAfterEnter`, `onAfterLeave` | `(el) => …` once its entrance (or a `replay`) has played, and once its exit has played and it's gone |
 | `onAfterMove` | `(el) => …` once a `layout` or `layoutId` slide, or a change of `animate`, has played |
 | `enter`, `leave` | `(el, { signal, reducedMotion, index }) => …`: animate it yourself (GSAP, motion) instead of `initial` / `exit`; return the animation |
 | `appear: false` | no entrance on mount; `replay` and exit still play |
 | `appear: 'later'` | no entrance for what's there at the first render (inside a component's panel: when it opens); anything added after comes in |
 | `after`, `steps` | wait on another name's moment (`'title'`, `'title:60%'`); inside a component, or among elements that appear together |
-| `layout: true` | slides to its new place when the layout moves it |
+| `layout: true` | slides to its new place when the layout moves it, and eases to a new size; `layout: 'position'` only slides |
 | `layoutId` | two elements with the same id are one element moving between places |
 | `layout: 'position'` | with `layoutId`: travels without resizing, so text never stretches |
 | `animate` | a look it holds; changes move from wherever it is on screen |
-| `progress` | 0 to 1: holds `animate`'s keyframe arrays at that point, for scrubbing |
-| `.size` modifier | eases the element to its content's new height |
+| `progress` | 0 to 1: holds `animate`'s keyframe arrays at that point, for scrubbing. A getter (`() => scroll.value`) is followed without re-rendering the component |
+| `.size` modifier | eases the element to its content's new height, and width when the content sizes it |
+| with `v-show` | hiding plays its exit on a copy where it was; showing plays its entrance again |
 | `v-animate:name` | joins the nearest component's `targets` under that name |
 | a string | an entrance or a preset by name, for a name that changes: `v-animate="loading ? 'fade' : 'rise'"`. List your presets in `MotionPresets` (`declare module 'vael-ui' { interface MotionPresets { wiggle: true } }`) and every name is checked. |
 
@@ -414,6 +417,10 @@ Modifiers: an entrance (`.fade`, `.rise`, `.drop`, `.pop`, `.blur`, or a preset 
 <div v-animate="{ animate: { opacity: [0, 1], scale: ['0.9', '1'] }, progress: swipe }" />
 ```
 
+Values beyond CSS: `rotateX`, `rotateY`, `skewX`, `skewY` and `perspective` (a card flip: `animate: { rotateY: flipped ? 180 : 0, perspective: 800 }`), and `pathLength` (0 to 1), `pathOffset`, `pathSpacing` to draw an SVG stroke (`initial: { pathLength: 0 }` draws a check in; the shape gets `pathLength="1"`).
+
+Keyframe arrays: `null` first starts from where the value is now (`scale: [null, 1.2, 1]`). Beside `repeat`, `repeatType: 'loop' | 'reverse' | 'mirror'` (`mirror` comes back eased as it went) and `repeatDelay` (seconds held between runs).
+
 Keyframes in `animate` with `repeat: Infinity` loop until the look changes:
 
 ```ts
@@ -424,6 +431,48 @@ const ring = {
 ```
 
 On one element, a component's `:motion` wins over `v-animate`.
+
+### From code
+
+For motion an event starts (a wrong code shakes the field, an added item bumps the cart badge), `animate(target, values, options)` plays `v-animate`'s values and timing from code. The target is an element, a component, an array, or a selector. It goes from where the element is (or through your keyframes), and the end stays as the element's own style; a new call on the same element carries on from where the last one is. It follows the `ConfigProvider` spring, `motion: false` (jumps to the end) and reduced motion (only fades and colors animate).
+
+```ts
+import { animate, useAnimate } from 'vael-ui/motion'
+
+const run = animate(field.value, { x: [0, -8, 8, -4, 0] }, { duration: 300 })
+await run // finished; never for repeat: Infinity
+run.pause(); run.play(); run.reverse(); run.stop(); run.finish()
+run.time = 120; run.speed = 2
+
+// Selectors inside `scope` (`ref="scope"` in the template); runs stop on unmount.
+const { scope, animate } = useAnimate()
+animate('.badge', { scale: [1, 1.4, 1] }, { spring: 'bouncy' })
+animate('.item', { opacity: [0, 1] }, { stagger: 0.05 })
+```
+
+Options: timing (`spring`, or `duration` + `easing`), `delay`, `stagger`, and for keyframes `times`, `repeat`, `repeatType`, `repeatDelay`, `onRepeat`. No sequence DSL: `await` orders, `Promise.all` runs together, `delay` overlaps. Prefer `states`, `animate` on `v-animate` or `replay` for motion that follows state; `animate()` is for events.
+
+Dragging your own elements: VueUse's `useDraggable`; the components that drag (BottomSheet, SwipeToReveal, Sortable, Slider) have it built in.
+
+### Scroll
+
+`useScrollProgress(target?, { container, axis, offset })` returns a ref from 0 to 1: the page's scroll, or `target`'s way through the screen (default `offset: ['start end', 'end start']`, from entering to having left; each pair is `'<target edge> <container edge>'` with `start`, `center`, `end`, a share, px or %). Pass it to `progress` as a getter so scrolling never re-renders the component:
+
+```vue
+<script setup lang="ts">
+import { useTemplateRef } from 'vue'
+import { useScrollProgress, vAnimate } from 'vael-ui/motion'
+
+const panel = useTemplateRef<HTMLElement>('panel')
+const progress = useScrollProgress(panel)
+</script>
+
+<template>
+  <div ref="panel" v-animate="{ animate: { opacity: [0.3, 1, 0.3] }, progress: () => progress, spring: 'smooth' }" />
+</template>
+```
+
+For "animate while visible", use `states.inView` with a `viewport`; for "play once on first sight", `when: 'visible'`.
 
 ### Hooks for GSAP or motion
 
@@ -550,7 +599,7 @@ By default vael-ui plays motion with Web Animations. A style's `engine` hands ov
 ```ts
 import { gsap } from 'gsap'
 import { animate } from 'motion'
-import type { MotionEngine } from 'vael-ui'
+import type { MotionEngine } from 'vael-ui/motion'
 
 export const gsapEngine: MotionEngine = (el, from, to, { duration, delay }) =>
   gsap.fromTo(el, from, { ...to, duration, delay, ease: 'power3.out' })
@@ -578,7 +627,7 @@ A component's own hooks still win over the engine.
 A `MotionStyle` is one object on `ConfigProvider` that sets how the whole app moves. It needs `version: 1`.
 
 ```ts
-import type { MotionStyle } from 'vael-ui'
+import type { MotionStyle } from 'vael-ui/motion'
 
 export const appMotion: MotionStyle = {
   version: 1,
@@ -611,7 +660,7 @@ export const appMotion: MotionStyle = {
 - **From outside your code** (a settings page, a database), validate with `parseMotionStyle`. It drops unknown or unsafe keys and lists them in `issues`; it never throws.
 
 ```ts
-import { parseMotionStyle } from 'vael-ui'
+import { parseMotionStyle } from 'vael-ui/motion'
 
 const { style, issues } = parseMotionStyle(JSON.parse(saved))
 ```
@@ -624,7 +673,7 @@ const { style, issues } = parseMotionStyle(JSON.parse(saved))
 
 ```vue
 <script setup lang="ts">
-import { useMotion } from 'vael-ui'
+import { useMotion } from 'vael-ui/motion'
 
 const props = defineProps<{ open: boolean }>()
 const motion = useMotion('overlay')
@@ -639,7 +688,7 @@ const motion = useMotion('overlay')
 
 ```vue
 <script setup lang="ts">
-import { useMotion } from 'vael-ui'
+import { useMotion } from 'vael-ui/motion'
 
 const props = defineProps<{ rows: { id: string; label: string }[] }>()
 const list = useMotion('list', () => ({ initial: { item: { opacity: 0, y: 6 } }, stagger: 0.04 }))
@@ -657,7 +706,7 @@ Roles: `'overlay'` (default), `'list'`, `'reveal'`, `'content'`. The second argu
 ### Testing
 
 ```ts
-import { settled } from 'vael-ui'
+import { settled } from 'vael-ui/motion'
 
 await user.click(screen.getByRole('button', { name: 'Open' }))
 await settled() // every animation vael-ui started has finished

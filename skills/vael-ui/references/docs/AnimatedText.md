@@ -18,6 +18,7 @@ Name | Type | Default | Description
 --- | --- | --- | ---
 `value` | `string` |  | The text to show. Changing it crossfades to the new text.
 `motion` | `AnimatedTextMotion \| undefined` | `true` | How it moves: its appearance (`{ initial: { root: { opacity: 0, y: 4 } } }`). `false` swaps the text at once. Unset, it follows the nearest `ConfigProvider`.
+`split` | `"words" \| "letters" \| undefined` |  | A new value comes in a word or a letter at a time, each after the one before. Screen readers still read it whole. Animate the pieces yourself with `motion: { initial: { piece: … } }`.
 `ui` | `Partial<{ root: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 
 ## Slots
@@ -39,7 +40,7 @@ Name | Type | Description
 
 `motion` takes `AnimatedTextMotion` (exported from `'vael-ui'`); `false` turns it off. AnimatedText: its appearance and the swap's timing.
 
-- Parts: `root`
+- Parts: `root`, `piece`
 - Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`
 
 See the [Motion guide](../guides/motion.md) for what each key does.

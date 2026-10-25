@@ -28,7 +28,8 @@ The resolver covers components only. Import directives where you use them, or re
 
 ```vue
 <script setup lang="ts">
-import { vAnimate, vTooltip } from 'vael-ui'
+import { vTooltip } from 'vael-ui'
+import { vAnimate } from 'vael-ui/motion'
 </script>
 
 <template>
@@ -57,7 +58,7 @@ In a Vapor template, unplugin-vue-components only finds components that sit insi
 
 ## One shared import, no `/vapor` subpath
 
-If an editor's auto-import keeps suggesting `vael-ui` instead of `vael-ui/vapor` (a known TypeScript limitation when a package exports the same name from two entry points), set a `vapor` export condition instead of importing from the subpath. Every `import … from 'vael-ui'` then resolves to the Vapor build project-wide, components and composables alike, and there's nothing left for auto-import to pick wrong.
+If an editor's auto-import keeps suggesting `vael-ui` instead of `vael-ui/vapor` (a known TypeScript limitation when a package exports the same name from two entry points), set a `vapor` export condition instead of importing from the subpath. Every `import … from 'vael-ui'` then resolves to the Vapor build project-wide, components and composables alike, and `vael-ui/motion` hands out the Vapor `vAnimate`, so there's nothing left for auto-import to pick wrong.
 
 ```ts
 // vite.config.ts

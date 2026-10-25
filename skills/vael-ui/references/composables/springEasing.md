@@ -3,13 +3,13 @@
 Turns a spring into a CSS `linear()` curve and the time it takes to settle, in ms. It's the curve vael-ui uses for `ConfigProvider`'s `:motion="{ spring }"`. The result has the same shape as the options `element.animate()` takes, so your own animations can move on the same spring without a library. Damping below 1 overshoots.
 
 ```ts
-import { springEasing } from 'vael-ui' // or 'vael-ui/vapor'
+import { springEasing } from 'vael-ui/motion' // either build
 ```
 
 ## Example
 
 ```ts
-import { springEasing } from 'vael-ui'
+import { springEasing } from 'vael-ui/motion'
 
 // { easing: 'linear(0, …, 1)', duration: 642 }
 const spring = springEasing({ damping: 0.7, response: 0.4 })

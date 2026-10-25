@@ -142,6 +142,8 @@ const motion: DialogMotion = {
 }
 ```
 
+**Imports.** Components and their motion types (`DialogMotion`, `SelectPart`) come from `vael-ui`. Everything for your own elements comes from `vael-ui/motion`, in both builds: `vAnimate`, `animate`, `useAnimate`, `useMotion`, `useScrollProgress`, `settled`, `springEasing`, `useSpringValue` and the general types (`MotionValues`, `MotionTiming`, `MotionStyle`). In a `<script setup vapor>` component use `import { vAnimateVapor as vAnimate } from 'vael-ui/motion'` (the VDOM `vAnimate` is skipped there); with the `vapor` export condition, plain `vAnimate` is already the Vapor form.
+
 Rules to apply every time:
 
 - **Ask whether it should animate.** Anything people do hundreds of times a day, or from the keyboard, stays instant. Keep the built-in look on command palettes, menus and tabs.
@@ -151,6 +153,7 @@ Rules to apply every time:
 - **Animate `x`, `y`, `scale`, `rotate` and `opacity`.** No `width`, `height` or `top` in values; use `v-animate.size`, `resize` or `layout`.
 - **Let reduced motion work.** vael-ui keeps fades and drops movement on its own, and skips hooks unless `reducedMotion: 'run'`.
 - **In tests,** `await settled()` or wrap in `<ConfigProvider :motion="false">`.
+- **Motion an event starts** (a wrong code shakes the field, a badge bumps on add): `animate(el, values, options)`, or `useAnimate()` inside a component; it follows the app's spring and reduced motion, and `await`s. Motion that follows state stays declarative: `states`, `v-animate`'s `animate` or `replay`.
 - **Acting once something has played**: put the callback on what animates. `onAfterEnter` / `onAfterLeave` go on an overlay's or list's `motion` (a list's run per item with `{ index }`), on a state (`states.invalid.onAfterEnter: ({ root }) => reset(root)`, parts by name, a repeated part as an array), and on your elements (`v-animate="{ initial: …, onAfterEnter: close }"`, or `targets.name`). `onAfterSwap` follows a swap, `onAfterMove` a `layout` slide or `animate` change, `onRepeat` sits beside `repeat`. All run at once when nothing plays, as with motion off. Never a `setTimeout` that repeats a duration; `settled()` is for tests. Table: [references/guides/motion.md](references/guides/motion.md#callbacks).
 
 Units: `duration` is ms; `delay`, `stagger` and `spring.response` are seconds. A spring and a duration never go together. Springs by name: `'snappy'`, `'smooth'`, `'bouncy'`, `'gentle'`. Entrances by name: `fade`, `rise`, `drop`, `pop`, `blur`. Every name is a typed union, so a typo fails vue-tsc.
@@ -160,6 +163,7 @@ Units: `duration` is ms; `delay`, `stagger` and `spring.response` are seconds. A
 0.5.0 replaced the old animation hand-off. Code written for 0.4, or remembered from it, breaks on these:
 
 - `motionCss` / `motion-css` is now `motion`.
+- `useSpringValue`, `createSpring` and `stepSpring` import from `vael-ui/motion`.
 - `beforeClose(done)` is gone: `before-close` returns `boolean` or a promise, and exit animations move to `motion.leave`.
 - `@item-enter`, `@card-leave`, `@row-enter`, `@chip-leave`, `@action-enter` and the other list events are gone: use `enter` / `leave` hooks in `motion`.
 - Button colors come from `--ui-button-bg` / `--ui-button-border`; Sortable's root is a `div.ui-sortable` around `ul.ui-sortable-list`; Tooltip's label is in `.ui-tooltip-content`; list hover backgrounds are one `.ui-indicator` styled by `--ui-indicator-bg`.
