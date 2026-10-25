@@ -615,6 +615,7 @@ import { settled } from 'vael-ui'
 
 await user.click(screen.getByRole('button', { name: 'Open' }))
 await settled() // every animation vael-ui started has finished
+await settled(field.value?.el) // only what's animating on that element, such as its invalid shake
 expect(screen.getByRole('dialog')).toBeVisible()
 ```
 
@@ -828,4 +829,5 @@ Check feel at 2 to 5 times the duration or frame by frame, test gestures on a re
 | `linked` in a ConfigProvider style | Set it on the Dialog, Drawer or BottomSheet |
 | `reducedMotion: 'run'` with full movement | Check `context.reducedMotion` and drop movement |
 | Tests that wait with `setTimeout` | `await settled()`, or `:motion="false"` |
+| Code that waits a fixed `setTimeout` for an animation to end | `await settled(el)` |
 | `v-animate` imported from `'vael-ui/vapor'` in a VDOM template | Import it from the build the template compiles as |

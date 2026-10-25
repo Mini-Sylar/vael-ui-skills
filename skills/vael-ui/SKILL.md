@@ -151,6 +151,7 @@ Rules to apply every time:
 - **Animate `x`, `y`, `scale`, `rotate` and `opacity`.** No `width`, `height` or `top` in values; use `v-animate.size`, `resize` or `layout`.
 - **Let reduced motion work.** vael-ui keeps fades and drops movement on its own, and skips hooks unless `reducedMotion: 'run'`.
 - **In tests,** `await settled()` or wrap in `<ConfigProvider :motion="false">`.
+- **Waiting for one animation in app code** (a shake before you clear a field): `await settled(el)`, not a `setTimeout` that repeats the duration. It resolves at once when nothing plays there, as under reduced motion.
 
 Units: `duration` is ms; `delay`, `stagger` and `spring.response` are seconds. A spring and a duration never go together. Springs by name: `'snappy'`, `'smooth'`, `'bouncy'`, `'gentle'`. Entrances by name: `fade`, `rise`, `drop`, `pop`, `blur`. Every name is a typed union, so a typo fails vue-tsc.
 
