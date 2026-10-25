@@ -51,7 +51,7 @@ import { Button, Toaster, toast } from 'vael-ui/vapor'
 - **Auto-import** with `unplugin-vue-components` and `VaelUiResolver` from `vael-ui/resolver` instead of importing every component. See [Auto import](./references/guides/auto-import.md).
 - **Whole app as Vapor:** `vue({ features: { vapor: true } })` (`@vitejs/plugin-vue` 6.0.8+). `optionsAPI: false` is safe for vael-ui.
 - **Fonts:** components use `font: inherit`, so set a `font-family` on `body`.
-- **Mount the hosts once:** `<Toaster />`, and `<TooltipHost />`, `<DialogHost />`, `<PopoverHost />` if you use `v-tooltip`, `openDialog()` or `openPopover()`.
+- **Mount the hosts once:** `<Toaster />`, and `<TooltipHost />`, `<DialogHost />`, `<PopoverHost />` if you use `v-tooltip`, `openDialog()` or `openPopover()`. With a `ConfigProvider`, mount them inside it: what a host shows (`toast()`, `openDialog()`, tooltips) takes the provider's theme, motion, messages and size only from a provider above the host.
 - **Directives** aren't auto-imported. Import `vTooltip`, `vAnimate`, `vScrollMask` or `vHoverIndicator` in `<script setup>`, or register them with `app.directive('tooltip', vTooltip)`.
 
 **Server rendering.** Both builds server-render and hydrate. For plain Vite SSR, set `ssr: { noExternal: ['vael-ui'] }` (each component imports its own CSS) and inject `ctx.teleports?.body` before `</body>`, since overlays teleport to `body`. `v-animate` entrances are written as CSS on the server and never replay on hydration.
