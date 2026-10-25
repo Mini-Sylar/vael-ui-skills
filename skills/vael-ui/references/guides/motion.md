@@ -829,5 +829,5 @@ Check feel at 2 to 5 times the duration or frame by frame, test gestures on a re
 | `linked` in a ConfigProvider style | Set it on the Dialog, Drawer or BottomSheet |
 | `reducedMotion: 'run'` with full movement | Check `context.reducedMotion` and drop movement |
 | Tests that wait with `setTimeout` | `await settled()`, or `:motion="false"` |
-| Code that waits a fixed `setTimeout` for an animation to end | `await settled(el)` |
+| Code that waits a fixed `setTimeout` for an animation to end | a state's `onFinish`, or `await settled(el)` |
 | `v-animate` imported from `'vael-ui/vapor'` in a VDOM template | Import it from the build the template compiles as |

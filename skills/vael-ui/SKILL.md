@@ -151,7 +151,7 @@ Rules to apply every time:
 - **Animate `x`, `y`, `scale`, `rotate` and `opacity`.** No `width`, `height` or `top` in values; use `v-animate.size`, `resize` or `layout`.
 - **Let reduced motion work.** vael-ui keeps fades and drops movement on its own, and skips hooks unless `reducedMotion: 'run'`.
 - **In tests,** `await settled()` or wrap in `<ConfigProvider :motion="false">`.
-- **Waiting for one animation in app code** (a shake before you clear a field): `await settled(el)`, not a `setTimeout` that repeats the duration. It resolves at once when nothing plays there, as under reduced motion.
+- **Acting once a state has played** (clear a field after its invalid shake): give the state an `onFinish`, as in `states: { invalid: { root: { x: [...] }, onFinish: ({ root }) => reset(root) } }`. It gets the elements by part name; a repeated part (OtpInput's `cell`, Stepper's steps, Dock's items) is an array. To wait on any element's animation instead, `await settled(el)`. Never a `setTimeout` that repeats the duration: both run at once when nothing plays, as under reduced motion.
 
 Units: `duration` is ms; `delay`, `stagger` and `spring.response` are seconds. A spring and a duration never go together. Springs by name: `'snappy'`, `'smooth'`, `'bouncy'`, `'gentle'`. Entrances by name: `fade`, `rise`, `drop`, `pop`, `blur`. Every name is a typed union, so a typo fails vue-tsc.
 
