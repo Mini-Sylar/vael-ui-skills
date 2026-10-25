@@ -19,6 +19,7 @@ Name | Type | Default | Description
 `attached` | `boolean \| undefined` | `false` | Draws a `start`/`end` label as a muted cell that shares the control's border. It stays the real `<label>`. Controls without a bordered frame (Switch, Slider…) keep a plain side label. Has no effect with `top`, `float` or `inset`.
 `labelWidth` | `string \| number \| undefined` | `'max-content'` | Width of a `start`/`end` label: a number is pixels, a string any CSS length (`'8rem'`). Give fields the same width to line up their controls, or set `--ui-field-label-width` once on a parent. An `attached` label truncates with an ellipsis when its text is wider.
 `labelAlign` | `"start" \| "end" \| undefined` | `'start'` | Aligns a `start`/`end` label's text. Use `'end'` for right-aligned form labels that sit next to the control.
+`motion` | `FieldMotion \| undefined` |  | How it moves: its parts' appearance (`{ initial: { label: { opacity: 0, y: 4 } } }`) and its states (`{ states: { invalid: { control: { x: [0, -6, 6, 0] } } } }`). `false` turns its own animation off.
 `ui` | `Partial<{ root: UiPartValue; label: UiPartValue; control: UiPartValue; group: UiPartValue; prepend: UiPartValue; append: UiPartValue; description: UiPartValue; error: UiPartValue; }> \| undefined` |  | Class and style overrides for each part. Joined cells (an `attached` label, `#prepend`, `#append`) take their colors from `--ui-field-cell-bg` and `--ui-field-cell-color`.
 
 ## Slots
@@ -41,4 +42,15 @@ _None._
 Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
+`parts` | `Record<string, HTMLElement \| HTMLElement[] \| null>` | Its elements by part name, for your own animation; a repeated part is an array.
+
+## Motion
+
+`motion` takes `FieldMotion` (exported from `'vael-ui'`); `false` turns it off. Field: its parts' appearance and states.
+
+- Parts: `root`, `label`, `control`, `description`, `error`
+- States: `invalid`, `disabled`, `focus`
+- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `replay`, `appear`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

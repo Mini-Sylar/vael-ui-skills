@@ -19,7 +19,7 @@ Name | Type | Default | Description
 `minDate` | `Date \| undefined` |  | Earliest selectable date (inclusive); the calendar disables earlier days, months and years.
 `maxDate` | `Date \| undefined` |  | Latest selectable date (inclusive); the calendar disables later days, months and years.
 `disabledDates` | `CalendarDisabledDates \| undefined` |  | List of unavailable dates, or a predicate function. Matching compares calendar days and ignores time.
-`locale` | `string \| undefined` |  | BCP-47 locale for the input text, month and weekday names, and the week start day.
+`locale` | `string \| undefined` |  | BCP-47 locale for the input text, month and weekday names, and the week start day. Typed dates read in its order too: month/day/year in `en-US`, day/month/year in `de`.
 `firstDayOfWeek` | `number \| undefined` |  | `0` (Sunday) to `6` (Saturday). Unset, it derives from `locale` and falls back to Monday.
 `months` | `number \| undefined` | `1` | How many months the panel shows side by side, for picking a range at a glance.
 `closeOnSelect` | `boolean \| undefined` | `true` | Closes the panel once a date (or a range's end) is picked. `false` keeps it open, for an apply button in `#footer` or trying a few dates; outside clicks and Escape still close it.
@@ -31,12 +31,13 @@ Name | Type | Default | Description
 `alignOffset` | `number \| undefined` | `0` | Shifts the panel along the alignment axis, in pixels.
 `closeOnEsc` | `boolean \| undefined` | `true` | Escape key closes the panel.
 `closeOnOutside` | `boolean \| undefined` | `true` | Clicking outside the panel closes it.
-`beforeClose` | `((done: () => void) => void) \| undefined` |  | Custom exit animation; call `done()` to finish closing.
-`forceMount` | `boolean \| undefined` | `false` | Keeps it mounted, toggled with `v-show`, so you can own the enter/exit animation.
+`beforeClose` | `BeforeClose<PopoverCloseReason> \| undefined` |  | Runs before the panel closes. Return `true` to close it, `false` to keep it open, or a promise of either, like `() => confirmAction(…).result`. The panel stays open while the promise is pending.
+`forceMount` | `boolean \| undefined` | `false` | Keeps it mounted while closed, toggled with `v-show`, so its content keeps its state. vael-ui then leaves its motion to you.
 `teleportTo` | `string \| HTMLElement \| undefined` | `'body'` | Teleport target: a CSS selector or element.
-`motionCss` | `boolean \| undefined` | `true` | `false` skips both the popover enter/leave and Calendar's month-slide transitions.
+`motion` | `DatePickerMotion \| undefined` | `true` | How the panel moves, like Popover's: `false` opens and closes it at once, and skips Calendar's month slide. An object retimes it (`{ spring }`), or gives values for the `panel` part or `enter` / `leave` hooks for your own library.
 `showButtonBar` | `boolean \| undefined` | `false` | Shows built-in Today (`single` mode only) and Clear buttons below the calendar. Has no effect once you provide the `#footer` slot, which renders instead.
 `showYearButtons` | `boolean \| undefined` | `false` | Adds « and » beside the month arrows to jump a year at a time. See Calendar's `showYearButtons`.
+`showWeekNumbers` | `boolean \| undefined` | `false` | Shows each week's number (ISO 8601) at the start of its row.
 `showTime` | `boolean \| undefined` | `false` | Adds an hour/minute row below the calendar (`single` mode only). Picking a date then keeps the panel open so you can set the time.
 `timeOnly` | `boolean \| undefined` | `false` | Hides the calendar and shows only the time row. Implies `showTime`.
 `hourFormat` | `"12" \| "24" \| undefined` |  | `'12'` adds an AM/PM toggle; `'24'` doesn't. Unset, it follows `locale` (or the runtime default) through `Intl`'s `hour12` resolution.
@@ -60,7 +61,7 @@ Name | Type | Description
 `update:modelValue` | `[value: Date \| CalendarRange \| null]` | Fires when `modelValue` changes (`v-model`).
 `open-change` | `[value: boolean, details: PopoverOpenChangeDetails]` | Fires when a close is requested; call `details.cancel()` to keep the panel open.
 `update:open` | `[value: boolean]` | Fires when `open` changes (`v-model:open`).
-`change` | `[value: Date \| CalendarRange \| null]` | Fires when you pick a date, time or range endpoint, or use Today or Clear.
+`change` | `[value: Date \| CalendarRange \| null]` | Fires when you pick a date, time or range endpoint, type one, or use Today or Clear.
 `month-change` | `[value: Date]` | Fires when the calendar's displayed month changes.
 
 ## Exposed
@@ -77,4 +78,13 @@ Name | Type | Description
 `open` | `() => void` | Opens the panel unless disabled.
 `close` | `() => void` | Closes the panel, running `@open-change` and `beforeClose` first.
 `cancelClose` | `() => void` | Cancels a close pending in `beforeClose` and keeps the panel open.
+
+## Motion
+
+`motion` takes `DatePickerMotion` (exported from `'vael-ui'`); `false` turns it off. DatePicker's panel: values or hooks for its parts, like Popover's.
+
+- Parts: `positioner`, `panel`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

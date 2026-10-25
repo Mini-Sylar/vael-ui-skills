@@ -21,6 +21,7 @@ Name | Type | Description
 `bounds` | `MaybeRefOrGetter<HTMLElement \| null \| undefined>` | An element the sheet fills instead of the viewport. Its resizes refit the panel, the same way viewport and on-screen keyboard changes do.
 `dismissible` | `MaybeRefOrGetter<boolean>` | Default `true`. `false` returns a drag past the smallest snap point to it instead of dismissing.
 `onDismiss` | `(velocity: number) => void` | Required. Fires when a release decides to dismiss, with the panel left where the drag ended. Run your close flow here. `velocity` is the release speed in px/ms, positive toward closed.
+`onProgress` | `(progress: number \| null, timing?: { duration: number; easing: string }) => void` | While dragging, how open the sheet is: `1` at the lowest snap point or above, `0` closed. Once it's let go without closing, `null` with the timing it settles on (unset means the drawer's). Use it to move another element with the sheet, such as the page behind it.
 
 ## Returns
 
@@ -28,5 +29,6 @@ Name | Type | Description
 --- | --- | ---
 `activeSnap` | `Ref<string \| null>` | The `id` of the snap point the sheet rests at. Read it only: writing it does not move the panel.
 `isDragging` | `Ref<boolean>` | `true` while the sheet follows a pointer.
-`reset` | `() => Promise<void>` | Slides the panel in to `initialSnap` again. `active` turning `true` already calls it.
+`reset` | `() => void` | Puts the panel at `initialSnap` at once. `active` turning `true` already calls it. The entrance itself is yours to animate, with `useMotion` for instance; `<BottomSheet>` plays its own.
+`settle` | `() => void` | Moves the panel back to the snap point it rests on. `<BottomSheet>` calls it when a `before-close` guard refuses a drag dismiss, so the sheet springs back from where it was let go.
 `setReceded` | `(receded: boolean) => void` | Scales the panel down and shifts it up 16 px while another sheet stacks on top, from its current snap point. `<BottomSheet>` calls it on the parent sheet when a nested one opens.

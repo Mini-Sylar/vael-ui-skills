@@ -53,7 +53,7 @@ Name | Type | Description
 `closeOnEsc` | `MaybeRefOrGetter<boolean>` | Default `true`. Only the topmost layer closes.
 `closeOnOutside` | `MaybeRefOrGetter<boolean>` | Default `true`. Closes on pointer down or focus outside the trigger and panel, and when Tab leaves the panel.
 `onOpenChange` | `(value: boolean, details: PopoverOpenChangeDetails) => void` | Fires before every close, with `value: false`. `details.reason` is `'trigger'`, `'escape'`, `'outside'` or `'programmatic'`. Call `details.cancel()` to keep it open. It doesn't fire on open.
-`beforeClose` | `() => ((done: () => void) => void) \| undefined` | A getter for a close hook. When it returns a function, the close waits until you call `done`. `isClosing` is `true` meanwhile.
+`beforeClose` | `() => BeforeClose \| undefined` | A getter for the close guard. Return `true` to close, `false` or nothing to stay open, or a promise of either. `isClosing` is `true` while a promise is pending.
 `scope` | `Ref<HTMLElement \| null>` | The region this popover belongs to, for Escape ownership in the layer stack. Omit it for a page-level popover.
 `tabIntoPanel` | `boolean` | Tab from the trigger moves into the panel, and Tab past either end closes it and carries on from the trigger. Turn it on for panels that take focus. Leave it off when focus stays on the trigger, as in a combobox. Not reactive.
 

@@ -46,7 +46,7 @@ Name | Type | Description
 `scrollTarget` | `MaybeRefOrGetter<HTMLElement \| string \| null>` | The element whose scrolling locks while open. Defaults to `container`, then `document.body`.
 `closeOnEsc` | `MaybeRefOrGetter<boolean>` | Default `true`. Escape closes the topmost layer only.
 `onOpenChange` | `(value: boolean, details: DialogOpenChangeDetails) => void` | Fires before every close, with `value: false`. `details.reason` is `'trigger'`, `'escape'`, `'outside'`, `'history'` or `'programmatic'`. Call `details.cancel()` to keep it open. It doesn't fire on open.
-`beforeClose` | `() => ((done: () => void) => void) \| undefined` | A getter for a close hook. When it returns a function, the close waits until you call `done`. `isClosing` is `true` meanwhile.
+`beforeClose` | `() => BeforeClose \| undefined` | A getter for the close guard. Return `true` to close, `false` or nothing to stay open, or a promise of either. `isClosing` is `true` while a promise is pending.
 `initialFocus` | `() => HTMLElement \| null \| undefined` | The element to focus on open. Return nothing to fall back to the panel's first focusable element, then the panel.
 `modal` | `MaybeRefOrGetter<boolean>` | Default `true`. `false` skips the scroll lock, the Tab trap and the focus moves; Escape and layer stacking still work. Read once per open.
 `closeOnHistoryBack` | `MaybeRefOrGetter<boolean>` | Default `false`. Pushes a history entry on open, so the back button or back gesture closes the dialog with the `'history'` reason instead of leaving the page. Any other close removes the entry again.

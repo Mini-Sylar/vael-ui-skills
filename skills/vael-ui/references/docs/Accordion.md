@@ -16,7 +16,7 @@ Name | Type | Default | Description
 --- | --- | --- | ---
 `multiple` | `boolean \| undefined` | `false` | Lets several items be open at once; the model becomes an array.
 `collapsible` | `boolean \| undefined` | `true` | Whether the last open item can close, leaving none open.
-`motionCss` | `boolean \| undefined` | `true` | `false` skips transitions; use exposed `panelEl`/`open` for custom motion.
+`motion` | `AccordionMotion \| undefined` | `true` | `false` turns the transitions off, so you can animate the exposed `panelEl` and `open` yourself. An object animates each item's states, like a quarter-turn chevron: `{ states: { open: { chevron: { rotate: '90deg' } } } }`.
 `headingLevel` | `1 \| 2 \| 3 \| 4 \| 5 \| 6 \| undefined` | `3` | Heading level wrapping each item's trigger; match it to the surrounding outline.
 `ui` | `Partial<{ root: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `value` | `V \| undefined` | `null` | Open item's `value` (a `string`, or a union of your item values), or an array of them with `multiple`. `V` takes the type you bind, and `@change` hands the same type back.
@@ -39,6 +39,16 @@ Name | Type | Description
 Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
+
+## Motion
+
+`motion` takes `AccordionMotion` (exported from `'vael-ui'`); `false` turns it off. Accordion's `motion`: values or hooks for its parts (AccordionPart), its states (`open`, `disabled`).
+
+- Parts: `item`, `header`, `trigger`, `chevron`, `panel`, `body`
+- States: `open`, `disabled`
+- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `replay`, `appear`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 
 ## AccordionItem
 

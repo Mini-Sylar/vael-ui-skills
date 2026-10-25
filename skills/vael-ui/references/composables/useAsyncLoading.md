@@ -1,6 +1,10 @@
 # useAsyncLoading
 
-Tracks every in-flight promise passed to `run()`. `loading` only clears once ALL of them have settled, so overlapping calls (or several buttons sharing one instance) never flicker the state early. This is exactly what `Button`’s own `loading="auto"` uses internally for promise-returning `@click` handlers.
+Tracks every in-flight promise you pass to `run()`. `loading` stays `true` until all of them settle, so overlapping calls, or several buttons sharing one instance, don't make the state flicker. `Button` uses it for `loading="auto"` when an `@click` handler returns a promise.
+
+```ts
+import { useAsyncLoading } from 'vael-ui' // or 'vael-ui/vapor'
+```
 
 ## Parameters
 
@@ -10,6 +14,5 @@ _None._
 
 Name | Type | Description
 --- | --- | ---
-`loading` | `ComputedRef<boolean>` | True while at least one call to run() hasn’t settled yet.
-`run` | `<T>(fn: () => T \| Promise<T>) => Promise<T>` | Wraps fn, incrementing/decrementing the in-flight count around it.
-
+`loading` | `ComputedRef<boolean>` | `true` while at least one `run()` call hasn't settled.
+`run` | `<T>(fn: () => T \| Promise<T>) => Promise<T>` | Runs `fn` and counts it as in flight until it settles.

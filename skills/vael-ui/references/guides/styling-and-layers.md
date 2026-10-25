@@ -57,24 +57,34 @@ Each semantic color (`danger`/`success`/`warning`/`info`) also has its own `-hov
 
 ### Motion
 
+These are the CSS side of the motion system. To change how a component moves, prefer its `motion` prop or a `ConfigProvider` motion style; see the [Motion guide](./motion.md). `ConfigProvider`'s `:motion="false"` zeroes the durations.
+
 | Variable | Default | Description |
 | --- | --- | --- |
-| `--ui-ease-out` | `cubic-bezier(0.23, 1, 0.32, 1)` | Default easing for entering/settling transitions. |
-| `--ui-ease-in-out` | `cubic-bezier(0.77, 0, 0.175, 1)` | Easing for on-screen movement (resize, reposition). |
+| `--ui-ease-out` | `cubic-bezier(0.23, 1, 0.32, 1)` | Default easing for entering and leaving. |
+| `--ui-ease-in-out` | `cubic-bezier(0.77, 0, 0.175, 1)` | Easing for movement on screen (resize, reposition). |
+| `--ui-ease-pop` | `cubic-bezier(0.34, 1.36, 0.64, 1)` | Slight overshoot for something arriving, such as a new count. Never for exits. |
 | `--ui-ease-drawer` | `cubic-bezier(0.32, 0.72, 0, 1)` | Easing for edge-anchored slides (drawers, sheets). |
-| `--ui-duration-drawer` | `500ms` | Duration for drawer/sheet slide transitions. |
-| `--ui-duration-press` | `160ms` | Duration for press/tap feedback. |
-| `--ui-duration-enter` | `200ms` | Duration for enter/open transitions. |
-| `--ui-duration-indicator` | `120ms` | How long the sliding hover highlight in lists and menus takes to glide to the next row. |
-| `--ui-duration-indicator-wide` | `200ms` | The same for wide rows (MenuList, Tree, DataTable), which move as a heavier slab. |
+| `--ui-duration-drawer` | `500ms` | Drawer and sheet opening. |
+| `--ui-duration-drawer-exit` | `350ms` | Drawer and sheet closing. |
+| `--ui-duration-press` | `160ms` | Press feedback. |
+| `--ui-duration-enter` | `200ms` | Opening. |
+| `--ui-duration-exit` | `150ms` | Closing. |
+| `--ui-duration-tooltip` | `125ms` | Tooltip opening. |
+| `--ui-duration-tooltip-exit` | `100ms` | Tooltip closing. |
+| `--ui-duration-toast` | `400ms` | Toast entering. |
+| `--ui-duration-toast-exit` | `200ms` | Toast leaving. |
+| `--ui-ease-toast` | `var(--ui-ease-out)` | Toast easing. |
+| `--ui-duration-stagger` | `40ms` | Gap between items arriving together. |
+| `--ui-duration-indicator` | `120ms` | How long the sliding hover highlight in lists and menus takes to reach the next row. |
+| `--ui-duration-indicator-wide` | `200ms` | The same for wide rows (MenuList, Tree, DataTable). |
 | `--ui-ease-indicator` | `var(--ui-ease-out)` | The sliding highlight's easing. |
-| `--ui-indicator-bg` | `var(--ui-muted)` | The sliding highlight's colour. Set it instead of a row `:hover` background, which would paint over it. |
-| `--ui-duration-exit` | `150ms` | Duration for exit/close transitions. |
-| `--ui-duration-tooltip` | `125ms` | Duration for tooltip open. |
-| `--ui-duration-tooltip-exit` | `100ms` | Duration for tooltip close. |
-| `--ui-duration-toast` | `400ms` | Duration for toast enter. |
-| `--ui-duration-toast-exit` | `200ms` | Duration for toast exit. |
-| `--ui-ease-toast` | `ease` | Easing for toast transitions. |
+| `--ui-indicator-bg` | unset, falls back to `var(--ui-muted)` | The sliding highlight's color. Set it instead of a row `:hover` background, which would paint over it. If your CSS reads it, write `var(--ui-indicator-bg, var(--ui-muted))`. |
+| `--ui-duration-number` | `500ms` | AnimatedNumber's roll. |
+| `--ui-ease-number` | `var(--ui-ease-out)` | AnimatedNumber's easing. |
+| `--ui-duration-text` | `150ms` | AnimatedText's swap. |
+| `--ui-ease-text` | `cubic-bezier(0.65, 0, 0.35, 1)` | AnimatedText's easing. |
+| `--ui-duration-pulse` | `1.2s` | Skeleton's pulse. |
 | `--ui-toast-offset` | `1rem` | Edge offset for the toast stack. |
 
 ## Advanced: joining your own control to a Field

@@ -22,6 +22,27 @@ That's it: write the tag, the import gets inserted at build time. `unplugin-vue-
 
 **No extra CSS wiring needed.** Every vael-ui component already imports its own CSS internally, so resolving the component import pulls its styles in for free. (Most `unplugin-vue-components` resolvers need a separate `sideEffects` entry to also import a component's stylesheet; vael-ui's doesn't.)
 
+## Directives
+
+The resolver covers components only. Import directives where you use them, or register them once:
+
+```vue
+<script setup lang="ts">
+import { vAnimate, vTooltip } from 'vael-ui'
+</script>
+
+<template>
+  <button v-tooltip="'Copy'" v-animate="{ initial: { opacity: 0 } }">…</button>
+</template>
+```
+
+```ts
+// main.ts
+app.directive('tooltip', vTooltip).directive('animate', vAnimate)
+```
+
+`v-tooltip` also needs `<TooltipHost />` mounted once. The Nuxt module registers `v-animate` for you.
+
 ## Vapor
 
 vael-ui ships two builds from the same source: the regular VDOM build and a Vapor build (`vael-ui/vapor`). By default the resolver imports from the VDOM build; pass `variant: 'vapor'` to resolve from the Vapor build instead:

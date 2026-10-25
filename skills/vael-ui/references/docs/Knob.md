@@ -23,6 +23,7 @@ Name | Type | Default | Description
 `name` | `string \| undefined` |  | Native `name` for form submission, via a hidden input.
 `valueText` | `((value: number) => string) \| undefined` |  | Drives `aria-valuetext`, e.g. `(v) => \`${v} dB\`` for a gain knob.
 `ui` | `Partial<{ root: UiPartValue; dial: UiPartValue; track: UiPartValue; fill: UiPartValue; indicator: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`motion` | `KnobMotion \| undefined` |  | How it moves: its appearance (`{ initial: { root: { opacity: 0, scale: 0.9 } } }`) and its states, like `active` while you turn it (`{ states: { active: { indicator: { scale: '1.2' } } } }`). `false` turns its own animation off.
 `modelValue` | `number \| undefined` | `0` | Current value.
 
 ## Slots
@@ -43,4 +44,15 @@ Name | Type | Description
 `el` | `HTMLElement \| null` | Root element.
 `dialEl` | `HTMLElement \| null` | Focusable dial element (`role="slider"`).
 `indicatorEl` | `HTMLElement \| null` | Pointer mark that rotates with the value.
+`parts` | `Record<string, HTMLElement \| HTMLElement[] \| null>` | Its elements by part name, for your own animation; a repeated part is an array.
+
+## Motion
+
+`motion` takes `KnobMotion` (exported from `'vael-ui'`); `false` turns it off. Knob: its appearance, states and the fill's timing.
+
+- Parts: `root`, `track`, `fill`, `indicator`
+- States: `disabled`, `focus`, `active`
+- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `replay`, `appear`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

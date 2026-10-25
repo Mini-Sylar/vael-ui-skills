@@ -36,13 +36,13 @@ Name | Type | Default | Description
 `alignOffset` | `number \| undefined` | `0` | Shifts the panel along the alignment axis, in pixels.
 `closeOnEsc` | `boolean \| undefined` | `true` | Escape key closes the panel.
 `closeOnOutside` | `boolean \| undefined` | `true` | Clicking outside the panel closes it.
-`beforeClose` | `((done: () => void) => void) \| undefined` |  | Custom exit animation; call `done()` to finish closing.
-`forceMount` | `boolean \| undefined` | `false` | Keeps it mounted, toggled with `v-show`, so you can own the enter/exit animation.
+`beforeClose` | `BeforeClose<PopoverCloseReason> \| undefined` |  | Runs before the panel closes. Return `true` to close it, `false` to keep it open, or a promise of either, like `() => confirmAction(…).result`. The panel stays open while the promise is pending.
+`forceMount` | `boolean \| undefined` | `false` | Keeps it mounted while closed, toggled with `v-show`, so its content keeps its state. vael-ui then leaves its motion to you.
 `teleportTo` | `string \| HTMLElement \| undefined` | `'body'` | Teleport target: a CSS selector or element.
 `filter` | `CascadeSelectFilter<T> \| undefined` |  | Adds a search box to the panel. While you type, the levels become one list of the matching leaves, each with its path. `true` matches every word against the whole path, ignoring case and accents; a function matches your way; `false` leaves filtering to you via `v-model:query`.
 `filterPlaceholder` | `string \| undefined` | `'Search...'` | Placeholder for the search box.
 `scrollFade` | `boolean \| undefined` | `true` | Masks the panel's top/bottom edge as its content scrolls under it, signaling there's more.
-`motionCss` | `boolean \| undefined` | `true` | `false` skips the built-in motion: the menu easing to its new height as you search, the clear button, and chip transitions, which you can animate via `@chip-enter`/`@chip-leave`.
+`motion` | `CascadeSelectMotion \| undefined` | `true` | How it moves. `false` skips all of it: the menu opening and easing to its new height as you search, the clear button and the chips. An object moves the menu your way, like Menu's: values for the `panel` part, `{ spring }`, or `enter` / `leave` hooks. `chips` does the same for the chips (`{ chips: { initial: { chip: { opacity: 0, y: 4 } } } }`).
 `ui` | `Partial<{ trigger: UiPartValue; value: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; filter: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `modelValue` | `V \| undefined` | `null` | Selected leaf value, or an array of leaf values with `multiple`.
 `open` | `boolean \| undefined` | `false` | Whether the panel is open.
@@ -65,8 +65,6 @@ Name | Type | Description
 `open-change` | `[value: boolean, details: PopoverOpenChangeDetails]` | Fires before the panel closes, with the reason; `details.cancel()` keeps it open.
 `select` | `[item: T, path: CascadeSelectPath]` | Fires when a leaf is picked or unpicked, with the item and its root-to-leaf path.
 `change` | `[value: V]` | Fires when you change the selection: picking a leaf, removing a chip, or clearing.
-`chip-enter` | `[el: Element, done: () => void]` | Replaces the chip enter transition when `motionCss` is `false`; call `done()` when finished.
-`chip-leave` | `[el: Element, done: () => void]` | Same as `@chip-enter`, for a chip's removal.
 `update:modelValue` | `[value: V \| undefined]` | Fires when `modelValue` changes (`v-model`).
 `update:open` | `[value: boolean]` | Fires when `open` changes (`v-model:open`).
 `update:query` | `[value: string]` | Fires when `query` changes (`v-model:query`).
@@ -76,7 +74,7 @@ Name | Type | Description
 Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
-`triggerEl` | `HTMLElement \| null` | Trigger element.
+`triggerEl` | `HTMLElement \| null` | Trigger element: the frame around the button and its clear button. Focusing it focuses the button.
 `panelEl` | `HTMLElement \| null` | Panel element (null while closed).
 `positionerEl` | `HTMLElement \| null` | Positioning wrapper around the panel (null while closed).
 `listEl` | `HTMLElement \| null` | Top-level row list element (null while closed).
@@ -86,4 +84,14 @@ Name | Type | Description
 `open` | `() => void` | Opens the panel.
 `close` | `() => void \| undefined` | Closes the panel, running `@open-change` and `beforeClose` first.
 `cancelClose` | `() => void \| undefined` | Cancels a close pending in `beforeClose` and keeps the panel open.
+
+## Motion
+
+`motion` takes `CascadeSelectMotion` (exported from `'vael-ui'`); `false` turns it off. CascadeSelect's menu, like Menu's. `chips` moves the chips.
+
+- Parts: `positioner`, `panel`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`
+- `chips` (`ChipsMotion`): A select's chips (`multiple`): values or hooks for `chip`, and the list's `stagger` and `leaving`.
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

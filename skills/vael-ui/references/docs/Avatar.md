@@ -16,6 +16,7 @@ Name | Type | Default | Description
 `size` | `"sm" \| "md" \| "lg" \| undefined` | `'md'` | Avatar size.
 `shape` | `"circle" \| "square" \| undefined` | `'circle'` | Round or rounded-square frame.
 `badgePlacement` | `"top-start" \| "top-end" \| "bottom-start" \| "bottom-end" \| undefined` | `'bottom-end'` | Which corner the `#badge` slot sits on.
+`motion` | `AvatarMotion \| undefined` |  | How it moves: its parts' appearance, like the image fading in over the fallback (`{ initial: { image: { opacity: 0 } } }`). `false` turns its own animation off.
 `ui` | `Partial<{ root: UiPartValue; image: UiPartValue; fallback: UiPartValue; badge: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 
 ## Slots
@@ -38,4 +39,14 @@ Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
 `imgEl` | `HTMLImageElement \| null` | Image element (null without `src`).
+`parts` | `Record<string, HTMLElement \| HTMLElement[] \| null>` | Its elements by part name, for your own animation; a repeated part is an array.
+
+## Motion
+
+`motion` takes `AvatarMotion` (exported from `'vael-ui'`); `false` turns it off. Avatar: its parts' appearance, like the image fading in over the fallback.
+
+- Parts: `root`, `image`, `fallback`, `badge`
+- Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

@@ -23,6 +23,7 @@ Name | Type | Default | Description
 `emptyText` | `string \| undefined` | `'No results found'` | Text shown when no nodes match the search or `items` is empty.
 `expandOnRowClick` | `boolean \| undefined` | `false` | Clicking a folder row also toggles its expansion, not only the chevron. The click still selects the row unless `selectableFolders` is `false`.
 `stickyScroll` | `boolean \| undefined` | `false` | Pins each expanded ancestor's row to the top of the panel while its children scroll past, VS Code-style. Nested rows keep their folder context in view.
+`scrollFade` | `boolean \| undefined` | `true` | Fades the panel's top and bottom edges while there are more rows past them. With `stickyScroll`, only the bottom fades, so pinned rows stay solid.
 `name` | `string \| undefined` |  | Renders hidden `<input>`(s) so a plain `<form>` post carries the selection, repeating `name` outside `'single'` mode.
 `side` | `'top' \| 'right' \| 'bottom' \| 'left' \| undefined` | `'bottom'` | Which side of the trigger the panel opens on.
 `align` | `'start' \| 'end' \| 'center' \| undefined` | `'start'` | How the panel aligns against the trigger along that side.
@@ -30,11 +31,11 @@ Name | Type | Default | Description
 `alignOffset` | `number \| undefined` | `0` | Shifts the panel along the alignment axis, in pixels.
 `closeOnEsc` | `boolean \| undefined` | `true` | Escape key closes the panel.
 `closeOnOutside` | `boolean \| undefined` | `true` | Clicking outside the panel closes it.
-`beforeClose` | `((done: () => void) => void) \| undefined` |  | Custom exit animation; call `done()` to finish closing.
-`forceMount` | `boolean \| undefined` | `false` | Keeps it mounted, toggled with `v-show`, so you can own the enter/exit animation.
+`beforeClose` | `BeforeClose<PopoverCloseReason> \| undefined` |  | Runs before the panel closes. Return `true` to close it, `false` to keep it open, or a promise of either, like `() => confirmAction(…).result`. The panel stays open while the promise is pending.
+`forceMount` | `boolean \| undefined` | `false` | Keeps it mounted while closed, toggled with `v-show`, so its content keeps its state. vael-ui then leaves its motion to you.
 `teleportTo` | `string \| HTMLElement \| undefined` | `'body'` | Teleport target: a CSS selector or element.
 `maxPanelHeight` | `number \| undefined` | `320` | Caps the panel height in pixels; the tree scrolls past it. The viewport limits it too, so pass `Infinity` to fill the available space.
-`motionCss` | `boolean \| undefined` | `true` | `false` skips all built-in motion (row transitions, chevron rotation, the panel and list easing to a new height, and the clear button).
+`motion` | `TreeSelectMotion \| undefined` | `true` | `false` skips all built-in motion: the panel opening, rows, the chevron, the list easing to a new height, and the clear button. An object moves the panel your way, like Popover's: values for the `panel` part, `{ spring }`, or `enter` / `leave` hooks for your own library.
 `ui` | `Partial<{ trigger: UiPartValue; value: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; filter: UiPartValue; list: UiPartValue; node: UiPartValue; empty: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `modelValue` | `string \| number \| (string \| number)[] \| null \| undefined` | `null` | Selected value, or an array of values outside `'single'` mode.
 `open` | `boolean \| undefined` | `false` | Whether the panel is open.
@@ -68,7 +69,7 @@ Name | Type | Description
 
 Name | Type | Description
 --- | --- | ---
-`triggerEl` | `HTMLElement \| null` | Trigger element.
+`triggerEl` | `HTMLElement \| null` | Trigger element: the frame around the combobox and its clear button. Focusing it focuses the combobox.
 `panelEl` | `HTMLElement \| null` | Panel element (null while closed).
 `positionerEl` | `HTMLElement \| null` | Positioning wrapper around the panel (null while closed).
 `listEl` | `HTMLElement \| null` | The tree's `role="tree"` element (null while closed).
@@ -85,4 +86,13 @@ Name | Type | Description
 `findNode` | `(value: string \| number) => TreeNode \| undefined` | Finds the node with this value in `items` (`undefined` while closed).
 `findParent` | `(value: string \| number) => TreeNode \| null` | Finds the parent of the node with this value (null for a root node or while closed).
 `removeNode` | `(value: string \| number) => boolean` | Removes the node with this value from `items` in place; returns whether it was found.
+
+## Motion
+
+`motion` takes `TreeSelectMotion` (exported from `'vael-ui'`); `false` turns it off. TreeSelect's panel: values or hooks for its parts, like Popover's.
+
+- Parts: `positioner`, `panel`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

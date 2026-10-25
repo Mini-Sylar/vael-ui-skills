@@ -17,7 +17,7 @@ Name | Type | Default | Description
 `gap` | `number \| undefined` | `10` | Spacing between stacked cards, in pixels.
 `teleportTo` | `string \| HTMLElement \| undefined` | `'body'` | Teleport target: a CSS selector or element. Wins over `container` either way.
 `container` | `DOMTarget \| undefined` |  | Scopes the stack to an element instead of the viewport: it teleports there and sits in that element's corner, so give the element `position: relative`. Pair with `name` to send only some toasts there. Omit it for a page-level toaster.
-`motionCss` | `boolean \| undefined` | `true` | `false` delegates enter/leave animations to `@card-enter`/`@card-leave` events.
+`motion` | `ToasterMotion \| undefined` | `true` | How toasts come and go. `false` shows and removes them at once. An object animates them your way: values for the `toast` part, or `enter` / `leave` hooks for your own library. The stack places them either way.
 `ui` | `Partial<{ root: UiPartValue; toast: UiPartValue; icon: UiPartValue; content: UiPartValue; title: UiPartValue; description: UiPartValue; action: UiPartValue; close: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 
 ## Slots
@@ -28,14 +28,21 @@ Name | Type | Description
 
 ## Events
 
-Name | Type | Description
---- | --- | ---
-`card-enter` | `[el: Element, done: () => void]` | Fires when a toast enters, only while `motionCss` is `false`. Run your own animation, then call `done()`.
-`card-leave` | `[el: Element, done: () => void]` | Same as `@card-enter`, for a toast leaving.
+_None._
 
 ## Exposed
 
 Name | Type | Description
 --- | --- | ---
 `toasterEl` | `HTMLElement \| null` | The toast list (`<ol>`) element, inside the live region.
+
+## Motion
+
+`motion` takes `ToasterMotion` (exported from `'vael-ui'`); `false` turns it off. Toaster's `motion`: values or hooks for its parts (ToasterPart), its states (`loading`, `success`, `error`, `warning`, `info`), how its items come and go (`stagger`, `leaving`, `appear`).
+
+- Parts: `root`, `toast`, `icon`, `content`, `title`, `description`, `action`, `close`
+- States: `loading`, `success`, `error`, `warning`, `info`
+- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `exit`, `enter`, `leave`, `stagger`, `leaving`, `appear`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

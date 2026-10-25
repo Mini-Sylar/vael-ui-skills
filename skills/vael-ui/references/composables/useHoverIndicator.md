@@ -18,7 +18,7 @@ Name | Type | Description
 `matchCross` | `boolean` | Default `true`: also matches each row across the list, for rows inset by its padding.
 `maxGlide` | `number` | Default `3`. A move longer than this many rows jumps instead of gliding.
 `enabled` | `MaybeRefOrGetter<boolean>` | `false` hides the indicator and stops tracking, while a row is being dragged, say.
-`motion` | `MaybeRefOrGetter<boolean \| undefined>` | `false` moves the indicator at once, for an animation of your own. Unset, it follows the nearest ConfigProvider's `motionCss`.
+`motion` | `MaybeRefOrGetter<boolean \| undefined>` | `false` moves the indicator at once, for an animation of your own. Unset, it follows the nearest ConfigProvider's `motion`.
 `indicator` | `MaybeRefOrGetter<'glide' \| 'instant' \| { damping?: number; response?: number } \| undefined>` | How it moves: a CSS glide, an instant move, or a spring. Unset, it follows the nearest ConfigProvider's `indicator`, else `'glide'`. See `useTabIndicator`.
 `indicatorEl` | `Ref<HTMLElement \| null>` | The indicator element. A spring writes to it directly each frame. Without it, a spring falls back to the glide.
 

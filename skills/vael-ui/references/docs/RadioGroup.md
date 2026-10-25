@@ -14,6 +14,7 @@ Name | Type | Default | Description
 `disabled` | `boolean \| undefined` | `false` | Disables every Radio in the group.
 `orientation` | `"horizontal" \| "vertical" \| undefined` | `'vertical'` | Lays the radios out in a row or a column.
 `ui` | `Partial<{ root: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`motion` | `RadioGroupMotion \| undefined` |  | How it moves: its appearance (`{ initial: { root: { opacity: 0, y: 4 } } }`); each Radio keeps its own `motion`. `false` turns its own animation off.
 `modelValue` | `string \| number \| null \| undefined` | `null` | Value of the selected Radio, or `null` when none is selected.
 
 ## Slots
@@ -34,4 +35,14 @@ Name | Type | Description
 Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
+`parts` | `Record<string, HTMLElement \| HTMLElement[] \| null>` | Its elements by part name, for your own animation; a repeated part is an array.
+
+## Motion
+
+`motion` takes `RadioGroupMotion` (exported from `'vael-ui'`); `false` turns it off. RadioGroup: its appearance; its radios keep their own `motion`.
+
+- Parts: `root`
+- Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

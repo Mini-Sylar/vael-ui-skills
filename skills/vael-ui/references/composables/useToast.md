@@ -1,6 +1,10 @@
 # useToast
 
-Sonner-style imperative toasts: call `toast(title, options)` from anywhere, no component context needed. `toast.success/error/warning/info/loading` are shortcuts for each variant, and `toast.promise(input, messages)` shows a loading toast immediately and swaps it for success/error once the promise settles, with no manual dismiss() bookkeeping. Requires a `<Toaster/>` mounted once at the app root to actually render.
+Sonner-style toasts you trigger from code. Call `toast(title, options)` from anywhere, with no component context. `toast.success`, `.error`, `.warning`, `.info` and `.loading` set the variant for you. `toast.promise(input, messages)` shows a loading toast at once, then swaps it for a success or error toast when the promise settles. You don't need to call `dismiss()` yourself. Toasts render in a `<Toaster/>`, which you mount once at the app root.
+
+```ts
+import { toast, useToastQueue } from 'vael-ui' // or 'vael-ui/vapor'
+```
 
 ## Parameters
 
@@ -10,9 +14,8 @@ _None._
 
 Name | Type | Description
 --- | --- | ---
-`toast(title, options?)` | `number \| string` | Pushes a default-variant toast and returns its id for `dismiss(id)`: a number, or your own `id` if you pass one. Options: `id`, `description`, `variant`, `duration` (in milliseconds, default 4000; `Infinity` keeps it until someone closes it), `action: { label, onClick }` `pinned`, which shows the toast in its own section beside the stack where newer toasts can't cover it (it doesn't count toward `maxVisible`, and it still times out unless `duration` is `Infinity`), and `toaster`, which sends it to the `<Toaster>` with that `name` instead of the unnamed one. Showing a toast with an `id` that's already on screen updates that toast and restarts its timer instead of adding another, so you don't need to track ids yourself.
-`toast.success / .error / .warning / .info / .loading` | `(title, options?) => number` | Same signature, fixed variant. loading defaults to duration: Infinity.
-`toast.promise(input, messages, options?)` | `Promise<T>` | input is a Promise or a function returning one. Shows messages.loading immediately, then messages.success/.error (string or a function of the settled value/error).
-`toast.dismiss(id?)` | `(id?: number | string) => void` | Dismisses one toast, or every toast when id is omitted.
-`useToastQueue(toaster?)` | `{ toasts, dismiss, pauseAll, resumeAll, setWaiting }` | One Toaster's queue plus pause and resume: the unnamed Toaster's, or the one whose `name` you pass. `<Toaster/>` uses it internally, for example to pause timers on `pointerenter`. `setWaiting(ids)` holds the timers of toasts that aren't on screen yet.
-
+`toast(title, options?)` | `number \| string` | Shows a toast with the default variant and returns its id for `dismiss(id)`: a number, or your own `id` if you pass one. Options: `id`, `description`, `variant`, `duration` (in milliseconds, default 4000; `Infinity` keeps it until someone closes it), `action: { label, onClick }` `pinned`, which shows the toast in its own section where newer toasts can't cover it, and `toaster`, which sends it to the `<Toaster>` with that `name` instead of the unnamed one. Showing a toast with an `id` that's already on screen updates that toast instead of adding another.
+`toast.success / .error / .warning / .info / .loading` | `(title, options?) => number` | Same signature with a fixed variant. `loading` defaults to `duration: Infinity`.
+`toast.promise(input, messages, options?)` | `Promise<T>` | `input` is a promise or a function that returns one. Shows `messages.loading` at once, then `messages.success` or `messages.error`. Each can be a string or a function of the settled value or error.
+`toast.dismiss(id?)` | `(id?: number \| string) => void` | Dismisses one toast, or every toast when you omit `id`.
+`useToastQueue(toaster?)` | `{ toasts, dismiss, pauseAll, resumeAll, setWaiting }` | Read-only access to one Toaster's queue, plus pause and resume: the unnamed one, or the one whose `name` you pass. `<Toaster/>` uses it internally, for example to pause timers on `pointerenter`. `setWaiting(ids)` holds the timers of toasts that aren't on screen yet.

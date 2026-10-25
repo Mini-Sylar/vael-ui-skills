@@ -15,6 +15,9 @@
 
 ## Motion
 
+- **The motion system** (`useMotion`, `vAnimate`, `settled`, `parseMotionStyle`, `MotionStyle`, the `*Motion` types): see the [Motion guide](../guides/motion.md). The composables below are the pieces behind it, for motion of your own.
+- [springEasing](./springEasing.md): A spring as a CSS `linear()` curve and settle time, for `element.animate()` or a transition; the curve behind `ConfigProvider`'s `:motion="{ spring }"`.
+- [useHaptic](./useHaptic.md): Haptic feedback with `selection`, `impact`, `notification`, `vibrate` and `intensity`; `ConfigProvider` `haptics` sets it app-wide and turns on vael-ui's own.
 - [useSpringValue](./useSpringValue.md): vael-ui's spring engine: the physics behind Sortable, Tree and DataTable reordering, and behind every sliding indicator set to spring mode. Also exports `createSpring` and `stepSpring`.
 - [useTabIndicator](./useTabIndicator.md): The sliding selection indicator behind Tabs, SelectButton, Pagination and MenuList, and behind the active option in Select, Combobox and CommandPalette.
 - [useHoverIndicator](./useHoverIndicator.md): The sliding hover highlight behind every vael-ui list: Select, Menu, Tree, DataTable, Tabs, Pagination, Calendar and the rest.
@@ -47,7 +50,7 @@ Each drives one component and renders nothing. Reach for one when a component's 
 - [useTooltip](./useTooltip.md) (`<Tooltip>`): The headless tooltip behind `<Tooltip>`: open and close delays, a warm group in which the next tooltip opens at once and glides from the last one, hover onto the tooltip, Escape, and touch long-press.
 - [useTooltipCore](./useTooltipCore.md) (`<Tooltip>`): `useTooltip` without its trigger hover, focus and press listeners, so one tooltip can serve many triggers through event delegation.
 - [usePopover](./usePopover.md) (`<Popover>`): The headless popover behind `<Popover>`, `<Menu>`, `<Select>`, `<Combobox>`, `<DatePicker>` and `<TreeSelect>`.
-- [useDialog](./useDialog.md) (`<Dialog>`): The headless modal behaviour behind `<Dialog>`: a cancelable close, Escape through the shared layer stack, a Tab focus trap, scroll lock, initial focus and focus return, and optional back-button dismiss.
+- [useDialog](./useDialog.md) (`<Dialog>`): The headless modal behavior behind `<Dialog>`: a cancelable close, Escape through the shared layer stack, a Tab focus trap, scroll lock, initial focus and focus return, and optional back-button dismiss.
 - [useDataTableContext](./useDataTableContext.md) (`<DataTable>`): Reaches the nearest `<DataTable>`'s sort and selection state from a component rendered inside it, such as a custom cell.
 - [useSlider](./useSlider.md) (`<Slider>`): The headless engine behind `<Slider>`.
 - [useKnob](./useKnob.md) (`<Knob>`): The headless engine behind `<Knob>`: a value on a 270° sweep, from −135° to +135° with the gap at the bottom.

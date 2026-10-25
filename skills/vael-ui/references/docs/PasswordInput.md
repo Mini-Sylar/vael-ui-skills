@@ -20,14 +20,14 @@ Name | Type | Default | Description
 `revealable` | `boolean \| undefined` | `true` | `false` hides the reveal toggle, for forms that must never show the password in plain text.
 `rules` | `PasswordRule[] \| undefined` |  | Requirement checks (`{ label, test }`) for the hint checklist and the `#hint` slot's `results`. There are no built-in rules; without `rules` or `#hint`, the hint doesn't render.
 `hintPlacement` | `"inline" \| "none" \| "popover" \| undefined` | `'popover'` | Where the requirements hint renders. `'none'` disables it outright.
-`motionCss` | `boolean \| undefined` | `true` | `false` skips the hint's enter/exit transition. Inline mode only.
+`motion` | `PasswordInputMotion \| undefined` | `true` | How it moves: its appearance (`{ initial: { root: { opacity: 0, y: 4 } } }`) and its states (`{ states: { invalid: { root: { x: [0, -6, 6, 0] } } } }`). The inline `hint` is a part; the popover one is not. `false` skips the inline hint's enter/exit transition.
 `side` | `'top' \| 'right' \| 'bottom' \| 'left' \| undefined` |  | Which side of the input the hint appears on, in both `'popover'` and `'inline'` mode. Inline defaults to `'bottom'`.
 `align` | `'start' \| 'end' \| 'center' \| undefined` |  | How the hint aligns against the input along that side, in both `'popover'` and `'inline'` mode. Inline defaults to `'start'`.
 `sideOffset` | `number \| undefined` |  | Gap between the input and the hint popover, in pixels. Popover mode only.
 `alignOffset` | `number \| undefined` |  | Shifts the hint popover along the alignment axis, in pixels. Popover mode only.
 `teleportTo` | `string \| HTMLElement \| undefined` |  | Teleport target for the hint popover: a CSS selector or element. Popover mode only.
 `forceMount` | `boolean \| undefined` | `false` | Keeps the hint popover mounted (toggled with `v-show`) and skips the built-in transition. Popover mode only.
-`beforeClose` | `((done: () => void) => void) \| undefined` |  | Custom exit animation for the hint popover; call `done()` when it's complete. Popover mode only.
+`beforeClose` | `BeforeClose<PopoverCloseReason> \| undefined` |  | Runs before the hint closes. Return `true` to close it, `false` to keep it open, or a promise of either, like `() => confirmAction(…).result`. The hint stays open while the promise is pending. Popover mode only.
 `ui` | `Partial<{ root: UiPartValue; frame: UiPartValue; input: UiPartValue; toggle: UiPartValue; hint: UiPartValue; hintList: UiPartValue; hintItem: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `modelValue` | `string \| undefined` | `''` | Password value.
 `visible` | `boolean \| undefined` | `false` | Whether the password is shown as plain text.
@@ -37,6 +37,7 @@ Name | Type | Default | Description
 Name | Type | Description
 --- | --- | ---
 `end` | `any` | Inline trailing content, placed before the reveal toggle.
+`display` | `{ value: string; placeholder: string; focused: boolean; }` | Draws the text yourself over the field's own text, as Input's `#display`: the real input keeps the caret, selection and screen reader text.
 `hint` | `{ value: string; results: PasswordRuleResult[]; }` | Replaces the default requirements checklist. Falls back to it when omitted.
 
 ## Events
@@ -56,4 +57,15 @@ Name | Type | Description
 `hintPanelEl` | `HTMLElement \| null` | Hint popover panel element (null while closed or in `'inline'` mode).
 `closeHint` | `() => void` | Closes the hint popover, running `beforeClose` if set.
 `cancelCloseHint` | `() => void` | Aborts a pending `beforeClose` exit and keeps the hint popover open.
+`parts` | `Record<string, HTMLElement \| HTMLElement[] \| null>` | Its elements by part name, for your own animation; a repeated part is an array.
+
+## Motion
+
+`motion` takes `PasswordInputMotion` (exported from `'vael-ui'`); `false` turns it off. PasswordInput: its appearance and states.
+
+- Parts: `root`, `input`, `toggle`, `hint`
+- States: `invalid`, `disabled`, `focus`
+- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `replay`, `appear`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

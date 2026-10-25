@@ -1,44 +1,47 @@
 # useSortable
 
-The spring-driven drag-to-reorder engine behind `<Sortable>`, `<Tree>`'s nested reorder, and `<DataTable>`'s column reorder — pointer and keyboard drive the same grabbed state, and all ordering/nesting decisions live in pure, independently-tested functions. `<Sortable>` is just a thin, optional convenience layer over this; reach for the composable directly when you need custom markup a component can't give you, or when building a cross-container board with `useSortableGroup()`, which wraps this same engine.
+The spring-driven drag-to-reorder engine behind `<Sortable>`, nested reordering in `<Tree>` and column reordering in `<DataTable>`. Pointer and keyboard input drive the same grabbed state. Pure, separately tested functions make every ordering and nesting decision. `<Sortable>` is an optional wrapper around it. Use the composable directly when you need markup a component can't give you. To move items between lists, use `useSortableGroup()`, which wraps the same engine.
+
+```ts
+import { useSortable } from 'vael-ui' // or 'vael-ui/vapor'
+```
 
 ## Parameters
 
 Name | Type | Description
 --- | --- | ---
-`rows` | `MaybeRefOrGetter<readonly FlatSortableRow[]>` | Visible rows in visual order — { value, depth, parentValue } — re-read at grab time.
-`getElement` | `(value) => HTMLElement \| null` | Resolves a row to the DOM node the engine measures and transforms directly.
-`onCommit` | `(value, to: DropPosition) => void` | Apply the reorder. Fires once, on a committed drop.
-`axis` | `MaybeRefOrGetter<'y' \| 'x'>` | Default 'y'. Nesting is only meaningful on 'y'.
-`nested` | `MaybeRefOrGetter<boolean>` | Enables depth changes — Tree turns this on, a flat list leaves it off.
-`dropOnTarget` | `MaybeRefOrGetter<boolean>` | VS Code model: hovering a row's middle drops INTO it. Requires nested.
-`reorderSiblings` | `MaybeRefOrGetter<boolean>` | false disables reordering among current siblings — only re-parenting is offered, with no indicator on a would-be sibling insert. Requires dropOnTarget.
-`nestEdgeFraction` | `MaybeRefOrGetter<number>` | Fraction of a target's own size, on each end, that still means "beside it" rather than "into it". Default 0.25 (a 50%-wide inside zone) — shrink it for a target that's hard to land on precisely.
-`canNestInto` | `(value) => boolean` | Which rows accept children. Without this, every row does.
-`childCountOf` | `(value) => number` | Existing child count, so an "inside" drop appends.
-`dragPreview` | `MaybeRefOrGetter<boolean>` | Lifts the grabbed row out as a floating preview that follows the cursor, leaving its slot dimmed — without it the row stays in flow and slides over its neighbours.
-`previewMode` | `MaybeRefOrGetter<'element' \| 'clone'>` | 'element': the real dragged row itself lifts and keeps moving — only one instance of it on screen. 'clone': a separate floating copy, the real row hidden until drop; needed when the real element can't leave its normal layout (a `<tr>`, a `<th>`). Default is context-dependent: 'element' once a `group` drag leaves this list, 'clone' for a plain `dragPreview` drag.
-`previewCarriesSubtree` | `MaybeRefOrGetter<boolean>` | dragPreview + nested only, default true. A dragged row with visible descendants (an expanded folder, a tab group) carries real copies of them along inside the floating clone, at the exact offset they already sat at, so the whole block reads as one physical thing lifting together.
+`rows` | `MaybeRefOrGetter<readonly FlatSortableRow[]>` | Visible rows in visual order, as `{ value, depth, parentValue }`. Read again each time a row is grabbed.
+`getElement` | `(value) => HTMLElement \| null` | Returns the DOM node for a row. The engine measures and moves that node directly.
+`onCommit` | `(value, to: DropPosition) => void` | Applies the reorder. Fires once, on a committed drop.
+`axis` | `MaybeRefOrGetter<'y' \| 'x'>` | Default `'y'`. Nesting only works on `'y'`.
+`nested` | `MaybeRefOrGetter<boolean>` | Enables depth changes. `Tree` turns it on; a flat list leaves it off.
+`dropOnTarget` | `MaybeRefOrGetter<boolean>` | VS Code-style drops: hovering the middle of a row drops the item into it. Requires `nested`.
+`reorderSiblings` | `MaybeRefOrGetter<boolean>` | `false` turns off reordering among current siblings. Only re-parenting is offered, and no indicator shows for a sibling insert. Requires `dropOnTarget`.
+`nestEdgeFraction` | `MaybeRefOrGetter<number>` | The fraction of a target's size, at each end, that means "beside it" rather than "into it". Default `0.25`, which leaves a 50% inside zone. Lower it for targets that are hard to hit.
+`canNestInto` | `(value) => boolean` | Which rows accept children. Without it, every row does.
+`childCountOf` | `(value) => number` | Existing child count, so an "inside" drop appends to the end.
+`dragPreview` | `MaybeRefOrGetter<boolean>` | Lifts the grabbed row into a floating preview that follows the cursor, and dims its slot. Without it, the row stays in the layout and slides past its neighbours.
+`previewMode` | `MaybeRefOrGetter<'element' \| 'clone'>` | `'element'` lifts the real row, so only one copy is on screen. `'clone'` shows a separate floating copy and hides the real row until the drop. Use `'clone'` when the real element can't leave its layout, such as a `<tr>` or `<th>`. The default depends on context: `'element'` once a `group` drag leaves this list, `'clone'` for a plain `dragPreview` drag.
+`previewCarriesSubtree` | `MaybeRefOrGetter<boolean>` | Only with `dragPreview` and `nested`. Default `true`. The dragged row's visible descendants (an expanded folder, a tab group) travel inside the floating clone at their current offsets. The whole block lifts as one piece.
 `disabled` | `MaybeRefOrGetter<boolean>` | Turns off dragging.
-`motionCss` | `MaybeRefOrGetter<boolean>` | false disables the built-in springs — positions snap.
-`canDrop` | `(details: SortableDropDetails) => boolean` | Synchronous structural veto, re-run while dragging: false marks the target invalid and blocks the drop. Keep it cheap.
-`beforeDrop` | `(details) => boolean \| Promise<boolean>` | Async gate at drop time — return false (or a promise of it) to cancel and spring the item home. Composes with confirmAction().result.
-`onDropError` | `(error, details) => void` | beforeDrop threw or rejected; the move is already reverted by the time this fires.
-`labelOf / announce` | `(value) => string / (event) => string` | Human label and live-region text for assistive tech.
-`group / groupId / container` | `SortableGroupHandle / string \| number / MaybeRefOrGetter<HTMLElement \| null>` | Shares drag sessions with other useSortable() lists passed the same handle — see useSortableGroup(). container is only needed when group is set, so it can hit-test an empty list.
+`motion` | `MaybeRefOrGetter<boolean>` | `false` turns off the built-in springs, so positions snap.
+`canDrop` | `(details: SortableDropDetails) => boolean` | A synchronous veto, re-run while dragging. Returning `false` marks the target invalid and blocks the drop. Keep it cheap.
+`beforeDrop` | `(details) => boolean \| Promise<boolean>` | An async check at drop time. Return `false`, or a promise of `false`, to cancel and spring the item back. Works with `confirmAction().result`.
+`onDropError` | `(error, details) => void` | `beforeDrop` threw or rejected. The move is already reverted when this fires.
+`labelOf / announce` | `(value) => string / (event) => string` | The row label and live-region text for assistive tech.
+`group / groupId / container` | `SortableGroupHandle / string \| number / MaybeRefOrGetter<HTMLElement \| null>` | Shares drag sessions with other `useSortable()` lists that get the same handle. See `useSortableGroup()`. `container` is only needed with `group`, so an empty list can be hit-tested.
 
 ## Returns
 
 Name | Type | Description
 --- | --- | ---
-`activeValue / isGrabbed / isDragging` | `Ref` | Which row is held, and by which input (isDragging is pointer-only, never a plain click).
-`isGrabbedValue` | `(value) => boolean` | Bind directly: :data-grabbed="isGrabbedValue(row.value) \|\| undefined". True for a folder's whole dragged subtree, not just the row you grabbed.
-`dropPosition / isValidDrop / isPending` | `Ref` | Where it would land, whether canDrop currently allows that, and whether an async beforeDrop is still deciding.
-`dropIntoValue / dropTargetValue / dropIntent` | `Ref` | Drop-on-target mode only: which row is being hovered, and before/after/inside.
-`draggedValues` | `Ref<ReadonlySet>` | Every value in the dragged block — a folder carries its descendants.
-`isForeignDropTarget` | `Ref<boolean>` | group only: true while a drag from a sibling member is hovering this list as the drop target. Always false for the list the drag started in — style `[data-drop-target]`'s worth of feedback on wherever you'd otherwise show it.
-`announcement` | `Ref<string>` | Live-region text. Render it in an aria-live="assertive" node.
-`onHandlePointerdown / onHandleKeydown` | `(event, value) => void` | Wire directly to a row's handle element.
-`consumeSuppressedClick` | `() => boolean` | True exactly once after a committed drag — swallow the trailing click a drag also triggers.
-`cancel` | `() => void` | Abandon the current grab and spring everything home.
-
+`activeValue / isGrabbed / isDragging` | `Ref` | The held row and how it's held. `isDragging` is pointer-only and stays `false` for a plain click.
+`isGrabbedValue` | `(value) => boolean` | Bind it directly: `:data-grabbed="isGrabbedValue(row.value) \|\| undefined"`. `true` for a folder's whole dragged subtree, not only the grabbed row.
+`dropPosition / isValidDrop / isPending` | `Ref` | Where the item would land, whether `canDrop` allows it, and whether an async `beforeDrop` is still pending.
+`dropIntoValue / dropTargetValue / dropIntent` | `Ref` | Drop-on-target mode only: the hovered row, and whether the drop goes before, after or inside it.
+`draggedValues` | `Ref<ReadonlySet>` | Every value in the dragged block. A folder carries its descendants.
+`isForeignDropTarget` | `Ref<boolean>` | Only with `group`. `true` while a drag from another list in the group hovers this list. Always `false` for the list the drag started in. Use it to style drop-target feedback.
+`announcement` | `Ref<string>` | Live-region text. Render it in an `aria-live="assertive"` element.
+`onHandlePointerdown / onHandleKeydown` | `(event, value) => void` | Bind these to a row's handle element.
+`consumeSuppressedClick` | `() => boolean` | Returns `true` once after a committed drag. Use it to ignore the click that follows the drag.
+`cancel` | `() => void` | Abandons the current grab and springs everything back.

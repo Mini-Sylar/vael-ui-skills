@@ -1,106 +1,36 @@
 # Bring your own animation
 
-Every component that animates ships a plain CSS transition, and each one lets you take over: drive it with GSAP, motion-v, or nothing at all. Which hooks you get depends on what the component does.
+This guide moved into the [Motion guide](./motion.md) in vael-ui 0.5.0, when every component moved onto one motion system. Start there.
 
-## Which hooks does a component have?
+Where to look for each way of taking over:
 
-- **Opens and closes** (Dialog, Popover, Tooltip, Menu, Select, DatePicker): `forceMount`, `beforeClose(done)` and an exposed `panelEl`. `forceMount` already turns the CSS transition off.
-- **Changes in place** (Calendar, Checkbox, Radio, Collapsible, Pagination, PullToRefresh): `motionCss` turns the transition off, and exposed elements let you animate it yourself.
-- **Items that come and go** (CommandPalette, Timeline, FileUpload): `motionCss` plus `@item-enter` and `@item-leave`.
+| You want to | Use | Motion guide section |
+| --- | --- | --- |
+| Turn a component's animation off | `:motion="false"` | [Turn it off](./motion.md#turn-it-off) |
+| Keep the look, change the feel | `:motion="{ spring: { damping, response } }"` | [Retime with a spring](./motion.md#retime-with-a-spring) |
+| Change how one part comes in or leaves | `initial` / `exit` by part | [Change a part's values](./motion.md#change-a-parts-values) |
+| Run GSAP, motion or WAAPI on the real elements | `enter` / `leave` hooks that return the animation | [Hooks for GSAP or motion](./motion.md#hooks-for-gsap-or-motion) |
+| Run every component through your library | a style's `engine` | [Your own engine](./motion.md#your-own-engine) |
+| Animate list items coming and going | `initial`, `exit`, `stagger`, `leaving`, or hooks | [Lists](./motion.md#lists) |
+| Confirm before an overlay closes | `before-close` returning `boolean` or a promise | [Overlays](./motion.md#overlays) |
+| Animate your own elements | `v-animate`, `useMotion` | [`v-animate`](./motion.md#v-animate), [`useMotion`](./motion.md#usemotion-for-your-own-components) |
 
-A component's own [props/slots/exposed reference](../docs/_INDEX.md) lists exactly what it has.
+## Coming from 0.4
 
-## `motionCss`
+The 0.4 hand-off API is gone. Code written against it breaks:
 
-`false` disables the built-in CSS transition. The component still changes state instantly, leaving the DOM ready for you to animate yourself.
+- `motionCss` / `motion-css` is now `motion`.
+- `before-close` is a guard. `(done) => …` no longer runs, and an exit animation there never plays. Return `true` to close, `false` to stay open, or a promise of either. Animate the close with a `leave` hook:
 
-On a `ConfigProvider`, `:motion-css="false"` means "no animation" for everything inside: panels snap open and closed, and toasts and list rows leave straight away, with no events to handle. Set it on the component itself when you want to take over its animation.
+  ```ts
+  // 0.4
+  beforeClose: (done) => gsap.to(panel, { opacity: 0, onComplete: done })
+  // 0.5
+  motion: { leave: ({ panel }) => gsap.to(panel, { opacity: 0 }) }
+  ```
 
-## `forceMount`
+- `force-mount` no longer means "I'll animate it". It keeps content mounted so its state survives a close. To animate force-mounted content, add `motion` values or hooks.
+- List events are removed: `item-enter` / `item-leave` (CommandPalette, FileUpload, Timeline), `card-enter` / `card-leave` (Toaster), `row-enter` / `row-leave` (DataTable), `chip-enter` / `chip-leave` (Select, Combobox), `action-enter` / `action-leave` (SpeedDial). Use `enter` / `leave` hooks in `motion`; return the animation instead of calling `done()`. CommandPalette rows go under `motion.items`, chips under `motion.chips`.
+- Don't wrap a vael-ui panel in motion-v's `<AnimatePresence>` or your own `<Transition>`. The component owns its presence; use hooks, or `v-animate` on elements inside.
 
-Keeps content mounted while closed instead of removing it on `v-if`, and turns off the built-in transition. Animate the exposed `panelEl` as it opens, and pair it with `beforeClose(done)` to run your own exit.
-
-Don't wrap panel content in motion-v's `<AnimatePresence>` keyed on `isClosing`: inside a panel that hides with `v-show`, the enter doesn't play and the exit never reports back, so the close never finishes.
-
-## `beforeClose(done)`
-
-For imperative libraries: pass a function that receives `done`. The component stays mounted and `isClosing` stays `true` until you call it.
-
-## Example: motion-v, Popover
-
-`forceMount` hands you the panel. Animate `panelEl` in when it opens, and run the exit in `beforeClose(done)`, which keeps the panel up until you call `done()`:
-
-```vue
-<script setup lang="ts">
-import { ref, useTemplateRef, watch } from 'vue'
-import { animate } from 'motion-v'
-import { Popover } from 'vael-ui'
-
-const open = ref(false)
-const popover = useTemplateRef('popover')
-
-// Runs before the panel shows, so it starts hidden instead of flashing.
-watch(open, (isOpen) => {
-  const panel = popover.value?.panelEl
-  if (!isOpen || !panel) return
-  panel.style.opacity = '0'
-  animate(panel, { opacity: [0, 1], scale: [0.95, 1] }, { duration: 0.2 })
-})
-
-// Popover keeps the panel up until done() is called.
-async function beforeClose(done: () => void) {
-  const panel = popover.value?.panelEl
-  if (panel) await animate(panel, { opacity: 0, scale: 0.95 }, { duration: 0.15 })
-  done()
-}
-</script>
-
-<template>
-  <Popover
-    ref="popover"
-    v-model:open="open"
-    force-mount
-    open-on-trigger-click
-    :before-close="beforeClose"
-  >
-    <template #trigger>
-      <button>Open</button>
-    </template>
-    <template #default>Popover content</template>
-  </Popover>
-</template>
-```
-
-## Example: GSAP, Dialog
-
-`beforeClose(done)` plus the exposed `panelEl` ref, so the tween runs on the real panel element before it's removed:
-
-```vue
-<script setup lang="ts">
-import { ref } from 'vue'
-import gsap from 'gsap'
-import { Dialog } from 'vael-ui'
-
-const dialogRef = ref<InstanceType<typeof Dialog>>()
-const open = ref(false)
-
-function beforeClose(done: () => void) {
-  gsap.to(dialogRef.value?.panelEl, {
-    opacity: 0,
-    y: 8,
-    duration: 0.2,
-    onComplete: done,
-  })
-}
-</script>
-
-<template>
-  <Dialog ref="dialogRef" v-model:open="open" :before-close="beforeClose">
-    Dialog content
-  </Dialog>
-</template>
-```
-
-## Known limitation: `<Transition>` + `<Teleport>` in Vue 3.6 Vapor before rc.4
-
-If targeting Vapor specifically: Vue versions before `3.6.0-rc.4` had a bug where `<Transition>` wrapping a Teleported component (e.g. a force-mounted `Dialog`) didn't correctly defer DOM removal, so `AnimatePresence`-style exit animations never got to run through a Teleport boundary under Vapor. The imperative `beforeClose` pattern above was the only reliable option. Fixed in `3.6.0-rc.4` and later; pin at least that version if relying on the AnimatePresence pattern with Vapor.
+The [changelog](./changelog.md) lists every 0.5.0 change.

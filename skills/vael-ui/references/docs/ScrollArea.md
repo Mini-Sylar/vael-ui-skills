@@ -1,5 +1,7 @@
 # ScrollArea
 
+A scroll box with slim, themed scrollbars and faded edges, in one or both directions.
+
 ```ts
 import { ScrollArea } from 'vael-ui' // or 'vael-ui/vapor'
 ```
@@ -11,6 +13,7 @@ Name | Type | Default | Description
 `orientation` | `"horizontal" \| "vertical" \| "both" \| undefined` | `'vertical'` | Which axis (or axes) the viewport scrolls along.
 `scrollFade` | `boolean \| undefined` | `true` | Masks the scrolling edge(s) as content scrolls under them.
 `autoHide` | `boolean \| undefined` | `false` | Hides the scrollbar thumb until you hover, focus or scroll the viewport.
+`motion` | `ScrollAreaMotion \| undefined` |  | How it moves: its appearance (`{ initial: { root: { opacity: 0, y: 4 } } }`). `false` turns its own animation off.
 `ui` | `Partial<{ root: UiPartValue; viewport: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 
 ## Slots
@@ -44,4 +47,14 @@ Name | Type | Description
 `scrollToBottom` | `(options?: Omit<ScrollToOptions, "top"> \| undefined) => void` | Smooth-scrolls to the bottom.
 `scrollToStart` | `(options?: Omit<ScrollToOptions, "left"> \| undefined) => void` | Smooth-scrolls to the left edge.
 `scrollToEnd` | `(options?: Omit<ScrollToOptions, "left"> \| undefined) => void` | Smooth-scrolls to the right edge.
+`parts` | `Record<string, HTMLElement \| HTMLElement[] \| null>` | Its elements by part name, for your own animation; a repeated part is an array.
+
+## Motion
+
+`motion` takes `ScrollAreaMotion` (exported from `'vael-ui'`); `false` turns it off. ScrollArea: its appearance.
+
+- Parts: `root`
+- Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

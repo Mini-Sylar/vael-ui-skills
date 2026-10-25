@@ -14,7 +14,7 @@ Name | Type | Default | Description
 `threshold` | `number \| undefined` |  | How far you pull, in pixels, before the refresh triggers.
 `maxPull` | `number \| undefined` |  | Maximum pull distance in pixels; the pull stops growing past it.
 `scrollEl` | `HTMLElement \| { el: HTMLElement \| null; } \| null \| undefined` |  | Existing scroll container to detect pulls on. Unset, the root itself scrolls.
-`motionCss` | `boolean \| undefined` | `true` | `false` skips the settle and indicator transitions; animate the `#indicator` slot or exposed `zoneEl` yourself. The live pull still tracks your finger.
+`motion` | `PullToRefreshMotion \| undefined` | `true` | How it moves: its appearance (`{ initial: { indicator: { opacity: 0 } } }`) and its states (`{ states: { refreshing: { indicator: { scale: '1.1' } } } }`). `false` skips the settle and indicator transitions; animate the `#indicator` slot or exposed `zoneEl` yourself. The live pull still tracks your finger.
 `ui` | `Partial<{ root: UiPartValue; zone: UiPartValue; indicator: UiPartValue; bubble: UiPartValue; label: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 
 ## Slots
@@ -37,4 +37,15 @@ Name | Type | Description
 `state` | `PullToRefreshState` | Current phase: `'idle'`, `'pulling'`, `'ready'`, `'loading'` or `'done'`.
 `progress` | `number` | Pull distance as a fraction of `threshold`, from 0 to 1.
 `refresh` | `() => Promise<void>` | Starts a refresh without a pull. No-op while one is already running.
+`parts` | `Record<string, HTMLElement \| HTMLElement[] \| null>` | Its elements by part name, for your own animation; a repeated part is an array.
+
+## Motion
+
+`motion` takes `PullToRefreshMotion` (exported from `'vael-ui'`); `false` turns it off. PullToRefresh: its appearance and states.
+
+- Parts: `root`, `indicator`
+- States: `pulling`, `refreshing`
+- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `replay`, `appear`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

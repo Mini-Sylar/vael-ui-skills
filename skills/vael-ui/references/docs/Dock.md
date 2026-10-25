@@ -21,6 +21,7 @@ Name | Type | Default | Description
 `tooltips` | `boolean \| undefined` | `true` | Renders each item's `v-tooltip` on hover.
 `tooltipSide` | `'top' \| 'right' \| 'bottom' \| 'left' \| undefined` |  | Which side each item's tooltip opens on. Unset, it's `'top'` when horizontal and `'right'` when vertical.
 `ui` | `Partial<{ root: UiPartValue; item: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`motion` | `DockMotion \| undefined` |  | How it moves: its appearance, item by item (`{ initial: { item: { opacity: 0, y: 8 } }, stagger: 0.04 }`). `false` turns its own animation off.
 
 ## Slots
 
@@ -39,4 +40,15 @@ Name | Type | Description
 `el` | `HTMLElement \| null` | Root element.
 `itemEls` | `() => HTMLButtonElement[]` | The item buttons, in order, to animate yourself (with `:magnify="false"` to turn the built-in magnification off).
 `remeasure` | `() => void` | Re-measures item positions for magnification, after a layout change the dock can't detect.
+`parts` | `Record<string, HTMLElement \| HTMLElement[] \| null>` | Its elements by part name, for your own animation; a repeated part is an array.
+
+## Motion
+
+`motion` takes `DockMotion` (exported from `'vael-ui'`); `false` turns it off. Dock: its appearance, item by item, and each item's states: `hover`, `active` (pressed), `focus`, and `selected`, which plays each time the item is picked (a launch hop).
+
+- Parts: `root`, `item`
+- States: `hover`, `active`, `focus`, `disabled`, `selected`
+- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `replay`, `appear`, `stagger`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

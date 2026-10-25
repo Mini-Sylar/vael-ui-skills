@@ -1,5 +1,7 @@
 # CommandPalette
 
+A searchable list of commands in a dialog, opened from a button or a keyboard shortcut such as ⌘K.
+
 ```ts
 import { CommandPalette } from 'vael-ui' // or 'vael-ui/vapor'
 ```
@@ -15,12 +17,12 @@ Name | Type | Default | Description
 `closeOnSelect` | `boolean \| undefined` | `true` | Closes the palette after an item is selected.
 `size` | `'sm' \| 'md' \| 'lg' \| undefined` | `'lg'` | Panel width, as in Dialog.
 `position` | `'top' \| 'right' \| 'bottom' \| 'left' \| 'center' \| undefined` | `'top'` | Where the panel anchors in the viewport. `'top'` matches the Spotlight/Raycast convention; `'center'` feels more like a Dialog.
-`modal` | `boolean \| undefined` | `true` | `false` disables the overlay, scroll lock and focus trap. Escape-to-close and layer stacking still apply.
+`modal` | `boolean \| undefined` | `true` | `false` turns off the overlay, scroll lock, focus trap and the inert page behind it. Escape-to-close and layer stacking still apply.
 `closeOnEsc` | `boolean \| undefined` | `true` | Escape key closes the panel.
 `closeOnOverlay` | `boolean \| undefined` | `true` | Clicking the overlay closes the panel. Has no effect when `modal` is `false`, since there's no overlay.
-`beforeClose` | `((done: () => void) => void) \| undefined` |  | Custom exit animation; call `done()` to finish closing. Forwarded to the underlying Dialog.
-`forceMount` | `boolean \| undefined` | `false` | Keeps it mounted, toggled with `v-show`, so you can own the enter/exit animation. Forwarded to the underlying Dialog.
-`motionCss` | `boolean \| undefined` | `true` | The results list eases to its new height as you type. `false` turns that off and hands each appearing and disappearing row to `@item-enter`/`@item-leave` instead.
+`beforeClose` | `BeforeClose<DialogCloseReason> \| undefined` |  | Runs before the palette closes. Return `true` to close it, `false` to keep it open, or a promise of either, like `() => confirmAction(…).result`. The palette stays open while the promise is pending. CommandPalette passes it to its Dialog.
+`forceMount` | `boolean \| undefined` | `false` | Keeps it mounted while closed, toggled with `v-show`, so its content keeps its state. vael-ui then leaves its motion to you. Forwarded to the underlying Dialog.
+`motion` | `CommandPaletteMotion \| undefined` | `true` | How it moves. `false` skips all of it: opening, closing, and the results easing to their new height as you type (rows change at once). An object moves the dialog your way, like Dialog's: values for its parts, `{ spring }`, or `enter` / `leave` hooks. `items` animates the rows (`{ items: { initial: { item: { opacity: 0 } } } }`).
 `teleportTo` | `string \| undefined` |  | Teleport target: a CSS selector. Takes precedence over `container`.
 `container` | `DOMTarget \| undefined` |  | Scopes the palette to one element instead of the viewport. Forwarded to the underlying Dialog.
 `scrollTarget` | `DOMTarget \| undefined` |  | Element whose scrolling locks while the palette is open, if different from `container`. Forwarded to the underlying Dialog.
@@ -43,8 +45,6 @@ Name | Type | Description
 --- | --- | ---
 `open-change` | `[value: boolean, details: DialogOpenChangeDetails]` | Fires before the palette closes, with the reason; `details.cancel()` keeps it open.
 `select` | `[item: T]` | Fires when you pick an enabled item by click or Enter.
-`item-enter` | `[el: Element, done: () => void]` | Fires as a row appears while you type, only while `motionCss` is `false`. Run your own animation, then call `done()`.
-`item-leave` | `[el: Element, done: () => void]` | Same as `@item-enter`, for a row disappearing.
 `update:open` | `[value: boolean]` | Fires when `open` changes (`v-model:open`).
 `update:query` | `[value: string]` | Fires when `query` changes (`v-model:query`).
 
@@ -58,8 +58,18 @@ Name | Type | Description
 `cancelClose` | `() => void \| undefined` | Cancels a close pending in `beforeClose` and keeps the palette open.
 `inputEl` | `HTMLInputElement \| null` | Search input element (null while closed).
 `listEl` | `HTMLElement \| null` | Results list element (null while closed).
-`highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between items (null while closed). With `motionCss: false` it moves at once, for your own animation.
+`highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between items (null while closed). With `motion: false` it moves at once, for your own animation.
 `filteredItems` | `T[]` | Items matching the current query, in `items` order.
 `activeIndex` | `number` | Index of the highlighted item in `filteredItems` (`-1` when none).
 `activeItem` | `T \| undefined` | The highlighted item, for acting on it from your own keys (copy, open in a new tab).
+
+## Motion
+
+`motion` takes `CommandPaletteMotion` (exported from `'vael-ui'`); `false` turns it off. CommandPalette's dialog, like Dialog's. `items` moves the result rows.
+
+- Parts: `overlay`, `panel`, `header`, `title`, `description`, `body`, `footer`, `maximize`, `close`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`, `linked`, `swap`, `direction`, `items`
+- `items` (`CommandPaletteItemsMotion`): The result rows: values or hooks for `item`, and the list's `stagger`.
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

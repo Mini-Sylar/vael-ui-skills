@@ -11,7 +11,7 @@ import { Collapsible } from 'vael-ui' // or 'vael-ui/vapor'
 Name | Type | Default | Description
 --- | --- | --- | ---
 `disabled` | `boolean \| undefined` | `false` | Blocks toggling and marks the trigger `aria-disabled`.
-`motionCss` | `boolean \| undefined` | `true` | `false` skips transitions; use exposed `panelEl` for custom motion.
+`motion` | `CollapsibleMotion \| undefined` | `true` | How it moves: its appearance (`{ initial: { panel: { opacity: 0 } } }`) and its states (`{ states: { open: { trigger: { opacity: 0.7 } } } }`). `false` skips the height transition; use the exposed `panelEl` for your own.
 `ui` | `Partial<{ root: UiPartValue; trigger: UiPartValue; panel: UiPartValue; body: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `open` | `boolean \| undefined` | `false` | Whether the panel is open.
 
@@ -34,4 +34,15 @@ Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
 `panelEl` | `HTMLElement \| null` | Panel element, always mounted.
+`parts` | `Record<string, HTMLElement \| HTMLElement[] \| null>` | Its elements by part name, for your own animation; a repeated part is an array.
+
+## Motion
+
+`motion` takes `CollapsibleMotion` (exported from `'vael-ui'`); `false` turns it off. Collapsible: its appearance and states.
+
+- Parts: `root`, `trigger`, `panel`
+- States: `open`, `disabled`
+- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `replay`, `appear`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

@@ -28,12 +28,12 @@ Name | Type | Default | Description
 `alignOffset` | `number \| undefined` | `0` | Shifts the panel along the alignment axis, in pixels.
 `closeOnEsc` | `boolean \| undefined` | `true` | Escape key closes the panel.
 `closeOnOutside` | `boolean \| undefined` | `true` | Clicking outside the panel closes it.
-`beforeClose` | `((done: () => void) => void) \| undefined` |  | Custom exit animation; call `done()` to finish closing.
-`forceMount` | `boolean \| undefined` | `false` | Keeps it mounted, toggled with `v-show`, so you can own the enter/exit animation.
+`beforeClose` | `BeforeClose<PopoverCloseReason> \| undefined` |  | Runs before the panel closes. Return `true` to close it, `false` to keep it open, or a promise of either, like `() => confirmAction(…).result`. The panel stays open while the promise is pending.
+`forceMount` | `boolean \| undefined` | `false` | Keeps it mounted while closed, toggled with `v-show`, so its content keeps its state. vael-ui then leaves its motion to you.
 `teleportTo` | `string \| HTMLElement \| undefined` | `'body'` | Teleport target: a CSS selector or element.
 `scrollFade` | `boolean \| undefined` | `true` | Masks the panel's top/bottom edge as its content scrolls under it, signaling there's more.
 `maxPanelHeight` | `number \| undefined` | `320` | Caps the panel height in pixels; the list scrolls past it. The viewport limits it too, so pass `Infinity` to fill the available space.
-`motionCss` | `boolean \| undefined` | `true` | `false` skips the built-in motion: the list easing to its new height as you search, the clear button, and chip transitions (`multiple`), which you can animate yourself via `@chip-enter`/`@chip-leave`.
+`motion` | `SelectMotion \| undefined` | `true` | How it moves. `false` skips all of it: the panel opening, the list easing to its new height as you search, the clear button and the chips. An object moves the panel your way, like Popover's: values for the `panel` part, `{ spring }`, or `enter` / `leave` hooks. `chips` does the same for the chips (`{ chips: { initial: { chip: { opacity: 0, y: 4 } } } }`).
 `filter` | `SelectFilter<T> \| undefined` |  | Adds a search box to the panel. `true` matches labels ignoring case and accents, a function matches your way, `false` leaves filtering to you via `v-model:query`.
 `filterPlaceholder` | `string \| undefined` | `'Search...'` | Placeholder for the search box.
 `ui` | `Partial<{ trigger: UiPartValue; value: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; filter: UiPartValue; list: UiPartValue; option: UiPartValue; group: UiPartValue; groupLabel: UiPartValue; empty: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
@@ -45,7 +45,7 @@ Name | Type | Default | Description
 
 Name | Type | Description
 --- | --- | ---
-`value` | `{ selected: T \| T[] \| null; }` | Custom trigger content for the current selection (an array when `multiple`).
+`value` | `{ selected: T \| T[] \| null; }` | Custom trigger content for the current selection (an array when `multiple`). It replaces the built-in label and its crossfade; to keep the crossfade, put the text in `<AnimatedText :value="…" />`.
 `header` | `{ count: number; total: number; }` | Content above the filter input (when `filter` is on) or the listbox. `count` and `total` support a result-count readout.
 `filter` | `{ query: string; onKeydown: (event: KeyboardEvent) => void; }` | Replaces the built-in filter row. Bind your input to `v-model:query`; pass keys to `onKeydown` to keep arrow/Home/End/Enter list navigation.
 `filter-icon` | `any` | Replaces only the built-in filter row's leading icon and keeps its Input frame.
@@ -62,8 +62,6 @@ Name | Type | Description
 `select` | `[item: T]` | Fires when you pick an item, including a pick that deselects it in `multiple` mode.
 `change` | `[value: string \| number \| (string \| number)[] \| null]` | Fires when you change the selection, including chip removal and clear.
 `reach-end` | `[]` | Fires when the list's last rows render, for loading more. Re-arms when the item count changes.
-`chip-enter` | `[el: Element, done: () => void]` | Fires instead of the built-in CSS transition when `motionCss` is `false`. Call `done()` once your enter animation finishes.
-`chip-leave` | `[el: Element, done: () => void]` | Same as `@chip-enter`, for a chip's removal.
 `update:modelValue` | `[value: string \| number \| (string \| number)[] \| null]` | Fires when `modelValue` changes (`v-model`).
 `update:open` | `[value: boolean]` | Fires when `open` changes (`v-model:open`).
 `update:query` | `[value: string]` | Fires when `query` changes (`v-model:query`).
@@ -72,11 +70,11 @@ Name | Type | Description
 
 Name | Type | Description
 --- | --- | ---
-`triggerEl` | `HTMLElement \| null` | Trigger element.
+`triggerEl` | `HTMLElement \| null` | Trigger element: the frame around the combobox and its clear button. Focusing it focuses the combobox.
 `panelEl` | `HTMLElement \| null` | Panel element (null while closed).
 `positionerEl` | `HTMLElement \| null` | Positioning wrapper around the panel (null while closed).
 `listEl` | `HTMLElement \| null` | Scrollable listbox element (null while closed).
-`highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between options (null while closed). With `motionCss: false` it moves at once, for your own animation.
+`highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between options (null while closed). With `motion: false` it moves at once, for your own animation.
 `filterInputRef` | `{ el: HTMLElement \| null; inputEl: HTMLInputElement \| null; } \| null` | Built-in search Input instance (null without `filter`, with a `#filter` slot, or while closed).
 `placement` | `Placement` | Resolved placement after flipping, e.g. `'bottom-start'`.
 `positionerStyle` | `Record<string, string>` | Inline positioning styles applied to the positioner.
@@ -86,4 +84,14 @@ Name | Type | Description
 `cancelClose` | `() => void` | Cancels a close pending in `beforeClose` and keeps the panel open.
 `activeIndex` | `number` | Index of the highlighted row in the filtered list (-1 for none).
 `scrollToIndex` | `(index: number, align?: ScrollAlign \| undefined) => void` | Scrolls the list to the row at `index`.
+
+## Motion
+
+`motion` takes `SelectMotion` (exported from `'vael-ui'`); `false` turns it off. Select's panel: values or hooks for its parts, like Popover's. `chips` moves the chips.
+
+- Parts: `positioner`, `panel`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`
+- `chips` (`ChipsMotion`): A select's chips (`multiple`): values or hooks for `chip`, and the list's `stagger` and `leaving`.
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

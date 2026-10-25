@@ -14,6 +14,7 @@ Name | Type | Default | Description
 `description` | `string \| undefined` |  | Default header description; the `#header` slot replaces it.
 `as` | `string \| undefined` | `'div'` | Root tag; use `'a'` or `'button'` for a fully interactive card.
 `interactive` | `boolean \| undefined` | `false` | Adds a hover and press affordance. Always on when `as` is `'a'` or `'button'`.
+`motion` | `CardMotion \| undefined` |  | How it moves: its parts' appearance (`{ initial: { root: { opacity: 0, y: 8 } } }`) and, on an interactive card, its press states (`{ states: { active: { root: { scale: '0.98' } } } }`). `false` turns its own animation off.
 `ui` | `Partial<{ root: UiPartValue; header: UiPartValue; title: UiPartValue; description: UiPartValue; body: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 
 ## Slots
@@ -33,4 +34,15 @@ _None._
 Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
+`parts` | `Record<string, HTMLElement \| HTMLElement[] \| null>` | Its elements by part name, for your own animation; a repeated part is an array.
+
+## Motion
+
+`motion` takes `CardMotion` (exported from `'vael-ui'`); `false` turns it off. Card: its parts' appearance, and press states on an interactive card.
+
+- Parts: `root`, `header`, `title`, `description`, `body`, `footer`
+- States: `active`, `hover`, `focus`
+- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `replay`, `appear`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

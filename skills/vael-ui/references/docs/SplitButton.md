@@ -13,6 +13,7 @@ Name | Type | Default | Description
 `items` | `readonly MenuEntry<T>[]` |  | Dropdown rows, in the same shape as Menu's `items`.
 `variant` | `'primary' \| 'secondary' \| 'outline' \| 'ghost' \| 'link' \| 'text' \| 'danger' \| undefined` | `'primary'` | Visual style of both buttons.
 `size` | `'sm' \| 'md' \| 'lg' \| undefined` | `'md'` | Size of both buttons.
+`unified` | `boolean \| undefined` | `false` | Joins the two buttons into one surface, without the thin line between them.
 `disabled` | `boolean \| undefined` | `false` | Disables both buttons and blocks interaction.
 `loading` | `boolean \| "auto" \| undefined` | `'auto'` | Forwarded to the main action Button only.
 `triggerLabel` | `string \| undefined` |  | `aria-label` for the chevron button; uses the localized "More actions" when unset.
@@ -22,8 +23,9 @@ Name | Type | Default | Description
 `alignOffset` | `number \| undefined` |  | Shifts the panel along the alignment axis, in pixels.
 `closeOnEsc` | `boolean \| undefined` |  | Escape key closes the panel.
 `closeOnOutside` | `boolean \| undefined` |  | Clicking outside the panel closes it.
-`beforeClose` | `((done: () => void) => void) \| undefined` |  | Custom exit animation; call `done()` to finish closing.
-`forceMount` | `boolean \| undefined` |  | Keeps the panel mounted (toggled with `v-show`) and skips the built-in transition, for JS animation libraries.
+`beforeClose` | `BeforeClose<PopoverCloseReason> \| undefined` |  | Runs before the menu closes. Return `true` to close it, `false` to keep it open, or a promise of either, like `() => confirmAction(…).result`. The menu stays open while the promise is pending.
+`forceMount` | `boolean \| undefined` |  | Keeps the panel mounted while closed, toggled with `v-show`, so its content keeps its state. vael-ui then leaves its motion to you.
+`motion` | `MenuMotion \| undefined` |  | How the menu moves, like Menu's. `false` opens and closes it at once. An object moves it your way: values for the `panel` part, `{ spring }`, or `enter` / `leave` hooks. Unset, it follows the nearest ConfigProvider's style.
 `teleportTo` | `string \| HTMLElement \| undefined` |  | Teleport target: a CSS selector or element.
 `scrollFade` | `boolean \| undefined` |  | Masks the panel's top/bottom edge as its content scrolls under it, signaling there's more.
 `ui` | `Partial<{ root: UiPartValue; main: UiPartValue; trigger: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
@@ -59,4 +61,13 @@ Name | Type | Description
 `open` | `() => void` | Opens the menu.
 `close` | `() => void \| undefined` | Closes the menu, running `beforeClose` first.
 `cancelClose` | `() => void \| undefined` | Cancels a close pending in `beforeClose` and keeps the menu open.
+
+## Motion
+
+`motion` takes `MenuMotion` (exported from `'vael-ui'`); `false` turns it off. Menu's `motion`, and ContextMenu's and SplitButton's: values or hooks for `positioner` and `panel`, and how it opens and closes.
+
+- Parts: `positioner`, `panel`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

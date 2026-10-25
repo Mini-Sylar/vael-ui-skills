@@ -30,6 +30,9 @@ Name | Type | Default | Description
 `invalid` | `boolean \| undefined` | `false` | Standalone override; ORed with the nearest Field's `error` state.
 `placeholder` | `string \| undefined` |  | Text shown while the input is empty.
 `name` | `string \| undefined` |  | Native `name` on the input; a plain `<form>` submits the formatted text.
+`scrub` | `number \| boolean \| undefined` | `false` | Drag sideways on the field, while you're not typing in it, to change the value: one `step` per this many pixels, ten with Shift held. `true` is 4 px. A click without a drag still focuses the field for typing.
+`animated` | `boolean \| undefined` | `false` | Rolls the digits to each new value from the steppers, the arrow keys or your code, like AnimatedNumber. Typing shows the plain input.
+`motion` | `InputNumberMotion \| undefined` |  | How it moves: its appearance (`{ initial: { root: { opacity: 0, y: 4 } } }`) and its states (`{ states: { invalid: { root: { x: [0, -6, 6, 0] } } } }`). `false` turns its own animation off.
 `ui` | `Partial<{ root: UiPartValue; input: UiPartValue; increment: UiPartValue; decrement: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `modelValue` | `number \| null \| undefined` | `null` | Numeric value; `null` when the field is empty.
 
@@ -39,6 +42,7 @@ Name | Type | Description
 --- | --- | ---
 `start` | `any` | Inline leading content, before the value and the `'split'` mode decrement button.
 `end` | `any` | Inline trailing content, before the stepper buttons.
+`display` | `{ value: string; placeholder: string; focused: boolean; }` | Draws the text yourself over the field's own text, as Input's `#display`; it replaces the rolling digits of `animated`. `value` is the formatted text.
 
 ## Events
 
@@ -54,4 +58,15 @@ Name | Type | Description
 `inputEl` | `HTMLInputElement \| null` | Native `<input>` element.
 `increment` | `() => void` | Adds one `step`, clamped to `max`. No-op when disabled or read-only.
 `decrement` | `() => void` | Subtracts one `step`, clamped to `min`. No-op when disabled or read-only.
+`parts` | `Record<string, HTMLElement \| HTMLElement[] \| null>` | Its elements by part name, for your own animation; a repeated part is an array.
+
+## Motion
+
+`motion` takes `InputNumberMotion` (exported from `'vael-ui'`); `false` turns it off. InputNumber: its appearance and states.
+
+- Parts: `root`, `input`, `increment`, `decrement`
+- States: `invalid`, `disabled`, `focus`
+- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `replay`, `appear`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

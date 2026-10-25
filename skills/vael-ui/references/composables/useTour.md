@@ -1,6 +1,10 @@
 # useTour
 
-The headless state machine behind `<Tour>` — index/group bookkeeping, step navigation, and the `onBeforeEnter`-await sequencing, with zero DOM or rendering baked in. `<Tour>` is just `useTour()` plus a spotlight overlay and a composed `Popover` callout; reach for this directly to build a fully custom walkthrough UI (a different animation library, a non-floating callout, an embedded panel) and keep only the sequencing logic.
+The headless state machine behind `<Tour>`. It tracks the step index and groups, handles navigation and awaits each step's `onBeforeEnter`. It renders nothing and doesn't touch the DOM. `<Tour>` is `useTour()` plus a spotlight overlay and a `Popover` callout. Use the composable directly to build your own walkthrough UI. For example, you might use a different animation library, a non-floating callout or an embedded panel.
+
+```ts
+import { useTour } from 'vael-ui' // or 'vael-ui/vapor'
+```
 
 ## Example
 
@@ -30,27 +34,25 @@ open.value = true
 
 Name | Type | Description
 --- | --- | ---
-`open` | `Ref<boolean>` | Owns the tour's visibility. Setting it true resets to the first step (awaits that step's onBeforeEnter, then fires onStepChange with reason: 'open'); setting it false is just "closed," no reset happens on its own.
-`id` | `string` | Identifies this tour instance. Not used internally — echoed back on every callback's details, useful once a page has more than one tour and a shared handler needs to tell them apart.
-`steps` | `MaybeRefOrGetter<readonly TourStep[]>` | Same shape as `<Tour>`'s own steps prop: target (a DOMTarget) plus title/description/side/align/spotlightPadding/spotlightRadius/disableInteraction/onBeforeEnter/group per step.
-`onStepChange` | `(details: TourStepChangeDetails) => void` | Fires after a step change settles, including the first step (reason: 'open'). details: { index, step, reason, previousIndex, previousStep, id }.
-`onSkip` | `(details: TourEndDetails) => void` | Fires when skip() is called. details: { index, step, id }.
-`onFinish` | `(details: TourEndDetails) => void` | Fires when next() is called on the last step. details: { index, step, id }.
-`close` | `() => void` | How finishing and skipping close the tour. Defaults to setting open to false; pass your own to run a custom exit first.
+`open` | `Ref<boolean>` | Controls the tour's visibility. Setting it to `true` resets to the first step: it awaits that step's `onBeforeEnter`, then fires `onStepChange` with `reason: 'open'`. Setting it to `false` closes the tour without resetting it.
+`id` | `string` | Identifies this tour instance. It isn't used internally. It's passed back in every callback's `details`, so a shared handler can tell tours apart when a page has more than one.
+`steps` | `MaybeRefOrGetter<readonly TourStep[]>` | Same shape as `<Tour>`'s `steps` prop. Each step has a `target` (a `DOMTarget`), plus optional `title`, `description`, `side`, `align`, `sideOffset`, `alignOffset`, `spotlightPadding`, `spotlightRadius`, `disableInteraction`, `onBeforeEnter` and `group`.
+`onStepChange` | `(details: TourStepChangeDetails) => void` | Fires after a step change settles, including the first step (`reason: 'open'`). `details` is `{ index, step, reason, previousIndex, previousStep, id }`.
+`onSkip` | `(details: TourEndDetails) => void` | Fires when you call `skip()`. `details` is `{ index, step, id }`.
+`onFinish` | `(details: TourEndDetails) => void` | Fires when you call `next()` on the last step. `details` is `{ index, step, id }`.
 
 ## Returns
 
 Name | Type | Description
 --- | --- | ---
-`id` | `string \| undefined` | Echoed straight back from options.id.
+`id` | `string \| undefined` | The `options.id` you passed in.
 `currentIndex` | `Ref<number>` | 
 `currentStep` | `ComputedRef<TourStep \| undefined>` | 
 `currentGroup` | `ComputedRef<string \| undefined>` | 
-`groups` | `ComputedRef<TourGroup[]>` | { group, steps }[], bucketed in first-seen order.
+`groups` | `ComputedRef<TourGroup[]>` | `{ group, steps }[]`, grouped in first-seen order.
 `total / isFirst / isLast` | `ComputedRef` | 
-`isTransitioning` | `Ref<boolean>` | True while the current step's onBeforeEnter is pending — keep the previous step's UI mounted until this clears.
-`next / prev` | `() => Promise<void>` | next() on the last step calls onFinish and sets open.value = false instead of advancing.
-`skip` | `() => void` | Fires onSkip and sets open.value = false.
+`isTransitioning` | `Ref<boolean>` | `true` while the next step's `onBeforeEnter` is pending. `currentIndex` doesn't change until it settles, so keep the previous step's UI mounted until then.
+`next / prev` | `() => Promise<void>` | On the last step, `next()` calls `onFinish` and sets `open.value = false` instead of advancing.
+`skip` | `() => void` | Calls `onSkip` and sets `open.value = false`.
 `goTo` | `(index: number) => Promise<void>` | 
-`goToGroup` | `(group: string) => Promise<void>` | Jumps to that group's first step.
-
+`goToGroup` | `(group: string) => Promise<void>` | Jumps to the group's first step.

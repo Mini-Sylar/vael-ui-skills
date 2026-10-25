@@ -12,7 +12,7 @@ Name | Type | Default | Description
 --- | --- | --- | ---
 `items` | `readonly T[]` |  | Entries to show; any shape, rendered through the `#item` slot.
 `orientation` | `"horizontal" \| "vertical" \| undefined` | `'vertical'` | Lays the entries out in a row or a column.
-`motionCss` | `boolean \| undefined` | `true` | Gates the connector fill transition and the item enter/leave/move animation.
+`motion` | `TimelineMotion \| undefined` | `true` | `false` turns off the connector fill and items coming and going. An object animates items your way: values for `item` or a step's own parts (`marker`, `connector`, `previousConnector`, `content`, `opposite`), `stagger`, or `enter` / `leave` hooks that get them all.
 `pulse` | `boolean \| undefined` | `false` | Adds a looping pulse ring to the active marker.
 `itemKey` | `((item: T, index: number) => string \| number) \| undefined` | `(item, index) => index` | Stable key for each item. Pass it when items can be reordered or removed.
 `completed` | `((item: T, index: number) => boolean) \| undefined` |  | Whether an item is done, which fills its dot and connector. Takes priority over `current`.
@@ -30,10 +30,7 @@ Name | Type | Description
 
 ## Events
 
-Name | Type | Description
---- | --- | ---
-`item-enter` | `[el: Element, done: () => void, parts: TimelineItemParts]` | Fires when an item enters, only while `motionCss` is `false`. Run your own animation, then call `done()`. `parts` holds the step's marker, connectors, content and opposite elements.
-`item-leave` | `[el: Element, done: () => void, parts: TimelineItemParts]` | Same as `@item-enter`, for an item leaving.
+_None._
 
 ## Exposed
 
@@ -43,4 +40,13 @@ Name | Type | Description
 `stepEls` | `HTMLElement[] \| null` | Item (`<li>`) elements, in order.
 `markerEls` | `HTMLElement[] \| null` | Marker elements, in order.
 `connectorEls` | `HTMLElement[] \| null` | Connector elements, one fewer than items (the last item has none).
+
+## Motion
+
+`motion` takes `TimelineMotion` (exported from `'vael-ui'`); `false` turns it off. Timeline's steps: values or hooks for `item` and its parts (`connector` is missing on the last step, `previousConnector` on the first, `opposite` without the slot), `stagger` and `leaving`.
+
+- Parts: `item`, `marker`, `connector`, `previousConnector`, `content`, `opposite`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `stagger`, `leaving`, `appear`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

@@ -11,7 +11,7 @@ import { SwipeToReveal } from 'vael-ui' // or 'vael-ui/vapor'
 Name | Type | Default | Description
 --- | --- | --- | ---
 `disabled` | `boolean \| undefined` | `false` | Blocks swiping. `reveal()`, `close()` and `v-model:open` still work.
-`motionCss` | `boolean \| undefined` | `true` | Plays the built-in release and settle transition. Set `false` to drive the settle yourself.
+`motion` | `SwipeToRevealMotion \| undefined` | `true` | How it moves: its appearance (`{ initial: { root: { opacity: 0, y: 4 } } }`) and its states (`{ states: { open: { actions: { opacity: 1 } } } }`). The built-in release and settle transition plays unless it's `false`, so you can drive the settle yourself.
 `revealScale` | `number \| boolean \| undefined` | `true` | Grows the actions panel in from its edge as it opens. A number from 0 to 1 sets the starting scale. `false` turns it off.
 `ui` | `Partial<{ root: UiPartValue; content: UiPartValue; actions: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `open` | `boolean \| undefined` | `false` | Whether an action panel is open. Setting it `true` opens the trailing edge, or the leading one if it's the only edge.
@@ -41,8 +41,19 @@ Name | Type | Description
 `trailingActionsEl` | `HTMLElement \| null` | Trailing actions panel (null without `#trailing-actions`).
 `isDragging` | `boolean` | Whether you're swiping. Taps don't count.
 `openSide` | `SwipeRevealSide \| null` | Which edge is open, or `null` when closed.
-`leadingProgress` | `number` | Reveal progress of the leading edge, from 0 to 1. Live during a drag, settled after.
-`trailingProgress` | `number` | Reveal progress of the trailing edge, from 0 to 1. Live during a drag, settled after.
+`leadingProgress` | `number` | Reveal progress of the leading edge, from 0 to 1, as it is on screen.
+`trailingProgress` | `number` | Reveal progress of the trailing edge, from 0 to 1, as it is on screen.
 `reveal` | `(side?: SwipeRevealSide \| undefined) => void` | Opens an edge. Without `side`, it opens the trailing edge, or the leading one if it's the only edge.
 `close` | `() => void` | Closes the open edge.
+`parts` | `Record<string, HTMLElement \| HTMLElement[] \| null>` | Its elements by part name, for your own animation; a repeated part is an array.
+
+## Motion
+
+`motion` takes `SwipeToRevealMotion` (exported from `'vael-ui'`); `false` turns it off. SwipeToReveal: its appearance and states.
+
+- Parts: `root`, `content`, `actions`
+- States: `open`, `dragging`
+- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `replay`, `appear`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

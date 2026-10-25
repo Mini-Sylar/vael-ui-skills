@@ -17,7 +17,7 @@ Name | Type | Default | Description
 `maxFiles` | `number \| undefined` |  | Maximum number of files in the list. Files past it fire `@reject` with `'maxFiles'`.
 `disabled` | `boolean \| undefined` | `false` | Disables the dropzone, browse button and file input.
 `name` | `string \| undefined` |  | Native `name` on the file input.
-`motionCss` | `boolean \| undefined` | `true` | `false` skips the built-in file-row transition; use `@item-enter`/`@item-leave` for custom motion.
+`motion` | `FileUploadMotion \| undefined` | `true` | How file rows come and go. `false` adds and removes them at once. An object animates them your way: values for the `item` part (`{ initial: { item: { opacity: 0, y: 6 } } }`), `stagger`, or `enter` / `leave` hooks for your own library.
 `ui` | `Partial<{ root: UiPartValue; dropzone: UiPartValue; browse: UiPartValue; list: UiPartValue; item: UiPartValue; remove: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `files` | `File[] \| undefined` | `[]` | Accepted files.
 
@@ -32,12 +32,10 @@ Name | Type | Description
 
 Name | Type | Description
 --- | --- | ---
-`add` | `[files: File[]]` | Fires with the files accepted from a pick or drop.
+`add` | `[files: File[]]` | Fires with the files accepted from a pick, a drop or a paste.
 `remove` | `[file: File]` | Fires when you remove a file from the list.
 `update:files` | `[value: File[]]` | Fires when `files` changes (`v-model:files`).
 `reject` | `[{ file: File; reason: FileRejectReason; }]` | Fires for each file that `accept`, `maxSize` or `maxFiles` rejects, with the reason.
-`item-enter` | `[el: Element, done: () => void]` | Fires when a file row enters, with the `(el, done)` transition hook. Only when `motionCss` is `false`.
-`item-leave` | `[el: Element, done: () => void]` | Same as `item-enter`, for a row's exit.
 
 ## Exposed
 
@@ -48,4 +46,13 @@ Name | Type | Description
 `inputEl` | `HTMLInputElement \| null` | Native file input.
 `listEl` | `HTMLElement \| null` | File list element (`null` until the first file is added).
 `browse` | `() => void` | Opens the native file picker (no-op while disabled).
+
+## Motion
+
+`motion` takes `FileUploadMotion` (exported from `'vael-ui'`); `false` turns it off. FileUpload's rows: values or hooks for `item`, and the list's `stagger` and `leaving`.
+
+- Parts: `item`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `stagger`, `leaving`, `appear`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

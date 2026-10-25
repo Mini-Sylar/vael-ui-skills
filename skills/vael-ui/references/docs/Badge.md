@@ -15,6 +15,7 @@ Name | Type | Default | Description
 `max` | `number \| undefined` | `99` | Counts above this render as `"${max}+"`.
 `dot` | `boolean \| undefined` | `false` | Minimal size with no content: a plain presence dot.
 `animated` | `boolean \| undefined` | `true` | `false` drops the built-in count-change animation so you can drive your own.
+`motion` | `BadgeMotion \| undefined` |  | How it moves: its appearance (`{ initial: { root: { opacity: 0, scale: 0.6 } } }`). `false` turns its own appearance off; `animated` keeps the count change.
 `ui` | `Partial<{ root: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 
 ## Slots
@@ -32,4 +33,14 @@ _None._
 Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
+`parts` | `Record<string, HTMLElement \| HTMLElement[] \| null>` | Its elements by part name, for your own animation; a repeated part is an array.
+
+## Motion
+
+`motion` takes `BadgeMotion` (exported from `'vael-ui'`); `false` turns it off. Badge: its appearance.
+
+- Parts: `root`
+- Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

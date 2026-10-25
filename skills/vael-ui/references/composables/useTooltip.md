@@ -52,7 +52,7 @@ Name | Type | Description
 `interactive` | `MaybeRefOrGetter<boolean>` | Default `true`: hovering the tooltip itself keeps it open, so its content can be selected or clicked.
 `closeOnEsc` | `MaybeRefOrGetter<boolean>` | Default `true`. The tooltip takes the Escape before any dialog around it, so the dialog stays open.
 `onOpenChange` | `(value: boolean, details: TooltipOpenChangeDetails) => void` | Fires before every close, with `value: false`. `details.reason` is `'pointer'`, `'focus'`, `'trigger'`, `'escape'` or `'programmatic'`. Call `details.cancel()` to keep the tooltip open. It doesn't fire on open.
-`beforeClose` | `() => ((done: () => void) => void) \| undefined` | A getter for a close hook. When it returns a function, the close waits until you call `done`, for an exit animation of your own. `isClosing` is `true` meanwhile.
+`beforeClose` | `() => BeforeClose \| undefined` | A getter for the close guard. Return `true` to close, `false` or nothing to stay open, or a promise of either. `isClosing` is `true` while a promise is pending.
 
 ## Returns
 

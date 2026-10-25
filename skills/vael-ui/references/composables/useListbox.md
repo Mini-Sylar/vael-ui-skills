@@ -22,7 +22,7 @@ const fruits = [
 ]
 const picked = shallowRef<string>()
 const listboxId = useId()
-const { activeIndex, activeId, onKeydown, setActive, optionId } = useListbox({
+const { activeIndex, activeId, onKeydown, point, optionId } = useListbox({
   items: fruits,
   getLabel: (fruit) => fruit.label,
   isDisabled: (fruit) => !!fruit.disabled,
@@ -51,7 +51,7 @@ const { activeIndex, activeId, onKeydown, setActive, optionId } = useListbox({
       :aria-selected="picked === fruit.value"
       :aria-disabled="fruit.disabled"
       :data-active="index === activeIndex || undefined"
-      @pointermove="setActive(index)"
+      @pointermove="point(index)"
     >
       {{ fruit.label }}
     </li>
@@ -77,5 +77,6 @@ Name | Type | Description
 `activeIndex` | `Ref<number>` | The active option's index, or `-1` for none. Reset it to `-1` yourself when the list closes.
 `activeId` | `ComputedRef<string \| undefined>` | The active option's id. Bind it as `aria-activedescendant` on the focused element.
 `onKeydown` | `(event: KeyboardEvent) => void` | Bind it on the focused element. Up and Down move between enabled options and wrap; with no active option, Down starts at the first and Up at the last. Home and End jump to the ends. Enter selects. Printable keys run a typeahead that resets after 500 ms. Space isn't handled, so a text input keeps it.
-`setActive` | `(index: number) => void` | Makes `index` active, for a pointer moving over the options. Calls `onActiveChange` first.
+`setActive` | `(index: number) => void` | Makes `index` active from code, such as when the list opens. Calls `onActiveChange` first, so the list can scroll to it.
+`point` | `(index: number) => void` | Makes `index` active without calling `onActiveChange`. Use it for a pointer moving over the options: the option is already on screen, and scrolling would move the list out from under the pointer.
 `optionId` | `(index: number) => string` | The id to put on the option at `index`: `${listboxId}-opt-${index}`.

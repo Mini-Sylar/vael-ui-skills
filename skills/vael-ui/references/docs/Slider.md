@@ -23,6 +23,7 @@ Name | Type | Default | Description
 `name` | `string \| undefined` |  | Native `name` for form submission, via one hidden input per thumb.
 `valueText` | `((value: number) => string) \| undefined` |  | Drives `aria-valuetext`, e.g. `(v) => \`$${v}\`` for a currency slider.
 `ui` | `Partial<{ root: UiPartValue; track: UiPartValue; fill: UiPartValue; thumb: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`motion` | `SliderMotion \| undefined` |  | How it moves: its appearance (`{ initial: { thumb: { opacity: 0, scale: 0.6 } } }`) and its states (`{ states: { focus: { thumb: { scale: '1.15' } } } }`). `{ when: 'visible' }` holds its appearance until it scrolls into view. `false` turns its own animation off.
 `modelValue` | `number \| [number, number] \| undefined` | `0` | Current value. Bind a `[start, end]` tuple for a two-thumb range.
 
 ## Slots
@@ -48,4 +49,15 @@ Name | Type | Description
 `fillEl` | `HTMLElement \| null` | Filled portion of the track.
 `thumbEls` | `HTMLElement[] \| null` | Thumb elements, one per value (two in range mode).
 `dragging` | `boolean` | `true` while a thumb is being dragged.
+`parts` | `Record<string, HTMLElement \| HTMLElement[] \| null>` | Its elements by part name, for your own animation; a repeated part is an array.
+
+## Motion
+
+`motion` takes `SliderMotion` (exported from `'vael-ui'`); `false` turns it off. Slider's `motion`: values or hooks for its parts (SliderPart), its states (`disabled`, `focus`), how its value changes.
+
+- Parts: `root`, `track`, `fill`, `thumb`
+- States: `disabled`, `focus`
+- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `when`, `replay`, `appear`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

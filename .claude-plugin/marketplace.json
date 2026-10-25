@@ -8,9 +8,9 @@
   "plugins": [
     {
       "name": "vael-ui",
-      "description": "Installation, usage, and best practices for the vael-ui Vue component library — the vdom/vapor split, auto-import, theming, and the animation-agnostic contract.",
+      "description": "Installation, usage, and best practices for the vael-ui Vue component library — the vdom/vapor split, auto-import, theming, and the motion system (the motion prop, v-animate, springs, hooks for GSAP or motion).",
       "source": "./",
-      "version": "1.3.0",
+      "version": "2.0.0",
       "author": {
         "name": "Mini-Sylar"
       },

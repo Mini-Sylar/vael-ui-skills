@@ -27,8 +27,9 @@ Name | Type | Default | Description
 `alignOffset` | `number \| undefined` | `0` | Shifts the panel along the alignment axis, in pixels.
 `closeOnEsc` | `boolean \| undefined` | `true` | Escape key closes the panel.
 `closeOnOutside` | `boolean \| undefined` | `true` | Clicking outside the panel closes it.
-`beforeClose` | `((done: () => void) => void) \| undefined` |  | Custom exit animation; call `done()` to finish closing.
-`forceMount` | `boolean \| undefined` | `false` | Keeps it mounted, toggled with `v-show`, so you can own the enter/exit animation.
+`beforeClose` | `BeforeClose<PopoverCloseReason> \| undefined` |  | Runs before the menu closes. Return `true` to close it, `false` to keep it open, or a promise of either, like `() => confirmAction(…).result`. The menu stays open while the promise is pending.
+`forceMount` | `boolean \| undefined` | `false` | Keeps it mounted while closed, toggled with `v-show`, so its content keeps its state. vael-ui then leaves its motion to you.
+`motion` | `MenuMotion \| undefined` |  | How it moves: `false` for instantly, `{ spring }` to retime the built-in motion, your own `initial` and `exit` for the panel, or `targets` for the rows (`select: '.ui-menu-item'`). Unset, it follows the nearest ConfigProvider's style.
 `teleportTo` | `string \| HTMLElement \| undefined` | `'body'` | Teleport target: a CSS selector or element.
 `scrollFade` | `boolean \| undefined` | `true` | Masks the panel's top/bottom edge as its content scrolls under it, signaling there's more.
 `maxPanelHeight` | `number \| undefined` |  | Caps the panel's height in pixels; the item list scrolls past it. Unset, only the viewport limits it.
@@ -50,10 +51,10 @@ Name | Type | Description
 
 Name | Type | Description
 --- | --- | ---
+`active` | `[value: boolean]` | Fires when the pointer enters or leaves any submenu row or panel in this subtree; a parent menu uses it to stay open.
 `open-change` | `[value: boolean, details: PopoverOpenChangeDetails]` | Fires before the menu closes, with the reason; `details.cancel()` keeps it open.
 `select` | `[item: T]` | Fires when a data-driven row is activated, including rows in submenus.
-`collapse` | `[]` | Fires on ArrowLeft inside the menu; a parent menu uses it to close this submenu.
-`active` | `[value: boolean]` | Fires when the pointer enters or leaves any submenu row or panel in this subtree; a parent menu uses it to stay open.
+`collapse` | `[]` | Fires on ArrowLeft inside the menu (ArrowRight right to left); a parent menu uses it to close this submenu.
 `update:open` | `[value: boolean]` | Fires when `open` changes (`v-model:open`).
 
 ## Exposed
@@ -63,7 +64,7 @@ Name | Type | Description
 `panelEl` | `HTMLElement \| null` | Panel element (null while closed).
 `positionerEl` | `HTMLElement \| null` | Positioning wrapper around the panel (null while closed).
 `listEl` | `HTMLElement \| null` | Item list element (null while closed).
-`highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between rows (null while closed). Under a ConfigProvider with `motionCss: false` it moves at once, for your own animation.
+`highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between rows (null while closed). Under a ConfigProvider with `motion: false` it moves at once, for your own animation.
 `placement` | `Placement` | Resolved placement after flipping, e.g. `'bottom-start'`.
 `positionerStyle` | `Record<string, string>` | Inline positioning style applied to the positioner.
 `isClosing` | `boolean` | `true` while a `beforeClose` close is pending.
@@ -71,4 +72,13 @@ Name | Type | Description
 `toggle` | `() => void` | Opens or closes the menu.
 `close` | `() => void` | Closes the menu, running `@open-change` and `beforeClose` first.
 `cancelClose` | `() => void` | Cancels a close pending in `beforeClose` and keeps the menu open.
+
+## Motion
+
+`motion` takes `MenuMotion` (exported from `'vael-ui'`); `false` turns it off. Menu's `motion`, and ContextMenu's and SplitButton's: values or hooks for `positioner` and `panel`, and how it opens and closes.
+
+- Parts: `positioner`, `panel`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

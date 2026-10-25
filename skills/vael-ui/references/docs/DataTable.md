@@ -33,7 +33,7 @@ Name | Type | Default | Description
 `lazy` | `boolean \| undefined` | `false` | Marks `data` as the current page only. Pair it with `total`.
 `total` | `number \| undefined` |  | Row count across all pages. Only used with `lazy`; unset, it falls back to `data.length`.
 `virtualize` | `boolean \| { itemSize?: number \| undefined; overscan?: number \| undefined; estimateSize?: number \| undefined; } \| undefined` |  | Renders only the visible rows. Requires `scrollHeight`. `itemSize` fixes the row height.
-`motionCss` | `boolean \| undefined` | `true` | Plays the built-in row and column-drag transitions. `false` hands rows to `@row-enter`/`@row-leave`.
+`motion` | `DataTableMotion \| undefined` | `true` | Plays the built-in row and column-drag transitions; `false` changes them at once. An object animates the rows your way: values for the `row` part, or `enter` / `leave` hooks for your own library. Past 150 rows, changes are instant either way.
 `reorderableColumns` | `boolean \| undefined` | `false` | Lets you drag column headers to reorder them. Pair with `v-model:columnOrder`.
 `columnGripVisibility` | `"hover" \| "always" \| undefined` | `'always'` | When a reorderable column's drag grip shows: `'always'`, or only on hover and focus (`'hover'`).
 `canDrop` | `((details: SortableDropDetails) => boolean) \| undefined` |  | Runs while a column drags; return `false` to mark the target invalid.
@@ -65,8 +65,6 @@ Name | Type | Description
 `row-click` | `[row: T]` | Fires when you click a row anywhere outside its interactive descendants.
 `reach-start` | `[]` | Virtualized only: fires when the rendered window nears the start of `data`, so you can fetch the previous page.
 `column-reorder` | `[order: (keyof T)[]]` | Fires when a column drag commits, with the new `field` order.
-`row-enter` | `[el: Element, done: () => void]` | Fires when a row enters. Call `done()` when finished; set `motionCss` to `false` to own the animation.
-`row-leave` | `[el: Element, done: () => void]` | Fires when a row leaves. Call `done()` when finished, as with `@row-enter`.
 `drop-error` | `[error: unknown, details: SortableDropDetails]` | Fires when `beforeDrop` throws or rejects during a column reorder, after DataTable reverts the move.
 `update:page` | `[value: number]` | Fires when `page` changes (`v-model:page`).
 `update:sort` | `[value: { field: keyof T \| null; dir: "asc" \| "desc" \| null; }]` | Fires when `sort` changes (`v-model:sort`).
@@ -77,7 +75,16 @@ Name | Type | Description
 Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
-`highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between body rows. With `motionCss: false` it moves at once, for your own animation.
+`highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between body rows. With `motion: false` it moves at once, for your own animation.
+
+## Motion
+
+`motion` takes `DataTableMotion` (exported from `'vael-ui'`); `false` turns it off. DataTable's body rows: values or hooks for `row`, and the list's `stagger`.
+
+- Parts: `row`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `stagger`, `leaving`, `appear`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 
 ## Column
 

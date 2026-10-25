@@ -8,7 +8,7 @@ import { Progress } from 'vael-ui' // or 'vael-ui/vapor'
 
 A ring's diameter is the `--ui-progress-ring-size` custom property on the root (`3rem`, or `1.5rem` at `size="sm"`). A gauge keeps that circle's scale and crops to its arc.
 
-**Stacked segments.** Pass an array as `value`: each entry is `{ value: number; label?: string; variant?: ProgressVariant; color?: string }` (`import type { ProgressSegment } from 'vael-ui'`), in the same units as `max`. Segments stack in order and shade from the bar's `variant` unless they set their own. The legend appears once any segment has a `label`; each row shows a colour swatch, the label and its percent of `max`. To show your own figures (GB, hours), put them in `label` (`'Photos · 40 GB'`) and keep the built-in row. `#legend` replaces a row's contents, swatch included, and gets `{ segment, index, percent }` but not the shaded colour, so give each segment a `color` if you draw your own swatch. A ring with segments is a donut. Size a ring with a class: `.gauge { --ui-progress-ring-size: 8rem }`.
+**Stacked segments.** Pass an array as `value`: each entry is `{ value: number; label?: string; variant?: ProgressVariant; color?: string }` (`import type { ProgressSegment } from 'vael-ui'`), in the same units as `max`. Segments stack in order and shade from the bar's `variant` unless they set their own. The legend appears once any segment has a `label`; each row shows a color swatch, the label and its percent of `max`. To show your own figures (GB, hours), put them in `label` (`'Photos · 40 GB'`) and keep the built-in row. `#legend` replaces a row's contents, swatch included, and gets `{ segment, index, percent }` but not the shaded color, so give each segment a `color` if you draw your own swatch. A ring with segments is a donut. Size a ring with a class: `.gauge { --ui-progress-ring-size: 8rem }`.
 
 ```vue
 <Progress :value="[{ value: 40, label: 'Photos' }, { value: 25, label: 'Video' }]" :max="100" />
@@ -28,7 +28,7 @@ Name | Type | Default | Description
 `sweep` | `number \| undefined` | `360` | How much of the circle a ring covers, in degrees, with the gap centred at the bottom: `180` is a half-ring gauge, `270` a speedometer. The value always fills that whole arc.
 `size` | `"sm" \| "md" \| undefined` | `'md'` | Track thickness, or the ring's size and thickness.
 `legend` | `boolean \| undefined` | `true` | Renders a legend under stacked segments that have labels.
-`motionCss` | `boolean \| undefined` | `true` | `false` skips the fill transition; drive `fillEl`/`fillEls` yourself.
+`motion` | `ProgressMotion \| undefined` | `true` | How it moves: its appearance (`{ initial: { track: { opacity: 0 } } }`) and its states (`{ states: { complete: { root: { scale: [1, 1.02, 1] } } } }`). `{ when: 'visible' }` fills it once it scrolls into view. `false` skips the fill transition; drive `fillEl`/`fillEls` yourself.
 `ui` | `Partial<{ root: UiPartValue; track: UiPartValue; fill: UiPartValue; legend: UiPartValue; legendItem: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 
 ## Slots
@@ -49,3 +49,14 @@ Name | Type | Description
 `el` | `HTMLElement \| null` | Root element.
 `fillEl` | `HTMLElement \| SVGPathElement \| null` | The first fill: a bar's `<div>` or a ring's `<path>`. Its share comes from the `--ui-progress-scale` custom property, and a ring segment's start from `--ui-progress-start`.
 `fillEls` | `(HTMLElement \| SVGPathElement)[]` | Every fill, one per stacked segment, in order.
+`parts` | `Record<string, HTMLElement \| HTMLElement[] \| null>` | Its elements by part name, for your own animation; a repeated part is an array.
+
+## Motion
+
+`motion` takes `ProgressMotion` (exported from `'vael-ui'`); `false` turns it off. Progress: its appearance, states, and the fill's timing and `when: 'visible'`.
+
+- Parts: `root`, `track`, `fill`, `legend`
+- States: `complete`, `indeterminate`
+- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `when`, `replay`, `appear`
+
+See the [Motion guide](../guides/motion.md) for what each key does.

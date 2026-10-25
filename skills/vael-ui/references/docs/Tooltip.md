@@ -19,8 +19,9 @@ Name | Type | Default | Description
 `closeDelay` | `number \| undefined` | `100` | Grace period after the pointer leaves, in milliseconds, so it can move onto the tooltip.
 `interactive` | `boolean \| undefined` | `true` | Hovering the tooltip itself keeps it open, so its content stays selectable and clickable.
 `closeOnEsc` | `boolean \| undefined` | `true` | Escape key closes the tooltip.
-`beforeClose` | `((done: () => void) => void) \| undefined` |  | Custom exit animation; call `done()` to finish closing.
-`forceMount` | `boolean \| undefined` | `false` | Keeps it mounted, toggled with `v-show`, so you can own the enter/exit animation.
+`beforeClose` | `BeforeClose<TooltipCloseReason> \| undefined` |  | Runs before the tooltip closes. Return `true` to close it, `false` to keep it open, or a promise of either, like `() => confirmAction(…).result`. The tooltip stays open while the promise is pending.
+`forceMount` | `boolean \| undefined` | `false` | Keeps it mounted while closed, toggled with `v-show`, so its content keeps its state. vael-ui then leaves its motion to you.
+`motion` | `TooltipMotion \| undefined` |  | How it moves. `false` shows and hides it at once. An object moves it your way, like Popover's: values for the `panel` part, `{ spring }`, or `enter` / `leave` hooks. A warm open, right after another tooltip, stays instant either way.
 `teleportTo` | `string \| HTMLElement \| undefined` | `'body'` | Teleport target: a CSS selector or element.
 `ui` | `Partial<{ positioner: UiPartValue; panel: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `open` | `boolean \| undefined` | `false` | Whether the tooltip is open.
@@ -51,4 +52,13 @@ Name | Type | Description
 `show` | `() => void` | Opens the tooltip immediately, skipping `openDelay`; revives it if it's mid-close.
 `hide` | `() => void` | Closes the tooltip, running `@open-change` and `beforeClose` first.
 `cancelClose` | `() => void` | Cancels a close pending in `beforeClose` and keeps the tooltip open.
+
+## Motion
+
+`motion` takes `TooltipMotion` (exported from `'vael-ui'`); `false` turns it off. Tooltip's box: values or hooks for its parts, like Popover's. Warm opens stay instant.
+
+- Parts: `positioner`, `panel`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

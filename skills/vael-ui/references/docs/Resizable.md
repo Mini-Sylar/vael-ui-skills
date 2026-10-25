@@ -16,6 +16,7 @@ Name | Type | Default | Description
 `edge` | `'start' \| 'end' \| undefined` | `'end'` | Which edge the handle sits on. `'start'` flips the drag so moving toward the panel grows it.
 `disabled` | `boolean \| undefined` | `false` | Disables dragging and keyboard resizing, and removes the handle from the tab order.
 `ariaLabel` | `string \| undefined` | `'Resize'` | Accessible label for the handle.
+`motion` | `ResizableMotion \| undefined` |  | How it moves: its appearance (`{ initial: { root: { opacity: 0 } } }`) and its states (`{ states: { dragging: { handle: { scale: '1.2' } } } }`). `false` turns its own animation off.
 `ui` | `Partial<{ root: UiPartValue; handle: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `size` | `number` |  | Panel size in pixels along `direction`. Overshoots `min` or `max` elastically mid-drag, then settles within them.
 
@@ -39,4 +40,15 @@ Name | Type | Description
 `el` | `HTMLElement \| null` | Root element.
 `handleEl` | `HTMLElement \| null` | Drag handle element.
 `isDragging` | `boolean` | Whether you're dragging the handle with a pointer.
+`parts` | `Record<string, HTMLElement \| HTMLElement[] \| null>` | Its elements by part name, for your own animation; a repeated part is an array.
+
+## Motion
+
+`motion` takes `ResizableMotion` (exported from `'vael-ui'`); `false` turns it off. Resizable: its appearance and states.
+
+- Parts: `root`, `handle`
+- States: `dragging`
+- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `replay`, `appear`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

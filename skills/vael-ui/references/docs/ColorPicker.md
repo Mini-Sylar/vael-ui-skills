@@ -10,7 +10,7 @@ Name | Type | Default | Description
 `disabled` | `boolean \| undefined` | `false` | Disables the swatch.
 `size` | `"sm" \| "md" \| "lg" \| undefined` | `'md'` | Swatch size.
 `teleportTo` | `string \| HTMLElement \| undefined` | `'body'` | Where the panel is teleported to.
-`motionCss` | `boolean \| undefined` | `true` | `false` skips the built-in transitions; use the exposed elements for your own.
+`motion` | `ColorPickerMotion \| undefined` | `true` | How it moves: the swatch's appearance (`{ initial: { swatch: { opacity: 0 } } }`) and states (`{ states: { disabled: { swatch: { opacity: 0.5 } } } }`), and the panel's like Popover's (`{ initial: { panel: { opacity: 0, y: -4 } } }`). `false` skips the built-in transitions; use the exposed elements for your own.
 `ui` | `Partial<{ root: UiPartValue; swatch: UiPartValue; panel: UiPartValue; value: UiPartValue; presets: UiPartValue; preset: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `modelValue` | `string \| undefined` | `'#000000'` | The color as `#rrggbb`.
 `open` | `boolean \| undefined` | `false` | Whether the picker panel is open.
@@ -39,4 +39,15 @@ Name | Type | Description
 `panelEl` | `HTMLElement \| null` | The open panel; `null` while closed.
 `areaEl` | `HTMLElement \| null` | The saturation and brightness plane; `null` while closed.
 `thumbEl` | `HTMLElement \| null` | The plane's thumb; `null` while closed.
+`parts` | `{ positioner: HTMLElement \| null; panel: HTMLElement \| null; }` | Its elements by part name, for your own animation; a repeated part is an array.
+
+## Motion
+
+`motion` takes `ColorPickerMotion` (exported from `'vael-ui'`); `false` turns it off. ColorPicker: the swatch's appearance and states, and the panel like Popover's.
+
+- Parts: `swatch`, `positioner`, `panel`
+- States: `disabled`
+- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

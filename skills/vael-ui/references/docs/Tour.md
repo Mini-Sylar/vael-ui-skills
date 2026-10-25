@@ -15,16 +15,16 @@ Name | Type | Default | Description
 `modal` | `boolean \| undefined` | `true` | Scroll-locks the page and makes everything but the target and callout inert while open.
 `closeOnEsc` | `boolean \| undefined` | `true` | Escape key closes the tour, firing `@skip`.
 `closeOnOverlay` | `boolean \| undefined` | `false` | Clicking the dimmed area closes the tour.
-`keyboardNav` | `boolean \| undefined` | `true` | `ArrowLeft` and `ArrowRight` move back and forward a step.
+`keyboardNav` | `boolean \| undefined` | `true` | `ArrowLeft` and `ArrowRight` move back and forward a step, swapped right to left.
 `spotlightPadding` | `number \| undefined` | `4` | Space between the target and the spotlight cutout, in pixels. Per-step `spotlightPadding` wins.
 `spotlightRadius` | `number \| undefined` | `8` | Spotlight cutout corner radius, in pixels. Per-step `spotlightRadius` wins.
 `scrollIntoView` | `boolean \| undefined` | `true` | Scrolls the target into view on every step change.
 `teleportTo` | `string \| HTMLElement \| undefined` |  | Teleport target: a CSS selector or element. Wins over `container` either way.
 `container` | `DOMTarget \| undefined` |  | Scopes the tour to an element. The spotlight dims only that box and the callout teleports there. Scroll lock and inert apply only inside it. Omit it for a page-level tour.
 `scrollTarget` | `DOMTarget \| undefined` |  | Element to scroll-lock while open. Defaults to `container`, then `document.body`.
-`forceMount` | `boolean \| undefined` | `false` | Keeps it mounted, toggled with `v-show`, so you can own the enter/exit animation.
-`beforeClose` | `((done: () => void) => void) \| undefined` |  | Custom exit animation; call `done()` to finish closing.
-`motionCss` | `boolean \| undefined` | `true` | The spotlight's glide between steps. `false` turns it off so you can animate `spotlightEl` yourself. For open and close, use `forceMount` and `beforeClose`.
+`forceMount` | `boolean \| undefined` | `false` | Keeps it mounted while closed, toggled with `v-show`, so its content keeps its state. vael-ui then leaves its motion to you.
+`beforeClose` | `BeforeClose<PopoverCloseReason> \| undefined` |  | Runs before the tour closes. Return `true` to close it, `false` to keep it open, or a promise of either, like `() => confirmAction(…).result`. The tour stays open while the promise is pending.
+`motion` | `TourMotion \| undefined` | `true` | How the callout moves, like Popover's, and whether the spotlight glides between steps. `false` turns both off, so you can animate `spotlightEl` yourself. An object moves the callout your way: values for the `panel` part, `{ spring }`, or `enter` / `leave` hooks. Its `{ duration, easing }` or `{ spring }` also times the glide between steps. Unset, the glide is quick to a nearby target and longer across the screen.
 `ui` | `Partial<{ spotlight: UiPartValue; positioner: UiPartValue; panel: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `open` | `boolean \| undefined` | `false` | Whether the tour is open.
 `step` | `number \| undefined` | `0` | Current step index; resets to the first step whenever the tour opens.
@@ -40,8 +40,8 @@ Name | Type | Description
 Name | Type | Description
 --- | --- | ---
 `open-change` | `[value: boolean, details: PopoverOpenChangeDetails]` | Fires when a close is requested; call `details.cancel()` to keep the tour open.
-`step-change` | `[details: TourStepChangeDetails<T>]` | Fires after moving to a step, including the first. The new step renders by the next frame.
 `skip` | `[details: TourEndDetails<T>]` | Fires when the tour ends early: the Skip button, Escape, or the step's target disappearing.
+`step-change` | `[details: TourStepChangeDetails<T>]` | Fires after moving to a step, including the first. The new step renders by the next frame.
 `finish` | `[details: TourEndDetails<T>]` | Fires when the tour advances past the last step.
 `update:open` | `[value: boolean]` | Fires when `open` changes (`v-model:open`).
 `update:step` | `[value: number]` | Fires when `step` changes (`v-model:step`).
@@ -54,7 +54,7 @@ Name | Type | Description
 `targetEl` | `HTMLElement \| null` | Current step's target element.
 `panelEl` | `HTMLElement \| null` | Callout panel element (`null` while closed).
 `positionerEl` | `HTMLElement \| null` | Positioning wrapper around the callout panel (`null` while closed).
-`spotlightEl` | `HTMLElement \| null` | Dimmed overlay with the cutout (`null` while closed).
+`spotlightEl` | `HTMLElement \| null` | Dimmed overlay with the cutout (`null` while closed). It carries the cutout's box, kept current through the glide: `--ui-tour-cutout-x`, `-y`, `-width`, `-height` and `-radius`, in px.
 `isClosing` | `boolean` | `true` while a `beforeClose` close is pending.
 `close` | `() => void \| undefined` | Closes the tour, running `@open-change` and `beforeClose` first.
 `cancelClose` | `() => void \| undefined` | Cancels a close pending in `beforeClose` and keeps the tour open.
@@ -63,4 +63,13 @@ Name | Type | Description
 `next` | `() => Promise<void>` | Goes to the next step, or finishes the tour on the last one.
 `prev` | `() => Promise<void>` | Goes back one step.
 `skip` | `() => void` | Closes the tour and fires `@skip`.
+
+## Motion
+
+`motion` takes `TourMotion` (exported from `'vael-ui'`); `false` turns it off. Tour's `motion`: the callout opens and closes like Popover's. Its timing, `{ duration, easing }` or `{ spring }`, also sets how the spotlight and the callout glide between steps. Unset, the glide is quick to a nearby target and longer across the screen. `false` turns it all off.
+
+- Parts: `positioner`, `panel`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`, `surface`, `swap`, `direction`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

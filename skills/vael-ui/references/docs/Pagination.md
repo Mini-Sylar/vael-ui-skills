@@ -17,7 +17,7 @@ Name | Type | Default | Description
 `total` | `number` |  | Total item count across all pages, not the current page's row count.
 `pageSizeOptions` | `number[] \| undefined` |  | Page-size `<Select>` options. Omit it to hide the dropdown.
 `siblingCount` | `number \| undefined` | `1` | Page-number buttons to show on each side of the current page before an ellipsis.
-`motionCss` | `boolean \| undefined` | `true` | `false` skips the indicator's built-in sliding; animate the exposed `indicatorEl` and `labelsEl` yourself.
+`motion` | `PaginationMotion \| undefined` | `true` | How it moves: its appearance, button by button (`{ initial: { button: { opacity: 0, y: 4 } }, stagger: 0.03 }`), over `root`, `button` and the current page's `indicator`. `spring` retimes the indicator; `move` hands its moves to your own animation. `false` skips the indicator's built-in sliding; animate the exposed `indicatorEl` and `labelsEl` yourself.
 `ui` | `Partial<{ root: UiPartValue; list: UiPartValue; button: UiPartValue; ellipsis: UiPartValue; sizeSelect: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `page` | `number \| undefined` | `1` | Current page, 1-based.
 `pageSize` | `number \| undefined` | `10` | Rows per page. Picking a size from the dropdown resets `page` to 1.
@@ -39,6 +39,16 @@ Name | Type | Description
 --- | --- | ---
 `listEl` | `HTMLElement \| null` | The page-number list.
 `indicatorEl` | `HTMLElement \| null` | The sliding highlight behind the current page.
-`highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between buttons. With `motionCss: false` it moves at once, for your own animation.
+`highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between buttons. With `motion: false` it moves at once, for your own animation.
 `labelsEl` | `HTMLElement \| null` | The page numbers in the contrast color, clipped to the indicator.
+`parts` | `Record<string, HTMLElement \| HTMLElement[] \| null>` | Its elements by part name, for your own animation; a repeated part is an array.
+
+## Motion
+
+`motion` takes `PaginationMotion` (exported from `'vael-ui'`); `false` turns it off. Pagination: its appearance, and how the current-page indicator moves.
+
+- Parts: `root`, `button`, `indicator`
+- Keys: `spring`, `duration`, `easing`, `initial`, `move`, `stretch`, `squash`, `replay`, `appear`, `stagger`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

@@ -1,6 +1,10 @@
 # useColorScheme
 
-Drives `document.documentElement.dataset.theme` from a `system` / `light` / `dark` mode. `system` removes the attribute entirely and follows `prefers-color-scheme` live. This is the exact composable the docs site’s own header theme toggle uses; `persist` is structural (like ConfigProvider’s `i18n`) so you can wire in cookies, a store, or localStorage yourself instead of the composable assuming one. Being a plain composable, it can only apply the saved mode once your JS bundle runs a component's `setup()` — after first paint. A returning user with a saved `dark` preference will see a flash of the light theme first unless you also set the attribute synchronously before Vue mounts; see the pre-hydration snippet below.
+`useColorScheme` sets the root `data-theme` to `light` or `dark`; `system` follows the OS preference. Pass `persist` to save the choice in cookies, a store, or `localStorage`. Vue restores saved choices on mount, which can occur after first paint. The HTML head example restores color mode and an optional root font size before paint. Pass `{ from: event }` as the second argument to `setMode` and the new scheme spreads in a circle from the click, as the example below and this site's header toggle do. Every call in the browser shares one state, so two toggles never disagree. It uses a View Transition; browsers without one, and reduced motion, switch at once.
+
+```ts
+import { useColorScheme } from 'vael-ui' // or 'vael-ui/vapor'
+```
 
 ## Example
 
@@ -18,40 +22,23 @@ const { mode, resolvedMode, setMode } = useColorScheme({
   },
 })
 
-// mode.value: 'system' | 'light' | 'dark' (what the user picked)
-// resolvedMode.value: 'light' | 'dark' (what's actually applied right now)
-setMode('dark')
-
-// Avoiding a flash of the wrong theme on load
-// ---------------------------------------------
-// useColorScheme can't run before Vue mounts, so a returning user with a
-// saved preference sees the default theme for a frame first. Set the
-// attribute synchronously in a blocking <script> in your HTML's <head>,
-// before your app's bundle loads — same trick as next-themes/Nuxt color-mode.
-// Match whatever persist.get()/set() convention you wired up above.
-//
-    <script>
-       (function () {
-         var saved = localStorage.getItem('theme') // your own persist.get()
-         if (saved === 'light' || saved === 'dark') {
-           document.documentElement.dataset.theme = saved
-         }
-       })()
-     </script>
+// mode.value: 'system' | 'light' | 'dark'
+// resolvedMode.value: 'light' | 'dark'
+// From your theme toggle, spreading from the click:
+// <button @click="(e) => setMode(resolvedMode === 'dark' ? 'light' : 'dark', { from: e })">
 ```
 
 ## Parameters
 
 Name | Type | Description
 --- | --- | ---
-`initial` | `'system' \| 'light' \| 'dark'` | Starting mode before persist.get() (if any) resolves. Default 'system'.
-`persist` | `{ get: () => string \| null; set: (mode) => void }` | Structural persistence hook. No default, nothing is persisted unless you pass this.
+`initial` | `'system' \| 'light' \| 'dark'` | The mode to use until `persist.get()` is read on mount. Default `'system'`.
+`persist` | `{ get: () => string \| null; set: (mode) => void }` | Structural persistence hook. No default: nothing is saved unless you pass it. `set` receives `null` for `'system'`.
 
 ## Returns
 
 Name | Type | Description
 --- | --- | ---
-`mode` | `ShallowRef<'system' \| 'light' \| 'dark'>` | What the user picked.
-`resolvedMode` | `ShallowRef<'light' \| 'dark'>` | What's actually applied. Resolves 'system' against the live media query.
-`setMode` | `(mode) => void` | Sets mode, persists it, and re-applies.
-
+`mode` | `ShallowRef<'system' \| 'light' \| 'dark'>` | The selected mode.
+`resolvedMode` | `ShallowRef<'light' \| 'dark'>` | The applied theme. Resolves `'system'` against the live media query.
+`setMode` | `(mode, reveal?: { from: Event \| Element \| { x, y }; duration?; easing? }) => void` | Sets the mode, persists it and applies it. With `reveal`, the new scheme spreads in a circle from `from`: a click, an element, or a point. `duration` defaults to 500 ms.

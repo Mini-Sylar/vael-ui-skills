@@ -6,7 +6,7 @@ A clickable action with variants, sizes, loading states, and icon slots built in
 import { Button } from 'vael-ui' // or 'vael-ui/vapor'
 ```
 
-**Colour a Button with its variables, not `background`/`border`.** Since 0.5.0 the box is painted by a `::before` layer (contents sit in `.ui-button-inner`), so a `background` or `border` set on the button itself is hidden under it. Set `--ui-button-bg` and `--ui-button-border` instead; text colour is plain `color`. Change the look on hover by setting the variable again under `:hover`. The layer draws a 1px `--ui-button-border` border, so a dashed or thicker one goes there too (`border-style`, `border-width` on `::before`):
+**Color a Button with its variables, not `background`/`border`.** Since 0.5.0 the box is painted by a `::before` layer (contents sit in `.ui-button-inner`), so a `background` or `border` set on the button itself is hidden under it. Set `--ui-button-bg` and `--ui-button-border` instead; text color is plain `color`. Change the look on hover by setting the variable again under `:hover`. The layer draws a 1px `--ui-button-border` border, so a dashed or thicker one goes there too (`border-style`, `border-width` on `::before`):
 
 ```css
 .publish {
@@ -37,14 +37,16 @@ Name | Type | Default | Description
 `as` | `string \| undefined` | `'button'` | Root tag, such as `as="a"` for a link styled as a button.
 `badgePlacement` | `"top-start" \| "top-end" \| "bottom-start" \| "bottom-end" \| undefined` | `'top-end'` | Where the `#badge` slot sits. Setting it reserves the wrapper up front, so a `v-if`'d `#badge` keeps a stable DOM position.
 `value` | `string \| number \| undefined` |  | In a `ButtonGroup` with a `v-model`, what this button turns on and off. Still the native `value` attribute, for a submit button in a form. Style the on state with `[aria-pressed='true']`, or Tailwind's `aria-pressed:`.
+`hold` | `number \| boolean \| undefined` | `false` | Acts only after a press and hold, for a destructive action: a fill sweeps across while you hold, and `@click` fires when it completes. Letting go early cancels. `true` holds for 1200ms; a number sets the milliseconds. Space and Enter hold too.
 `ui` | `Partial<{ root: UiPartValue; leading: UiPartValue; trailing: UiPartValue; content: UiPartValue; label: UiPartValue; badge: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`motion` | `ButtonMotion \| undefined` |  | Animates its states, like a label that sinks while pressed: `{ states: { active: { label: { scale: '0.94' } } } }`.
 `pressed` | `boolean \| undefined` |  | Opt-in standalone toggle: `v-model:pressed` turns it on and off and sets `aria-pressed`. Style the on state with `[aria-pressed='true']`, or Tailwind's `aria-pressed:`.
 
 ## Slots
 
 Name | Type | Description
 --- | --- | ---
-`default` | `{ loading: boolean; el: HTMLElement \| null; run: <T>(fn: () => T \| Promise<T>) => Promise<T>; }` | Button label; receives the loading state, the root element and `run`.
+`default` | `{ loading: boolean; el: HTMLElement \| null; run: <T>(fn: () => T \| Promise<T>) => Promise<T>; holdProgress: number; }` | Button label; receives the loading state, the root element, `run` and, with `hold`, how far the hold has got.
 `loader` | `{ loading: boolean; el: HTMLElement \| null; }` | Custom loader visuals; the library still handles placement and the crossfade.
 `leading` | `any` | Icon before the label, in an optically aligned `1em` box.
 `trailing` | `any` | Icon after the label, in an optically aligned `1em` box.
@@ -63,4 +65,16 @@ Name | Type | Description
 `el` | `HTMLElement \| null` | Root element (the button itself, even when a badge wrapper is rendered).
 `loading` | `boolean` | Whether the button is loading, from the `loading` prop or `'auto'` tracking.
 `run` | `<T>(fn: () => T \| Promise<T>) => Promise<T>` | Runs `fn` with the loading state shown until it settles.
+`holding` | `boolean` | Whether a `hold` press is in progress.
+`holdProgress` | `number` | With `hold`: 0 at rest, rising to 1 as the hold completes.
+
+## Motion
+
+`motion` takes `ButtonMotion` (exported from `'vael-ui'`); `false` turns it off. `active` is pressed (pointer, Space or Enter); `hover` responds to a mouse only.
+
+- Parts: `root`, `leading`, `trailing`, `content`, `label`, `badge`
+- States: `active`, `hover`, `focus`, `loading`, `disabled`
+- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `replay`, `appear`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 

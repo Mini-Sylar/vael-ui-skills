@@ -20,7 +20,7 @@ Name | Type | Default | Description
 `filterable` | `boolean \| undefined` | `true` | Shows a built-in label search box above the tree and expands the ancestors of any match.
 `filterPlaceholder` | `string \| undefined` | `'Search...'` | Placeholder and accessible label for the filter box.
 `emptyText` | `string \| undefined` | `'No results found'` | Text shown when no rows are visible (empty `items` or no filter matches).
-`motionCss` | `boolean \| undefined` | `true` | `false` skips all built-in motion (row transitions, chevron rotation, cross-folder moves and the list easing to its new height as you search).
+`motion` | `TreeMotion \| undefined` | `true` | How it moves: its appearance, row by row (`{ initial: { node: { opacity: 0, x: -4 } }, stagger: 0.03 }`), over `list`, `node`, `chevron` and `label`. `false` skips all built-in motion (row transitions, chevron rotation, cross-folder moves and the list easing to its new height as you search).
 `forceMount` | `boolean \| undefined` | `false` | Keeps collapsed folders' children mounted (`v-show` plus `data-state`) so you can animate expand/collapse yourself instead of using the built-in transition.
 `reorderable` | `boolean \| undefined` | `false` | Lets you drag rows to reorder and nest them, VS Code style. Drop on a row's middle to move into it, or on an edge to place beside it.
 `canNestInto` | `((node: T) => boolean) \| undefined` |  | Which rows accept dropped children. Unset, any row that already has children does; pass your own to let empty folders take drops.
@@ -32,6 +32,7 @@ Name | Type | Default | Description
 `touchDragDelay` | `number \| undefined` | `150` | How long, in ms, a touch pointer must hold a row still before a drag starts. The hold tells a drag apart from a tap to select or expand. Mouse and pen are unaffected.
 `expandOnRowClick` | `boolean \| undefined` | `false` | Clicking anywhere on a folder row toggles it, as well as the chevron. The click still selects the folder unless `selectableFolders` is `false`.
 `stickyScroll` | `boolean \| undefined` | `false` | Pins each expanded ancestor row to the top of the list while its children scroll past, VS Code-style.
+`scrollFade` | `boolean \| undefined` | `true` | Fades the list's top and bottom edges while there are more rows past them. With `stickyScroll`, only the bottom fades, so pinned rows stay solid.
 `id` | `string \| undefined` |  | Id for the `role="tree"` list element. Auto-generated when omitted.
 `ui` | `Partial<{ list: UiPartValue; node: UiPartValue; filter: UiPartValue; empty: UiPartValue; chevron: UiPartValue; label: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `modelValue` | `string \| number \| (string \| number)[] \| null \| undefined` | `null` | Selected value: one value in `'single'` mode, an array in `'multiple'`, leaf values in `'checkbox'`.
@@ -63,10 +64,11 @@ Name | Type | Description
 Name | Type | Description
 --- | --- | ---
 `listEl` | `HTMLElement \| null` | The `role="tree"` list element.
-`highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between rows. With `motionCss: false` it moves at once, for your own animation.
+`highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between rows. With `motion: false` it moves at once, for your own animation.
 `filterInputRef` | `{ el: HTMLElement \| null; inputEl: HTMLInputElement \| null; } \| null` | The filter box's Input instance (null when `filterable` is off).
 `focusFirstRow` | `() => void` | Focuses the first visible row.
-`initRoving` | `() => void` | Makes the first visible row the tab stop without focusing it.
+`initRoving` | `() => void` | Makes the first selected row, or else the first visible row, the tab stop without focusing it.
+`focusNode` | `(value: string \| number) => void` | Expands the folders above the row with this value and focuses it.
 `expandAll` | `() => void` | Expands every folder.
 `collapseAll` | `() => void` | Collapses every folder.
 `expandNode` | `(value: string \| number) => void` | Expands the node with this value, e.g. after adding a child to it.
@@ -76,4 +78,14 @@ Name | Type | Description
 `removeNode` | `(value: string \| number) => boolean` | Removes a node from `items` in place; returns whether one was found.
 `isReordering` | `boolean` | `true` while a row is held, by pointer or keyboard.
 `cancelReorder` | `() => void` | Aborts an in-flight reorder and springs every row back into place.
+`parts` | `Record<string, HTMLElement \| HTMLElement[] \| null>` | Its elements by part name, for your own animation; a repeated part is an array.
+
+## Motion
+
+`motion` takes `TreeMotion` (exported from `'vael-ui'`); `false` turns it off. Tree: its appearance, row by row.
+
+- Parts: `list`, `node`, `chevron`, `label`
+- Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`, `stagger`
+
+See the [Motion guide](../guides/motion.md) for what each key does.
 
