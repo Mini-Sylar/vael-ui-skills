@@ -18,7 +18,7 @@ Name | Type | Default | Description
 `ariaLabel` | `string \| undefined` | `'Actions'` | Accessible name for both the trigger button and the action `role="menu"`.
 `radius` | `number \| undefined` | `96` | Arc radius in pixels. Only applies when `direction` is `'quarter-circle'`.
 `motion` | `SpeedDialMotion \| undefined` | `true` | How the actions fan out and back, and the icon turns. `false` shows them and turns the icon at once. An object animates the actions your way: values for the `action` part, `stagger`, or `enter` / `leave` hooks for your own library.
-`ui` | `Partial<{ root: UiPartValue; trigger: UiPartValue; action: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`ui` | `Partial<{ root: UiPartValue; trigger: UiPartValue; action: UiPartValue; icon: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `open` | `boolean \| undefined` | `false` | Whether the actions are shown.
 
 ## Slots

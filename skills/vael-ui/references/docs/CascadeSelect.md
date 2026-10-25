@@ -43,7 +43,7 @@ Name | Type | Default | Description
 `filterPlaceholder` | `string \| undefined` | `'Search...'` | Placeholder for the search box.
 `scrollFade` | `boolean \| undefined` | `true` | Masks the panel's top/bottom edge as its content scrolls under it, signaling there's more.
 `motion` | `CascadeSelectMotion \| undefined` | `true` | How it moves. `false` skips all of it: the menu opening and easing to its new height as you search, the clear button and the chips. An object moves the menu your way, like Menu's: values for the `panel` part, `{ spring }`, or `enter` / `leave` hooks. `chips` does the same for the chips (`{ chips: { initial: { chip: { opacity: 0, y: 4 } } } }`).
-`ui` | `Partial<{ trigger: UiPartValue; value: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; filter: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`ui` | `Partial<{ trigger: UiPartValue; value: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; filter: UiPartValue; footer: UiPartValue; start: UiPartValue; end: UiPartValue; clear: UiPartValue; chevron: UiPartValue; filterIcon: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `modelValue` | `V \| undefined` | `null` | Selected leaf value, or an array of leaf values with `multiple`.
 `open` | `boolean \| undefined` | `false` | Whether the panel is open.
 `query` | `string \| undefined` | `''` | Search box text. Clears when the panel closes.
@@ -52,6 +52,8 @@ Name | Type | Default | Description
 
 Name | Type | Description
 --- | --- | ---
+`start` | `any` | Content at the start of the trigger, such as an icon, before the value.
+`end` | `any` | Content before the built-in clear button and chevron.
 `value` | `{ selected: V extends unknown[] ? T[] : T \| null; path: V extends unknown[] ? CascadeSelectPath[] : CascadeSelectPath; }` | Custom trigger content; receives the selected leaf and its path, or arrays of both.
 `header` | `any` | Content above the row list, forwarded to the underlying Menu's `#header`.
 `item` | `{ item: T; hasChildren: boolean; path: T[]; }` | Custom row content at any level; the row keeps its expand and select behavior. `path` is the items above it, so `path.length` is how deep it sits, even in search results.

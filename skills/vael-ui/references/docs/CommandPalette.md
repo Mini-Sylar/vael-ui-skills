@@ -26,7 +26,7 @@ Name | Type | Default | Description
 `teleportTo` | `string \| undefined` |  | Teleport target: a CSS selector. Takes precedence over `container`.
 `container` | `DOMTarget \| undefined` |  | Scopes the palette to one element instead of the viewport. Forwarded to the underlying Dialog.
 `scrollTarget` | `DOMTarget \| undefined` |  | Element whose scrolling locks while the palette is open, if different from `container`. Forwarded to the underlying Dialog.
-`ui` | `Partial<{ panel: UiPartValue; input: UiPartValue; list: UiPartValue; groupLabel: UiPartValue; item: UiPartValue; empty: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`ui` | `Partial<{ panel: UiPartValue; input: UiPartValue; list: UiPartValue; groupLabel: UiPartValue; item: UiPartValue; empty: UiPartValue; footer: UiPartValue; icon: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `open` | `boolean \| undefined` | `false` | Whether the palette is open.
 `query` | `string \| undefined` | `''` | Search text. Resets to empty each time the palette opens.
 

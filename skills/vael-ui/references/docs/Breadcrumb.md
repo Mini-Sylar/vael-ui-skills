@@ -14,7 +14,7 @@ Name | Type | Default | Description
 `ariaLabel` | `string \| undefined` |  | Overrides the default localized "Breadcrumb" nav landmark label.
 `wrap` | `boolean \| undefined` | `false` | Wraps crumbs onto multiple lines instead of scrolling one line horizontally on overflow.
 `motion` | `BreadcrumbMotion \| undefined` |  | How it moves: its appearance, crumb by crumb (`{ initial: { item: { opacity: 0, x: -4 } }, stagger: 0.03 }`). Crumbs a new path adds or removes come and go the same way. `false` turns its own animation off.
-`ui` | `Partial<{ root: UiPartValue; list: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`ui` | `Partial<{ root: UiPartValue; list: UiPartValue; icon: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 
 ## Slots
 
@@ -75,7 +75,7 @@ Name | Type | Description
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-`ui` | `Partial<{ root: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`ui` | `Partial<{ root: UiPartValue; icon: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 
 ### Slots
 

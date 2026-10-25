@@ -15,7 +15,7 @@ Name | Type | Default | Description
 `maxPull` | `number \| undefined` |  | Maximum pull distance in pixels; the pull stops growing past it.
 `scrollEl` | `HTMLElement \| { el: HTMLElement \| null; } \| null \| undefined` |  | Existing scroll container to detect pulls on. Unset, the root itself scrolls.
 `motion` | `PullToRefreshMotion \| undefined` | `true` | How it moves: its appearance (`{ initial: { indicator: { opacity: 0 } } }`) and its states (`{ states: { refreshing: { indicator: { scale: '1.1' } } } }`). `false` skips the settle and indicator transitions; animate the `#indicator` slot or exposed `zoneEl` yourself. The live pull still tracks your finger.
-`ui` | `Partial<{ root: UiPartValue; zone: UiPartValue; indicator: UiPartValue; bubble: UiPartValue; label: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`ui` | `Partial<{ root: UiPartValue; zone: UiPartValue; indicator: UiPartValue; bubble: UiPartValue; label: UiPartValue; arrow: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 
 ## Slots
 

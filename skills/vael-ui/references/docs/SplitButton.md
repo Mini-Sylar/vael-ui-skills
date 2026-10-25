@@ -28,7 +28,7 @@ Name | Type | Default | Description
 `motion` | `MenuMotion \| undefined` |  | How the menu moves, like Menu's. `false` opens and closes it at once. An object moves it your way: values for the `panel` part, `{ spring }`, or `enter` / `leave` hooks. Unset, it follows the nearest ConfigProvider's style.
 `teleportTo` | `string \| HTMLElement \| undefined` |  | Teleport target: a CSS selector or element.
 `scrollFade` | `boolean \| undefined` |  | Masks the panel's top/bottom edge as its content scrolls under it, signaling there's more.
-`ui` | `Partial<{ root: UiPartValue; main: UiPartValue; trigger: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`ui` | `Partial<{ root: UiPartValue; main: UiPartValue; trigger: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; footer: UiPartValue; chevron: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `open` | `boolean \| undefined` | `false` | Whether the dropdown menu is open.
 
 ## Slots

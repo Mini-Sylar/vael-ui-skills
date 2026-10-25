@@ -28,7 +28,7 @@ Name | Type | Default | Description
 `teleportTo` | `string \| HTMLElement \| undefined` |  | Teleport target for the hint popover: a CSS selector or element. Popover mode only.
 `forceMount` | `boolean \| undefined` | `false` | Keeps the hint popover mounted (toggled with `v-show`) and skips the built-in transition. Popover mode only.
 `beforeClose` | `BeforeClose<PopoverCloseReason> \| undefined` |  | Runs before the hint closes. Return `true` to close it, `false` to keep it open, or a promise of either, like `() => confirmAction(…).result`. The hint stays open while the promise is pending. Popover mode only.
-`ui` | `Partial<{ root: UiPartValue; frame: UiPartValue; input: UiPartValue; toggle: UiPartValue; hint: UiPartValue; hintList: UiPartValue; hintItem: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`ui` | `Partial<{ root: UiPartValue; frame: UiPartValue; input: UiPartValue; toggle: UiPartValue; hint: UiPartValue; hintList: UiPartValue; hintItem: UiPartValue; hintIcon: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `modelValue` | `string \| undefined` | `''` | Password value.
 `visible` | `boolean \| undefined` | `false` | Whether the password is shown as plain text.
 

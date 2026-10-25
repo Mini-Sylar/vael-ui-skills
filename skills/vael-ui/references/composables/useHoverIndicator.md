@@ -6,6 +6,14 @@ The sliding hover highlight behind every vael-ui list: Select, Menu, Tree, DataT
 import { useHoverIndicator } from 'vael-ui' // or 'vael-ui/vapor'
 ```
 
+For most lists, the `v-hover-indicator` directive does all of this in one attribute: it adds the indicator element and the positioning, and takes the same `scope`, `orientation`, `scroller`, `group` and `enabled`, plus `class` and `.over` (a tint over rows with a solid background). Reach for the composable when you need `maxGlide`, `motion`, `indicator` or your own indicator element.
+
+```vue
+<ul v-hover-indicator="'.row'">
+  <li v-for="item in items" :key="item.id" class="row">{{ item.name }}</li>
+</ul>
+```
+
 ## Parameters
 
 Name | Type | Description

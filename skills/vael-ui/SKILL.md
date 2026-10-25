@@ -52,7 +52,7 @@ import { Button, Toaster, toast } from 'vael-ui/vapor'
 - **Whole app as Vapor:** `vue({ features: { vapor: true } })` (`@vitejs/plugin-vue` 6.0.8+). `optionsAPI: false` is safe for vael-ui.
 - **Fonts:** components use `font: inherit`, so set a `font-family` on `body`.
 - **Mount the hosts once:** `<Toaster />`, and `<TooltipHost />`, `<DialogHost />`, `<PopoverHost />` if you use `v-tooltip`, `openDialog()` or `openPopover()`.
-- **Directives** aren't auto-imported. Import `vTooltip`, `vAnimate` or `vScrollMask` in `<script setup>`, or register them with `app.directive('tooltip', vTooltip)`.
+- **Directives** aren't auto-imported. Import `vTooltip`, `vAnimate`, `vScrollMask` or `vHoverIndicator` in `<script setup>`, or register them with `app.directive('tooltip', vTooltip)`.
 
 **Server rendering.** Both builds server-render and hydrate. For plain Vite SSR, set `ssr: { noExternal: ['vael-ui'] }` (each component imports its own CSS) and inject `ctx.teleports?.body` before `</body>`, since overlays teleport to `body`. `v-animate` entrances are written as CSS on the server and never replay on hydration.
 
@@ -73,6 +73,8 @@ export default defineNuxtPlugin((nuxtApp) => {
 - **Don't fight built-in motion with CSS.** No `!important` transitions, no `transition` on a part vael-ui animates, no `<Transition>` or motion-v `<AnimatePresence>` wrapped around a vael-ui panel. Use `:motion` (see [Motion](#motion)).
 - **`before-close` is a guard, not an animation.** Return `true` to close, `false` to stay open, or a promise: `:before-close="() => confirmAction({ title: 'Discard changes?' }).result"`. Animate a close with `motion.exit` or a `leave` hook.
 - **`force-mount` keeps content mounted** so its state survives a close. It doesn't hand you the animation.
+- **Your own lists get the sliding hover highlight with `v-hover-indicator`,** not a `:hover` background on each row: `<ul v-hover-indicator="'.row'">`. The value is an expression, so the selector needs inner quotes. Rows with a solid background (SwipeToReveal rows, cards) take `.over`, which draws the highlight as a tint on top. The highlight is the list's first child, so a `:first-child` rule on the rows needs `:first-of-type` or a class. On a panel whose background is `--ui-muted`, set `--ui-indicator-bg: var(--ui-muted-hover)`, or the highlight matches the panel.
+- **Style a built-in chevron, clear button or icon through its `ui` key** (`chevron`, `clear`, `icon`, `filterIcon`, …) or a `ConfigProvider` theme, not a deep selector on its class.
 - **Theme once, override per instance.** `ConfigProvider`'s `theme`, `size`, `motion`, `indicator`, `loader-type`, `haptics` and `i18n` are app-wide defaults. For a global change, set a `--ui-*` variable once. For one instance, use the `ui` prop: part names map to a class or `{ class, style }`.
 
   ```vue

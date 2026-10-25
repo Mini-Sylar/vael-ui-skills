@@ -36,7 +36,7 @@ Name | Type | Default | Description
 `teleportTo` | `string \| HTMLElement \| undefined` | `'body'` | Teleport target: a CSS selector or element.
 `maxPanelHeight` | `number \| undefined` | `320` | Caps the panel height in pixels; the tree scrolls past it. The viewport limits it too, so pass `Infinity` to fill the available space.
 `motion` | `TreeSelectMotion \| undefined` | `true` | `false` skips all built-in motion: the panel opening, rows, the chevron, the list easing to a new height, and the clear button. An object moves the panel your way, like Popover's: values for the `panel` part, `{ spring }`, or `enter` / `leave` hooks for your own library.
-`ui` | `Partial<{ trigger: UiPartValue; value: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; filter: UiPartValue; list: UiPartValue; node: UiPartValue; empty: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`ui` | `Partial<{ trigger: UiPartValue; value: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; filter: UiPartValue; list: UiPartValue; node: UiPartValue; empty: UiPartValue; footer: UiPartValue; start: UiPartValue; end: UiPartValue; clear: UiPartValue; chevron: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `modelValue` | `string \| number \| (string \| number)[] \| null \| undefined` | `null` | Selected value, or an array of values outside `'single'` mode.
 `open` | `boolean \| undefined` | `false` | Whether the panel is open.
 `query` | `string \| undefined` | `''` | Search box text.
@@ -46,6 +46,8 @@ Name | Type | Default | Description
 
 Name | Type | Description
 --- | --- | ---
+`start` | `any` | Content at the start of the trigger, such as an icon, before the value.
+`end` | `any` | Content before the built-in clear button and chevron.
 `value` | `{ selected: T[]; }` | Custom trigger content for the selected nodes.
 `header` | `any` | Content above the filter input (when `filterable` is on) or the tree.
 `node` | `{ node: T; depth: number; expanded: boolean; checked: boolean; indeterminate: boolean; disabled: boolean; toggleExpand: () => void; toggleSelect: () => void; findNode: (value: string \| number) => T \| undefined; findParent: (value: string \| number) => T \| null; removeNode: (value: string \| number) => boolean; }` | Custom row content for each node; the built-in row wrapper and behavior stay in place.

@@ -26,7 +26,7 @@ Each component's reference file ends with a **Motion** section: its motion type,
 
 A string goes straight to CSS, so `y: '100%'` and `x: '2rem'` work.
 
-**Timing** is a `spring` **or** a `duration` with an `easing`, never both (TypeScript rejects it). A spring takes a name, `'snappy'` (quick), `'smooth'` (calm), `'bouncy'` (overshoots) or `'gentle'` (slow, a little give), or its numbers `{ damping, response }`: `damping: 1` lands without overshoot, below 1 it bounces. An easing is any CSS easing, or a token by name: `'out'`, `'in-out'`, `'drawer'`, `'pop'`, `'text'`. `response` is roughly the seconds to arrive. Movement rides the spring; opacity, color and blur always ease, so a bouncy spring never flickers transparency.
+**Timing** is a `spring` **or** a `duration` with an `easing`, never both (TypeScript rejects it). A spring takes a name, `'snappy'` (quick), `'smooth'` (calm), `'bouncy'` (overshoots) or `'gentle'` (slow, a little give), or its numbers `{ damping, response }`: `damping: 1` lands without overshoot, below 1 it bounces. An easing is any CSS easing, or a token by name: `'out'`, `'in-out'`, `'drawer'`, `'pop'`, `'bounce'` (lands like a dropped ball, for one-off moments), `'text'`. `response` is roughly the seconds to arrive. Movement and sizes ride the spring; opacity, color and blur always ease, so a bouncy spring never flickers transparency. Timing on one component retimes only its own transitions: a token named inside it still means the theme's.
 
 Any single value can carry its own timing: `y: { value: 12, spring: { damping: 0.6, response: 0.4 }, delay: 0.05 }`.
 
@@ -377,7 +377,7 @@ Modifiers: an entrance (`.fade`, `.rise`, `.drop`, `.pop`, `.blur`, or a preset 
 | `when: 'visible'` | waits until it scrolls into view, once |
 | `replay` | plays `initial` again whenever this value changes |
 | `appear: false` | no entrance on mount; `replay` and exit still play |
-| `appear: 'later'` | no entrance for what's there at the first render; anything added after comes in |
+| `appear: 'later'` | no entrance for what's there at the first render (inside a component's panel: when it opens); anything added after comes in |
 | `after`, `steps` | wait on another name's moment (`'title'`, `'title:60%'`); inside a component, or among elements that appear together |
 | `layout: true` | slides to its new place when the layout moves it |
 | `layoutId` | two elements with the same id are one element moving between places |
@@ -682,7 +682,7 @@ Don't move data people are reading or acting on just for style: keep a chart, a 
 ### 3. Enter quickly, leave quicker
 
 - Enter and exit both ease **out**: they start fast, so the response feels immediate. Never ease **in** on UI; it delays the moment people are watching.
-- Leaving is faster and quieter than entering: less distance, no bounce. vael-ui caps closes at about 200 ms, and an unset `exit` is already a quiet fade (a `v-animate` element leaves back the way it came, at half the distance).
+- Leaving is faster and quieter than entering: less distance, no bounce. vael-ui caps closes at about 200 ms, and an unset `exit` is already a quiet fade (a `v-animate` element leaves back the way it came, at half the distance). Inside a closing panel, content without its own `exit` simply leaves with the panel.
 - Leave the way it came. A toast that drops in from the top leaves through the top. A drawer slides back to its edge.
 - Don't delay a close or a hover-out. Dismissal must feel instant.
 

@@ -34,7 +34,7 @@ Name | Type | Default | Description
 `scrollFade` | `boolean \| undefined` | `true` | Masks the panel's top/bottom edge as its content scrolls under it, signaling there's more.
 `maxPanelHeight` | `number \| undefined` |  | Caps the panel's height in pixels; the item list scrolls past it. Unset, only the viewport limits it.
 `openPath` | `readonly string[] \| undefined` |  | Row path to reveal on open, as each row's `value` (or `label`): every submenu along it opens and its last row takes focus instead of the first, e.g. to show the current selection.
-`ui` | `Partial<{ positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`ui` | `Partial<{ positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; footer: UiPartValue; icon: UiPartValue; chevron: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `open` | `boolean \| undefined` | `false` | Whether the menu is open.
 
 ## Slots

@@ -12,7 +12,7 @@ Name | Type | Default | Description
 --- | --- | --- | ---
 `items` | `readonly MenuEntry<T>[] \| undefined` |  | Data-driven rows, in the same shape as Menu's `items`, so a MenuList and a Menu can share one array.
 `active` | `string \| number \| null \| undefined` |  | `value` of the current page; the matching row gets `aria-current="page"`.
-`ui` | `Partial<{ root: UiPartValue; item: UiPartValue; separator: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`ui` | `Partial<{ root: UiPartValue; item: UiPartValue; separator: UiPartValue; icon: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `motion` | `MenuListMotion \| undefined` |  | How it moves: its appearance, row by row (`{ initial: { item: { opacity: 0, x: -4 } }, stagger: 0.03 }`), over `root`, `item` and the current page's `indicator`. `spring` retimes the indicator; `move` hands its moves to your own animation. `false` turns its own animation off.
 
 ## Slots

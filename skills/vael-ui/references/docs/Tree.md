@@ -34,7 +34,7 @@ Name | Type | Default | Description
 `stickyScroll` | `boolean \| undefined` | `false` | Pins each expanded ancestor row to the top of the list while its children scroll past, VS Code-style.
 `scrollFade` | `boolean \| undefined` | `true` | Fades the list's top and bottom edges while there are more rows past them. With `stickyScroll`, only the bottom fades, so pinned rows stay solid.
 `id` | `string \| undefined` |  | Id for the `role="tree"` list element. Auto-generated when omitted.
-`ui` | `Partial<{ list: UiPartValue; node: UiPartValue; filter: UiPartValue; empty: UiPartValue; chevron: UiPartValue; label: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`ui` | `Partial<{ list: UiPartValue; node: UiPartValue; filter: UiPartValue; empty: UiPartValue; chevron: UiPartValue; label: UiPartValue; filterIcon: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `modelValue` | `string \| number \| (string \| number)[] \| null \| undefined` | `null` | Selected value: one value in `'single'` mode, an array in `'multiple'`, leaf values in `'checkbox'`.
 `query` | `string \| undefined` | `''` | Filter box text.
 `node` | `T \| T[] \| null \| undefined` | `null` | Selected node object(s), resolved from `v-model` against `items`. Read-only in effect: the value model overwrites any writes.

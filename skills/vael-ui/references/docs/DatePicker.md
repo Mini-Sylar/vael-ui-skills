@@ -42,7 +42,7 @@ Name | Type | Default | Description
 `timeOnly` | `boolean \| undefined` | `false` | Hides the calendar and shows only the time row. Implies `showTime`.
 `hourFormat` | `"12" \| "24" \| undefined` |  | `'12'` adds an AM/PM toggle; `'24'` doesn't. Unset, it follows `locale` (or the runtime default) through `Intl`'s `hour12` resolution.
 `minuteStep` | `number \| undefined` | `1` | Minute increment for the arrow-key and stepper-button adjustments.
-`ui` | `Partial<{ root: UiPartValue; input: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; navButton: UiPartValue; label: UiPartValue; weekdays: UiPartValue; weekday: UiPartValue; grid: UiPartValue; cell: UiPartValue; time: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`ui` | `Partial<{ root: UiPartValue; input: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; navButton: UiPartValue; label: UiPartValue; weekdays: UiPartValue; weekday: UiPartValue; grid: UiPartValue; cell: UiPartValue; time: UiPartValue; footer: UiPartValue; icon: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `modelValue` | `Date \| CalendarRange \| null \| undefined` | `null` | Selected date, or `{ start, end }` in `range` mode.
 `open` | `boolean \| undefined` | `false` | Whether the panel is open.
 

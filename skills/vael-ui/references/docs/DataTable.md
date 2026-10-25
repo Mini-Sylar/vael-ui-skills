@@ -40,7 +40,7 @@ Name | Type | Default | Description
 `beforeDrop` | `((details: SortableDropDetails) => boolean \| Promise<boolean>) \| undefined` |  | Async check before a column drop. Return `false`, or a promise of it, to cancel.
 `previewMode` | `"element" \| "clone" \| undefined` | `'clone'` | What follows the pointer in a column drag. Avoid `'element'` here.
 `touchDragDelay` | `number \| undefined` | `150` | Ms a touch must hold a header before a column drag starts, so taps still sort.
-`ui` | `Partial<{ root: UiPartValue; toolbar: UiPartValue; table: UiPartValue; thead: UiPartValue; th: UiPartValue; sortButton: UiPartValue; grip: UiPartValue; resizeHandle: UiPartValue; tbody: UiPartValue; tr: UiPartValue; td: UiPartValue; expansionRow: UiPartValue; expansionContent: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`ui` | `Partial<{ root: UiPartValue; toolbar: UiPartValue; table: UiPartValue; thead: UiPartValue; th: UiPartValue; sortButton: UiPartValue; sortChevron: UiPartValue; grip: UiPartValue; resizeHandle: UiPartValue; tbody: UiPartValue; tr: UiPartValue; td: UiPartValue; expansionRow: UiPartValue; expansionContent: UiPartValue; expandChevron: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `page` | `number \| undefined` | `1` | Current page, 1-based. Only used when `rows` is set; DataTable clamps it to the page count.
 `sort` | `{ field: keyof T \| null; dir: "asc" \| "desc" \| null; } \| undefined` | `{ field: null, dir: null }` | Current sort field and direction.
 `columnOrder` | `(keyof T)[] \| undefined` | `[]` | Column `field`s in display order. When empty, columns follow their `<Column>` order in the template.

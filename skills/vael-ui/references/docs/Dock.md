@@ -21,7 +21,7 @@ Name | Type | Default | Description
 `tooltips` | `boolean \| undefined` | `true` | Renders each item's `v-tooltip` on hover.
 `tooltipSide` | `'top' \| 'right' \| 'bottom' \| 'left' \| undefined` |  | Which side each item's tooltip opens on. Unset, it's `'top'` when horizontal and `'right'` when vertical.
 `ui` | `Partial<{ root: UiPartValue; item: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
-`motion` | `DockMotion \| undefined` |  | How it moves: its appearance, item by item (`{ initial: { item: { opacity: 0, y: 8 } }, stagger: 0.04 }`). `false` turns its own animation off.
+`motion` | `DockMotion \| undefined` |  | How it moves: its appearance, item by item (`{ initial: { item: { opacity: 0, y: 8 } }, stagger: 0.04 }`), and the `spring` magnification follows the pointer on (`{ spring: 'bouncy' }`). `false` turns its own animation off.
 
 ## Slots
 
@@ -44,7 +44,7 @@ Name | Type | Description
 
 ## Motion
 
-`motion` takes `DockMotion` (exported from `'vael-ui'`); `false` turns it off. Dock: its appearance, item by item, and each item's states: `hover`, `active` (pressed), `focus`, and `selected`, which plays each time the item is picked (a launch hop).
+`motion` takes `DockMotion` (exported from `'vael-ui'`); `false` turns it off. Dock: its appearance, item by item, and each item's states: `hover`, `active` (pressed), `focus`, and `selected`, which plays each time the item is picked (a launch hop). Its `spring` is the one magnification follows the pointer on, overshoot included.
 
 - Parts: `root`, `item`
 - States: `hover`, `active`, `focus`, `disabled`, `selected`

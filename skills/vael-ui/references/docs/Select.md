@@ -36,7 +36,7 @@ Name | Type | Default | Description
 `motion` | `SelectMotion \| undefined` | `true` | How it moves. `false` skips all of it: the panel opening, the list easing to its new height as you search, the clear button and the chips. An object moves the panel your way, like Popover's: values for the `panel` part, `{ spring }`, or `enter` / `leave` hooks. `chips` does the same for the chips (`{ chips: { initial: { chip: { opacity: 0, y: 4 } } } }`).
 `filter` | `SelectFilter<T> \| undefined` |  | Adds a search box to the panel. `true` matches labels ignoring case and accents, a function matches your way, `false` leaves filtering to you via `v-model:query`.
 `filterPlaceholder` | `string \| undefined` | `'Search...'` | Placeholder for the search box.
-`ui` | `Partial<{ trigger: UiPartValue; value: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; filter: UiPartValue; list: UiPartValue; option: UiPartValue; group: UiPartValue; groupLabel: UiPartValue; empty: UiPartValue; footer: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`ui` | `Partial<{ trigger: UiPartValue; value: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; filter: UiPartValue; list: UiPartValue; option: UiPartValue; group: UiPartValue; groupLabel: UiPartValue; empty: UiPartValue; footer: UiPartValue; start: UiPartValue; end: UiPartValue; clear: UiPartValue; chevron: UiPartValue; filterIcon: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `modelValue` | `string \| number \| (string \| number)[] \| null \| undefined` | `null` | Selected value, or an array of values when `multiple`.
 `query` | `string \| undefined` | `''` | Search box text. Clears when the panel closes.
 `open` | `boolean \| undefined` | `false` | Whether the panel is open.
@@ -45,6 +45,8 @@ Name | Type | Default | Description
 
 Name | Type | Description
 --- | --- | ---
+`start` | `any` | Content at the start of the trigger, such as an icon, before the value.
+`end` | `any` | Content before the built-in clear button and chevron.
 `value` | `{ selected: T \| T[] \| null; }` | Custom trigger content for the current selection (an array when `multiple`). It replaces the built-in label and its crossfade; to keep the crossfade, put the text in `<AnimatedText :value="…" />`.
 `header` | `{ count: number; total: number; }` | Content above the filter input (when `filter` is on) or the listbox. `count` and `total` support a result-count readout.
 `filter` | `{ query: string; onKeydown: (event: KeyboardEvent) => void; }` | Replaces the built-in filter row. Bind your input to `v-model:query`; pass keys to `onKeydown` to keep arrow/Home/End/Enter list navigation.
