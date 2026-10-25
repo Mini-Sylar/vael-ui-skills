@@ -9,7 +9,7 @@ Each component's reference file ends with a **Motion** section: its motion type,
 ## Contents
 
 - [Units](#units)
-- [The API by task](#the-api-by-task): [turn it off](#turn-it-off), [retime with a spring](#retime-with-a-spring), [change a part's values](#change-a-parts-values), [states](#states), [entrances on any component](#entrances-on-any-component), [lists](#lists), [overlays](#overlays), [your elements inside an overlay](#your-elements-inside-an-overlay), [`v-animate`](#v-animate), [hooks for GSAP or motion](#hooks-for-gsap-or-motion), [indicators](#indicators), [your own engine](#your-own-engine), [app-wide styles](#app-wide-styles), [`useMotion`](#usemotion-for-your-own-components), [testing](#testing), [server rendering](#server-rendering), [what never animates](#what-never-animates), [debugging](#debugging)
+- [The API by task](#the-api-by-task): [turn it off](#turn-it-off), [retime with a spring](#retime-with-a-spring), [change a part's values](#change-a-parts-values), [states](#states), [entrances on any component](#entrances-on-any-component), [lists](#lists), [overlays](#overlays), [your elements inside an overlay](#your-elements-inside-an-overlay), [`v-animate`](#v-animate), [hooks for GSAP or motion](#hooks-for-gsap-or-motion), [callbacks](#callbacks), [indicators](#indicators), [your own engine](#your-own-engine), [app-wide styles](#app-wide-styles), [`useMotion`](#usemotion-for-your-own-components), [testing](#testing), [server rendering](#server-rendering), [what never animates](#what-never-animates), [debugging](#debugging)
 - [Motion that feels right](#motion-that-feels-right)
 - [Common mistakes](#common-mistakes)
 
@@ -376,6 +376,9 @@ Modifiers: an entrance (`.fade`, `.rise`, `.drop`, `.pop`, `.blur`, or a preset 
 | `states` | looks held while hovered (a mouse), pressed (`active`) or focused: `{ hover: { scale: 1.03 }, active: { scale: 0.97 } }` |
 | `when: 'visible'` | waits until it scrolls into view, once |
 | `replay` | plays `initial` again whenever this value changes |
+| `onAfterEnter`, `onAfterLeave` | `(el) => …` once its entrance (or a `replay`) has played, and once its exit has played and it's gone |
+| `onAfterMove` | `(el) => …` once a `layout` or `layoutId` slide, or a change of `animate`, has played |
+| `enter`, `leave` | `(el, { signal, reducedMotion, index }) => …`: animate it yourself (GSAP, motion) instead of `initial` / `exit`; return the animation |
 | `appear: false` | no entrance on mount; `replay` and exit still play |
 | `appear: 'later'` | no entrance for what's there at the first render (inside a component's panel: when it opens); anything added after comes in |
 | `after`, `steps` | wait on another name's moment (`'title'`, `'title:60%'`); inside a component, or among elements that appear together |
@@ -470,6 +473,49 @@ What the component guarantees:
 - **Context.** The second argument has `signal`, `origin` (the `transform-origin` it grows from), `reducedMotion`, `targets` (your marked elements by name) and `direction` (for swaps).
 
 Overlays expose their elements (`panelEl`, `overlayEl`, `positionerEl`), and most other components expose `parts` (their elements by part name; repeated parts are arrays), for animation outside the hooks.
+
+### Callbacks
+
+They run once a motion has played, so the next step never guesses a duration. With nothing to play (motion off, an element off screen), they run at once. Never a `setTimeout` that repeats a duration.
+
+| Where | Callbacks | They get |
+| --- | --- | --- |
+| An overlay's `motion` (Dialog, Drawer, Popover, …) | `onAfterEnter` once fully open, `onAfterLeave` once fully closed, as its `@after-enter` / `@after-leave` | its parts by name |
+| A list's `motion` (Toaster, FileUpload, SpeedDial, DataTable, …) | `onAfterEnter`, `onAfterLeave`, per item | the item's parts, `{ index }` |
+| A swap (Dialog, Popover, Calendar) | `onAfterSwap` once the new view is in | that view (Calendar: its grid), `{ direction }` |
+| A state | `states.invalid.onAfterEnter` once on and played; `.onAfterLeave` once off and settled back | parts by name; a repeated part (OtpInput's `cell`) is an array |
+| An always-on component's `initial` | `onAfterEnter` after its appearance, on mount and each `replay` | nothing |
+| `v-animate`, or a name in `targets` | `onAfterEnter`, `onAfterLeave`; `v-animate` also `onAfterMove` | the element |
+| A keyframe value | `onRepeat` beside `repeat`, as each repeat starts | how many so far (1, 2, …) |
+
+```vue
+<!-- Close once the success tick has drawn in -->
+<svg v-if="saved" v-animate="{ initial: { scale: 0.25, opacity: 0 }, duration: 500, onAfterEnter: close }" />
+```
+
+```ts
+// Start over once the shake has played
+states: {
+  invalid: {
+    root: { x: { value: [0, -8, 8, -5, 5, 0], duration: 400 } },
+    onAfterEnter: ({ root }) => {
+      code.value = ''
+      invalid.value = false
+      root.querySelector('input')?.focus()
+    },
+  },
+}
+// An overlay: select the field once open, toast once closed
+const motion: DialogMotion = {
+  onAfterEnter: ({ panel }) => panel.querySelector('input')?.select(),
+  onAfterLeave: () => toast.success('Renamed'),
+}
+```
+
+- A state that's already on when the component mounts doesn't run `onAfterEnter`; one that turns on while the motion code is still loading plays and does.
+- `onAfterEnter` never runs for something that starts leaving first; its `onAfterLeave` does.
+- Inside a component, an element's callbacks come from its `v-animate` value, else its `targets` entry. Prefer `targets` with `:ref="target('name')"`: both are typed, so a misspelled name is a type error.
+- Your own animation on one element: `v-animate="{ enter: (el) => gsap.from(el, { y: 20, opacity: 0 }), leave: (el) => gsap.to(el, { opacity: 0 }) }"`. Return the tween; the callbacks wait for it, and it's stopped if the element leaves first.
 
 ### Indicators
 
@@ -615,7 +661,7 @@ import { settled } from 'vael-ui'
 
 await user.click(screen.getByRole('button', { name: 'Open' }))
 await settled() // every animation vael-ui started has finished
-await settled(field.value?.el) // only what's animating on that element, such as its invalid shake
+await settled(field.value?.el) // only what's animating on that element
 expect(screen.getByRole('dialog')).toBeVisible()
 ```
 
@@ -829,5 +875,5 @@ Check feel at 2 to 5 times the duration or frame by frame, test gestures on a re
 | `linked` in a ConfigProvider style | Set it on the Dialog, Drawer or BottomSheet |
 | `reducedMotion: 'run'` with full movement | Check `context.reducedMotion` and drop movement |
 | Tests that wait with `setTimeout` | `await settled()`, or `:motion="false"` |
-| Code that waits a fixed `setTimeout` for an animation to end | a state's `onFinish`, or `await settled(el)` |
+| Code that waits a fixed `setTimeout` for an animation to end | `onAfterEnter` / `onAfterLeave` on what animates: the element, the state, the overlay or the list |
 | `v-animate` imported from `'vael-ui/vapor'` in a VDOM template | Import it from the build the template compiles as |
