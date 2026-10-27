@@ -33,6 +33,7 @@ Name | Type | Default | Description
 `teleportTo` | `string \| HTMLElement \| undefined` | `'body'` | Teleport target: a CSS selector or element.
 `scrollFade` | `boolean \| undefined` | `true` | Masks the panel's top/bottom edge as its content scrolls under it, signaling there's more.
 `maxPanelHeight` | `number \| undefined` | `320` | Caps the panel height in pixels; the list scrolls past it. The viewport limits it too, so pass `Infinity` to fill the available space.
+`panelWidth` | `PanelWidth \| undefined` | `'trigger'` | The panel's width. `'trigger'` matches the field (at least 12rem); a width in px or any CSS length (`'20rem'`) sets it.
 `motion` | `SelectMotion \| undefined` | `true` | How it moves. `false` skips all of it: the panel opening, the list easing to its new height as you search, the clear button and the chips. An object moves the panel your way, like Popover's: values for the `panel` part, `{ spring }`, or `enter` / `leave` hooks. `chips` does the same for the chips (`{ chips: { initial: { chip: { opacity: 0, y: 4 } } } }`).
 `filter` | `SelectFilter<T> \| undefined` |  | Adds a search box to the panel. `true` matches labels ignoring case and accents, a function matches your way, `false` leaves filtering to you via `v-model:query`.
 `filterPlaceholder` | `string \| undefined` | `'Search...'` | Placeholder for the search box.

@@ -35,6 +35,7 @@ Name | Type | Default | Description
 `forceMount` | `boolean \| undefined` | `false` | Keeps it mounted while closed, toggled with `v-show`, so its content keeps its state. vael-ui then leaves its motion to you.
 `teleportTo` | `string \| HTMLElement \| undefined` | `'body'` | Teleport target: a CSS selector or element.
 `maxPanelHeight` | `number \| undefined` | `320` | Caps the panel height in pixels; the tree scrolls past it. The viewport limits it too, so pass `Infinity` to fill the available space.
+`panelWidth` | `PanelWidth \| undefined` | `'trigger'` | The panel's width. `'trigger'` matches the field (at least 18rem, room for nested rows); a width in px or any CSS length (`'20rem'`) sets it.
 `motion` | `TreeSelectMotion \| undefined` | `true` | `false` skips all built-in motion: the panel opening, rows, the chevron, the list easing to a new height, and the clear button. An object moves the panel your way, like Popover's: values for the `panel` part, `{ spring }`, or `enter` / `leave` hooks for your own library.
 `ui` | `Partial<{ trigger: UiPartValue; value: UiPartValue; positioner: UiPartValue; panel: UiPartValue; header: UiPartValue; filter: UiPartValue; list: UiPartValue; node: UiPartValue; empty: UiPartValue; footer: UiPartValue; start: UiPartValue; end: UiPartValue; clear: UiPartValue; chevron: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `modelValue` | `string \| number \| (string \| number)[] \| null \| undefined` | `null` | Selected value, or an array of values outside `'single'` mode.

@@ -34,6 +34,7 @@ Name | Type | Default | Description
 `align` | `'start' \| 'end' \| 'center' \| undefined` | `'start'` | How the panel aligns against the trigger along that side.
 `sideOffset` | `number \| undefined` | `8` | Gap between the trigger and the panel, in pixels.
 `alignOffset` | `number \| undefined` | `0` | Shifts the panel along the alignment axis, in pixels.
+`panelWidth` | `PanelWidth \| undefined` |  | The first level's width. Unset, it fits its rows and is at least as wide as the field, up to 16rem, so the next level opens close by. `'trigger'` makes it at least the field's full width; a width in px or any CSS length (`'20rem'`) sets it. The levels opening beside it keep their own width.
 `closeOnEsc` | `boolean \| undefined` | `true` | Escape key closes the panel.
 `closeOnOutside` | `boolean \| undefined` | `true` | Clicking outside the panel closes it.
 `beforeClose` | `BeforeClose<PopoverCloseReason> \| undefined` |  | Runs before the panel closes. Return `true` to close it, `false` to keep it open, or a promise of either, like `() => confirmAction(…).result`. The panel stays open while the promise is pending.

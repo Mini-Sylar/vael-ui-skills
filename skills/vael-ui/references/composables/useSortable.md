@@ -13,7 +13,7 @@ Name | Type | Description
 `rows` | `MaybeRefOrGetter<readonly FlatSortableRow[]>` | Visible rows in visual order, as `{ value, depth, parentValue }`. Read again each time a row is grabbed.
 `getElement` | `(value) => HTMLElement \| null` | Returns the DOM node for a row. The engine measures and moves that node directly.
 `onCommit` | `(value, to: DropPosition) => void` | Applies the reorder. Fires once, on a committed drop.
-`axis` | `MaybeRefOrGetter<'y' \| 'x'>` | Default `'y'`. Nesting only works on `'y'`.
+`axis` | `MaybeRefOrGetter<'y' \| 'x'>` | Default `'y'`. Nesting only works on `'y'`. Rows that wrap onto more lines (a card grid) reorder in reading order, slot by slot.
 `nested` | `MaybeRefOrGetter<boolean>` | Enables depth changes. `Tree` turns it on; a flat list leaves it off.
 `dropOnTarget` | `MaybeRefOrGetter<boolean>` | VS Code-style drops: hovering the middle of a row drops the item into it. Requires `nested`.
 `reorderSiblings` | `MaybeRefOrGetter<boolean>` | `false` turns off reordering among current siblings. Only re-parenting is offered, and no indicator shows for a sibling insert. Requires `dropOnTarget`.
