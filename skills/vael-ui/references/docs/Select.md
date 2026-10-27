@@ -90,7 +90,7 @@ Name | Type | Description
 
 ## Motion
 
-`motion` takes `SelectMotion` (exported from `'vael-ui'`); `false` turns it off. Select's panel: values or hooks for its parts, like Popover's. `chips` moves the chips.
+`motion` takes `SelectMotion` (exported from `'vael-ui'`); `false` turns it off. Select's panel: values or hooks for its parts, like Popover's. `chips` moves the chips; `valueSwap: false` shows a picked value without its crossfade.
 
 - Parts: `positioner`, `panel`
 - Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`, `onAfterEnter`, `onAfterLeave`

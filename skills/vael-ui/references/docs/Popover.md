@@ -22,6 +22,7 @@ Name | Type | Default | Description
 `forceMount` | `boolean \| undefined` | `false` | Keeps it mounted while closed, toggled with `v-show`, so its content keeps its state. vael-ui then leaves its motion to you.
 `teleportTo` | `string \| HTMLElement \| undefined` |  | Teleport target: a CSS selector or element. Wins over `container` either way.
 `scrollFade` | `boolean \| undefined` | `true` | Masks the panel's top/bottom edge as its content scrolls under it, signaling there's more.
+`panelWidth` | `PanelWidth \| undefined` |  | The panel's width: `'trigger'` for at least its trigger's width, or a width in px or any CSS length (`'20rem'`). Unset, it fits its content.
 `container` | `DOMTarget \| undefined` |  | Scopes the popover to an element. It teleports there instead of `body`, and its Escape handling stays within it. Omit it for a page-level popover.
 `openOnTriggerClick` | `boolean \| undefined` | `false` | Clicking the `#trigger` slot toggles `open`, and the popover finds the trigger element itself (no `setTriggerEl` needed). Otherwise you drive `open` yourself.
 `motion` | `PopoverMotion<N> \| undefined` |  | How it moves: `false` for instantly, `{ spring }` to retime the built-in motion, states by part (`initial: { panel: { … } }`), your `targets`, or `enter`/`leave` hooks for a library. Unset, it follows the nearest ConfigProvider's style.

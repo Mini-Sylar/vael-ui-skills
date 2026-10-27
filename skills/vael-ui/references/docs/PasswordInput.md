@@ -25,6 +25,7 @@ Name | Type | Default | Description
 `align` | `'start' \| 'end' \| 'center' \| undefined` |  | How the hint aligns against the input along that side, in both `'popover'` and `'inline'` mode. Inline defaults to `'start'`.
 `sideOffset` | `number \| undefined` |  | Gap between the input and the hint popover, in pixels. Popover mode only.
 `alignOffset` | `number \| undefined` |  | Shifts the hint popover along the alignment axis, in pixels. Popover mode only.
+`panelWidth` | `PanelWidth \| undefined` |  | The hint popover's width: `'trigger'` for at least the input's width, or a width in px or any CSS length (`'20rem'`). Unset, it fits its rules, up to 16rem. Popover mode only.
 `teleportTo` | `string \| HTMLElement \| undefined` |  | Teleport target for the hint popover: a CSS selector or element. Popover mode only.
 `forceMount` | `boolean \| undefined` | `false` | Keeps the hint popover mounted (toggled with `v-show`) and skips the built-in transition. Popover mode only.
 `beforeClose` | `BeforeClose<PopoverCloseReason> \| undefined` |  | Runs before the hint closes. Return `true` to close it, `false` to keep it open, or a promise of either, like `() => confirmAction(…).result`. The hint stays open while the promise is pending. Popover mode only.

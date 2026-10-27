@@ -90,7 +90,7 @@ Name | Type | Description
 
 ## Motion
 
-`motion` takes `CascadeSelectMotion` (exported from `'vael-ui'`); `false` turns it off. CascadeSelect's menu, like Menu's. `chips` moves the chips.
+`motion` takes `CascadeSelectMotion` (exported from `'vael-ui'`); `false` turns it off. CascadeSelect's menu, like Menu's. `chips` moves the chips; `valueSwap: false` shows a picked value without its crossfade.
 
 - Parts: `positioner`, `panel`
 - Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`, `onAfterEnter`, `onAfterLeave`

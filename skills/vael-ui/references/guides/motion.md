@@ -709,6 +709,7 @@ export const appMotion: MotionStyle = {
   - `press`: Button; `reveal`: Message and your own `useMotion('reveal')`
 - **Component keys** (`dialog`, `toaster`, `select`, `button`, `switch`, …) take that component's motion shape, by part, and beat the role. `drawer` sits over `dialog`, so drawers can move apart from dialogs.
 - **Presets** are your own `v-animate` entrances by name: `presets: { wiggle: {…} }` makes `v-animate.wiggle` (or `v-animate="'wiggle'"`) work inside the provider; a built-in name (`rise`) replaces that entrance there. Type the names with `import 'vael-ui/motion'` and `declare module 'vael-ui/motion' { interface MotionPresets { wiggle: true } }`, so they autocomplete and a typo fails vue-tsc.
+- **`valueSwap: false`** shows a value picked in Select, Combobox, TreeSelect, CascadeSelect or DatePicker without its crossfade, keeping the panel's motion. It works without a full style too (`:motion="{ valueSwap: false }"` on ConfigProvider), and on one field's own `motion`.
 - **Filters** name SVG filters the provider puts on the page: `filters: { goo: { blur: 8, contrast: [18, -7] } }`, used with `filter: url(#goo)`, such as on a Popover's `surface`.
 - **Resolution:** built-in < role < component key < a nearer `ConfigProvider` < the component's own `motion`. A key replaces the one below it whole; `false` at any level stops everything below.
 - **Data only.** A style can be JSON, except `engine` and hooks. `linked` is set on the component, never in a style.
