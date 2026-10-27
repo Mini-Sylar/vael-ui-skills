@@ -52,7 +52,7 @@ Name | Type | Description
 `motion` takes `FileUploadMotion` (exported from `'vael-ui'`); `false` turns it off. FileUpload's rows: values or hooks for `item`, and the list's `stagger` and `leaving`.
 
 - Parts: `item`
-- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `stagger`, `leaving`, `appear`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `stagger`, `leaving`, `appear`, `onAfterEnter`, `onAfterLeave`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

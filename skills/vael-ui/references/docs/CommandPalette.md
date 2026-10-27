@@ -68,7 +68,7 @@ Name | Type | Description
 `motion` takes `CommandPaletteMotion` (exported from `'vael-ui'`); `false` turns it off. CommandPalette's dialog, like Dialog's. `items` moves the result rows.
 
 - Parts: `overlay`, `panel`, `header`, `title`, `description`, `body`, `footer`, `maximize`, `close`
-- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`, `linked`, `swap`, `direction`, `items`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`, `onAfterEnter`, `onAfterLeave`, `linked`, `swap`, `direction`, `onAfterSwap`, `items`
 - `items` (`CommandPaletteItemsMotion`): The result rows: values or hooks for `item`, and the list's `stagger`.
 
 See the [Motion guide](../guides/motion.md) for what each key does.

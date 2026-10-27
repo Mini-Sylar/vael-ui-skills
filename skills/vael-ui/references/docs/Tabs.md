@@ -12,7 +12,7 @@ Name | Type | Default | Description
 --- | --- | --- | ---
 `items` | `T[]` |  | Tab values, in order; drives keyboard navigation.
 `orientation` | `"horizontal" \| "vertical" \| undefined` | `'horizontal'` | Lays the tabs out in a row or a column; arrow keys follow the axis.
-`activation` | `"automatic" \| "manual" \| undefined` | `'automatic'` | `'automatic'`: arrow keys select. `'manual'`: arrow keys move focus only, and `Enter` or `Space` selects.
+`activation` | `"manual" \| "automatic" \| undefined` | `'automatic'` | `'automatic'`: arrow keys select. `'manual'`: arrow keys move focus only, and `Enter` or `Space` selects.
 `idBase` | `string \| undefined` |  | Prefix for the tab and panel ids. Set it when you render tab panels: each tab then gets `aria-controls="{idBase}-panel-{value}"`, so give each panel that id (or spread the exposed `panelProps(value)`). Values should be id-safe (no spaces).
 `ui` | `Partial<{ list: UiPartValue; item: UiPartValue; indicator: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `motion` | `TabsMotion \| undefined` |  | How it moves: its appearance, tab by tab (`{ initial: { item: { opacity: 0, y: 4 } } }`), over `list`, `item` and your `indicator`. `spring` retimes the indicator; `move` hands its moves to your own animation. `false` turns its own animation off.
@@ -47,7 +47,7 @@ Name | Type | Description
 `motion` takes `TabsMotion` (exported from `'vael-ui'`); `false` turns it off. Tabs's `motion`: values or hooks for its parts (TabsPart), how its indicator moves (a `move` hook).
 
 - Parts: `list`, `item`, `indicator`
-- Keys: `spring`, `duration`, `easing`, `initial`, `move`, `stretch`, `squash`, `replay`, `appear`
+- Keys: `spring`, `duration`, `easing`, `initial`, `move`, `stretch`, `squash`, `replay`, `appear`, `onAfterEnter`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

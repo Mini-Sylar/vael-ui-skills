@@ -40,8 +40,8 @@ Name | Type | Description
 `atBottom` | `boolean` | Whether the viewport is scrolled to the bottom.
 `atStart` | `boolean` | Whether the viewport is scrolled to the left edge.
 `atEnd` | `boolean` | Whether the viewport is scrolled to the right edge.
-`isScrolling` | `boolean` | `true` while a scroll is in progress, including native momentum or rubber-band settling.
-`directions` | `{ left: boolean; right: boolean; top: boolean; bottom: boolean; }` | Direction of the current scroll, as `top`, `bottom`, `left` and `right` flags.
+`isScrolling` | `Readonly<{ value: boolean; }>` | `true` while a scroll is in progress, including native momentum or rubber-band settling.
+`directions` | `Readonly<Edges>` | Direction of the current scroll, as `top`, `bottom`, `left` and `right` flags.
 `scrollTo` | `(options: ScrollToOptions) => void` | Scrolls the viewport with native `ScrollToOptions`.
 `scrollToTop` | `(options?: Omit<ScrollToOptions, "top"> \| undefined) => void` | Smooth-scrolls to the top.
 `scrollToBottom` | `(options?: Omit<ScrollToOptions, "top"> \| undefined) => void` | Smooth-scrolls to the bottom.
@@ -54,7 +54,7 @@ Name | Type | Description
 `motion` takes `ScrollAreaMotion` (exported from `'vael-ui'`); `false` turns it off. ScrollArea: its appearance.
 
 - Parts: `root`
-- Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`
+- Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`, `onAfterEnter`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

@@ -85,7 +85,7 @@ Name | Type | Description
 `motion` takes `TreeMotion` (exported from `'vael-ui'`); `false` turns it off. Tree: its appearance, row by row.
 
 - Parts: `list`, `node`, `chevron`, `label`
-- Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`, `stagger`
+- Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`, `onAfterEnter`, `stagger`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

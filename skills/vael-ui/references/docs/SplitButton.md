@@ -67,7 +67,7 @@ Name | Type | Description
 `motion` takes `MenuMotion` (exported from `'vael-ui'`); `false` turns it off. Menu's `motion`, and ContextMenu's and SplitButton's: values or hooks for `positioner` and `panel`, and how it opens and closes.
 
 - Parts: `positioner`, `panel`
-- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`, `onAfterEnter`, `onAfterLeave`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

@@ -47,7 +47,7 @@ Name | Type | Description
 
 - Parts: `swatch`, `positioner`, `panel`
 - States: `disabled`
-- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`
+- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`, `onAfterEnter`, `onAfterLeave`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

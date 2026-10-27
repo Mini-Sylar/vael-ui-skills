@@ -38,6 +38,6 @@ Name | Type | Description
 `motion` takes `LoaderMotion` (exported from `'vael-ui'`); `false` turns it off. Loader: its appearance; `false` holds it still.
 
 - Parts: `root`
-- Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`
+- Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`, `onAfterEnter`
 
 See the [Motion guide](../guides/motion.md) for what each key does.

@@ -50,7 +50,7 @@ Name | Type | Description
 
 - Parts: `root`, `label`, `control`, `description`, `error`
 - States: `invalid`, `disabled`, `focus`
-- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `replay`, `appear`
+- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `replay`, `appear`, `onAfterEnter`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

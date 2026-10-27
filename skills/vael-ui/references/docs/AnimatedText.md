@@ -41,6 +41,6 @@ Name | Type | Description
 `motion` takes `AnimatedTextMotion` (exported from `'vael-ui'`); `false` turns it off. AnimatedText: its appearance and the swap's timing.
 
 - Parts: `root`, `piece`
-- Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`
+- Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`, `onAfterEnter`
 
 See the [Motion guide](../guides/motion.md) for what each key does.

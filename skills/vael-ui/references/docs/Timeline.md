@@ -46,7 +46,7 @@ Name | Type | Description
 `motion` takes `TimelineMotion` (exported from `'vael-ui'`); `false` turns it off. Timeline's steps: values or hooks for `item` and its parts (`connector` is missing on the last step, `previousConnector` on the first, `opposite` without the slot), `stagger` and `leaving`.
 
 - Parts: `item`, `marker`, `connector`, `previousConnector`, `content`, `opposite`
-- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `stagger`, `leaving`, `appear`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `stagger`, `leaving`, `appear`, `onAfterEnter`, `onAfterLeave`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

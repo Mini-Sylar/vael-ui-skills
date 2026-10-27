@@ -58,7 +58,7 @@ Name | Type | Description
 `motion` takes `TooltipMotion` (exported from `'vael-ui'`); `false` turns it off. Tooltip's box: values or hooks for its parts, like Popover's. Warm opens stay instant.
 
 - Parts: `positioner`, `panel`
-- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`, `onAfterEnter`, `onAfterLeave`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

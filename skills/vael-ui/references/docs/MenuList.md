@@ -41,7 +41,7 @@ Name | Type | Description
 `motion` takes `MenuListMotion` (exported from `'vael-ui'`); `false` turns it off. MenuList: its appearance, and how the current-page indicator moves.
 
 - Parts: `root`, `item`, `indicator`
-- Keys: `spring`, `duration`, `easing`, `initial`, `move`, `replay`, `appear`, `stagger`
+- Keys: `spring`, `duration`, `easing`, `initial`, `move`, `replay`, `appear`, `onAfterEnter`, `stagger`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

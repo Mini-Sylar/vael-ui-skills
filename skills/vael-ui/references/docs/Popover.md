@@ -61,7 +61,7 @@ Name | Type | Description
 `motion` takes `PopoverMotion` (exported from `'vael-ui'`); `false` turns it off. Popover's `motion`: values or hooks for `positioner` and `panel`, how it opens and closes (`morph`, `surface`, `resize`) and swapped content.
 
 - Parts: `positioner`, `panel`
-- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`, `surface`, `swap`, `direction`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`, `surface`, `onAfterEnter`, `onAfterLeave`, `swap`, `direction`, `onAfterSwap`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

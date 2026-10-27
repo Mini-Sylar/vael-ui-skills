@@ -42,7 +42,7 @@ Name | Type | Description
 `motion` takes `RadioGroupMotion` (exported from `'vael-ui'`); `false` turns it off. RadioGroup: its appearance; its radios keep their own `motion`.
 
 - Parts: `root`
-- Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`
+- Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`, `onAfterEnter`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

@@ -38,11 +38,11 @@ Name | Type | Description
 
 ## Motion
 
-`motion` takes `CollapsibleMotion` (exported from `'vael-ui'`); `false` turns it off. Collapsible: its appearance and states.
+`motion` takes `CollapsibleMotion` (exported from `'vael-ui'`); `false` turns it off. Collapsible: its appearance and states. */ type CollapsibleHook = MotionHook< CollapsiblePart \| 'body', { signal: AbortSignal; reducedMotion: boolean } > /** Collapsible: its appearance and states, and your own opening and closing. With a hook its height no longer eases: `enter` runs once the panel is open (animate it from closed), and `leave` before it closes, which waits for what it returns.
 
 - Parts: `root`, `trigger`, `panel`
 - States: `open`, `disabled`
-- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `replay`, `appear`
+- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `replay`, `appear`, `onAfterEnter`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

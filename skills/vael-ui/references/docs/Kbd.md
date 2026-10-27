@@ -35,7 +35,7 @@ Name | Type | Description
 `motion` takes `KbdMotion` (exported from `'vael-ui'`); `false` turns it off. Kbd: its appearance.
 
 - Parts: `root`
-- Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`
+- Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`, `onAfterEnter`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

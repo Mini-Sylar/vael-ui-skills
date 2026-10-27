@@ -26,7 +26,7 @@ Name | Type | Default | Description
 `initialFocus` | `(() => HTMLElement \| null \| undefined) \| undefined` |  | Returns the element to focus on open; return `null` or `undefined` to focus the first focusable element.
 `showClose` | `boolean \| undefined` | `true` | Shows the built-in close button (×). Hide it when the footer carries the only sensible actions.
 `modal` | `boolean \| undefined` | `true` | `false` turns off the overlay, scroll lock, focus trap and the inert page behind it. Escape-close and layer stacking still apply.
-`flush` | `boolean \| undefined` | `false` | `true` removes edge padding; `top`/`bottom` panels sit flush to the viewport edge instead of floating.
+`flush` | `boolean \| undefined` | `false` | `true` removes edge padding: a `top`/`bottom` Dialog sits flush to the viewport edge instead of floating (a Drawer's always does).
 `closeOnOverlay` | `boolean \| undefined` | `true` | Clicking the overlay closes the panel. Has no effect when `modal` is `false` (no overlay to click).
 `closeOnHistoryBack` | `boolean \| undefined` | `false` | The browser or mobile back action closes the panel instead of leaving the page. Opening pushes a history entry, and any other close removes it.
 `scrollTarget` | `DOMTarget \| undefined` |  | Element to scroll-lock while open. Defaults to `container`; pass the inner scroller when the container itself doesn't scroll.
@@ -70,7 +70,7 @@ Name | Type | Description
 `motion` takes `DialogMotion` (exported from `'vael-ui'`); `false` turns it off. Dialog's `motion`, and Drawer's and BottomSheet's: values or hooks for its parts (DialogPart), how it opens and closes (`morph`, `linked`, `exitOrder`, `resize`) and swapped content.
 
 - Parts: `overlay`, `panel`, `header`, `title`, `description`, `body`, `footer`, `maximize`, `close`
-- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`, `linked`, `swap`, `direction`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`, `onAfterEnter`, `onAfterLeave`, `linked`, `swap`, `direction`, `onAfterSwap`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

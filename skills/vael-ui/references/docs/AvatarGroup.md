@@ -39,7 +39,7 @@ Name | Type | Description
 `motion` takes `AvatarGroupMotion` (exported from `'vael-ui'`); `false` turns it off. AvatarGroup: its appearance, avatar by avatar.
 
 - Parts: `root`, `avatar`
-- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `stagger`, `leaving`, `appear`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `stagger`, `leaving`, `appear`, `onAfterEnter`, `onAfterLeave`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

@@ -51,7 +51,7 @@ Name | Type | Description
 `motion` takes `MessageMotion` (exported from `'vael-ui'`); `false` turns it off. Message coming and going: values or hooks for `root`.
 
 - Parts: `root`
-- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `onAfterEnter`, `onAfterLeave`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

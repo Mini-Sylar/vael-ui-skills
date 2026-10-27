@@ -96,7 +96,7 @@ Name | Type | Description
 `motion` takes `ComboboxMotion` (exported from `'vael-ui'`); `false` turns it off. Combobox's panel: values or hooks for its parts, like Popover's. `chips` moves the chips.
 
 - Parts: `positioner`, `panel`
-- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`, `onAfterEnter`, `onAfterLeave`
 - `chips` (`ChipsMotion`): A select's chips (`multiple`): values or hooks for `chip`, and the list's `stagger` and `leaving`.
 
 See the [Motion guide](../guides/motion.md) for what each key does.

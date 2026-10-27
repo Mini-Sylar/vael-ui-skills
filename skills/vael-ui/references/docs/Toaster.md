@@ -42,7 +42,7 @@ Name | Type | Description
 
 - Parts: `root`, `toast`, `icon`, `content`, `title`, `description`, `action`, `close`
 - States: `loading`, `success`, `error`, `warning`, `info`
-- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `exit`, `enter`, `leave`, `stagger`, `leaving`, `appear`
+- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `exit`, `enter`, `leave`, `stagger`, `leaving`, `appear`, `onAfterEnter`, `onAfterLeave`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

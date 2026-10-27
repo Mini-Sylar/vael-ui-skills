@@ -51,7 +51,7 @@ Name | Type | Description
 `motion` takes `SpeedDialMotion` (exported from `'vael-ui'`); `false` turns it off. SpeedDial's actions: values or hooks for `action`, the list's `stagger` and `leaving`.
 
 - Parts: `action`
-- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `stagger`, `leaving`, `appear`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `stagger`, `leaving`, `appear`, `onAfterEnter`, `onAfterLeave`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

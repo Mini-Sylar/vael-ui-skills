@@ -36,7 +36,7 @@ Name | Type | Description
 `motion` takes `SeparatorMotion` (exported from `'vael-ui'`); `false` turns it off. Separator's `motion`: values or hooks for its parts (SeparatorPart).
 
 - Parts: `root`, `line`, `text`
-- Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`
+- Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`, `onAfterEnter`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

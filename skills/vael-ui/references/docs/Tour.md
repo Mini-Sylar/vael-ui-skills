@@ -10,7 +10,7 @@ import { Tour } from 'vael-ui' // or 'vael-ui/vapor'
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-`steps` | `readonly T[]` |  | Steps to walk through, in order; each points at a `target` element.
+`steps` | `readonly T[]` |  | Steps to walk through, in order: `{ target, title, description }`, where `target` is the element (or a selector) the step points at. A step can also set its callout's `side`, `align` and spotlight, and a `group` for "Section 2 of 3".
 `id` | `string \| undefined` |  | Identifies this tour instance (see `useTour`'s `id` option).
 `modal` | `boolean \| undefined` | `true` | Scroll-locks the page and makes everything but the target and callout inert while open.
 `closeOnEsc` | `boolean \| undefined` | `true` | Escape key closes the tour, firing `@skip`.
@@ -69,7 +69,7 @@ Name | Type | Description
 `motion` takes `TourMotion` (exported from `'vael-ui'`); `false` turns it off. Tour's `motion`: the callout opens and closes like Popover's. Its timing, `{ duration, easing }` or `{ spring }`, also sets how the spotlight and the callout glide between steps. Unset, the glide is quick to a nearby target and longer across the screen. `false` turns it all off.
 
 - Parts: `positioner`, `panel`
-- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`, `surface`, `swap`, `direction`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`, `surface`, `onAfterEnter`, `onAfterLeave`, `swap`, `direction`, `onAfterSwap`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

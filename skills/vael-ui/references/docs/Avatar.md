@@ -46,7 +46,7 @@ Name | Type | Description
 `motion` takes `AvatarMotion` (exported from `'vael-ui'`); `false` turns it off. Avatar: its parts' appearance, like the image fading in over the fallback.
 
 - Parts: `root`, `image`, `fallback`, `badge`
-- Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`
+- Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`, `onAfterEnter`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

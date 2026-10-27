@@ -55,7 +55,7 @@ Name | Type | Description
 `motion` takes `CalendarMotion` (exported from `'vael-ui'`); `false` turns it off. How Calendar's label and grid change months. Give each part's look as values, or as a function of `where`: its `direction` is `1` going forward and `-1` going back.
 
 - Parts: `label`, `grid`
-- Keys: `spring`, `duration`, `easing`, `initial`, `exit`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `onAfterSwap`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

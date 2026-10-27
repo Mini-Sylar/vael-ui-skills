@@ -40,7 +40,7 @@ Name | Type | Description
 `motion` takes `BadgeMotion` (exported from `'vael-ui'`); `false` turns it off. Badge: its appearance.
 
 - Parts: `root`
-- Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`
+- Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`, `onAfterEnter`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

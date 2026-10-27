@@ -48,7 +48,7 @@ Name | Type | Description
 `motion` takes `PaginationMotion` (exported from `'vael-ui'`); `false` turns it off. Pagination: its appearance, and how the current-page indicator moves.
 
 - Parts: `root`, `button`, `indicator`
-- Keys: `spring`, `duration`, `easing`, `initial`, `move`, `stretch`, `squash`, `replay`, `appear`, `stagger`
+- Keys: `spring`, `duration`, `easing`, `initial`, `move`, `stretch`, `squash`, `replay`, `appear`, `onAfterEnter`, `stagger`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

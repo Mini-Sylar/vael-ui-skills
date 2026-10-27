@@ -42,7 +42,7 @@ Name | Type | Description
 `motion` takes `ButtonGroupMotion` (exported from `'vael-ui'`); `false` turns it off. ButtonGroup: its appearance; its buttons keep their own `motion`.
 
 - Parts: `root`
-- Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`
+- Keys: `spring`, `duration`, `easing`, `initial`, `replay`, `appear`, `onAfterEnter`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

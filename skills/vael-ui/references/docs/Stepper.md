@@ -48,7 +48,7 @@ Name | Type | Description
 
 - Parts: `root`, `step`, `circle`, `connector`, `content`
 - States: `current`, `completed`, `upcoming`, `disabled`, `hover`, `focus`
-- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `replay`, `appear`, `stagger`
+- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `replay`, `appear`, `onAfterEnter`, `stagger`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

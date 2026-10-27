@@ -59,7 +59,7 @@ Name | Type | Description
 `motion` takes `DialogMotion` (exported from `'vael-ui'`); `false` turns it off. Dialog's `motion`, and Drawer's and BottomSheet's: values or hooks for its parts (DialogPart), how it opens and closes (`morph`, `linked`, `exitOrder`, `resize`) and swapped content.
 
 - Parts: `overlay`, `panel`, `header`, `title`, `description`, `body`, `footer`, `maximize`, `close`
-- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`, `linked`, `swap`, `direction`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`, `onAfterEnter`, `onAfterLeave`, `linked`, `swap`, `direction`, `onAfterSwap`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

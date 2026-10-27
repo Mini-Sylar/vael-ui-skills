@@ -42,6 +42,6 @@ Name | Type | Description
 `motion` takes `AnimatedNumberMotion` (exported from `'vael-ui'`); `false` turns it off. AnimatedNumber: its appearance, timing for the roll, and `when: 'visible'`.
 
 - Parts: `root`
-- Keys: `spring`, `duration`, `easing`, `initial`, `when`, `replay`, `appear`
+- Keys: `spring`, `duration`, `easing`, `initial`, `when`, `replay`, `appear`, `onAfterEnter`
 
 See the [Motion guide](../guides/motion.md) for what each key does.

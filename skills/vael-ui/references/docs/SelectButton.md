@@ -48,7 +48,7 @@ Name | Type | Description
 
 - Parts: `root`, `option`, `indicator`
 - States: `disabled`
-- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `move`, `stretch`, `squash`, `replay`, `appear`, `stagger`
+- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `move`, `stretch`, `squash`, `replay`, `appear`, `onAfterEnter`, `stagger`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

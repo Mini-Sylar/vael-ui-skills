@@ -94,7 +94,7 @@ Name | Type | Description
 `motion` takes `TreeSelectMotion` (exported from `'vael-ui'`); `false` turns it off. TreeSelect's panel: values or hooks for its parts, like Popover's.
 
 - Parts: `positioner`, `panel`
-- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`, `onAfterEnter`, `onAfterLeave`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

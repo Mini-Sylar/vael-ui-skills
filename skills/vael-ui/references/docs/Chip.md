@@ -42,7 +42,7 @@ Name | Type | Description
 
 - Parts: `root`, `remove`
 - States: `disabled`, `focus`, `active`, `hover`
-- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `replay`, `appear`
+- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `replay`, `appear`, `onAfterEnter`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

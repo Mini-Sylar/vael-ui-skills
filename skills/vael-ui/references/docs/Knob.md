@@ -52,7 +52,7 @@ Name | Type | Description
 
 - Parts: `root`, `track`, `fill`, `indicator`
 - States: `disabled`, `focus`, `active`
-- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `replay`, `appear`
+- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `replay`, `appear`, `onAfterEnter`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

@@ -82,7 +82,7 @@ Name | Type | Description
 `motion` takes `DataTableMotion` (exported from `'vael-ui'`); `false` turns it off. DataTable's body rows: values or hooks for `row`, and the list's `stagger`.
 
 - Parts: `row`
-- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `stagger`, `leaving`, `appear`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `stagger`, `leaving`, `appear`, `onAfterEnter`, `onAfterLeave`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

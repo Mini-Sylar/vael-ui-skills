@@ -41,7 +41,7 @@ Name | Type | Description
 `motion` takes `ToolbarMotion` (exported from `'vael-ui'`); `false` turns it off. Toolbar: its appearance, and how the hover highlight moves.
 
 - Parts: `root`, `item`, `indicator`
-- Keys: `spring`, `duration`, `easing`, `initial`, `move`, `replay`, `appear`, `stagger`
+- Keys: `spring`, `duration`, `easing`, `initial`, `move`, `replay`, `appear`, `onAfterEnter`, `stagger`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

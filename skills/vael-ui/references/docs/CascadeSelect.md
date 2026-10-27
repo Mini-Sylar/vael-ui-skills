@@ -92,7 +92,7 @@ Name | Type | Description
 `motion` takes `CascadeSelectMotion` (exported from `'vael-ui'`); `false` turns it off. CascadeSelect's menu, like Menu's. `chips` moves the chips.
 
 - Parts: `positioner`, `panel`
-- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `targets`, `morph`, `exitOrder`, `resize`, `onAfterEnter`, `onAfterLeave`
 - `chips` (`ChipsMotion`): A select's chips (`multiple`): values or hooks for `chip`, and the list's `stagger` and `leaving`.
 
 See the [Motion guide](../guides/motion.md) for what each key does.

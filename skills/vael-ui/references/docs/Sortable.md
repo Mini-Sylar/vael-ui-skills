@@ -98,7 +98,7 @@ Name | Type | Description
 
 - Parts: `root`, `item`
 - States: `dragging`, `settling`
-- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `replay`, `appear`, `stagger`
+- Keys: `spring`, `duration`, `easing`, `initial`, `states`, `replay`, `appear`, `onAfterEnter`, `stagger`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 

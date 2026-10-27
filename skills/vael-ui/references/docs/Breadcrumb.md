@@ -39,7 +39,7 @@ Name | Type | Description
 `motion` takes `BreadcrumbMotion` (exported from `'vael-ui'`); `false` turns it off. Breadcrumb: its appearance, crumb by crumb.
 
 - Parts: `root`, `item`
-- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `stagger`, `leaving`, `appear`
+- Keys: `spring`, `duration`, `easing`, `initial`, `exit`, `enter`, `leave`, `stagger`, `leaving`, `appear`, `onAfterEnter`, `onAfterLeave`
 
 See the [Motion guide](../guides/motion.md) for what each key does.
 
