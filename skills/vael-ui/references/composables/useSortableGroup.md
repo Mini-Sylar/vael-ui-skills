@@ -10,7 +10,7 @@ import { useSortableGroup } from 'vael-ui' // or 'vael-ui/vapor'
 
 Name | Type | Description
 --- | --- | ---
-`onTransfer` | `(value, from: GroupDropPosition, to: GroupDropPosition) => void` | Required. Fires once, on a committed drop into another list. Remove `value` from the array for `from.groupId` and insert it into the array for `to.groupId`. It lives on the group, not on each list, because a move between lists isn't either list's decision.
+`onTransfer` | `(value, from: GroupDropPosition, to: GroupDropPosition) => void` | Required. Fires once, on a committed drop into another list. Take the item at `from.index` out of the array for `from.groupId` and insert it at `to.index` in the array for `to.groupId`. Use the indexes: `value` is the item's key from a `Sortable`, but its position from `v-draggable`. It lives on the group, not on each list, because a move between lists isn't either list's decision.
 `canDrop` | `(details: GroupDropDetails) => boolean` | Vetoes a move between lists while dragging, such as a WIP limit on the target column. It re-runs live, so keep it cheap.
 `beforeDrop` | `(details: GroupDropDetails) => boolean \| Promise<boolean>` | An async check at drop time. Return `false`, or a promise of `false`, to cancel and spring the item back. Works with `confirmAction().result`, like `useSortable`'s `beforeDrop`.
 `onDropError` | `(error: unknown, details: GroupDropDetails) => void` | `beforeDrop` threw or rejected. The move is already reverted when this fires.
