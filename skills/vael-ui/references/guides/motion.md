@@ -9,7 +9,7 @@ Each component's reference file ends with a **Motion** section: its motion type,
 ## Contents
 
 - [Units](#units)
-- [The API by task](#the-api-by-task): [turn it off](#turn-it-off), [retime with a spring](#retime-with-a-spring), [change a part's values](#change-a-parts-values), [states](#states), [entrances on any component](#entrances-on-any-component), [lists](#lists), [overlays](#overlays), [your elements inside an overlay](#your-elements-inside-an-overlay), [`v-animate`](#v-animate), [from code](#from-code), [scroll](#scroll), [hooks for GSAP or motion](#hooks-for-gsap-or-motion), [callbacks](#callbacks), [indicators](#indicators), [your own engine](#your-own-engine), [app-wide styles](#app-wide-styles), [`useMotion`](#usemotion-for-your-own-components), [testing](#testing), [server rendering](#server-rendering), [what never animates](#what-never-animates), [debugging](#debugging)
+- [The API by task](#the-api-by-task): [turn it off](#turn-it-off), [retime with a spring](#retime-with-a-spring), [change a part's values](#change-a-parts-values), [states](#states), [entrances on any component](#entrances-on-any-component), [lists](#lists), [overlays](#overlays), [your elements inside an overlay](#your-elements-inside-an-overlay), [`v-animate`](#v-animate), [from code](#from-code), [tween a number](#tween-a-number), [pages](#pages), [scroll](#scroll), [hooks for GSAP or motion](#hooks-for-gsap-or-motion), [callbacks](#callbacks), [indicators](#indicators), [your own engine](#your-own-engine), [app-wide styles](#app-wide-styles), [`useMotion`](#usemotion-for-your-own-components), [testing](#testing), [server rendering](#server-rendering), [what never animates](#what-never-animates), [debugging](#debugging)
 - [Motion that feels right](#motion-that-feels-right)
 - [Common mistakes](#common-mistakes)
 
@@ -112,6 +112,11 @@ const press: ButtonMotion = { states: { active: { root: { scale: '0.96' } } } }
 // Invalid: plays once on entering the state
 const shake: InputMotion = { states: { invalid: { root: { x: [0, -6, 6, -3, 0] } } } }
 
+// And again on each wrong code while it stays invalid: `replay` plays it again while it's on
+const again: InputMotion = {
+  states: { invalid: { root: { x: [0, -6, 6, -3, 0] }, replay: attempts.value } },
+}
+
 // Open: the chevron turns, on a spring
 const chevron: AccordionMotion = {
   states: { open: { chevron: { rotate: 180 } } },
@@ -145,6 +150,8 @@ const code: OtpInputMotion = {
   },
 }
 ```
+
+**Collapsible and Accordion.** Their content stays mounted; closed, it's `hidden="until-found"`, so the browser's find reaches it and opens it. Collapsible takes `enter` and `leave` hooks (`({ panel, body }) => …`): the panel shows at once and your hook animates it; closing waits for what `leave` returns.
 
 ### Entrances on any component
 
@@ -249,7 +256,9 @@ function show(event: MouseEvent) {
 
 Dialog also has `origin="trigger"`: it zooms the centered panel out of the focused element that opened it.
 
-**Inner parts.** On Dialog, Drawer and BottomSheet, `initial` reaches `title`, `description`, `body`, `footer` and the rest. `exitOrder: 'reverse'` closes them before the panel.
+**Inner parts.** On Dialog, Drawer and BottomSheet, `initial` reaches `title`, `description`, `body`, `footer` and the rest. `stagger` brings the parts you give an `initial` in one after another, in page order (`stagger: true`). `exitOrder: 'reverse'` closes them before the panel.
+
+**Drawer sides.** Every side is an edge: a `top` or `bottom` Drawer spans that edge and slides in from it, as left and right do. A Dialog at `position="top"` or `"bottom"` stays a card.
 
 ```ts
 const motion: DialogMotion = {
@@ -345,7 +354,9 @@ const motion: DialogMotion<'summary' | 'rows'> = {
 
 ### `v-animate`
 
-`v-animate` gives your own elements the same motion. Import `vAnimate` from `'vael-ui'` (or `'vael-ui/vapor'` in a `<script setup vapor>` component). The Nuxt module registers it for you.
+`v-animate` gives your own elements the same motion. Import `vAnimate` from `'vael-ui/motion'` (in a `<script setup vapor>` component, `vAnimateVapor as vAnimate` from the same place). The Nuxt module registers it for you.
+
+**Names.** The word after the colon, as in `v-animate:rows`, is a name. An element on its own needs none. Name elements when they belong together: elements under one name that come in at the same time are one group, so `stagger` plays them one after another; inside a component (a Dialog), its `motion.targets.rows` sets how the elements named `rows` move, and they come and go with it; `after: 'rows'` lets another element wait for them; pages under one name can wait for each other with `swap: 'wait'`.
 
 ```vue
 <script setup lang="ts">
@@ -372,18 +383,19 @@ Modifiers: an entrance (`.fade`, `.rise`, `.drop`, `.pop`, `.blur`, or a preset 
 | `exit` | where it leaves to; `false` leaves at once |
 | `spring`, or `duration` + `easing` | its timing |
 | `delay` | seconds, before its entrance and before a `layout` slide (it holds its old place meanwhile) |
-| `stagger` | siblings under the same `v-animate:name`, in page order: `true` (the 40ms token), `'end'`, `'center'`, `'edges'`, seconds, or `(index, count) => seconds` |
-| `states` | looks held while hovered (a mouse), pressed (`active`), focused, or in view (`inView`): `{ hover: { scale: 1.03 }, inView: { opacity: 1 } }` |
+| `stagger` | elements under the same `v-animate:name`, in page order: `true` (the 40 ms token), `'end'`, `'center'`, `'edges'`, seconds, or `(index, count) => seconds`. Across a grid, `'center'` and `'edges'` go by where each element sits: from the middle cell, or from the corners |
+| `states` | looks held while hovered (a mouse), pressed (`active`), focused, or in view (`inView`): `{ hover: { scale: 1.03 }, inView: { opacity: 1 } }`. Each takes `onAfterEnter` / `onAfterLeave` (`(el) => …`, as it turns on and off), and `inView` its own `viewport` |
 | `when: 'visible'` | waits until it scrolls into view, once |
 | `viewport` | when it counts as in view, for `when: 'visible'` and `states.inView`: `{ amount: 'some' \| 'all' \| 0–1, margin: '0px 0px -20% 0px', once: true }` |
-| `replay` | plays `initial` again whenever this value changes |
+| `replay` | plays `initial` again whenever this value changes, and `animate`'s keyframes from the start (a line that redraws on each new period) |
+| `swap: 'wait'` | replacing another element under the same name (a page, a wizard step): comes in once that one has left. Default `'sync'` crosses them |
 | `onStart` | `(el) => …` as its entrance starts moving, after any `delay`, `after` or scroll into view |
 | `onAfterEnter`, `onAfterLeave` | `(el) => …` once its entrance (or a `replay`) has played, and once its exit has played and it's gone |
 | `onAfterMove` | `(el) => …` once a `layout` or `layoutId` slide, or a change of `animate`, has played |
 | `enter`, `leave` | `(el, { signal, reducedMotion, index }) => …`: animate it yourself (GSAP, motion) instead of `initial` / `exit`; return the animation |
 | `appear: false` | no entrance on mount; `replay` and exit still play |
 | `appear: 'later'` | no entrance for what's there at the first render (inside a component's panel: when it opens); anything added after comes in |
-| `after`, `steps` | wait on another name's moment (`'title'`, `'title:60%'`); inside a component, or among elements that appear together |
+| `after`, `steps` | wait on another name's moment (`'title'`, `'title:60%'`): inside a component, among elements that appear together, or for elements already on the page (what they're playing now) |
 | `layout: true` | slides to its new place when the layout moves it, and eases to a new size; `layout: 'position'` only slides |
 | `layoutId` | two elements with the same id are one element moving between places |
 | `layout: 'position'` | with `layoutId`: travels without resizing, so text never stretches |
@@ -391,8 +403,8 @@ Modifiers: an entrance (`.fade`, `.rise`, `.drop`, `.pop`, `.blur`, or a preset 
 | `progress` | 0 to 1: holds `animate`'s keyframe arrays at that point, for scrubbing. A getter (`() => scroll.value`) is followed without re-rendering the component |
 | `.size` modifier | eases the element to its content's new height, and width when the content sizes it |
 | with `v-show` | hiding plays its exit on a copy where it was; showing plays its entrance again |
-| `v-animate:name` | joins the nearest component's `targets` under that name |
-| a string | an entrance or a preset by name, for a name that changes: `v-animate="loading ? 'fade' : 'rise'"`. List your presets in `MotionPresets` (`declare module 'vael-ui' { interface MotionPresets { wiggle: true } }`) and every name is checked. |
+| `v-animate:name` | a name (see **Names** above): groups, joins the nearest component's `targets`, and is what `after` and `swap: 'wait'` refer to |
+| a string | an entrance or a preset by name, for a name that changes: `v-animate="loading ? 'fade' : 'rise'"`. List your presets in `MotionPresets` (`import 'vael-ui/motion'`, then `declare module 'vael-ui/motion' { interface MotionPresets { wiggle: true } }`) and every name is checked. |
 
 ```vue
 <!-- Grows to fit its content -->
@@ -444,15 +456,39 @@ await run // finished; never for repeat: Infinity
 run.pause(); run.play(); run.reverse(); run.stop(); run.finish()
 run.time = 120; run.speed = 2
 
-// Selectors inside `scope` (`ref="scope"` in the template); runs stop on unmount.
-const { scope, animate } = useAnimate()
+// Selectors inside an element of the component; runs stop on unmount.
+const { animate } = useAnimate(useTemplateRef('row'))
 animate('.badge', { scale: [1, 1.4, 1] }, { spring: 'bouncy' })
 animate('.item', { opacity: [0, 1] }, { stagger: 0.05 })
 ```
 
 Options: timing (`spring`, or `duration` + `easing`), `delay`, `stagger`, and for keyframes `times`, `repeat`, `repeatType`, `repeatDelay`, `onRepeat`. No sequence DSL: `await` orders, `Promise.all` runs together, `delay` overlaps. Prefer `states`, `animate` on `v-animate` or `replay` for motion that follows state; `animate()` is for events.
 
-Dragging your own elements: VueUse's `useDraggable`; the components that drag (BottomSheet, SwipeToReveal, Sortable, Slider) have it built in.
+Dragging: the components that drag (BottomSheet, SwipeToReveal, Sortable, Slider) have it built in. To let people reorder your own list or move items between lists, use `v-draggable` with `useSortableGroup`. For an element dragged freely (VueUse's `useDraggable`), hold its offset in `animate` and set it back to 0 on release: `v-animate` springs it home.
+
+### Tween a number
+
+`useTween(source, options?)` is a number that eases to each new value of its source, from wherever it is: a total, a percentage, something you draw. It rides the app's spring unless you give a `spring`, or a `duration` and `easing`, and jumps with motion off or reduced motion. For a value that should keep its speed through a change (one following a drag), use `useSpringValue`.
+
+```ts
+import { useTween } from 'vael-ui/motion'
+
+const shown = useTween(() => cart.total, { duration: 600, easing: 'out' })
+```
+
+### Pages
+
+A route change is an element leaving and another coming in. Name the routed component; the old page leaves where it was as the new one comes in, or with `swap: 'wait'`, the new one comes in once the old one has gone.
+
+```vue
+<RouterView v-slot="{ Component, route }">
+  <component
+    :is="Component"
+    :key="route.path"
+    v-animate:page="{ initial: { opacity: 0, y: 12 }, exit: { opacity: 0, y: -12 }, swap: 'wait' }"
+  />
+</RouterView>
+```
 
 ### Scroll
 
@@ -540,6 +576,20 @@ They run once a motion has played, so the next step never guesses a duration. Wi
 ```vue
 <!-- Close once the success tick has drawn in -->
 <svg v-if="saved" v-animate="{ initial: { scale: 0.25, opacity: 0 }, duration: 500, onAfterEnter: close }" />
+```
+
+Chain them so each step plays on a still page: the tick's `onAfterEnter` closes the dialog, and the dialog's `onAfterLeave` applies the result (adds the row, shows the toast). Applied while the dialog fades, the page moves under it, the exit reads as a cut, and the new row's entrance is hidden.
+
+```ts
+const pending = shallowRef<Visit | null>(null)
+const DIALOG: DialogMotion = {
+  onAfterLeave: () => {
+    if (!pending.value) return
+    visits.value = [pending.value, ...visits.value]
+    toast.success('Visit saved')
+    pending.value = null
+  },
+}
 ```
 
 ```ts
@@ -654,7 +704,12 @@ export const appMotion: MotionStyle = {
 ```
 
 - **Roles** take plain values, not parts: `overlay` (with `morph`, `surface`, `exitOrder`, `swap`, `resize`), `list` (with `stagger`, `leaving`, `appear`), `reveal`, `press` (`active`, `hover`) and `content` (your targets inside components).
-- **Component keys** (`dialog`, `toaster`, `select`, `button`, `switch`, …) take that component's motion shape, by part, and beat the role.
+  - `overlay`: Dialog, Drawer, BottomSheet, Popover, Menu, Tooltip, and the Select, Combobox, DatePicker and TreeSelect panels
+  - `list`: Toaster, Timeline, FileUpload, SpeedDial, DataTable rows, CommandPalette rows, Breadcrumb, AvatarGroup
+  - `press`: Button; `reveal`: Message and your own `useMotion('reveal')`
+- **Component keys** (`dialog`, `toaster`, `select`, `button`, `switch`, …) take that component's motion shape, by part, and beat the role. `drawer` sits over `dialog`, so drawers can move apart from dialogs.
+- **Presets** are your own `v-animate` entrances by name: `presets: { wiggle: {…} }` makes `v-animate.wiggle` (or `v-animate="'wiggle'"`) work inside the provider; a built-in name (`rise`) replaces that entrance there. Type the names with `import 'vael-ui/motion'` and `declare module 'vael-ui/motion' { interface MotionPresets { wiggle: true } }`, so they autocomplete and a typo fails vue-tsc.
+- **Filters** name SVG filters the provider puts on the page: `filters: { goo: { blur: 8, contrast: [18, -7] } }`, used with `filter: url(#goo)`, such as on a Popover's `surface`.
 - **Resolution:** built-in < role < component key < a nearer `ConfigProvider` < the component's own `motion`. A key replaces the one below it whole; `false` at any level stops everything below.
 - **Data only.** A style can be JSON, except `engine` and hooks. `linked` is set on the component, never in a style.
 - **From outside your code** (a settings page, a database), validate with `parseMotionStyle`. It drops unknown or unsafe keys and lists them in `issues`; it never throws.
@@ -745,7 +800,7 @@ vael-ui skips these on purpose:
 
 ## Motion that feels right
 
-The built-in motion already follows these rules. Apply them when you add or change motion. Decide in order, and stop as soon as the answer is "don't animate".
+The built-in motion already follows these rules. Apply them when you add or change motion. Decide in order, and stop as soon as the answer is "don't animate". Pick every value by what the motion does (a menu opening, a toast leaving, a text swap), never because a number looks close to another.
 
 ### 1. Should it animate at all?
 
@@ -775,12 +830,29 @@ Every animation needs one of these. If you can't name one, don't add it.
 
 Don't move data people are reading or acting on just for style: keep a chart, a table or a balance still.
 
-### 3. Enter quickly, leave quicker
+### 3. Pick the tool
+
+Use the first that fits, so the motion follows the app's spring, `motion: false` and reduced motion with no extra code:
+
+| What moves | Use |
+| --- | --- |
+| A vael-ui component (a dialog, a menu, a list, a field) | its `motion` prop: values by part, a spring, `states` |
+| Your element coming, going, moving or holding a look | `v-animate`: `initial` / `exit`, `layout`, `layoutId`, `animate`, `states` |
+| Several of your elements in a sequence | names and `after` / `steps`, or `targets` on the component around them |
+| Motion an event starts (a wrong code, an item added) | `animate()` or `useAnimate()` |
+| A number on screen (a total, a percentage) | `useTween` (a duration) or `useSpringValue` (a spring that keeps its speed) |
+| A timeline with labels, a library you already use | `enter` / `leave` hooks returning a GSAP or motion animation |
+| Everything at once (the app's feel) | a `ConfigProvider` `motion` style |
+
+Don't add a CSS `transition` or `@keyframes` to something vael-ui animates, and don't wrap its panels in `<Transition>`.
+
+### 4. Enter quickly, leave quicker
 
 - Enter and exit both ease **out**: they start fast, so the response feels immediate. Never ease **in** on UI; it delays the moment people are watching.
 - Leaving is faster and quieter than entering: less distance, no bounce. vael-ui caps closes at about 200 ms, and an unset `exit` is already a quiet fade (a `v-animate` element leaves back the way it came, at half the distance). Inside a closing panel, content without its own `exit` simply leaves with the panel.
 - Leave the way it came. A toast that drops in from the top leaves through the top. A drawer slides back to its edge.
 - Don't delay a close or a hover-out. Dismissal must feel instant.
+- Hover in is quick and direct; the way back may settle more softly, on a spring. Hover states only ever follow a mouse: `states.hover` ignores touch, so a tap never sticks a hover look.
 
 ```ts
 const motion: DialogMotion = {
@@ -789,7 +861,7 @@ const motion: DialogMotion = {
 }
 ```
 
-### 4. Durations, easing and springs
+### 5. Durations, easing and springs
 
 Use vael-ui's tokens before inventing numbers. They autocomplete in `duration` and `easing`.
 
@@ -805,6 +877,21 @@ Use vael-ui's tokens before inventing numbers. They autocomplete in `duration` a
 | `--ui-ease-in-out` | `cubic-bezier(0.77, 0, 0.175, 1)` | moving something already on screen |
 | `--ui-ease-drawer` | `cubic-bezier(0.32, 0.72, 0, 1)` | drawers and sheets |
 | `--ui-ease-pop` | `cubic-bezier(0.34, 1.36, 0.64, 1)` | a small entrance with a little overshoot |
+
+Values by what moves. Start here, and go quieter for anything frequent:
+
+| What moves | Open | Close | Distance | Starting scale | Blur |
+| --- | --- | --- | --- | --- | --- |
+| Press feedback | 100–160 ms | at once | none | `0.97` (held while pressed) | none |
+| Tooltip | 125 ms, after a short intent delay | 100 ms | 4 px | `0.98` | none |
+| Menu, select, popover | 150–250 ms | 150 ms | 6–8 px | `0.97` | none |
+| Dialog | 200–250 ms | 150 ms | 12–16 px | `0.96` | none |
+| Drawer, sheet | 500 ms or a spring | 350 ms | its own size (`100%`) | none | none |
+| Toast | 400 ms | 200 ms | its own height | `0.95` behind the front one | none |
+| Text or icon swap | 150 ms, both ways | 150 ms | 4 px | none | 2 px |
+| Page, step or tab panel | 200–250 ms | 120–150 ms | 8–12 px | none | 0–3 px |
+| Error shake | 300–400 ms | — | 6–8 px a side | none | none |
+| A rare flourish (success, a badge) | up to 500 ms, `'pop'` | 200 ms | up to 30 px | `0.9` | up to 8 px |
 
 Rules:
 
@@ -824,13 +911,13 @@ Rules:
 
 Start at `damping: 1`. Add bounce only when the gesture carried momentum (a flick, a throw) or for a rare flourish. A menu that overshoots after a plain click feels wrong; a sheet that overshoots after a flick feels right. Never bounce a close.
 
-### 5. Grow from where it came from
+### 6. Grow from where it came from
 
 - Popover, Menu and Tooltip panels already grow from the exact center of their trigger, even after flipping to stay on screen. Don't override their `transform-origin`.
 - Dialogs stay centered: they aren't anchored to a trigger. Use `origin="trigger"` or `morph` only when the dialog really is the trigger expanding (a card into its detail view).
 - For your own floating elements, set the origin to the trigger, or use `morph: { from: () => el }`.
 
-### 6. Make it interruptible
+### 7. Make it interruptible
 
 People change their minds mid-animation. Every vael-ui animation continues from where it is on screen when interrupted, so:
 
@@ -843,7 +930,7 @@ People change their minds mid-animation. Every vael-ui animation continues from 
 leave: ({ panel }) => gsap.to(panel, { opacity: 0, y: 8, duration: 0.15 })
 ```
 
-### 7. Never appear from nothing
+### 8. Never appear from nothing
 
 Never animate from `scale: 0`. Start at `0.9` or higher, with opacity. Small surfaces barely scale (tooltips `0.98`), larger ones a little more (menus `0.97`, dialogs `0.96`). Below about `0.9` it reads as a zoom.
 
@@ -856,11 +943,13 @@ initial: { panel: { opacity: 0, scale: '0.96' } }
 
 The same goes for distance: 4 px for a text swap, 6 to 8 px for list items and small panels, 12 to 16 px for a dialog. Anything over about 40 px, other than a drawer or sheet, feels slow.
 
-### 8. Stagger lightly
+### 9. Stagger and delay lightly
 
-30 to 80 ms between items (`stagger: 0.04`). Keep the total under about 300 ms: for long lists, shrink the stagger or animate only the first rows. Past 24 items arriving together, vael-ui shows the rest at once unless you time them.
+30 to 80 ms between items (`stagger: 0.04`). Keep the total under about 300 ms: for long lists, shrink the stagger or animate only the first rows. Past 24 items arriving together, vael-ui shows the rest at once unless you time them. In a grid, `stagger: 'center'` spreads from the middle cell, which reads better than page order.
 
-### 9. Respect reduced motion
+A delay is right for three things only: a stagger, filtering an accidental trigger (a tooltip waits so a passing cursor doesn't open it), and sequencing on purpose (`after`). If something feels late, shorten its duration instead of adding a delay, and never delay a close.
+
+### 10. Respect reduced motion
 
 vael-ui handles it: under `prefers-reduced-motion`, built-in motion and your values keep their fades and drop movement and scale, and your hooks don't run. Don't fight it:
 
@@ -878,15 +967,15 @@ const motion: DialogMotion = {
 }
 ```
 
-### 10. Animate transform and opacity
+### 11. Animate transform and opacity
 
 - Move things with `x`, `y`, `scale`, `rotate` and `opacity`. These run on the compositor and stay smooth while the page is busy.
 - Don't put `width`, `height`, `top`, `left`, `margin` or `padding` in values or states. For size, use `v-animate.size`, a component's own `resize`, or `layout`.
-- Keep `blur` small (2 to 4 px) and short. It's expensive, especially in Safari.
+- Keep `blur` small (2 to 4 px) and short. It's expensive, especially in Safari. A little blur is right when two states cross (a text swap, a page sliding over another): it blends them into one change instead of two objects overlapping. Never on a plain fade.
 - Don't add `will-change` yourself; vael-ui handles layers while it animates.
 - Don't add a CSS `transition` to a part that `motion` animates; you'll get a warning and a fight.
 
-### 11. Slow where people decide, fast where the system answers
+### 12. Slow where people decide, fast where the system answers
 
 A deliberate action can take time; the response never should. Button's `hold` fills over 1200 ms and snaps back at once on release. Use it instead of building your own hold-to-confirm.
 
@@ -894,11 +983,18 @@ A deliberate action can take time; the response never should. Button's `hold` fi
 <Button variant="danger" :hold="1500" @click="remove">Hold to delete</Button>
 ```
 
-### 12. Match the mood, then check it
+### 13. Match the mood, then check it
 
 A dashboard or a form should be crisp: `damping: 1`, short distances. A playful product can bounce a little more. Set it once in a `ConfigProvider` style so every component agrees, rather than tuning each instance.
 
-Check feel at 2 to 5 times the duration or frame by frame, test gestures on a real phone, and look again the next day.
+Check feel at 2 to 5 times the duration (DevTools' Animations panel) or frame by frame, test gestures on a real phone, and look again the next day. What to look for:
+
+- Two states visibly overlapping in a crossfade (shorten it, or add 2 px of blur)
+- A start or stop that jerks (wrong easing, or a spring with too little damping)
+- Something growing from the wrong point (its origin)
+- Properties out of step (an opacity that finishes long before the movement)
+- A gap where nothing shows between one view leaving and the next arriving (the exit is too slow)
+- Anything moving that people were reading
 
 ## Common mistakes
 
@@ -919,7 +1015,7 @@ Check feel at 2 to 5 times the duration or frame by frame, test gestures on a re
 | Bounce on a close, or on a plain click | `damping: 1` there; bounce only after momentum |
 | Stagger on a command palette or anything frequent | Keep the built-in, quiet look |
 | A list stagger that takes a second to finish | 0.03 to 0.05 s, total under about 300 ms |
-| A shake that plays only once | Turn `invalid` off, then on again on the next frame |
+| A shake that plays only once while the field stays invalid | Give the state a `replay` that changes on each attempt: `invalid: { root: { x: […] }, replay: attempts }` |
 | A `MotionStyle` without `version: 1` | Add it; `{ spring }` alone is the retime-only short form |
 | `linked` in a ConfigProvider style | Set it on the Dialog, Drawer or BottomSheet |
 | `reducedMotion: 'run'` with full movement | Check `context.reducedMotion` and drop movement |

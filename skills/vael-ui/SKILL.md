@@ -26,7 +26,7 @@ Check a component's reference file before writing code. It lists the exact props
 npm install vael-ui vue
 ```
 
-Requires Vue `^3.5.0`. The Vapor build needs Vue `^3.6.0` and `createVaporApp`. Vapor is pre-1.0 in Vue, so **pin an exact prerelease** (`npm install vue@3.6.0-rc.12 --save-exact`, the version `vael-ui@0.5.0` is compiled against). A floating `rc` tag causes compiler/runtime mismatches, often inside `<Transition>`; a range like `^3.5.0` can resolve to 3.5, which has no Vapor.
+Requires Vue `^3.5.0`. The Vapor build needs Vue `^3.6.0` and `createVaporApp`. Vapor is pre-1.0 in Vue, so **pin an exact prerelease** (`npm install vue@3.6.0-rc.13 --save-exact`, the version `vael-ui@0.5.0` is compiled against). A floating `rc` tag causes compiler/runtime mismatches, often inside `<Transition>`; a range like `^3.5.0` can resolve to 3.5, which has no Vapor.
 
 ```ts
 // main.ts (Vapor)
@@ -49,7 +49,7 @@ import { Button, Toaster, toast } from 'vael-ui/vapor'
 ```
 
 - **Auto-import** with `unplugin-vue-components` and `VaelUiResolver` from `vael-ui/resolver` instead of importing every component. See [Auto import](./references/guides/auto-import.md).
-- **Whole app as Vapor:** `vue({ features: { vapor: true } })` (`@vitejs/plugin-vue` 6.0.8+). `optionsAPI: false` is safe for vael-ui.
+- **Whole app as Vapor:** `vue({ features: { vapor: true } })` (`@vitejs/plugin-vue` 6.0.8+). `optionsAPI: false` is safe for vael-ui. vue-tsc only types an SFC as Vapor when it has the `vapor` attribute, so without it cast the root: `createVaporApp(App as unknown as VaporComponent)`. With the `vapor` export condition, add `"customConditions": ["vapor"]` to `tsconfig` so `vael-ui` types resolve the same way.
 - **Fonts:** components use `font: inherit`, so set a `font-family` on `body`.
 - **Mount the hosts once:** `<Toaster />`, and `<TooltipHost />`, `<DialogHost />`, `<PopoverHost />` if you use `v-tooltip`, `openDialog()` or `openPopover()`. With a `ConfigProvider`, mount them inside it: what a host shows (`toast()`, `openDialog()`, tooltips) takes the provider's theme, motion, messages and size only from a provider above the host.
 - **Directives** aren't auto-imported. Import `vTooltip`, `vAnimate`, `vScrollMask` or `vHoverIndicator` in `<script setup>`, or register them with `app.directive('tooltip', vTooltip)`.
@@ -101,6 +101,10 @@ export default defineNuxtPlugin((nuxtApp) => {
 - **Check the [component index](./references/docs/_INDEX.md) before building by hand.** Gauges and donuts (`Progress type="circle"`), stacked bars (`Progress` segments), spinners (`Loader`), inline rename (`Editable`), color pickers, rolling numbers (`AnimatedNumber`), text swaps (`AnimatedText`), boards (`Sortable` + `useSortableGroup`), tours, OTP fields, swipe actions, pull-to-refresh and hold-to-confirm (`Button hold`) all ship.
 - **Shrinkable flex layouts:** give a component `min-inline-size: 0` inside a resizable or narrow flex container, or it overflows instead of shrinking. Give `Toolbar` `flex: 1` so its overflow menu can measure the room it has.
 - **Don't import `vael-ui/style.css` by default.** Each component loads its own CSS.
+- **vue-tsc doesn't narrow `v-if` inside a directive's value.** `` v-if="selected" v-animate="{ layoutId: `site-${selected!.id}` }" `` needs the `!`; at runtime the value is never read again once the `v-if` drops it.
+- **Combobox and Select options hold no buttons.** An option's content is flattened for screen readers and focus stays in the field, so a delete button inside `#item` works only with a mouse. Put removal outside the list.
+- **Widen a picker's panel with `ui.panel`:** `<DatePicker :ui="{ panel: { style: { inlineSize: '20rem' } } }" />`. The calendar fills it and the days grow; on a phone it still fits the screen.
+- **Pull to refresh on a scrolling page:** wrap the content in `PullToRefresh` with `:scroll-el="document.documentElement"` and the same handler as the visible refresh button, which keeps working for keyboard and desktop. Mouse drags pull too, so mount it only where touch is the input (a phone layout).
 - **`resolve.conditions: ['vapor']` alone breaks Vite.** Spread `defaultClientConditions` / `defaultServerConditions` (see [Auto import](./references/guides/auto-import.md#one-shared-import-no-vapor-subpath)).
 
 ## Motion
@@ -130,6 +134,11 @@ The full guide is [references/guides/motion.md](./references/guides/motion.md): 
 <!-- Hover and press on any element, as on a component -->
 <div v-animate="{ states: { hover: { scale: 1.03 }, active: { scale: 0.97 } } }">…</div>
 
+<!-- Pages: the old one leaves, then the new one comes in -->
+<RouterView v-slot="{ Component, route }">
+  <component :is="Component" :key="route.path" v-animate:page="{ initial: { opacity: 0, y: 8 }, swap: 'wait' }" />
+</RouterView>
+
 <!-- The whole app on one spring -->
 <ConfigProvider :motion="{ spring: 'snappy' }"><App /></ConfigProvider>
 ```
@@ -142,18 +151,26 @@ const motion: DialogMotion = {
 }
 ```
 
-**Imports.** Components and their motion types (`DialogMotion`, `SelectPart`) come from `vael-ui`. Everything for your own elements comes from `vael-ui/motion`, in both builds: `vAnimate`, `animate`, `useAnimate`, `useMotion`, `useScrollProgress`, `settled`, `springEasing`, `useSpringValue` and the general types (`MotionValues`, `MotionTiming`, `MotionStyle`). In a `<script setup vapor>` component use `import { vAnimateVapor as vAnimate } from 'vael-ui/motion'` (the VDOM `vAnimate` is skipped there); with the `vapor` export condition, plain `vAnimate` is already the Vapor form.
+**Imports.** Components and their motion types (`DialogMotion`, `SelectPart`) come from `vael-ui`. Everything for your own elements comes from `vael-ui/motion`, in both builds: `vAnimate`, `animate`, `useAnimate`, `useMotion`, `useScrollProgress`, `useTween`, `settled`, `springEasing`, `useSpringValue` and the general types (`MotionValues`, `MotionTiming`, `MotionStyle`). In a `<script setup vapor>` component use `import { vAnimateVapor as vAnimate } from 'vael-ui/motion'` (the VDOM `vAnimate` is skipped there); with the `vapor` export condition, plain `vAnimate` is already the Vapor form.
+
+**Names.** `v-animate:rows` names an element. A lone element needs no name. Elements under one name that come in together stagger as one group, inside a component they're its `targets.rows`, `after: 'rows'` waits for them, and pages under one name can `swap: 'wait'`.
 
 Rules to apply every time:
 
-- **Ask whether it should animate.** Anything people do hundreds of times a day, or from the keyboard, stays instant. Keep the built-in look on command palettes, menus and tabs.
+- **Decide before you animate, in order:** how often people see it (hundreds of times a day or from the keyboard: no motion, and keep the built-in look on command palettes, menus and tabs), what it's for (feedback, where it came from, what changed, smoothing a jump; delight only for rare moments), then the tool (the component's `motion` prop, `v-animate`, `animate()`, `useTween`, hooks). Stop at "don't animate".
+- **Pick values by what moves, not the nearest number.** A tooltip opens in about 125 ms from `scale: '0.98'`, a menu in 150 to 250 ms from `0.97` and 6 to 8 px, a dialog in 200 to 250 ms from `0.96` and 12 to 16 px; each closes faster. The full table: [Values by what moves](./references/guides/motion.md#5-durations-easing-and-springs).
 - **Ease out both ways, leave faster than you enter**, and keep UI motion under 300 ms. Use the tokens by name: `easing: 'out'`, `duration: 'enter'`.
 - **Springs for movement and anything people can grab**, starting at `'snappy'` or `'smooth'` (no overshoot). Bounce only after a flick or for a rare flourish; never on a close.
 - **Never scale from 0.** Start at `scale: '0.95'` or higher with `opacity: 0`, and move 4 to 16 px.
+- **Delay only to stagger, to filter an accidental trigger, or to sequence (`after`).** Something that feels late needs a shorter duration, not a delay, and a close is never delayed. Keep a stagger's total under about 300 ms.
+- **Number on screen:** `useTween(() => total)` eases it to each new value; don't animate a number with a `setInterval`.
+- **`layout` follows an element's place in its parent.** When something opens above a list (a detail panel), the list's box is what moves: give it `v-animate="{ layout: 'position' }"` too, or it snaps down while its items slide.
 - **Animate `x`, `y`, `scale`, `rotate` and `opacity`.** No `width`, `height` or `top` in values; use `v-animate.size`, `resize` or `layout`.
 - **Let reduced motion work.** vael-ui keeps fades and drops movement on its own, and skips hooks unless `reducedMotion: 'run'`.
 - **In tests,** `await settled()` or wrap in `<ConfigProvider :motion="false">`.
 - **Motion an event starts** (a wrong code shakes the field, a badge bumps on add): `animate(el, values, options)`, or `useAnimate()` inside a component; it follows the app's spring and reduced motion, and `await`s. Motion that follows state stays declarative: `states`, `v-animate`'s `animate` or `replay`.
+- **Apply an overlay's result after it has left,** in its `onAfterLeave`: add the row, toast, navigate. Changed while the dialog fades, the page moves under it, the quick exit reads as a cut, and the new row's entrance plays hidden behind it.
+- **Tables:** with your own row `motion`, a page change (no row kept) drops the old rows at once and brings the new ones in with your `initial`; `exit` plays when rows are removed or filtered out. Without it, a page change shows at once.
 - **Acting once something has played**: put the callback on what animates. `onAfterEnter` / `onAfterLeave` go on an overlay's or list's `motion` (a list's run per item with `{ index }`), on a state (`states.invalid.onAfterEnter: ({ root }) => reset(root)`, parts by name, a repeated part as an array), and on your elements (`v-animate="{ initial: …, onAfterEnter: close }"`, or `targets.name`). `onAfterSwap` follows a swap, `onAfterMove` a `layout` slide or `animate` change, `onRepeat` sits beside `repeat`. All run at once when nothing plays, as with motion off. Never a `setTimeout` that repeats a duration; `settled()` is for tests. Table: [references/guides/motion.md](references/guides/motion.md#callbacks).
 
 Units: `duration` is ms; `delay`, `stagger` and `spring.response` are seconds. A spring and a duration never go together. Springs by name: `'snappy'`, `'smooth'`, `'bouncy'`, `'gentle'`. Entrances by name: `fade`, `rise`, `drop`, `pop`, `blur`. Every name is a typed union, so a typo fails vue-tsc.
