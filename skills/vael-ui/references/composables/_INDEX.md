@@ -19,8 +19,11 @@
 - [springEasing](./springEasing.md): A spring as a CSS `linear()` curve and settle time, for `element.animate()` or a transition; the curve behind `ConfigProvider`'s `:motion="{ spring }"`.
 - [useHaptic](./useHaptic.md): Haptic feedback with `selection`, `impact`, `notification`, `vibrate` and `intensity`; `ConfigProvider` `haptics` sets it app-wide and turns on vael-ui's own.
 - [useSpringValue](./useSpringValue.md): vael-ui's spring engine: the physics behind Sortable, Tree and DataTable reordering, and behind every sliding indicator set to spring mode. Also exports `createSpring` and `stepSpring`.
+- [useAnimate](./useAnimate.md): `animate()` and `useAnimate()`: motion an event starts, on one element or as a sequence of steps with typed `at` names; every option, the `at` forms and the controls.
 - [useTween](./useTween.md): A number that eases to each new value of its source, from wherever it is, on the app's spring or a duration you give: totals, percentages, values you draw.
 - [useScrollProgress](./useScrollProgress.md): Scroll progress as a ref from 0 to 1: the page's, from top to bottom, or an element's way through the screen (or a scrolling container). Feed it to `v-animate`'s `progress` as a getter.
+- [useScrollLength](./useScrollLength.md): How far the page or a container can scroll, in px, kept current; with `useScrollProgress`, the distance scrolled.
+- [settled](./settled.md): Resolves once nothing vael-ui started is still animating, for tests.
 - [useTabIndicator](./useTabIndicator.md): The sliding selection indicator behind Tabs, SelectButton, Pagination and MenuList, and behind the active option in Select, Combobox and CommandPalette.
 - [useHoverIndicator](./useHoverIndicator.md): The sliding hover highlight behind every vael-ui list: Select, Menu, Tree, DataTable, Tabs, Pagination, Calendar and the rest.
 

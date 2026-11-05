@@ -2,6 +2,19 @@
 
 What changed in each release, newest first. Read this when upgrading an app, or when code written for an older version behaves differently. For the current API, the component and composable references are the source of truth.
 
+## 0.5.1
+
+Nothing breaks. New:
+
+- **Sequences from code.** `animate([[target, values, options], …])` plays steps one after another as one sequence, steered by one set of controls. `at` places a step (`'+0.2'`, `'-0.15'`, `'50%'`, seconds from the start, `'name'`, `'name:60%'`), and its names are typed. Types: `SequenceStep`, `SequenceStepOptions`, `SequenceAt`. See [In order](./motion.md#in-order).
+- **`useScrollLength(container?, { axis })`**: how far the page or a container can scroll, in px.
+- **`scaleZ`** beside `scaleX` and `scaleY`, and **`stagger: 'random'`**, a new shuffle each time the group plays.
+
+Changed:
+
+- **`pathLength: 0` hides the stroke.** A round or square line cap no longer leaves a dot before a stroke draws in or after it draws out. Drop any `opacity` you added to hide it.
+- **`@focus` and `@blur` fire on the form controls** (`Checkbox`, `Switch`, `Radio`, `RadioGroup`, `Select`, `TreeSelect`, `OtpInput`, `Slider`, `SelectButton`) when focus enters or leaves the whole control. Inside a `Field`, the Field's `id` wins over one passed to the control, and a passed `aria-describedby` is merged with the Field's, so a form library that spreads its own `id`, `aria-*` and `onBlur` works.
+
 ## 0.5.0
 
 ### Upgrading from 0.4

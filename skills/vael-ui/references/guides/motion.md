@@ -9,7 +9,7 @@ Each component's reference file ends with a **Motion** section: its motion type,
 ## Contents
 
 - [Units](#units)
-- [The API by task](#the-api-by-task): [turn it off](#turn-it-off), [retime with a spring](#retime-with-a-spring), [change a part's values](#change-a-parts-values), [states](#states), [entrances on any component](#entrances-on-any-component), [lists](#lists), [overlays](#overlays), [your elements inside an overlay](#your-elements-inside-an-overlay), [`v-animate`](#v-animate), [from code](#from-code), [tween a number](#tween-a-number), [pages](#pages), [scroll](#scroll), [hooks for GSAP or motion](#hooks-for-gsap-or-motion), [callbacks](#callbacks), [indicators](#indicators), [your own engine](#your-own-engine), [app-wide styles](#app-wide-styles), [`useMotion`](#usemotion-for-your-own-components), [testing](#testing), [server rendering](#server-rendering), [what never animates](#what-never-animates), [debugging](#debugging)
+- [The API by task](#the-api-by-task): [turn it off](#turn-it-off), [retime with a spring](#retime-with-a-spring), [change a part's values](#change-a-parts-values), [states](#states), [entrances on any component](#entrances-on-any-component), [lists](#lists), [overlays](#overlays), [your elements inside an overlay](#your-elements-inside-an-overlay), [`v-animate`](#v-animate), [from code](#from-code), [in order](#in-order), [tween a number](#tween-a-number), [pages](#pages), [scroll](#scroll), [hooks for GSAP or motion](#hooks-for-gsap-or-motion), [callbacks](#callbacks), [indicators](#indicators), [your own engine](#your-own-engine), [app-wide styles](#app-wide-styles), [`useMotion`](#usemotion-for-your-own-components), [testing](#testing), [server rendering](#server-rendering), [what never animates](#what-never-animates), [debugging](#debugging)
 - [Motion that feels right](#motion-that-feels-right)
 - [Common mistakes](#common-mistakes)
 
@@ -197,7 +197,7 @@ Toaster (`toast`), Timeline (`item` and its `marker`, `connector`, `previousConn
 | Key | What it does |
 | --- | --- |
 | `initial` / `exit` | where items come from and go to |
-| `stagger` | items arriving together one after another: seconds, `true` (the 40ms token), or `'end'`, `'center'`, `'edges'` |
+| `stagger` | items arriving together one after another: seconds, `true` (the 40ms token), or `'end'`, `'center'`, `'edges'`, `'random'` |
 | `leaving: 'pop'` (default) | lifts a leaving item out of the layout, so the rest close the gap at once |
 | `leaving: 'hold'` | keeps the gap until the item is gone |
 | `appear: true` | also animates the items already there when the list mounts (never on hydration) |
@@ -383,7 +383,7 @@ Modifiers: an entrance (`.fade`, `.rise`, `.drop`, `.pop`, `.blur`, or a preset 
 | `exit` | where it leaves to; `false` leaves at once |
 | `spring`, or `duration` + `easing` | its timing |
 | `delay` | seconds, before its entrance and before a `layout` slide (it holds its old place meanwhile) |
-| `stagger` | elements under the same `v-animate:name`, in page order: `true` (the 40 ms token), `'end'`, `'center'`, `'edges'`, seconds, or `(index, count) => seconds`. Across a grid, `'center'` and `'edges'` go by where each element sits: from the middle cell, or from the corners |
+| `stagger` | elements under the same `v-animate:name`, in page order: `true` (the 40 ms token), `'end'`, `'center'`, `'edges'`, `'random'` (a new shuffle each time), seconds, or `(index, count) => seconds`. Across a grid, `'center'` and `'edges'` go by where each element sits: from the middle cell, or from the corners |
 | `states` | looks held while hovered (a mouse), pressed (`active`), focused, or in view (`inView`): `{ hover: { scale: 1.03 }, inView: { opacity: 1 } }`. Each takes `onAfterEnter` / `onAfterLeave` (`(el) => …`, as it turns on and off), and `inView` its own `viewport` |
 | `when: 'visible'` | waits until it scrolls into view, once |
 | `viewport` | when it counts as in view, for `when: 'visible'` and `states.inView`: `{ amount: 'some' \| 'all' \| 0–1, margin: '0px 0px -20% 0px', once: true }` |
@@ -429,7 +429,7 @@ Modifiers: an entrance (`.fade`, `.rise`, `.drop`, `.pop`, `.blur`, or a preset 
 <div v-animate="{ animate: { opacity: [0, 1], scale: ['0.9', '1'] }, progress: swipe }" />
 ```
 
-Values beyond CSS: `rotateX`, `rotateY`, `skewX`, `skewY` and `perspective` (a card flip: `animate: { rotateY: flipped ? 180 : 0, perspective: 800 }`), and `pathLength` (0 to 1), `pathOffset`, `pathSpacing` to draw an SVG stroke (`initial: { pathLength: 0 }` draws a check in; the shape gets `pathLength="1"`).
+Values beyond CSS: `rotateX`, `rotateY`, `scaleX`, `scaleY`, `scaleZ` (depth, under `perspective`), `skewX`, `skewY` and `perspective` (a card flip: `animate: { rotateY: flipped ? 180 : 0, perspective: 800 }`), and `pathLength` (0 to 1), `pathOffset`, `pathSpacing` to draw an SVG stroke (`initial: { pathLength: 0 }` draws a check in; the shape gets `pathLength="1"`). At `pathLength: 0` the stroke is hidden, so a round or square line cap leaves no dot; don't add `opacity` for that.
 
 Keyframe arrays: `null` first starts from where the value is now (`scale: [null, 1.2, 1]`). Beside `repeat`, `repeatType: 'loop' | 'reverse' | 'mirror'` (`mirror` comes back eased as it went) and `repeatDelay` (seconds held between runs).
 
@@ -462,7 +462,35 @@ animate('.badge', { scale: [1, 1.4, 1] }, { spring: 'bouncy' })
 animate('.item', { opacity: [0, 1] }, { stagger: 0.05 })
 ```
 
-Options: timing (`spring`, or `duration` + `easing`), `delay`, `stagger`, and for keyframes `times`, `repeat`, `repeatType`, `repeatDelay`, `onRepeat`. No sequence DSL: `await` orders, `Promise.all` runs together, `delay` overlaps. Prefer `states`, `animate` on `v-animate` or `replay` for motion that follows state; `animate()` is for events.
+Options: timing (`spring`, or `duration` + `easing`), `delay`, `stagger`, and for keyframes `times`, `repeat`, `repeatType`, `repeatDelay`, `onRepeat`. Prefer `states`, `animate` on `v-animate` or `replay` for motion that follows state; `animate()` is for events. Full reference: [useAnimate](../composables/useAnimate.md).
+
+### In order
+
+Two ways, by what starts it.
+
+**Elements that come in together** (a page, a `v-if`, a card): name them and give each an `after`. Template only.
+
+```vue
+<h2 v-animate:title="{ initial: { opacity: 0, y: 10 } }">Plan the week</h2>
+<p v-animate:lede="{ initial: { opacity: 0, y: 6 }, after: 'title:50%' }">Four tasks</p>
+<li v-for="t in tasks" :key="t.id" v-animate:cards="{ initial: { opacity: 0, scale: 0.96 }, stagger: true, after: 'lede' }">…</li>
+```
+
+Inside a dialog, drawer or popover the same names go in its `targets`. One element through several stops: `steps`.
+
+**Motion an event starts** (a payment sent, a step completed): give `animate()` a list of steps, `[target, values, options]`. Each starts when the one before ends unless its `at` says otherwise. The controls (`await`, `pause()`, `time`, `reverse()`, `speed`) steer the whole sequence; two steps on one element carry on from each other.
+
+```ts
+const { animate } = useAnimate(useTemplateRef('stage'))
+await animate([
+  ['.card', { opacity: [0, 1], scale: [0.92, 1] }, { name: 'card' }],
+  ['.check path', { pathLength: [0, 1] }, { at: 'card:60%', duration: 300 }],
+  ['.title', { opacity: [0, 1], y: [6, 0] }, { at: '-0.15' }],
+  ['.detail', { opacity: [0, 1] }, { at: '50%' }],
+])
+```
+
+`at`: `'+0.2'` / `'-0.15'` seconds after or before the step before ends, `'50%'` through it, a number of seconds from the start, `'card'` with the step named `card`, `'card:60%'` 60% through it. The names are typed: TypeScript offers the ones your steps declare and fails on any other. Name a step above the one that starts from it; a later or unknown name warns in development and starts after the step before. `delay` in the second argument holds the whole sequence. Types: `SequenceStep`, `SequenceStepOptions`, `SequenceAt`.
 
 Dragging: the components that drag (BottomSheet, SwipeToReveal, Sortable, Slider) have it built in. To let people reorder your own list or move items between lists, use `v-draggable` with `useSortableGroup`. For an element dragged freely (VueUse's `useDraggable`), hold its offset in `animate` and set it back to 0 on release: `v-animate` springs it home.
 
@@ -509,6 +537,8 @@ const progress = useScrollProgress(panel)
 ```
 
 For "animate while visible", use `states.inView` with a `viewport`; for "play once on first sight", `when: 'visible'`.
+
+`useScrollLength(container?, { axis })` is how far the page or a container can scroll, in px, kept current as content loads and the window resizes: `progress.value * length.value` is the distance scrolled.
 
 ### Hooks for GSAP or motion
 
@@ -839,8 +869,9 @@ Use the first that fits, so the motion follows the app's spring, `motion: false`
 | --- | --- |
 | A vael-ui component (a dialog, a menu, a list, a field) | its `motion` prop: values by part, a spring, `states` |
 | Your element coming, going, moving or holding a look | `v-animate`: `initial` / `exit`, `layout`, `layoutId`, `animate`, `states` |
-| Several of your elements in a sequence | names and `after` / `steps`, or `targets` on the component around them |
+| Several of your elements in a sequence as they come in | names and `after` / `steps`, or `targets` on the component around them |
 | Motion an event starts (a wrong code, an item added) | `animate()` or `useAnimate()` |
+| Several steps an event starts (a payment sent) | `animate([...steps])` with `at` |
 | A number on screen (a total, a percentage) | `useTween` (a duration) or `useSpringValue` (a spring that keeps its speed) |
 | A timeline with labels, a library you already use | `enter` / `leave` hooks returning a GSAP or motion animation |
 | Everything at once (the app's feel) | a `ConfigProvider` `motion` style |
