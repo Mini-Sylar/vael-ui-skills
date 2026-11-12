@@ -6,6 +6,8 @@ A panel that slides in from a viewport edge, for navigation or side content.
 import { Drawer } from 'vael-ui' // or 'vael-ui/vapor'
 ```
 
+The backdrop's colour is `--ui-overlay`; a `background` on `ui.overlay` doesn't change it.
+
 ## Props
 
 Name | Type | Default | Description

@@ -395,7 +395,8 @@ Modifiers: an entrance (`.fade`, `.rise`, `.drop`, `.pop`, `.blur`, or a preset 
 | `enter`, `leave` | `(el, { signal, reducedMotion, index }) => …`: animate it yourself (GSAP, motion) instead of `initial` / `exit`; return the animation |
 | `appear: false` | no entrance on mount; `replay` and exit still play |
 | `appear: 'later'` | no entrance for what's there at the first render (inside a component's panel: when it opens); anything added after comes in |
-| `after`, `steps` | wait on another name's moment (`'title'`, `'title:60%'`): inside a component, among elements that appear together, or for elements already on the page (what they're playing now) |
+| `appear: 'once'` | one entrance per name per page load: the first time the name has elements to show (rows arriving once their data has loaded included) they come in together, with their stagger; later mounts under the name (a sidebar group reopened, a route that remounts it) show at once. Needs a name (`v-animate:rows`) |
+| `after`, `steps` | wait on another name's moment (`'title'`, `'title:60%'`): inside a component, among elements that appear together, for elements already on the page (what they're playing now), or for a `layoutId` slide under that name (`after: 'agent:60%'` starts 60% of the way through the travel) |
 | `layout: true` | slides to its new place when the layout moves it, and eases to a new size; `layout: 'position'` only slides |
 | `layoutId` | two elements with the same id are one element moving between places |
 | `layout: 'position'` | with `layoutId`: travels without resizing, so text never stretches |

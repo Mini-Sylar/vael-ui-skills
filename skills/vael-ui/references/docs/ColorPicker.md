@@ -3,7 +3,8 @@
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-`presets` | `string[] \| undefined` |  | Colors offered as swatches in the panel, as `#rrggbb`.
+`presets` | `string[] \| undefined` |  | Colors offered as swatches, as `#rrggbb`.
+`presetsPlacement` | `"inline" \| "panel" \| undefined` | `'panel'` | Where the presets show: in the panel, or inline beside the swatch, which then opens the panel for any other color.
 `showEyeDropper` | `boolean \| undefined` | `true` | Shows the eyedropper button in browsers that have one.
 `label` | `string \| undefined` | `'Color'` | Accessible label for the swatch and the panel.
 `name` | `string \| undefined` |  | Native `name`, so a plain `<form>` submits the hex.

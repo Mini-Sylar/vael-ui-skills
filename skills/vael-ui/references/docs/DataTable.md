@@ -96,6 +96,8 @@ Name | Type | Default | Description
 `label` | `string \| undefined` |  | Header text. Falls back to `field`.
 `sortable` | `boolean \| undefined` |  | Makes the header a button that cycles ascending, descending and unsorted.
 `width` | `string \| number \| undefined` |  | Column width as a CSS length. Numbers are pixels.
+`minWidth` | `string \| number \| undefined` |  | Least width as a CSS length, for a column that shares the rest of the room. Numbers are pixels.
+`fill` | `boolean \| undefined` | `false` | Takes the room the other columns leave, and no more: a long value (an email that doesn't wrap) ends in an ellipsis instead of widening the table past its container.
 `resizable` | `boolean \| undefined` |  | Unset, inherits DataTable's `resizableColumns`; `true` or `false` overrides it for this column.
 `reorderable` | `boolean \| undefined` |  | Unset, inherits DataTable's `reorderableColumns`; `false` pins this column in place.
 `data` | `T[] \| undefined` |  | Type-inference anchor only. Bind it (`<Column :data="items">`) so other props infer against `T`.

@@ -47,6 +47,7 @@ Name | Type | Description
 Name | Type | Description
 --- | --- | ---
 `el` | `HTMLElement \| null` | Root element.
+`focus` | `() => void` | Focuses the field. Called while it's disabled, it focuses as soon as it's enabled again.
 `inputEl` | `HTMLInputElement \| null` | Invisible native `<input>` that receives typing and paste.
 `cellEls` | `HTMLElement[] \| null` | Cell elements, one per character slot.
 `ringEl` | `HTMLElement \| null` | The ring and caret that glide to the active cell. `null` with a custom `#cell` slot.

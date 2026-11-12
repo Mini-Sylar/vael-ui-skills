@@ -38,6 +38,7 @@ Name | Type | Description
 `default` | `any` | Main action button content.
 `header` | `any` | Forwarded to the dropdown Menu's own `#header`.
 `item` | `{ item: T; }` | Custom content for one dropdown row, keeping its behavior; forwarded to Menu's own `#item`.
+`label` | `{ item: T; }` | Override a row's text only; its icon and shortcut stay. Forwarded to Menu's own `#label`.
 `footer` | `any` | Forwarded to the dropdown Menu's own `#footer`.
 
 ## Events

@@ -15,6 +15,7 @@ Name | Type | Default | Description
 `filter` | `((item: T, query: string) => boolean) \| undefined` |  | Custom filter function; replaces the default label/keywords match. Omit to use the built-in filter.
 `shortcut` | `string \| undefined` |  | Global shortcut that toggles `open`, such as `'mod+k'` (`mod` is Cmd on Mac, Ctrl elsewhere). Nothing listens until you set it.
 `closeOnSelect` | `boolean \| undefined` | `true` | Closes the palette after an item is selected.
+`loading` | `boolean \| undefined` | `false` | Results are on their way (a server search): shows a spinner instead of "No results" while the list is empty.
 `size` | `'sm' \| 'md' \| 'lg' \| undefined` | `'lg'` | Panel width, as in Dialog.
 `position` | `'top' \| 'right' \| 'bottom' \| 'left' \| 'center' \| undefined` | `'top'` | Where the panel anchors in the viewport. `'top'` matches the Spotlight/Raycast convention; `'center'` feels more like a Dialog.
 `modal` | `boolean \| undefined` | `true` | `false` turns off the overlay, scroll lock, focus trap and the inert page behind it. Escape-to-close and layer stacking still apply.
@@ -37,6 +38,7 @@ Name | Type | Description
 `item` | `{ item: T; index: number; active: boolean; group: string \| undefined; select: () => void; }` | Custom row content for each item; call `select()` to pick it. `group` is its group's name.
 `group-label` | `{ group: string; items: T[]; }` | Custom content for a group's heading. `group` is its name; `items` are its items still showing.
 `empty` | `any` | Replaces the localized "no results" row shown when nothing matches.
+`loading` | `any` | Replaces the spinner shown while `loading` and the list is empty.
 `footer` | `{ activeItem: T \| undefined; query: string; }` | A strip under the list, such as key hints. `activeItem` is the highlighted item, if any.
 
 ## Events

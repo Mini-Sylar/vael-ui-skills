@@ -45,6 +45,7 @@ Name | Type | Description
 `trigger` | `{ open: boolean; }` | Trigger markup. Menu wires the click and anchors the panel to it, so render only the button.
 `header` | `any` | Content above the item list, outside its scroll region; it stays put while `items` scrolls.
 `item` | `{ item: T; }` | Override one data-driven row's content while keeping its behavior.
+`label` | `{ item: T; }` | Override a row's text only; its icon, shortcut and submenu chevron stay.
 `default` | `{ close: () => void; open: boolean; isClosing: boolean; cancelClose: () => void; panelEl: HTMLElement \| null; placement: string; maxHeight: number \| null; }` | Fully custom menu content. Render your own `role="menuitem"` markup; Menu ignores `items`.
 `footer` | `any` | Content below the item list, outside its scroll region; it stays put while `items` scrolls.
 

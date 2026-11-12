@@ -20,7 +20,7 @@ Name | Type | Default | Description
 Name | Type | Description
 --- | --- | ---
 `preview` | `{ value: string; }` | The resting text.
-`edit` | `{ value: string; update: (value: string) => void; submit: () => void; cancel: () => void; size: "sm" \| "md" \| "lg"; }` | The control while editing, in place of the Input: a Textarea, a Select, a date picker. Bind `value` and call `update` with each change; Enter, Escape and focus leaving still work.
+`edit` | `{ value: string; update: (value: string) => void; submit: () => void; cancel: () => void; size: "sm" \| "md" \| "lg"; }` | The control while editing, in place of the Input: a Textarea, a Select, a date picker. Bind `value` and call `update` with each change; Enter, Escape and focus leaving still work. A key your control handles itself with `preventDefault()` (`@keydown.enter.prevent="save"`) is left to it.
 `actions` | `{ submit: () => void; cancel: () => void; }` | Buttons beside the control, such as save and cancel.
 
 ## Events

@@ -39,6 +39,7 @@ Name | Type | Description
 `default` | `{ open: boolean; }` | Wrapped content, such as a card, row or image. Right-clicking it, or long-pressing it on touch, opens the menu.
 `header` | `any` | Forwarded to Menu's own `#header`.
 `item` | `{ item: T; }` | Override one data-driven row's content while keeping its behavior.
+`label` | `{ item: T; }` | Override a row's text only; its icon and shortcut stay. Forwarded to Menu's own `#label`.
 `footer` | `any` | Forwarded to Menu's own `#footer`.
 
 ## Events

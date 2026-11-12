@@ -7,7 +7,11 @@ vael-ui ships every component's CSS inside `@layer ui-components`. **Unlayered C
 @layer app-base, ui-components;
 ```
 
-Deliberately overriding one component (a `ui` prop class, a Tailwind utility) wants the opposite: keep that override CSS **unlayered**, which it already is by default in a normal `<style>` block or utility class. That's what lets it win over the layered internals on purpose.
+Deliberately overriding one component (a `ui` prop class, a Tailwind utility) wants the opposite: keep that override CSS **unlayered**, which it already is by default in a normal `<style>` block or utility class. That's what lets it win over the layered internals on purpose. An override class that sits in an app layer declared *before* `ui-components` loses to them, whatever its specificity: `.x-body { padding: 0 }` in `@layer app` doesn't beat `.ui-dialog-header + .ui-dialog-body { padding-block-start: … }`. Take it out of the layer, or declare its layer after `ui-components`.
+
+The overlay behind a Dialog, Drawer, BottomSheet or Tour is coloured by `--ui-overlay`, not by a `background` on its `ui.overlay` class.
+
+A class you pass through `ui` lands on an element inside the component. From a `<style scoped>` block it only matches with `:deep(.my-class)`: Vue's scope attribute reaches a child component's root, not the parts inside it (and never a teleported panel).
 
 Everything before `0.2.0` didn't split CSS per component. Only relevant on that old a version, or if you specifically want everything loaded at once regardless of what's used.
 

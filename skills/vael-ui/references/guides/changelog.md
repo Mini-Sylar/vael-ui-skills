@@ -2,6 +2,14 @@
 
 What changed in each release, newest first. Read this when upgrading an app, or when code written for an older version behaves differently. For the current API, the component and composable references are the source of truth.
 
+## 0.5.4
+
+Nothing breaks. New: Sortable `handle="item"` (drag a card from anywhere; a still press is a click inside), `variant="plain"`, `virtualize` (long lists render only rows near the screen), `@drag-start` / `@drag-end`; Select and Combobox items with `value: null` (an "Unassigned" choice; constraint `SelectChoice`); `Column fill` and `min-width`; `<Calendar planner>`; `v-animate` `appear: 'once'`; `#label` on Menu, MenuList, ContextMenu and SplitButton; `Input loading`, `CommandPalette loading` and `#loading`; `OtpInput` `focus()` that waits for the field to be enabled; `ColorPicker presets-placement="inline"`; `v-tooltip` `keys`; `v-scroll-mask.x` / `.y` / `.both`.
+
+Changed looks: form controls round their height and text to the pixel grid like Button, so an `md` field and an `md` Button are the same height at any root size; a Button's box is drawn inside the element (a border reset can't widen it); Sortable `axis="x"` items line up at the top; a Badge never pops on its first render and `motion: false` turns its count change off too; `Collapsible` without `#trigger` renders no trigger element; MenuList's hover highlight steps aside on the current page's row.
+
+Fixed: Sortable `preview-mode="element"` keeps a card above lists with their own stacking context, the clone keeps the row's look, a dropped card doesn't shift after it settles, Escape cancels a pending async `beforeDrop`; Editable takes focus when opened from outside and owns Escape inside a Drawer; Tree rows and interactive Cards let controls inside them work; a passed `aria-required` (a form library's schema) reaches the control inside a `Field`; ColorPicker, Editable and Rating take their Field's wiring; `v-hover-indicator` stands down during a Sortable drag; `v-scroll-mask` fades in the frame content overflows; rows that mount just after a component's entrance join it, and a scroll only skips entrances inside the box that scrolled; springs settle to the pixel on long moves; `after` waits on a `layoutId` slide; `layout: 'position'` doesn't bounce after an ancestor's entrance; theme contrast text matches between server and browser; `useVirtualizer` `getKey` keeps heights with their rows; i18n `{count}` placeholders survive vue-i18n; no uiKit warning for English.
+
 ## 0.5.1
 
 Nothing breaks. New:

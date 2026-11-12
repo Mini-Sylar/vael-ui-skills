@@ -6,6 +6,18 @@ A month grid for picking a single date, multiple dates, or a range.
 import { Calendar } from 'vael-ui' // or 'vael-ui/vapor'
 ```
 
+**A month planner.** `planner` turns the grid into boxes that fill their container and grow with their content; `#day` holds what each day shows. A click on a chip, button or dragged row inside a day is that control's, not a selection, and the day number is yours to place (the slot's `date`). To drag items between days, put a `Sortable` in each day sharing one `useSortableGroup()`:
+
+```vue
+<Calendar v-model="selected" planner>
+  <template #day="{ date }">
+    <span class="date">{{ date.getDate() }}</span>
+    <Sortable v-model:items="tasksOn(date)" item-key="id" handle="item" variant="plain"
+      :group="board" :group-id="isoDate(date)" />
+  </template>
+</Calendar>
+```
+
 ## Props
 
 Name | Type | Default | Description
@@ -20,6 +32,7 @@ Name | Type | Default | Description
 `months` | `number \| undefined` | `1` | How many months to show side by side, for picking a range at a glance. They move together and wrap onto separate rows when there isn't room.
 `showYearButtons` | `boolean \| undefined` | `false` | Adds « and » beside the month arrows to jump a year at a time, handy for ranges that span years. Only in the day view; the month and year grids already step by years.
 `showWeekNumbers` | `boolean \| undefined` | `false` | Shows each week's number (ISO 8601) at the start of its row.
+`planner` | `boolean \| undefined` | `false` | Lays the month out as a planner: the calendar fills its container, the seven columns share the width, and each day is a box that grows with what you put in `#day` (tasks, events, a `Sortable` to drag them between days), with the date at its top start. A click on a control inside a day is that control's, not a selection.
 `motion` | `CalendarMotion \| undefined` | `true` | `false` skips the month change's slide. An object restyles it: give the `label` and `grid` looks as values, or as functions of `where.direction` (`1` forward, `-1` back).
 `ui` | `Partial<{ root: UiPartValue; header: UiPartValue; navButton: UiPartValue; label: UiPartValue; weekdays: UiPartValue; weekday: UiPartValue; grid: UiPartValue; cell: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `modelValue` | `Date \| CalendarRange \| null \| undefined` | `null` | Selected date, or `{ start, end }` in `range` mode.

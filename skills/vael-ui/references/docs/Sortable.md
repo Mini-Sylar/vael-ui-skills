@@ -32,7 +32,17 @@ const board = useSortableGroup({
 
 Fixed-height columns that scroll: put the height and `overflow-y: auto` on the Sortable (its `class` reaches the `.ui-sortable` root) and turn on `restrict-to-list` so the dragged card stays inside the column it's over. Leave it off when columns grow with their cards.
 
-**Showing the placeholder.** With `preview-mode="clone"` a copy follows the pointer and the original row is the placeholder: it moves to where the card will land and carries `data-sortable-source`. Sortable hides it with `visibility: hidden`. Each row is a `.ui-sortable-item` `<li>` with a 1px `--ui-border` border, holding the drag handle and a `.ui-sortable-content` box with your `#item` content, so show it like this:
+**Cards you drag from anywhere (Asana, Trello).** `handle="item"` makes the whole row the handle: a press that moves drags it, a press that doesn't is a click on whatever is inside (a card that opens, a button in it), the row takes keyboard focus for Space and the arrows, and a touch holds 150 ms before it drags so the list still scrolls. Don't put the card in `#handle`: that nests it in a `<button>`. `variant="plain"` drops the row's own box (border, padding, background), so rows look like your content and a held row lifts on a surface of its own. `@drag-start` and `@drag-end` fire with the row's value, for anything that should pause while a row is held.
+
+```vue
+<Sortable v-model:items="cards" item-key="id" handle="item" variant="plain" :group="board" :group-id="column.id">
+  <template #item="{ item }"><TaskCard :task="item" @click="open(item)" /></template>
+</Sortable>
+```
+
+**Gap and direction live on the root.** The `<ul>` is `display: contents`, so the rows lay out as the root's own children: set `gap` (and `flex-direction`) on the Sortable's `class` or `ui.root`, never on the list. With `axis="x"`, items line up at the top at their own height.
+
+**Showing the placeholder.** With `preview-mode="clone"` a copy follows the pointer and the original row is the placeholder: it moves to where the card will land and carries `data-sortable-source`. Sortable hides it with `visibility: hidden`. Each row is a `.ui-sortable-item` `<li>` (with `variant="card"`, a 1px `--ui-border` border), holding the drag handle and a `.ui-sortable-content` box with your `#item` content, so show it like this:
 
 ```css
 .column :deep(.ui-sortable-item[data-sortable-source]) {
@@ -56,6 +66,9 @@ Name | Type | Default | Description
 `autoScroll` | `boolean \| undefined` | `true` | Scrolls the list, any scrollable ancestor, or the page while a drag nears its edge.
 `restrictToList` | `boolean \| undefined` | `false` | For lists in a `group`: keeps the dragged row inside the part of the list it's over that's on screen, so it never hangs past a fixed-height column. Leave it off for lists that grow with their rows.
 `disabled` | `boolean \| undefined` | `false` | Turns off dragging, so rows stay static.
+`virtualize` | `number \| boolean \| undefined` | `false` | For long lists: only rows near the screen render their `#item` content; the others keep a row of their measured size, so dragging, autoscroll and moving between grouped lists work as before. The page or any scrolling box around the list can scroll it. `true`, or the size in px to hold for a row not seen yet (its height, or its width with `axis="x"`).
+`handle` | `"button" \| "item" \| undefined` | `'button'` | What you drag by. `'button'` is the grip at the start of each row. `'item'` is the whole row, as a board's cards: a press that moves drags it, one that doesn't is a click on what's inside. From the keyboard, Space picks a row up and Enter opens it (a click on its content). Rows then take a touch hold (`touchDragDelay`, 150 ms unset) so the list still scrolls.
+`variant` | `"card" \| "plain" \| undefined` | `'card'` | `'card'` draws each row as a card: a border, padding and a background. `'plain'` draws no box, so rows look like your content; a held row lifts with a background and a shadow.
 `motion` | `SortableMotion \| undefined` | `true` | How it moves: its appearance, row by row (`{ initial: { item: { opacity: 0, y: 8 } }, stagger: 0.04 }`), and its states (`{ states: { dragging: { root: { scale: '1.01' } } } }`). `false` skips the built-in springs, so rows snap to their new slots. Use it when you drive the motion yourself.
 `group` | `SortableGroupHandle \| undefined` |  | Handle from `useSortableGroup()`. Lists that share it, `<Sortable>` or `useSortable()`, let items cross between them.
 `groupId` | `string \| number \| undefined` |  | This list's identity within `group`. Unset, Sortable assigns one.
@@ -77,6 +90,8 @@ Name | Type | Description
 --- | --- | ---
 `drop-error` | `[error: unknown, details: SortableDropDetails]` | Fires when `beforeDrop` throws or rejects, after Sortable reverts the move.
 `reorder` | `[value: string \| number, to: DropPosition]` | Fires after `items` changes order. Persist optimistically here; on failure, restore your own snapshot of `items`.
+`drag-start` | `[value: string \| number]` | Fires when a row is picked up, by pointer or keyboard.
+`drag-end` | `[value: string \| number]` | Fires when the row is dropped or the drag is cancelled, before its rows settle.
 `update:items` | `[value: T[]]` | Fires when `items` changes (`v-model:items`).
 
 ## Exposed

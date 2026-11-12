@@ -6,6 +6,8 @@ A modal overlay that interrupts the page until the user responds or dismisses it
 import { Dialog } from 'vael-ui' // or 'vael-ui/vapor'
 ```
 
+The backdrop's colour is `--ui-overlay` (set it on `:root` or on the Dialog); a `background` on `ui.overlay` doesn't change it. The body's padding under a header comes from a layered `.ui-dialog-header + .ui-dialog-body` rule: an unlayered class on `ui.body` overrides it. In a `<style scoped>` block, write it as `:deep(.x-body)` or put it in a global stylesheet: Vue adds the scope attribute only to a child component's root, never to the Dialog's teleported body, so a plain scoped `.x-body` never matches.
+
 ## Props
 
 Name | Type | Default | Description

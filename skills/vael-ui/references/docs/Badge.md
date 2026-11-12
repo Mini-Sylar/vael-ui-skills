@@ -15,7 +15,7 @@ Name | Type | Default | Description
 `max` | `number \| undefined` | `99` | Counts above this render as `"${max}+"`.
 `dot` | `boolean \| undefined` | `false` | Minimal size with no content: a plain presence dot.
 `animated` | `boolean \| undefined` | `true` | `false` drops the built-in count-change animation so you can drive your own.
-`motion` | `BadgeMotion \| undefined` |  | How it moves: its appearance (`{ initial: { root: { opacity: 0, scale: 0.6 } } }`). `false` turns its own appearance off; `animated` keeps the count change.
+`motion` | `BadgeMotion \| undefined` |  | How it moves: its appearance (`{ initial: { root: { opacity: 0, scale: 0.6 } } }`). `false` turns all of its motion off, the count change included.
 `ui` | `Partial<{ root: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 
 ## Slots

@@ -17,6 +17,7 @@ Name | Type | Default | Description
 `invalid` | `boolean \| undefined` | `false` | Standalone override; ORed with the nearest Field's `error` state.
 `placeholder` | `string \| undefined` |  | Text shown while the input is empty.
 `clearable` | `boolean \| undefined` | `false` | Shows a button that empties the input while it has text.
+`loading` | `boolean \| undefined` | `false` | Shows a spinner at the end while something loads for it, such as search results.
 `animated` | `boolean \| undefined` | `false` | Crossfades a placeholder or value that changes on its own, like AnimatedText. What you type never animates.
 `ui` | `Partial<{ root: UiPartValue; input: UiPartValue; start: UiPartValue; end: UiPartValue; clear: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
 `motion` | `InputMotion \| undefined` |  | Animates its states, like a shake when it turns invalid: `{ states: { invalid: { root: { x: [0, -6, 6, -3, 0] } } } }`.

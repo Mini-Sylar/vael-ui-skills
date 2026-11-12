@@ -20,6 +20,7 @@ Name | Type | Default | Description
 Name | Type | Description
 --- | --- | ---
 `item` | `{ item: T; isGroup: boolean; }` | Override one row's content while keeping its behavior. `isGroup` marks an inert group label (an entry with `items`, whose children render beneath it).
+`label` | `{ item: T; isGroup: boolean; }` | Override a row's text only; its icon and shortcut stay.
 
 ## Events
 

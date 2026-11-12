@@ -15,6 +15,10 @@ Name | Type | Description
 `itemSize` | `MaybeRefOrGetter<number \| undefined>` | Row size in px. Omit it to measure the first rendered row, with a 36 px estimate until then.
 `overscan` | `MaybeRefOrGetter<number>` | Extra rows rendered past each edge. Default `8`.
 `onReachEnd` | `() => void` | Fires once when the rendered window's last index reaches `count - 1 - overscan`. Fires again after `count` changes.
+`onReachStart` | `() => void` | The same at the top: fires once the window's first index nears 0, for loading older items.
+`dynamic` | `MaybeRefOrGetter<boolean>` | Rows of different heights: call `measureRow(index)` as each row's `:ref`. Default `false`.
+`estimateSize` | `MaybeRefOrGetter<number>` | With `dynamic`, the height of a row not measured yet. Default `40`.
+`getKey` | `(index: number) => string \| number` | With `dynamic`, each row's identity: measured heights follow their rows when older items are prepended. Unset, rows go by index.
 
 ## Returns
 
