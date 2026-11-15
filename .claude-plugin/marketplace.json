@@ -1,7 +1,7 @@
 {
   "$schema": "https://code.claude.com/schemas/marketplace.schema.json",
   "name": "vael-ui-skills",
-  "description": "Skill for the vael-ui Vue 3 component library",
+  "description": "Skills for the vael-ui Vue 3 component library and the vael-form forms library",
   "owner": {
     "name": "Mini-Sylar"
   },
@@ -10,11 +10,26 @@
       "name": "vael-ui",
       "description": "Installation, usage, and best practices for the vael-ui Vue component library — the vdom/vapor split, auto-import, theming, and the motion system (the motion prop, v-animate, springs, hooks for GSAP or motion).",
       "source": "./",
+      "skills": [
+        "./skills/vael-ui"
+      ],
       "version": "2.0.0",
       "author": {
         "name": "Mini-Sylar"
       },
       "homepage": "https://github.com/Mini-Sylar/vael-ui-skills"
+    },
+    {
+      "name": "vael-form",
+      "displayName": "vael-form Guide",
+      "description": "Vue forms with vael-form — useForm on Zod, Valibot, ArkType or any Standard Schema, binding to plain inputs and vael-ui, when errors show, async rules, lists and steps, server errors, i18n, Nuxt, SSR, accessibility, testing, and moving from vee-validate.",
+      "source": "./skills/vael-form",
+      "version": "1.0.0",
+      "author": {
+        "name": "Mini-Sylar"
+      },
+      "homepage": "https://github.com/Mini-Sylar/vael-ui-skills",
+      "license": "MIT"
     }
   ]
 }
