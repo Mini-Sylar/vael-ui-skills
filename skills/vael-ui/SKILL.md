@@ -39,7 +39,7 @@ A Vue 3 component library: 70 components, from buttons and form fields to overla
 npm install vael-ui vue
 ```
 
-Vue `^3.5.0`. The Vapor build needs Vue `^3.6.0` and `createVaporApp`; Vapor is pre-1.0, so **pin the exact prerelease** `vael-ui@0.5.5` is compiled against (`npm install vue@3.6.0-rc.15 --save-exact`). A floating `rc` tag causes compiler/runtime mismatches, often inside `<Transition>`. From rc.15 a ref to your own Vapor component holds only what it exposes, not its element: for `triggerEl` / `scrollEl` pass an element ref, or have the component `defineExpose({ el })` (`#trigger`'s `setTriggerEl` takes either).
+Vue `^3.5.0`. The Vapor build needs Vue `^3.6.0` and `createVaporApp`; Vapor is pre-1.0, so **pin the exact prerelease** `vael-ui@0.5.5` is compiled against (`npm install vue@3.6.0-rc.15 --save-exact`). A floating `rc` tag causes compiler/runtime mismatches, often inside `<Transition>`. In Vapor a component's ref holds only what it exposes, not its element: when you pass your own component to `setTriggerEl`, `triggerEl` or `scrollEl`, give it `defineExpose({ el })`, or pass a ref to an element. Every vael-ui component with a root element exposes `el`.
 
 ```vue
 <!-- App.vue -->
@@ -192,7 +192,7 @@ Rules that apply every time: ease out both ways and leave faster than you enter,
 | `window.addEventListener('keydown')` for Escape | the component already handles it (Editable, Sortable, overlays) |
 | `import 'vael-ui/style.css'` | nothing: components load their own |
 | A prop name from memory | the reference file |
-| `:trigger-el` / `:scroll-el` bound to a ref on your own Vapor component | an element ref, or `defineExpose({ el })` in that component |
+| `setTriggerEl`, `:trigger-el` or `:scroll-el` given your own Vapor component | an element ref, or `defineExpose({ el })` in that component |
 
 ## Upgrading from 0.4
 
