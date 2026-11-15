@@ -6,6 +6,8 @@ A small floating label that appears on hover or focus to explain an element.
 import { Tooltip } from 'vael-ui' // or 'vael-ui/vapor'
 ```
 
+`v-tooltip` (with `<TooltipHost />` mounted once) is the lighter form for most targets. Its value is a string, or `{ content, props, follow, side, align, sideOffset, openDelay, closeDelay, keys, beforeClose, forceMount }`. `content` is text or a component for markup, such as a status dot or a progress bar, with its `props`: `v-tooltip="{ content: ProjectTip, props: { project } }"`. It's drawn in the one shared tooltip, so it still opens at once and glides between targets. `follow: true` tracks a mouse or pen along a wide target, such as a timeline bar, and stops at its ends; from the keyboard it stays centred. The tooltip is for text: put links and buttons in a Popover.
+
 ## Props
 
 Name | Type | Default | Description
@@ -15,9 +17,10 @@ Name | Type | Default | Description
 `align` | `'start' \| 'end' \| 'center' \| undefined` | `'center'` | How the tooltip aligns against the trigger along that side.
 `sideOffset` | `number \| undefined` | `8` | Gap between the trigger and the tooltip, in pixels.
 `alignOffset` | `number \| undefined` | `0` | Shifts the tooltip along the alignment axis, in pixels.
+`follow` | `boolean \| undefined` | `false` | While open, the tooltip tracks a mouse or pen along the trigger's edge, clamped to it, in place of `align` and `alignOffset`: for a wide trigger, such as a timeline bar.
 `openDelay` | `number \| undefined` | `400` | Delay before a cold open, in milliseconds. Warm-group opens (another tooltip visible or recently hidden) are instant.
 `closeDelay` | `number \| undefined` | `100` | Grace period after the pointer leaves, in milliseconds, so it can move onto the tooltip.
-`interactive` | `boolean \| undefined` | `true` | Hovering the tooltip itself keeps it open, so its content stays selectable and clickable.
+`interactive` | `boolean \| undefined` | `true` | Hovering the tooltip itself keeps it open, so its text can be selected. Keyboard users can't reach it, so put links and buttons in a Popover.
 `closeOnEsc` | `boolean \| undefined` | `true` | Escape key closes the tooltip.
 `beforeClose` | `BeforeClose<TooltipCloseReason> \| undefined` |  | Runs before the tooltip closes. Return `true` to close it, `false` to keep it open, or a promise of either, like `() => confirmAction(…).result`. The tooltip stays open while the promise is pending.
 `forceMount` | `boolean \| undefined` | `false` | Keeps it mounted while closed, toggled with `v-show`, so its content keeps its state. vael-ui then leaves its motion to you.

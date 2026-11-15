@@ -71,7 +71,7 @@ Name | Type | Description
 `positionerStyle` | `Record<string, string>` | Inline positioning style applied to the positioner.
 `isClosing` | `boolean` | `true` while a `beforeClose` close is pending.
 `open` | `() => void` | Opens the menu.
-`toggle` | `() => void` | Opens or closes the menu.
+`toggle` | `(event: MouseEvent) => void` | Opens or closes the menu.
 `close` | `() => void` | Closes the menu, running `@open-change` and `beforeClose` first.
 `cancelClose` | `() => void` | Cancels a close pending in `beforeClose` and keeps the menu open.
 

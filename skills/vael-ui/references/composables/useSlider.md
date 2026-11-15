@@ -74,5 +74,5 @@ Name | Type | Description
 `onTrackPointerdown` | `(event: PointerEvent) => void` | Bind it on the track. It jumps the nearest thumb to the press and keeps dragging it until release.
 `onThumbPointerdown` | `(index: number, event: PointerEvent) => void` | Bind it on each thumb with `.stop`, so the track handler does not run as well.
 `onThumbKeydown` | `(index: number, event: KeyboardEvent) => void` | Bind it on each thumb. Handles the arrow keys, Page Up, Page Down, Home and End.
-`isDragging` | `Ref<boolean>` | `true` from pointer down until release.
+`isDragging` | `Ref<boolean>` | `true` from pointer down until release. A move counts from its first 4 px.
 `activeThumb` | `Ref<number \| null>` | The index of the thumb a pointer is dragging, or `null` when idle.

@@ -41,6 +41,7 @@ Name | Type | Description
 `onSelect` | `(itemEl: HTMLElement) => void` | Fires when an enabled item is activated, by click or by Enter or Space while it has focus. It doesn't fire for submenu triggers. `<Menu>` closes here unless the item carries `data-keep-open`.
 `onExpand` | `(itemEl: HTMLElement) => void` | Fires instead of `onSelect` when the activated item has `aria-haspopup="menu"`. ArrowRight on such an item clicks it, so it lands here too. `<Menu>` opens the nested submenu.
 `onCollapse` | `() => void` | Fires on ArrowLeft. Wire it only when this list is a submenu, to close it and return focus to the parent row. Without it, ArrowLeft does nothing.
+`roving` | `boolean` | Keeps one Tab stop for the whole list, as a `role="menu"` needs. `false` leaves every item a Tab stop, as `<MenuList>` does for a nav of links. Defaults to `true`.
 
 ## Returns
 
@@ -48,5 +49,5 @@ Name | Type | Description
 --- | --- | ---
 `onKeydown` | `(event: KeyboardEvent) => void` | Bind it on the list. Up and Down wrap around, Home and End jump to the ends, and printable keys run a typeahead over each item's text. The typeahead buffer resets after 500 ms.
 `focusFirst` | `() => void` | Gives the first enabled item `tabindex="0"` and focuses it. Call it when a popup menu opens.
-`focusItem` | `(el: HTMLElement \| undefined) => void` | Makes `el` the Tab stop and focuses it, such as a submenu's parent row after the submenu closes.
-`initRoving` | `() => void` | Gives the first enabled item `tabindex="0"` without focusing it. Call it once on mount for a list that is always on screen, like `<MenuList>`.
+`focusItem` | `(el: HTMLElement \| undefined, focusOptions?: FocusOptions) => void` | Makes `el` the Tab stop and focuses it, such as a submenu's parent row after the submenu closes.
+`initRoving` | `() => void` | Gives the first enabled item `tabindex="0"` without focusing it. Call it once on mount for a menu that is always on screen.

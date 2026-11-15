@@ -14,6 +14,7 @@ Name | Type | Default | Description
 `max` | `number \| undefined` | `Infinity` | Largest size in pixels.
 `direction` | `'horizontal' \| 'vertical' \| undefined` | `'horizontal'` | Axis the panel resizes along: `'horizontal'` sets its width, `'vertical'` its height.
 `edge` | `'start' \| 'end' \| undefined` | `'end'` | Which edge the handle sits on. `'start'` flips the drag so moving toward the panel grows it.
+`step` | `number \| undefined` |  | Snaps the size to a multiple of `step` on release, the drag itself staying smooth, and an arrow key resizes one step. Unset, a drag doesn't snap and an arrow key moves 16 px.
 `disabled` | `boolean \| undefined` | `false` | Disables dragging and keyboard resizing, and removes the handle from the tab order.
 `ariaLabel` | `string \| undefined` | `'Resize'` | Accessible label for the handle.
 `motion` | `ResizableMotion \| undefined` |  | How it moves: its appearance (`{ initial: { root: { opacity: 0 } } }`) and its states (`{ states: { dragging: { handle: { scale: '1.2' } } } }`). `false` turns its own animation off.

@@ -41,7 +41,7 @@ Name | Type | Description
 `dropIntoValue / dropTargetValue / dropIntent` | `Ref` | Drop-on-target mode only: the hovered row, and whether the drop goes before, after or inside it.
 `draggedValues` | `Ref<ReadonlySet>` | Every value in the dragged block. A folder carries its descendants.
 `isForeignDropTarget` | `Ref<boolean>` | Only with `group`. `true` while a drag from another list in the group hovers this list. Always `false` for the list the drag started in. Use it to style drop-target feedback.
-`announcement` | `Ref<string>` | Live-region text. Render it in an `aria-live="assertive"` element.
+`announcement` | `Ref<string>` | Live-region text. Render it in an `aria-live="polite"` element.
 `onHandlePointerdown / onHandleKeydown` | `(event, value) => void` | Bind these to a row's handle element.
 `consumeSuppressedClick` | `() => boolean` | Returns `true` once after a committed drag. Use it to ignore the click that follows the drag.
 `cancel` | `() => void` | Abandons the current grab and springs everything back.

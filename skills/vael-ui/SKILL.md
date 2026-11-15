@@ -4,10 +4,10 @@ description: Use whenever writing, editing, reviewing or debugging Vue code that
 license: MIT
 metadata:
   author: Mini-Sylar
-  version: 2.1.0
+  version: 2.2.0
 ---
 
-# vael-ui `vael-ui@0.5.4`
+# vael-ui `vael-ui@0.5.5`
 
 A Vue 3 component library: 70 components, from buttons and form fields to overlays, data tables, drag-and-drop and gestures, plus composables, with one motion system you take over part by part. Two builds from one source: `vael-ui` (regular Vue) and `vael-ui/vapor` (Vue Vapor), same names, props and composables.
 
@@ -39,7 +39,7 @@ A Vue 3 component library: 70 components, from buttons and form fields to overla
 npm install vael-ui vue
 ```
 
-Vue `^3.5.0`. The Vapor build needs Vue `^3.6.0` and `createVaporApp`; Vapor is pre-1.0, so **pin the exact prerelease** `vael-ui@0.5.4` is compiled against (`npm install vue@3.6.0-rc.14 --save-exact`). A floating `rc` tag causes compiler/runtime mismatches, often inside `<Transition>`.
+Vue `^3.5.0`. The Vapor build needs Vue `^3.6.0` and `createVaporApp`; Vapor is pre-1.0, so **pin the exact prerelease** `vael-ui@0.5.5` is compiled against (`npm install vue@3.6.0-rc.15 --save-exact`). A floating `rc` tag causes compiler/runtime mismatches, often inside `<Transition>`. From rc.15 a ref to your own Vapor component holds only what it exposes, not its element: for `triggerEl` / `scrollEl` pass an element ref, or have the component `defineExpose({ el })` (`#trigger`'s `setTriggerEl` takes either).
 
 ```vue
 <!-- App.vue -->
@@ -70,7 +70,7 @@ Read the reference file, then decide at the level of the whole task:
 | Task | Reach for |
 | --- | --- |
 | Confirm, prompt, one-off dialog, toast | `confirmAction()`, `openDialog()`, `openPopover()`, `toast()`: promises and handles, no template wiring. `const { result } = confirmAction({ title: 'Delete?', variant: 'danger', onConfirm: () => api.delete(id) }); if (await result) refresh()` |
-| A form | `Field` around each control (label placement, description, error, required). Controls merge a parent Field's `disabled`, `id` and `aria-describedby` on their own. To validate it, use the separate `vael-form` package (schema, `v-model`, errors, accessible submit): `<Field :error="errors.email"><Input v-model="email" v-bind="attrs.email" /></Field>`; docs at vael-ui.dev/forms |
+| A form | `Field` around each control (label placement, description, error, required). Controls merge a parent Field's `disabled`, `id` and `aria-describedby` on their own. To validate it, use the separate `vael-form` package (schema, `v-model`, errors, accessible submit): `<Field :error="errors.email"><Input v-model="email" v-bind="attrs.email" /></Field>`; docs at vael-ui.dev/forms. A Field error is read with its control, not `role="alert"`; vael-form focuses the first invalid field on submit. `required` on a control (Select, Combobox, DatePicker, OtpInput, …) blocks a plain form submit while empty; a Field's `required` is only the hint |
 | A toggle, a toggle row | `<Button v-model:pressed>`; `ButtonGroup` with `v-model` and a `value` per `Button` (`multiple`, `:allow-empty="false"`). Never hand-wire `aria-pressed` |
 | Grouped options | `{ label, items }` entries in `Select`/`Combobox` items (`ui.group`, `#group-label`). Collapsible groups are a tree: `TreeSelect` |
 | An "Unassigned" or "None" option | an item with `value: null`: picking it sets the model to `null`, and `null` shows it as picked. No sentinel strings |
@@ -82,6 +82,10 @@ Read the reference file, then decide at the level of the whole task:
 | Loading content | `<Skeleton :loading>` around the real content, rendered with placeholder data: it draws each line, avatar and button as a bone. Mark a custom element `data-skeleton-block` |
 | Pull to refresh on a page | `PullToRefresh` with `:scroll-el="document.documentElement"` and the same handler as the visible button; mount it only where touch is the input |
 | A shortcut hint on a tooltip | `v-tooltip="{ content: 'Search', keys: ['⌘', 'K'] }"` |
+| A tooltip with markup (status dot, progress bar) | a component as `content`: `v-tooltip="{ content: ProjectTip, props: { project } }"`, drawn in the one shared tooltip. Links and buttons go in a Popover |
+| A tooltip along a wide target (timeline bar) | `v-tooltip="{ content, follow: true }"` or `<Tooltip follow>`: it tracks the pointer and stops at the ends |
+| A timeline bar, a span to drag and stretch | two `useResizable(size, { offset: start, edge: 'start' \| 'end', bounds, step, scrollEl })` over the same refs; `onMovePointerdown` / `onMoveKeydown` on the bar. Snaps on release, Escape reverts: [useResizable](./references/composables/useResizable.md). A plain panel: `Resizable` (`step`) |
+| A sidebar nav of links | `MenuList`: every row is its own Tab stop, like links. Your own list: `useMenu({ roving: false })` |
 
 **Things that look like gaps but aren't:** Combobox and Select options hold no buttons (content is flattened for screen readers; put removal outside the list). A `Toolbar` needs `flex: 1` so its overflow menu can measure its room. Components inside a narrow or resizable flex container need `min-inline-size: 0` or they overflow instead of shrinking. Sortable's gap and direction live on its root (`class` or `ui.root`), never on the inner list.
 
@@ -90,7 +94,9 @@ Read the reference file, then decide at the level of the whole task:
 - **State is a `v-model`** per controllable thing: `v-model:open`, `v-model:items`, `v-model:editing`, `v-model:pressed`. Open or close from outside by writing the model; the component focuses what should be focused (an `Editable` opened with `v-model:editing` focuses its control).
 - **Callbacks for what happens after** go on the thing that animates: an overlay's `motion.onAfterLeave` (add the row, toast, navigate there, never while it fades), a list's per-item `onAfterEnter`, a state's `onAfterEnter`. All run at once when motion is off.
 - **`before-close`** is the only close guard; return a promise for async.
-- **Escape** goes to the innermost thing that wants it: a tooltip, an `Editable` mid-edit, a Sortable mid-drag, then the dialog. Don't add window listeners for it.
+- **Focus on open** is handled: Dialog, Drawer and BottomSheet focus an `[autofocus]` element, else the first control in their content (not the × button). Put `autofocus` on the field you want first rather than an `initialFocus` callback; `modal: false` still takes and returns focus. `confirmAction` is an alert dialog either way; its popover opens on Cancel.
+- **Toasts:** toasts with an `action` stay until dismissed (so Undo is reachable). Pass `duration` only to force a timeout; `duration: Infinity` keeps an important error up.
+- **Escape** goes to the innermost thing that wants it: a tooltip, an `Editable` mid-edit, a Sortable or resize mid-drag, then the dialog. Don't add window listeners for it.
 - **Clicks inside rows** of Tree, Calendar days and Sortable items reach the button you put there; the row itself doesn't also select. Don't `.stop` on every inner button.
 - **vue-tsc doesn't narrow `v-if` inside a directive's value:** `` v-if="selected" v-animate="{ layoutId: `site-${selected!.id}` }" `` needs the `!`.
 
@@ -186,6 +192,7 @@ Rules that apply every time: ease out both ways and leave faster than you enter,
 | `window.addEventListener('keydown')` for Escape | the component already handles it (Editable, Sortable, overlays) |
 | `import 'vael-ui/style.css'` | nothing: components load their own |
 | A prop name from memory | the reference file |
+| `:trigger-el` / `:scroll-el` bound to a ref on your own Vapor component | an element ref, or `defineExpose({ el })` in that component |
 
 ## Upgrading from 0.4
 

@@ -26,7 +26,7 @@ Name | Type | Description
 
 Name | Type | Description
 --- | --- | ---
-`select` | `[item: T]` | Fires on click, or Enter/Space when the row has roving focus.
+`select` | `[item: T]` | Fires on click, or Enter/Space on a focused row.
 
 ## Exposed
 

@@ -49,7 +49,7 @@ Name | Type | Description
 `alignOffset` | `MaybeRefOrGetter<number>` | Shift along the aligned edge, in px. Default `0`.
 `openDelay` | `MaybeRefOrGetter<number>` | Delay before a cold open, in ms. Default `400`. A warm open is always instant: another tooltip is visible, or one closed less than 300 ms ago.
 `closeDelay` | `MaybeRefOrGetter<number>` | Grace period after the pointer leaves, in ms, long enough to move onto the tooltip. Default `100`.
-`interactive` | `MaybeRefOrGetter<boolean>` | Default `true`: hovering the tooltip itself keeps it open, so its content can be selected or clicked.
+`interactive` | `MaybeRefOrGetter<boolean>` | Default `true`: hovering the tooltip itself keeps it open, so its text can be selected. Keyboard users can't reach it, so put links and buttons in a Popover.
 `closeOnEsc` | `MaybeRefOrGetter<boolean>` | Default `true`. The tooltip takes the Escape before any dialog around it, so the dialog stays open.
 `onOpenChange` | `(value: boolean, details: TooltipOpenChangeDetails) => void` | Fires before every close, with `value: false`. `details.reason` is `'pointer'`, `'focus'`, `'trigger'`, `'escape'` or `'programmatic'`. Call `details.cancel()` to keep the tooltip open. It doesn't fire on open.
 `beforeClose` | `() => BeforeClose \| undefined` | A getter for the close guard. Return `true` to close, `false` or nothing to stay open, or a promise of either. `isClosing` is `true` while a promise is pending.

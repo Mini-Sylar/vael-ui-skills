@@ -2,7 +2,7 @@
 
 The headless engine behind `<Resizable>`.
 
-The headless drag and keyboard engine behind `<Resizable>`. It turns a handle's pointer drag into a size in px on your ref. Mid drag, the size stretches past `min` and `max` with rubber-band resistance, then settles back within them on release. Arrow keys resize by 16 px, and Home and End jump to `min` and `max`. `<Resizable>` adds the panel, the separator role and its ARIA values. Use the composable when the handle and the panel live apart in your own layout.
+The headless drag and keyboard engine behind `<Resizable>`. It turns a handle's pointer drag into a size in px on your ref, written once a frame. Mid drag, the size stretches past `min` and `max` with rubber-band resistance, then settles back within them on release. Escape puts it back where the drag started. Arrow keys resize by 16 px, and Home and End jump to `min` and `max`. `<Resizable>` adds the panel, the separator role and its ARIA values. Use the composable when the handle and the panel live apart in your own layout.
 
 ```ts
 import { useResizable } from 'vael-ui' // or 'vael-ui/vapor'
@@ -42,6 +42,21 @@ const { isDragging, onHandlePointerdown, onHandleKeydown } = useResizable(width,
 </template>
 ```
 
+A span, such as a timeline bar: two instances over the same `offset` and size, one per edge. Drag either end or the bar; it snaps to a day on release, Escape puts it back, and the timeline scrolls near its edges.
+
+```ts
+const DAY = 28
+const scroller = useTemplateRef<HTMLElement>('scroller') // the scrolling timeline
+const start = shallowRef(4 * DAY)
+const size = shallowRef(10 * DAY)
+const shared = { offset: start, bounds: [0, 60 * DAY] as [number, number], step: DAY, min: DAY, scrollEl: scroller }
+const startEnd = useResizable(size, { ...shared, edge: 'start' })
+const endEnd = useResizable(size, { ...shared, edge: 'end' })
+// bar: :style="{ insetInlineStart: `${start}px`, inlineSize: `${size}px` }"
+//      @pointerdown="endEnd.onMovePointerdown" @keydown="endEnd.onMoveKeydown"
+// ends: @pointerdown.stop="startEnd.onHandlePointerdown" @keydown.stop="startEnd.onHandleKeydown" (and endEnd's)
+```
+
 ## Parameters
 
 Name | Type | Description
@@ -52,12 +67,18 @@ Name | Type | Description
 `direction` | `MaybeRefOrGetter<'horizontal' \| 'vertical'>` | Default `'horizontal'`, which reads `clientX` and the Left and Right arrows. `'vertical'` reads `clientY` and the Up and Down arrows.
 `edge` | `MaybeRefOrGetter<'start' \| 'end'>` | Default `'end'`: the handle sits on the trailing edge, so dragging right or down grows the panel. `'start'` flips it, for a handle on a right-docked panel's left border.
 `disabled` | `MaybeRefOrGetter<boolean>` | Default `false`. Ignores pointer and key input while `true`.
+`step` | `MaybeRefOrGetter<number \| undefined>` | Snaps to a multiple of `step` on release, a day on a timeline say, while the drag itself stays smooth. An arrow key moves one step. Unset, a drag doesn't snap and an arrow key moves 16 px.
+`offset` | `Ref<number>` | Where it starts, for a span such as a timeline bar. An `edge: 'start'` handle then moves the start and the size together, so the far end stays put, and `onMovePointerdown` moves the whole span. Two instances over the same two refs, one per edge, make a bar. A handle pulled past `min` flips the span over its other end.
+`bounds` | `MaybeRefOrGetter<[number, number]>` | With `offset`: the span stays between these, start and end.
+`scrollEl` | `MaybeRefOrGetter<HTMLElement \| null>` | A scrolling container. Near its edges it scrolls under the pointer during a drag, faster the closer the pointer gets, and the drag follows. Set its `scroll-padding` to what covers it, such as a sticky column, and the edge is measured from there.
 `onCommit` | `() => void` | Fires once per settled interaction: on pointer release, or after each key press. Persist the size here rather than on every drag frame.
 
 ## Returns
 
 Name | Type | Description
 --- | --- | ---
+`onMovePointerdown` | `(event: PointerEvent) => void` | With `offset`: bind it on the span to move it whole. It starts after 4 px of travel, so a still press stays a click, and the click after a move, or after Escape, doesn't fire.
+`onMoveKeydown` | `(event: KeyboardEvent) => void` | With `offset`: the arrow keys move the whole span a step.
 `onHandlePointerdown` | `(event: PointerEvent) => void` | Bind it on the handle. Give the handle `touch-action: none`, so a touch drag resizes instead of scrolling.
 `onHandleKeydown` | `(event: KeyboardEvent) => void` | Bind it on the handle, and give the handle `tabindex="0"` so it can take focus.
-`isDragging` | `Ref<boolean>` | `true` from pointer down until release.
+`isDragging` | `Ref<boolean>` | `true` from pointer down until release. A move counts from its first 4 px.

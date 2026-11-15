@@ -12,7 +12,7 @@ Name | Type | Default | Description
 --- | --- | --- | ---
 `label` | `string \| undefined` |  | Label text, linked to the wrapped control.
 `description` | `string \| undefined` |  | Help text below the control, linked via `aria-describedby`.
-`error` | `string \| undefined` |  | Error message; renders with `role="alert"`.
+`error` | `string \| undefined` |  | Error message, linked to the control with `aria-describedby`.
 `required` | `boolean \| undefined` |  | Shows a required marker and sets `aria-required` on the wrapped control.
 `disabled` | `boolean \| undefined` |  | Disables the wrapped control.
 `labelPlacement` | `"top" \| "start" \| "end" \| "float" \| "inset" \| undefined` | `'top'` | `'top'` stacks above the control; `'float'` overlays its edge, moving up on focus or fill; `'inset'` sits inside it; `'start'`/`'end'` sit before/after it on the same line. With `'start'`/`'end'`, add `attached` to join the label to the control as one box, and `labelWidth` to line up a column of fields.

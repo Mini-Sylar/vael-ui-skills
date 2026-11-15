@@ -24,7 +24,7 @@ Name | Type | Default | Description
 `months` | `number \| undefined` | `1` | How many months the panel shows side by side, for picking a range at a glance.
 `closeOnSelect` | `boolean \| undefined` | `true` | Closes the panel once a date (or a range's end) is picked. `false` keeps it open, for an apply button in `#footer` or trying a few dates; outside clicks and Escape still close it.
 `formatOptions` | `Intl.DateTimeFormatOptions \| undefined` |  | `Intl.DateTimeFormat` options for the input text. Unset, the format follows `view`, `showTime` and `timeOnly`.
-`name` | `string \| undefined` |  | Renders a hidden `<input>` that mirrors the selection as `YYYY-MM-DD` for form posts.
+`name` | `string \| undefined` |  | Renders a hidden `<input>` that mirrors the selection for form posts: `YYYY-MM-DD`, or `YYYY-MM-DDTHH:mm` with `showTime`, `HH:mm` with `timeOnly`, `YYYY-MM` or `YYYY` for a month or year `view`.
 `side` | `'top' \| 'right' \| 'bottom' \| 'left' \| undefined` | `'bottom'` | Which side of the trigger the panel opens on.
 `align` | `'start' \| 'end' \| 'center' \| undefined` | `'start'` | How the panel aligns against the trigger along that side.
 `sideOffset` | `number \| undefined` | `8` | Gap between the trigger and the panel, in pixels.

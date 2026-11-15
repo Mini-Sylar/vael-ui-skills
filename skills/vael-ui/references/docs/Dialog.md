@@ -25,9 +25,9 @@ Name | Type | Default | Description
 `description` | `string \| undefined` |  | Muted line under the title; wires `aria-describedby` automatically.
 `role` | `"dialog" \| "alertdialog" \| undefined` | `'dialog'` | Use `'alertdialog'` for urgent messages that need a response, such as confirmations. Screen readers announce it more assertively.
 `origin` | `"trigger" \| "center" \| undefined` | `'center'` | `'trigger'` zooms the panel out of the element that opened it, and back into it on close, for a dialog that expands from a card or a button. Centred dialogs only.
-`initialFocus` | `(() => HTMLElement \| null \| undefined) \| undefined` |  | Returns the element to focus on open; return `null` or `undefined` to focus the first focusable element.
+`initialFocus` | `(() => HTMLElement \| null \| undefined) \| undefined` |  | Returns the element to focus on open. Return `null` or `undefined` to focus an `[autofocus]` element, else the first control in the body or footer.
 `showClose` | `boolean \| undefined` | `true` | Shows the built-in close button (×). Hide it when the footer carries the only sensible actions.
-`modal` | `boolean \| undefined` | `true` | `false` turns off the overlay, scroll lock, focus trap and the inert page behind it. Escape-close and layer stacking still apply.
+`modal` | `boolean \| undefined` | `true` | `false` turns off the overlay, scroll lock, focus trap and the inert page behind it. Escape-close, layer stacking, focus on open and focus return still apply.
 `flush` | `boolean \| undefined` | `false` | `true` removes edge padding: a `top`/`bottom` Dialog sits flush to the viewport edge instead of floating (a Drawer's always does).
 `closeOnOverlay` | `boolean \| undefined` | `true` | Clicking the overlay closes the panel. Has no effect when `modal` is `false` (no overlay to click).
 `closeOnHistoryBack` | `boolean \| undefined` | `false` | The browser or mobile back action closes the panel instead of leaving the page. Opening pushes a history entry, and any other close removes it.
