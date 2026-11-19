@@ -12,7 +12,7 @@ metadata:
 A Vue 3 component library: 70 components, from buttons and form fields to overlays, data tables, drag-and-drop and gestures, plus composables, with one motion system you take over part by part. Two builds from one source: `vael-ui` (regular Vue) and `vael-ui/vapor` (Vue Vapor), same names, props and composables.
 
 **References** (generated from the library's types; if this page disagrees with one, the reference is right):
-[Components](./references/docs/_INDEX.md) · [Composables](./references/composables/_INDEX.md) · [Motion guide](./references/guides/motion.md) · [Motion recipes](./references/guides/recipes.md) (both read through `vael-motion`) · [Setup](./references/guides/setup.md) · [Auto import](./references/guides/auto-import.md) · [Styling & CSS variables](./references/guides/styling-and-layers.md) · [Changelog](./references/guides/changelog.md)
+[Components](./references/docs/_INDEX.md) · [Composables](./references/composables/_INDEX.md) · [Motion guide](./references/guides/motion.md) · [Motion recipes](./references/guides/recipes.md) (both read through `vael-motion`) · [Setup](./references/guides/setup.md) · [Auto import](./references/guides/auto-import.md) · [Styling & CSS variables](./references/guides/styling-and-layers.md) · [Other exports](./references/guides/exports.md) (helpers, pure functions, injection keys, every type) · [Changelog](./references/guides/changelog.md)
 
 ## How to work with this skill
 
