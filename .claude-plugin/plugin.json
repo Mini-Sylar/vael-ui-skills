@@ -1,8 +1,8 @@
 {
   "name": "vael-ui",
   "displayName": "vael-ui Guide",
-  "description": "Installation, usage, and best practices for the vael-ui Vue component library — the vdom/vapor split, auto-import, theming, and the motion system (the motion prop, v-animate, springs, hooks for GSAP or motion).",
-  "version": "2.0.0",
+  "description": "Installation, usage and best practices for the vael-ui Vue component library, plus a motion skill for animation, gestures and the motion system.",
+  "version": "2.4.0",
   "author": {
     "name": "Mini-Sylar"
   },
