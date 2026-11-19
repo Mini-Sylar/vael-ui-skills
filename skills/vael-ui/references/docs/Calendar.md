@@ -56,7 +56,8 @@ Name | Type | Description
 
 Name | Type | Description
 --- | --- | ---
-`rootEl` | `HTMLElement \| null` | Root element.
+`el` | `HTMLElement \| null` | Root element.
+`rootEl` | `HTMLElement \| null` | Root element (same as `el`).
 `gridEl` | `HTMLElement \| null` | Day grid element (`null` while the month or year grid shows).
 `highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between cells. With `motion: false` it moves at once, for your own animation.
 `goToPreviousMonth` | `() => void` | Steps back one page: a month, or a year or 12 years in the month and year grids.

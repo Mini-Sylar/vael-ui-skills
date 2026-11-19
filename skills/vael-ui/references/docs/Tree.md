@@ -63,6 +63,7 @@ Name | Type | Description
 
 Name | Type | Description
 --- | --- | ---
+`el` | `HTMLElement \| null` | Root element.
 `listEl` | `HTMLElement \| null` | The `role="tree"` list element.
 `highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between rows. With `motion: false` it moves at once, for your own animation.
 `filterInputRef` | `{ el: HTMLElement \| null; inputEl: HTMLInputElement \| null; } \| null` | The filter box's Input instance (null when `filterable` is off).

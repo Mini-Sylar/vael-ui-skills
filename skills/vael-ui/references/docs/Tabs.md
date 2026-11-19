@@ -35,6 +35,7 @@ Name | Type | Description
 
 Name | Type | Description
 --- | --- | ---
+`el` | `HTMLElement \| null` | Root element: the tab list.
 `listEl` | `HTMLElement \| null` | Tab list (root) element.
 `highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between tabs. Under a ConfigProvider with `motion: false` it moves at once, for your own animation.
 `tabId` | `(item: T) => string` | The id a tab carries.

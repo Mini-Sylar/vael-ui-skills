@@ -1,6 +1,6 @@
 # useColorScheme
 
-`useColorScheme` sets the root `data-theme` to `light` or `dark`; `system` follows the OS preference. Pass `persist` to save the choice in cookies, a store, or `localStorage`. Vue restores saved choices on mount, which can occur after first paint. The HTML head example restores color mode and an optional root font size before paint. Pass `{ from: event }` as the second argument to `setMode` and the new scheme spreads in a circle from the click, as the example below and this site's header toggle do. Every call in the browser shares one state, so two toggles never disagree. It uses a View Transition; browsers without one, and reduced motion, switch at once.
+Sets the root `data-theme` to `light` or `dark`; `system` follows the OS preference. Pass `persist` to save the choice in cookies, a store or `localStorage`. Vue restores a saved choice on mount, which can be after first paint, so the HTML head example restores the color mode, and an optional root font size, before paint. Every call in the browser shares one state, so two toggles never disagree. Pass `{ from: event }` as the second argument to `setMode` and the new scheme spreads in a circle from the click, as the example below and this site's header toggle do. It uses a View Transition; browsers without one, and reduced motion, switch at once.
 
 ```ts
 import { useColorScheme } from 'vael-ui' // or 'vael-ui/vapor'
@@ -33,12 +33,13 @@ const { mode, resolvedMode, setMode } = useColorScheme({
 Name | Type | Description
 --- | --- | ---
 `initial` | `'system' \| 'light' \| 'dark'` | The mode to use until `persist.get()` is read on mount. Default `'system'`.
-`persist` | `{ get: () => string \| null; set: (mode) => void }` | Structural persistence hook. No default: nothing is saved unless you pass it. `set` receives `null` for `'system'`.
+`persist` | `{ get: () => string \| null; set: (mode) => void }` | Saves and restores the choice. Without it, nothing is saved. `set` receives `null` for `'system'`.
 
 ## Returns
 
 Name | Type | Description
 --- | --- | ---
 `mode` | `ShallowRef<'system' \| 'light' \| 'dark'>` | The selected mode.
-`resolvedMode` | `ShallowRef<'light' \| 'dark'>` | The applied theme. Resolves `'system'` against the live media query.
+`resolvedMode` | `ShallowRef<'light' \| 'dark'>` | The applied theme, with `'system'` resolved against the live media query.
 `setMode` | `(mode, reveal?: { from: Event \| Element \| { x, y }; duration?; easing? }) => void` | Sets the mode, persists it and applies it. With `reveal`, the new scheme spreads in a circle from `from`: a click, an element, or a point. `duration` defaults to 500 ms.
+

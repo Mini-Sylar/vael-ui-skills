@@ -72,6 +72,7 @@ Name | Type | Description
 
 Name | Type | Description
 --- | --- | ---
+`el` | `HTMLElement \| null` | Root element: the trigger frame.
 `triggerEl` | `HTMLElement \| null` | Trigger element: the frame around the combobox and its clear button. Focusing it focuses the combobox.
 `panelEl` | `HTMLElement \| null` | Panel element (null while closed).
 `positionerEl` | `HTMLElement \| null` | Positioning wrapper around the panel (null while closed).

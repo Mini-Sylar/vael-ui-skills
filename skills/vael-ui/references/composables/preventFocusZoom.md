@@ -1,6 +1,6 @@
 # preventFocusZoom
 
-iOS zooms the page when you focus a form field with text under 16px. vael-ui's fields follow your font size, so at 14px they would trigger it. Call `preventFocusZoom()` once and fields keep your size on iPhone without the zoom. It adds `maximum-scale=1` to the viewport on iOS only, where pinch-to-zoom keeps working. Android and desktop never focus-zoom, so it leaves them alone. If you'd rather have bigger fields on phones than change the viewport, set `--ui-touch-font-size: 16px` instead.
+Stops iOS from zooming the page when you focus a field. iOS zooms on any field with text under 16 px, and vael-ui's fields follow your font size, so at 14 px they trigger it. Call `preventFocusZoom()` once and fields keep your size on iPhone without the zoom. It adds `maximum-scale=1` to the viewport on iOS only, where pinch-to-zoom keeps working. Android and desktop never zoom on focus, so it leaves them alone. To get bigger fields on phones instead of changing the viewport, set `--ui-touch-font-size: 16px`.
 
 ```ts
 import { preventFocusZoom } from 'vael-ui' // or 'vael-ui/vapor'
@@ -23,4 +23,5 @@ _None._
 
 Name | Type | Description
 --- | --- | ---
-`changed` | `boolean` | `true` on iOS, where it set the viewport. `false` elsewhere, and during SSR.
+`changed` | `boolean` | Whether it changed the viewport: `true` on iOS, `false` elsewhere and during server rendering.
+

@@ -1,14 +1,20 @@
 # useAnimate
 
-Plays motion from your code, for something an event starts: a wrong code shaking, an item flying to the cart, a success card building in. `animate(target, values, options)` takes the same values and timing as `v-animate`, follows the app's spring, `motion: false` and reduced motion, and leaves the end as the element's own style. Give it a list of steps instead and it plays them one after another as one sequence. `useAnimate()` is the same `animate` scoped to a component: selectors match inside its element, and whatever it started stops when the component unmounts. For motion that plays when elements come in, use `v-animate` with `after` and `stagger` in the template instead.
+Plays motion from your code, for something an event starts: a wrong code shaking, an item flying to the cart, a success card building in. `animate(target, values, options)` takes the same values and timing as `v-animate`, and follows the app's spring, `motion: false` and reduced motion. The end stays as the element's own style. Pass a list of steps and it plays them one after another as one sequence. To play motion as elements come in, use `v-animate` with `after` and `stagger` in the template.
 
 ```ts
 import { animate, useAnimate } from 'vael-ui/motion' // either build
 ```
 
+## Which one?
+
+- `useAnimate()`: use it in a component. Selectors match inside your element, and what it started stops when the component unmounts.
+- `animate`: use it only outside a component, such as a shared `shake(el)` helper that other code calls with an element, or a test.
+
 ## Example
 
 ```ts
+// In a component: useAnimate, scoped to it.
 import { useTemplateRef } from 'vue'
 import { useAnimate } from 'vael-ui/motion'
 
@@ -26,6 +32,13 @@ async function sent() {
     ['.check path', { pathLength: [0, 1] }, { at: 'card:60%' }],
     ['.title', { opacity: [0, 1], y: [6, 0] }, { at: '-0.15' }],
   ])
+}
+
+// Outside a component, say in shake.ts: plain animate, given the element itself.
+import { animate } from 'vael-ui/motion'
+
+export function shake(el: Element) {
+  return animate(el, { x: [0, -8, 8, -4, 0] }, { duration: 300 })
 }
 ```
 

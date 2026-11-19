@@ -10,17 +10,18 @@ import { useFieldControl } from 'vael-ui' // or 'vael-ui/vapor'
 
 Name | Type | Description
 --- | --- | ---
-`filled` | `MaybeRefOrGetter<boolean>` | `true` when the control has a value. Reported to the nearest Field, including programmatic `v-model` writes.
+`filled` | `MaybeRefOrGetter<boolean>` | Tells the nearest Field whether the control has a value, including values your code sets through `v-model`.
 
 ## Returns
 
 Name | Type | Description
 --- | --- | ---
-`id` | `string` | Bind to the control's `id`. It's Field's `controlId` when there is one, otherwise a new `useId()`.
-`describedBy` | `() => string \| undefined` | Bind to `aria-describedby`.
-`labelledBy` | `() => string \| undefined` | Bind to `aria-labelledby` on group controls (RadioGroup) that have no single native input.
-`invalid` | `() => boolean` | OR it into the control's own `invalid` prop.
-`required` | `() => boolean` | Bind to `aria-required`.
-`disabled` | `() => boolean` | Advisory. OR it into the control's own `disabled` prop.
-`onFocus` | `() => void` | Call it from the control's native `focus` handler.
-`onBlur` | `() => void` | Call it from the control's native `blur` handler.
+`id` | `string` | The id to bind on the control: Field's `controlId` when there is one, otherwise a new `useId()`.
+`describedBy` | `() => string \| undefined` | The value for `aria-describedby`.
+`labelledBy` | `() => string \| undefined` | The value for `aria-labelledby`, on group controls such as RadioGroup that have no single native input.
+`invalid` | `() => boolean` | Whether Field marks the control invalid. Combine it with the control's own `invalid` prop.
+`required` | `() => boolean` | The value for `aria-required`.
+`disabled` | `() => boolean` | Whether Field disables the control. Combine it with the control's own `disabled` prop.
+`onFocus` | `() => void` | Reports focus to Field. Call it from the control's native `focus` event.
+`onBlur` | `() => void` | Reports blur to Field. Call it from the control's native `blur` event.
+

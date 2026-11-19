@@ -1,10 +1,10 @@
 ---
 name: vael-ui
-description: Use whenever writing, editing, reviewing or debugging Vue code that uses vael-ui ("vael-ui" or "vael-ui/vapor" imports, or vael-ui in package.json), even when the request only names a component (dialog, drawer, toast, data table, select, date picker, sortable board, calendar planner, tree) or asks to animate one. Covers the exact props, slots, events and motion parts of all 70 components; setup (vdom vs Vapor builds, auto-import, Nuxt, SSR); theming with ConfigProvider, the ui prop and --ui-* variables; the motion system (the `motion` prop, springs, states, `v-animate` with layout, `layoutId`, `appear`, `after`; hooks for GSAP or motion; settled() in tests) with rules for motion that feels right; imperative composables (openDialog, confirmAction, toast); and upgrading from 0.4. Check it before guessing a prop name, hand-building something vael-ui ships, or animating around a vael-ui component.
+description: Use whenever writing, editing, reviewing or debugging Vue code that uses vael-ui ("vael-ui" or "vael-ui/vapor" imports, or vael-ui in package.json), even when the request only names a component (dialog, drawer, toast, data table, select, date picker, sortable board, calendar planner, tree) or asks to animate one. Covers the exact props, slots, events and motion parts of all 70 components; setup (vdom vs Vapor builds, auto-import, Nuxt, SSR); theming with ConfigProvider, the ui prop and --ui-* variables; the motion system (the `motion` prop, springs, states, `v-animate` with layout, `layoutId`, `appear`, `after`, live values; hooks for GSAP or motion; settled() in tests) with rules and recipes for motion that feels right; gestures (`useDrag`, `useWheel`, `usePanZoom`, `useDragSelect`, `v-draggable`, sortable boards); imperative composables (openDialog, confirmAction, toast); and upgrading from 0.4. Check it before guessing a prop name, hand-building something vael-ui ships, or animating around a vael-ui component.
 license: MIT
 metadata:
   author: Mini-Sylar
-  version: 2.2.0
+  version: 2.3.0
 ---
 
 # vael-ui `vael-ui@0.5.5`
@@ -12,13 +12,16 @@ metadata:
 A Vue 3 component library: 70 components, from buttons and form fields to overlays, data tables, drag-and-drop and gestures, plus composables, with one motion system you take over part by part. Two builds from one source: `vael-ui` (regular Vue) and `vael-ui/vapor` (Vue Vapor), same names, props and composables.
 
 **References** (generated from the library's types; if this page disagrees with one, the reference is right):
-[Components](./references/docs/_INDEX.md) · [Composables](./references/composables/_INDEX.md) · [Motion guide](./references/guides/motion.md) · [Auto import](./references/guides/auto-import.md) · [Styling & CSS variables](./references/guides/styling-and-layers.md) · [Changelog](./references/guides/changelog.md)
+[Components](./references/docs/_INDEX.md) · [Composables](./references/composables/_INDEX.md) · [Motion guide](./references/guides/motion.md) · [Motion recipes](./references/guides/recipes.md) · [Auto import](./references/guides/auto-import.md) · [Styling & CSS variables](./references/guides/styling-and-layers.md) · [Changelog](./references/guides/changelog.md)
 
 ## How to work with this skill
 
 1. **Open the component's reference file before writing a line.** It lists every prop, slot, event, exposed value and motion part. Never guess a prop name; a typo in a motion value fails `vue-tsc`, a typo in a prop silently does nothing.
 2. **Walk the build sequence below in order.** Setup → pick the component → wire it → style it → animate it → test it. Most mistakes come from skipping a step: hand-building something that ships, styling a part with a deep selector, or wrapping a vael-ui panel in `<Transition>`.
 3. **Make the call, write the code.** Don't present option menus. State in one line what you chose when it wasn't obvious.
+4. **Read the project's taste first.** If the repo has a `DESIGN.md` (or a CLAUDE.md / AGENTS.md section) with Motion or Interaction rules, they beat the defaults here. When the user corrects a duration, a spring, a distance or a look, follow it for the rest of the task and say it's worth recording (`/learn-taste` writes it down with its reason).
+
+**Pairs with Emil Kowalski's skills, when they're installed.** `animate`, `choreograph`, `gestures`, `review-animations` and `emil-design-eng` carry the philosophy and the CSS and Motion recipes. This skill is the vael-ui mapping of the same rules: which prop, directive or composable plays each one, with the values already chosen. When they disagree on a library detail, this skill and the reference files win; when they disagree on feel, check the recording.
 
 ## Hard rules
 
@@ -29,7 +32,9 @@ A Vue 3 component library: 70 components, from buttons and form fields to overla
 5. **Guards aren't animations.** `before-close` returns `true`, `false` or a promise (`() => confirmAction({ title: 'Discard?' }).result`). An exit animates through `motion.exit` or a `leave` hook. `force-mount` keeps content mounted; it hands you nothing else.
 6. **Decide whether to animate before how.** Keyboard-driven and hundreds-a-day UI (command palettes, menus, tabs) keeps the built-in look or none. Name the purpose (feedback, where it came from, what changed, smoothing a jump) or don't animate.
 7. **Directives are imported, not auto-imported.** `vTooltip`, `vAnimate` (`vAnimateVapor as vAnimate` in a `<script setup vapor>`), `vScrollMask`, `vHoverIndicator`, `vDraggable` from `vael-ui` or `vael-ui/motion`.
-8. **In tests, `await settled()`** from `vael-ui/motion`, or wrap in `<ConfigProvider :motion="false">`. Never a `setTimeout` that repeats a duration.
+8. **Don't hand-roll a drag.** A free drag is `useDrag`, a picker or carousel `useWheel`, pan and zoom `usePanZoom`, band selection `useDragSelect`, reordering `Sortable` or `v-draggable`. They track 1:1, throw on a spring that keeps the speed, catch mid-flight, and follow `ConfigProvider` and reduced motion. No `pointermove` listeners, VueUse `useDraggable` with a CSS settle, or `setInterval` carousels.
+9. **A number drives a look through a live value.** `v-animate="{ animate: { rotate: () => mapRange(drag.x.value, [-300, 300], [-20, 20]) } }"`: followed every frame with no render. Never write `style.transform` for something a getter can drive, and never put a CSS `transition` on it.
+10. **In tests, `await settled()`** from `vael-ui/motion`, or wrap in `<ConfigProvider :motion="false">`. Never a `setTimeout` that repeats a duration.
 
 ## The build sequence
 
@@ -84,7 +89,12 @@ Read the reference file, then decide at the level of the whole task:
 | A shortcut hint on a tooltip | `v-tooltip="{ content: 'Search', keys: ['⌘', 'K'] }"` |
 | A tooltip with markup (status dot, progress bar) | a component as `content`: `v-tooltip="{ content: ProjectTip, props: { project } }"`, drawn in the one shared tooltip. Links and buttons go in a Popover |
 | A tooltip along a wide target (timeline bar) | `v-tooltip="{ content, follow: true }"` or `<Tooltip follow>`: it tracks the pointer and stops at the ends |
+| A stacked bar with hover text per segment, a thinner stop or a tiny one that stays visible | `Progress` segments take `tooltip`, `class` and `style`: `{ value: 2, tooltip: 'Stopped 2 min', style: { minInlineSize: '6px' } }`. A `gap` goes on `ui.track`; the segments shrink to fit it. Hover text needs a mounted `TooltipHost` |
 | A timeline bar, a span to drag and stretch | two `useResizable(size, { offset: start, edge: 'start' \| 'end', bounds, step, scrollEl })` over the same refs; `onMovePointerdown` / `onMoveKeydown` on the bar. Snaps on release, Escape reverts: [useResizable](./references/composables/useResizable.md). A plain panel: `Resizable` (`step`) |
+| A card, notice or panel that moves with the finger and decides on release (swipe to dismiss, a deck, a draggable dialog) | `useDrag({ el, axis, handle, onRelease })`: `onRelease({ projected })` returns where it goes, or `null` for home; `exit` on a spring keeps the throw's speed. `v-draggable` only reorders |
+| A picker, a carousel, a coverflow | `useWheel(index, { el, count, size, orientation, loop })`: items place with `--ui-wheel-distance` and style with `progressOf(i)`; `step`, `goTo` and `onKeydown` for buttons and keys |
+| A photo viewer, a map, a lightbox | `usePanZoom({ el, maxScale })`: pinch, double tap, ctrl and wheel, keys; `scale` is live. A lightbox is a `Dialog` with `maximized` |
+| Drag across empty space to select | `useDragSelect({ el, spring })`: the children are the items; draw the band with the live `x`, `y`, `width`, `height` |
 | A sidebar nav of links | `MenuList`: every row is its own Tab stop, like links. Your own list: `useMenu({ roving: false })` |
 
 **Things that look like gaps but aren't:** Combobox and Select options hold no buttons (content is flattened for screen readers; put removal outside the list). A `Toolbar` needs `flex: 1` so its overflow menu can measure its room. Components inside a narrow or resizable flex container need `min-inline-size: 0` or they overflow instead of shrinking. Sortable's gap and direction live on its root (`class` or `ui.root`), never on the inner list.
@@ -118,6 +128,7 @@ Theme once, override per instance, in this order:
 | A Button's colours | `--ui-button-bg` / `--ui-button-border` on it. Its box is a `::before` layer, so `background` and `border` on the element vanish. Dashed: `.my-button::before { border-style: dashed }` |
 | A list's hover | `--ui-indicator-bg`. Select, Menu, Tree, DataTable, Tabs slide one `.ui-indicator` behind their rows; a row `:hover` background paints over it |
 | Your own list's hover | `<ul v-hover-indicator="'.row'">` (inner quotes: the value is an expression). `.over` for rows with a solid background. The highlight is the list's first child, so `:first-child` rules on rows need `:first-of-type`. On a `--ui-muted` panel set `--ui-indicator-bg: var(--ui-muted-hover)` |
+| A tooltip's colours | `--ui-tooltip-bg` / `--ui-tooltip-color` in `ui.panel`'s `style` on `TooltipHost` (all) or in `v-tooltip="{ content, ui: { panel } }"` (one), or in your CSS. Its box is a `::before`, so a plain `background` there paints a square rectangle that doesn't move with the tooltip |
 | Tailwind | Pass `twMerge` as `ConfigProvider`'s `class-merge`; `ui` classes don't dedupe on their own |
 | A `ui` class from `<style scoped>` | `:deep(.my-class)`: the scope attribute never reaches a component's inner parts or a teleported panel |
 
@@ -125,11 +136,22 @@ Theme once, override per instance, in this order:
 
 ### 5. Animate it
 
-Full guide: [references/guides/motion.md](./references/guides/motion.md) (API by task, then rules for motion that feels right, then common mistakes). Decide in this order, and stop at "don't":
+Guides: [Motion](./references/guides/motion.md) for the API by task and the rules, [Recipes](./references/guides/recipes.md) for ready-made starting points (a list, a page change, a shared element, a success sequence, swipe to dismiss, a card deck, a picker, pan and zoom). Start from the recipe that matches the request. Decide in this order, and stop at "don't":
 
-1. **How often is it seen?** Hundreds a day or from the keyboard: nothing beyond the built-in. Occasionally (dialogs, drawers, toasts): standard. Rarely (onboarding, success): delight is allowed.
-2. **What's it for?** Feedback, where it came from, what changed, smoothing a jump. Can't name it: don't.
-3. **Which tool?** The component's `motion` prop → `v-animate` on your elements → `animate()` / `useAnimate()` for event-started motion → `useTween` for a number → `enter` / `leave` hooks for GSAP or motion.
+1. **How often is it seen?** Hundreds a day or from the keyboard (command palettes, menus, tabs, list navigation): nothing beyond the built-in. Occasionally (dialogs, drawers, toasts): standard. Rarely (onboarding, success, celebration): delight is allowed. Say which tier in your answer.
+2. **What's it for?** Feedback, where it came from, what changed, smoothing a jump. Name it in a word, or don't build it. Data people are reading or acting on doesn't move for style.
+3. **Cast the elements** when more than one moves: one lead (moves first and furthest), support (follows with less), decoration (fades only), everything else still. Then relate each pair: together by default; overlap (a stagger, 30 to 80 ms, total under about 300 ms) only when order carries meaning; sequence (`after`, `animate([…])`) only when overlap would look wrong. One entrance per container: a panel that animates in carries its content. Exits go together, shorter than the entrance.
+4. **Which tool?** Walk down and stop at the first that fits:
+
+| The motion is | Tool |
+| --- | --- |
+| A vael-ui component's own | its `motion` prop: off, a spring, values by part, states, hooks |
+| Your element coming, going, moving or holding a look | `v-animate`: `initial` / `exit`, `layout`, `layoutId`, `states`, `animate` |
+| Started by an event (a wrong code, a sent payment) | `animate()` / `useAnimate()`, or a list of steps for a sequence |
+| Following a number (a drag, a scroll, the pointer, a slider) | a live value in `animate`, with `mapRange`; `progress` for a keyframe sweep |
+| A number you display or draw | `AnimatedNumber`, or `useTween` |
+| Driven by a finger | `useDrag`, `useWheel`, `usePanZoom`, `useDragSelect` |
+| The user's own library (GSAP, motion) | `enter` / `leave` hooks that **return** the animation: vael-ui waits for it and stops it if interrupted |
 
 ```vue
 <Dialog v-model:open="open" :motion="false" />                                           <!-- off -->
@@ -142,6 +164,7 @@ Full guide: [references/guides/motion.md](./references/guides/motion.md) (API by
 <span v-animate.pop.bouncy>New</span>
 <div v-animate="{ states: { hover: { scale: 1.03 }, active: { scale: 0.97 } } }">…</div>
 <li v-for="p in projects" :key="p.id" v-animate:projects="{ initial: { opacity: 0, y: 6 }, stagger: true, appear: 'once' }"> <!-- once per page load -->
+<article v-animate="{ animate: { rotate: () => mapRange(drag.x.value, [-300, 300], [-20, 20]) } }"> <!-- a live value -->
 
 <RouterView v-slot="{ Component, route }">                                                <!-- pages: out, then in -->
   <component :is="Component" :key="route.path" v-animate:page="{ initial: { opacity: 0, y: 8 }, swap: 'wait' }" />
@@ -156,9 +179,9 @@ const motion: DialogMotion = {
 }
 ```
 
-**Imports.** Components and their motion types (`DialogMotion`, `SelectPart`) from `vael-ui`. Everything for your own elements from `vael-ui/motion`, in both builds: `vAnimate`, `animate`, `useAnimate`, `useMotion`, `useScrollProgress`, `useScrollLength`, `useTween`, `settled`, `springEasing`, `useSpringValue`, and the types `MotionValues`, `MotionTiming`, `MotionStyle`.
+**Imports.** Components and their motion types (`DialogMotion`, `SelectPart`) from `vael-ui`, along with the gesture composables (`useDrag`, `useWheel`, `usePanZoom`, `useDragSelect`). Everything for your own elements from `vael-ui/motion`, in both builds: `vAnimate`, `animate`, `useAnimate`, `useMotion`, `mapRange`, `useScrollProgress`, `useScrollLength`, `useTween`, `settled`, `springEasing`, `useSpringValue`, and the types `MotionValues`, `MotionTiming`, `MotionStyle`. Inside a component use `useAnimate()`; plain `animate` is for helpers and tests that have an element.
 
-**Names.** `v-animate:rows` names an element. Elements under one name that come in together stagger as one group; inside a component they're its `targets.rows`; `after: 'rows'` (or `'rows:60%'`) waits for them, for what they're already playing, or for a `layoutId` slide under that name; pages under one name can `swap: 'wait'`; `appear: 'once'` plays the name's entrance once per page load.
+**Names.** `v-animate:rows` names an element. Elements under one name that come in together stagger as one group; inside a component they're its `targets.rows`; `after: 'rows'` (or `'rows:60%'`) waits for them, for what they're already playing, or for a `layoutId` slide under that name; pages under one name can `swap: 'wait'`; `appear: 'once'` plays the name's entrance once per page load. Name an element only when something else has to point at it.
 
 **Values, by what moves** (the full table is [here](./references/guides/motion.md#5-durations-easing-and-springs)):
 
@@ -172,6 +195,8 @@ const motion: DialogMotion = {
 Units: `duration` ms; `delay`, `stagger`, `spring.response` seconds. A spring and a duration never go together. Tokens by name: `easing: 'out'`, `duration: 'enter'`. Entrances by name: `fade`, `rise`, `drop`, `pop`, `blur`. Every name is a typed union.
 
 Rules that apply every time: ease out both ways and leave faster than you enter, under 300 ms; never scale from 0 (`'0.95'` or higher with `opacity: 0`, move 4–16 px); delay only to stagger, to filter an accidental trigger, or to sequence with `after` (a stagger's total under about 300 ms; a close is never delayed); animate `x`, `y`, `scale`, `rotate`, `opacity`, never `width`/`height`/`top` (use `.size`, `resize` or `layout`); when a panel opens above a list, give the list `layout: 'position'` too or it snaps; turn a trigger only with `v-animate` (another library writing `transform` on it drags its open panel along; tween a child instead); reduced motion is handled for you (fades kept, movement dropped, hooks skipped unless `reducedMotion: 'run'`).
+
+**Gestures follow one split.** While the pointer is down the element is the finger: 1:1, no easing, no spring, no `transition`, and no render per move (read `x`, `y`, `scale`, `position` in getters). On release a spring keeps the speed: decide from `projected` (where the throw would land), so a short flick counts; bounce only after a throw, never for a button or a key; a new press catches it mid-flight. Everything linked to the drag (the page behind, the next card, the backdrop) reads the one number the drag writes. A drag has no keyboard form: add `throwTo`, `step` and `onKeydown`. Give a thrown element's `exit` a spring (`x: { value: far, spring: 'smooth' }`) or it stops at the edge and only then fades.
 
 ### 6. Test it
 
@@ -191,6 +216,12 @@ Rules that apply every time: ease out both ways and leave faster than you enter,
 | `setTimeout(duration)` to act after motion | `onAfterEnter` / `onAfterLeave` / `onAfterMove`, `settled()` in tests |
 | `window.addEventListener('keydown')` for Escape | the component already handles it (Editable, Sortable, overlays) |
 | `import 'vael-ui/style.css'` | nothing: components load their own |
+| `pointermove` / VueUse `useDraggable` plus a CSS transition to settle, `setInterval` carousels | `useDrag`, `useWheel`, `usePanZoom`, `useDragSelect` |
+| A spring or `transition` on an element while it's dragged | nothing: tracking is 1:1, the composable springs it on release |
+| Deciding a swipe from the offset alone, or an `exit` with a plain number after a throw | `projected` in `onRelease`; `x: { value, spring: 'smooth' }` |
+| `v-draggable` to move one element, or `useDrag` to reorder | `v-draggable` / `Sortable` reorder; `useDrag` moves one element |
+| `el.style.transform` written for something a getter can drive | a live value: `animate: { rotate: () => … }` |
+| Stagger on a menu, a command palette, tabs or any keyboard path | the built-in look, or none |
 | A prop name from memory | the reference file |
 | `setTriggerEl`, `:trigger-el` or `:scroll-el` given your own Vapor component | an element ref, or `defineExpose({ el })` in that component |
 
@@ -200,4 +231,9 @@ Rules that apply every time: ease out both ways and leave faster than you enter,
 
 ## Output
 
-Write the code. Then, in a few lines: which component or composable you used and why (one line), anything you decided that the request left open, and what to feel-check in the browser when the result depends on motion.
+Write the code. Then, in a few lines:
+
+- **The gate**: the frequency tier and the named purpose. If part of the request was declined (a stagger on a menu, motion on a keyboard path), say which and why.
+- **The ingredients**: the component or composable and why (one line), then tool, values and timing in one line each.
+- **What you decided** that the request left open.
+- **What to feel-check**, when the result depends on motion: play it at 2 to 5 times the duration, step it frame by frame, interrupt it mid-flight, try a gesture on a real phone, and look again the next day. If the user corrects any value, that's taste worth recording with `/learn-taste`.

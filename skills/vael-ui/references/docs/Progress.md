@@ -19,7 +19,7 @@ A ring's diameter is the `--ui-progress-ring-size` custom property on the root (
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-`value` | `number \| ProgressSegment[] \| null \| undefined` |  | One value, or segments that stack into one bar (a storage breakdown, a budget). `null`/`undefined` renders the indeterminate (looping) state.
+`value` | `number \| ProgressSegment[] \| null \| undefined` |  | One value, or segments that stack into one bar (a storage breakdown, a budget): each is `{ value, label?, variant?, color?, tooltip?, class?, style? }`. `null`/`undefined` renders the indeterminate (looping) state.
 `max` | `number \| undefined` | `100` | Value that counts as complete; Progress clamps `value` to `0`–`max`.
 `label` | `string \| undefined` |  | Accessible label for the progress bar.
 `valueText` | `string \| undefined` |  | Human-readable reading for assistive tech (`aria-valuetext`), e.g. "42 GB of 100 GB".

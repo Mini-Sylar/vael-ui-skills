@@ -16,6 +16,7 @@
 ## Motion
 
 - **The motion system** (`useMotion`, `vAnimate`, `settled`, `parseMotionStyle`, `MotionStyle`, the `*Motion` types): see the [Motion guide](../guides/motion.md). The composables below are the pieces behind it, for motion of your own.
+- [mapRange](./mapRange.md): Maps a number from one range onto another, held at the ends, with more points to bend the line. Feed it a getter to `v-animate` live values: `rotate: () => mapRange(drag.x.value, [-300, 300], [-20, 20])`.
 - [springEasing](./springEasing.md): A spring as a CSS `linear()` curve and settle time, for `element.animate()` or a transition; the curve behind `ConfigProvider`'s `:motion="{ spring }"`.
 - [useHaptic](./useHaptic.md): Haptic feedback with `selection`, `impact`, `notification`, `vibrate` and `intensity`; `ConfigProvider` `haptics` sets it app-wide and turns on vael-ui's own.
 - [useSpringValue](./useSpringValue.md): vael-ui's spring engine: the physics behind Sortable, Tree and DataTable reordering, and behind every sliding indicator set to spring mode. Also exports `createSpring` and `stepSpring`.
@@ -38,6 +39,10 @@
 
 ## Drag & Drop
 
+- [useDrag](./useDrag.md): Move one element freely and decide where it goes when let go: a card deck, a swipe to dismiss, a draggable dialog (`handle`). Springs on the throw's speed; `x`/`y` are live for `v-animate` getters.
+- [useWheel](./useWheel.md): A position along a list of items that you drag, throw, scroll or step with keys, and that rests on one item: a wheel picker, carousel, coverflow.
+- [usePanZoom](./usePanZoom.md): Pan and zoom one element: drag, pinch, double tap, ctrl and wheel, keys. A photo viewer, a map, a lightbox. `scale` is live.
+- [useDragSelect](./useDragSelect.md): Drag across empty space to select the items the band touches (rubber-band selection), with an optional spring and a `stretch` for a bowed band.
 - [useSortable](./useSortable.md): The spring-driven drag-to-reorder engine behind `<Sortable>`, `<Tree>`'s nested reorder, and `<DataTable>`'s column reorder — pointer and keyboard drive the same grabbed state, and all ordering/nesting decisions live in pure, independently-tested functions.
 - [useSortableGroup](./useSortableGroup.md): Cross-container drag — the primitive a Kanban-style board is built from, not a component.
 - [moveTreeNode](./moveTreeNode.md): Moves for a reorderable tree. Also exports `isDescendantOf`.

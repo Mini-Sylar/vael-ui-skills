@@ -24,11 +24,12 @@ el.style.transition = `transform ${spring.duration}ms ${spring.easing}`
 
 Name | Type | Description
 --- | --- | ---
-`spring` | `{ damping?: number; response?: number }` | Damping 1 settles without overshoot; below 1 it bounces. Response is roughly the time to arrive, in seconds.
+`spring` | `{ damping?: number; response?: number }` | The spring to convert. Damping 1 settles without overshoot; below 1 it overshoots. `response` is roughly the time to arrive, in seconds.
 
 ## Returns
 
 Name | Type | Description
 --- | --- | ---
-`easing` | `string` | A CSS `linear()` easing that follows the spring.
+`easing` | `string` | The CSS `linear()` easing that follows the spring.
 `duration` | `number` | How long the spring takes to settle, in ms.
+

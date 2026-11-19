@@ -9,7 +9,7 @@ Each component's reference file ends with a **Motion** section: its motion type,
 ## Contents
 
 - [Units](#units)
-- [The API by task](#the-api-by-task): [turn it off](#turn-it-off), [retime with a spring](#retime-with-a-spring), [change a part's values](#change-a-parts-values), [states](#states), [entrances on any component](#entrances-on-any-component), [lists](#lists), [overlays](#overlays), [your elements inside an overlay](#your-elements-inside-an-overlay), [`v-animate`](#v-animate), [from code](#from-code), [in order](#in-order), [tween a number](#tween-a-number), [pages](#pages), [scroll](#scroll), [hooks for GSAP or motion](#hooks-for-gsap-or-motion), [callbacks](#callbacks), [indicators](#indicators), [your own engine](#your-own-engine), [app-wide styles](#app-wide-styles), [`useMotion`](#usemotion-for-your-own-components), [testing](#testing), [server rendering](#server-rendering), [what never animates](#what-never-animates), [debugging](#debugging)
+- [The API by task](#the-api-by-task): [turn it off](#turn-it-off), [retime with a spring](#retime-with-a-spring), [change a part's values](#change-a-parts-values), [states](#states), [entrances on any component](#entrances-on-any-component), [lists](#lists), [overlays](#overlays), [your elements inside an overlay](#your-elements-inside-an-overlay), [`v-animate`](#v-animate), [from code](#from-code), [in order](#in-order), [tween a number](#tween-a-number), [pages](#pages), [scroll](#scroll), [live values](#live-values), [gestures](#gestures), [hooks for GSAP or motion](#hooks-for-gsap-or-motion), [callbacks](#callbacks), [indicators](#indicators), [your own engine](#your-own-engine), [app-wide styles](#app-wide-styles), [`useMotion`](#usemotion-for-your-own-components), [testing](#testing), [server rendering](#server-rendering), [what never animates](#what-never-animates), [debugging](#debugging)
 - [Motion that feels right](#motion-that-feels-right)
 - [Common mistakes](#common-mistakes)
 
@@ -430,6 +430,8 @@ Modifiers: an entrance (`.fade`, `.rise`, `.drop`, `.pop`, `.blur`, or a preset 
 <div v-animate="{ animate: { opacity: [0, 1], scale: ['0.9', '1'] }, progress: swipe }" />
 ```
 
+A shared element whose trip an ancestor with `overflow`, `contain` or `clip-path` would clip (a thumbnail in a clipped card flying to a lightbox) flies as a copy in the top layer and hands over to the real one when it lands. Nothing to set. A target behind a modal's inert page lands out of sight instead.
+
 Values beyond CSS: `rotateX`, `rotateY`, `scaleX`, `scaleY`, `scaleZ` (depth, under `perspective`), `skewX`, `skewY` and `perspective` (a card flip: `animate: { rotateY: flipped ? 180 : 0, perspective: 800 }`), and `pathLength` (0 to 1), `pathOffset`, `pathSpacing` to draw an SVG stroke (`initial: { pathLength: 0 }` draws a check in; the shape gets `pathLength="1"`). At `pathLength: 0` the stroke is hidden, so a round or square line cap leaves no dot; don't add `opacity` for that.
 
 Keyframe arrays: `null` first starts from where the value is now (`scale: [null, 1.2, 1]`). Beside `repeat`, `repeatType: 'loop' | 'reverse' | 'mirror'` (`mirror` comes back eased as it went) and `repeatDelay` (seconds held between runs).
@@ -493,7 +495,7 @@ await animate([
 
 `at`: `'+0.2'` / `'-0.15'` seconds after or before the step before ends, `'50%'` through it, a number of seconds from the start, `'card'` with the step named `card`, `'card:60%'` 60% through it. The names are typed: TypeScript offers the ones your steps declare and fails on any other. Name a step above the one that starts from it; a later or unknown name warns in development and starts after the step before. `delay` in the second argument holds the whole sequence. Types: `SequenceStep`, `SequenceStepOptions`, `SequenceAt`.
 
-Dragging: the components that drag (BottomSheet, SwipeToReveal, Sortable, Slider) have it built in. To let people reorder your own list or move items between lists, use `v-draggable` with `useSortableGroup`. For an element dragged freely (VueUse's `useDraggable`), hold its offset in `animate` and set it back to 0 on release: `v-animate` springs it home.
+Dragging has its own section: [Gestures](#gestures).
 
 ### Tween a number
 
@@ -540,6 +542,124 @@ const progress = useScrollProgress(panel)
 For "animate while visible", use `states.inView` with a `viewport`; for "play once on first sight", `when: 'visible'`.
 
 `useScrollLength(container?, { axis })` is how far the page or a container can scroll, in px, kept current as content loads and the window resizes: `progress.value * length.value` is the distance scrolled.
+
+### Live values
+
+A value in `animate` can be a getter or a ref. It is followed every frame without rendering the component, so something that moves (a drag, a scroll, a pointer) can drive a look.
+
+```vue
+<script setup lang="ts">
+import { mapRange, vAnimate } from 'vael-ui/motion'
+</script>
+
+<template>
+  <!-- The card leans with the drag, with no render -->
+  <article v-animate="{ animate: { rotate: () => mapRange(drag.x.value, [-300, 300], [-20, 20]) } }" />
+  <!-- The next card follows on a spring: it settles after the one above it moves -->
+  <article v-animate="{ animate: { scale: { value: () => mapRange(slot, [0, 3], [1, 0.82]), spring: 'smooth' } } }" />
+</template>
+```
+
+- `{ value: getter, spring: 'smooth' }` follows on a spring. `spring: true` uses the app's.
+- `mapRange(value, from, to)` turns one number into another. It holds the end value past either end, and more points bend the line: `mapRange(x, [-300, 0, 300], [-20, 0, 20])`.
+- Use a live value when the look follows a number. Use `progress` when the look is a keyframe sweep (`opacity: [0.3, 1, 0.3]`).
+- An `exit` on a spring carries on at the speed the element was moving, so a thrown card keeps going. Give the value a spring: `exit: () => ({ x: { value: far, spring: 'smooth' }, opacity: 0 })`. A plain number leaves on a short ease and stops at the edge while the fade runs.
+- Never write a property by hand (`el.style.transform`) that a live value can drive, and never put a CSS `transition` on it.
+
+### Gestures
+
+What a finger drives, and which tool does it:
+
+| The task | Reach for |
+| --- | --- |
+| A bottom sheet, a swipe-to-reveal row, a slider, a resizable panel | the component: `BottomSheet`, `SwipeToReveal`, `Slider`, `Resizable` |
+| Reorder the children of a container, or move them between containers | `Sortable`, `v-draggable`, `useSortable` + `useSortableGroup` |
+| Move **one element** freely and decide where it goes when let go: a card, a notice, a floating dialog | `useDrag` |
+| A picker, a carousel or a coverflow that rests on one item | `useWheel` |
+| Pan and zoom a photo, a map or a diagram | `usePanZoom` |
+| Drag across empty space to select what the band touches | `useDragSelect` |
+
+`v-draggable` only reorders. `useDrag` only moves one element. Neither does the other's job. Don't hand-roll `pointermove` listeners, VueUse's `useDraggable` with a CSS transition to settle, or a `setInterval` carousel: these already track, throw, catch mid-flight, honor `ConfigProvider`'s spring and `motion: false`, and handle reduced motion.
+
+**Swipe away** (`useDrag`):
+
+```vue
+<script setup lang="ts">
+import { shallowRef, useTemplateRef } from 'vue'
+import { useDrag } from 'vael-ui'
+import { mapRange, vAnimate } from 'vael-ui/motion'
+
+const shown = shallowRef(true)
+const notice = useTemplateRef<HTMLElement>('notice')
+const width = () => notice.value?.offsetWidth ?? 300
+let gone = 1 // which way it was thrown, read by `exit`
+
+const drag = useDrag({
+  el: notice,
+  axis: 'x', // a drag across it stays the page's scroll
+  // `projected` is where the throw would land, so a flick counts
+  onRelease({ projected }) {
+    if (Math.abs(projected.x) < width() / 3) return null // home, on a spring
+    gone = Math.sign(projected.x)
+    shown.value = false
+  },
+})
+</script>
+
+<template>
+  <div
+    v-if="shown"
+    ref="notice"
+    v-animate="{
+      animate: { opacity: () => mapRange(Math.abs(drag.x.value), [0, width()], [1, 0.2]) },
+      exit: () => ({ x: { value: gone * width() * 1.2, spring: 'smooth' }, opacity: 0 }),
+    }"
+  />
+</template>
+```
+
+**Rules for every gesture:**
+
+1. **Tracking is 1:1.** While the pointer is down the element is the finger: no easing, no spring, no CSS `transition`. `useDrag`, `useWheel` and `usePanZoom` write `translate` directly. Don't re-render per move: read `x`, `y`, `scale` and `position` in `v-animate` getters.
+2. **Release on a spring that keeps the speed.** Decide from `projected` (where the throw would land), not from where the finger lifted: a short fast flick commits, a slow drag past the middle commits, a slow drag short of it goes home. Distance or speed, not distance only.
+3. **Bounce only on a hand's release.** The composables give a thrown element a little give and settle `throwTo`, `reset` and keys without any: a button applied no force. Don't give a button's move a bouncier spring.
+4. **Catch it mid-flight.** A new press takes over from where the element is. Never use a keyframe animation on anything a gesture can touch.
+5. **Derive linked looks from the drag.** The page behind scales, the next card rises, the backdrop fades: read one number (`drag.x`, `wheel.progressOf(i)`) in getters. Two separate animations drift apart the moment a gesture is reversed.
+6. **Edges give.** A pull past the end of a wheel or a zoom stretches a little and returns; there is no hard stop. Escape mid-drag puts the element back.
+7. **A drag has no keyboard form.** Add the buttons and keys: `drag.throwTo(...)`, `wheel.step(1)`, `@keydown="wheel.onKeydown"`, `pz.zoomBy(1.5)`. Arrow-key moves settle without bounce.
+8. **Touch.** `touch-action` is set for you on `el` (along a free axis the drag owns the touch; across one axis the page scrolls). With `handle`, give the handle `touch-action: none`. `useDragSelect` is for a mouse or pen: a touch scrolls. Test on a real phone.
+9. **Reduced motion drops the throw and the bounce; tracking stays.** It's the user's own movement.
+
+`useDrag` takes `handle` (a selector inside `el`) so only a press there drags, as a dialog's header does:
+
+```ts
+const panel = computed(() => dialog.value?.panelEl ?? null)
+const drag = useDrag({ el: panel, handle: '.drag-header', onRelease: ({ projected }) => inWindow(projected) })
+```
+
+**A picker or carousel** (`useWheel`): the wheel writes `--ui-wheel-offset` (in items) and `--ui-wheel-distance` (px) on the items near the resting spot. Place with the variable, so it holds under reduced motion, and style with `progressOf`:
+
+```vue
+<div ref="el" tabindex="0" aria-roledescription="carousel" aria-label="Places" @keydown="wheel.onKeydown">
+  <div
+    v-for="(place, i) in places"
+    :key="place"
+    v-animate="{ animate: look, progress: () => wheel.progressOf(i) }"
+    class="card"
+  >{{ place }}</div>
+</div>
+<!-- .card { position: absolute; translate: var(--ui-wheel-distance, 200vw) 0 } -->
+```
+
+```ts
+const index = shallowRef(0)
+const wheel = useWheel(index, { el: useTemplateRef('el'), count: places.length, size: 170, orientation: 'horizontal', loop: true })
+// One value per place from three to the left (progress 0) to three to the right (1)
+const spread = [-3, -2, -1, 0, 1, 2, 3]
+const look = { rotateY: spread.map((d) => d * -32), scale: spread.map((d) => 1 - Math.min(0.3, Math.abs(d) * 0.12)), opacity: spread.map((d) => 1 - Math.min(1, Math.abs(d) / 3)) }
+```
+
+`useWheel`'s `onTick` takes `useHaptic().selection` for a click per item. For an autoplaying carousel, call `wheel.step(1)` on a timer that pauses while `wheel.isDragging.value`, on hover and on focus. `usePanZoom({ el, maxScale })` binds the same way: `@keydown="pz.onKeydown"`, and `pz.scale` is live for a getter (labels that fade in as you zoom).
 
 ### Hooks for GSAP or motion
 
@@ -885,6 +1005,7 @@ Don't add a CSS `transition` or `@keyframes` to something vael-ui animates, and 
 - Leaving is faster and quieter than entering: less distance, no bounce. vael-ui caps closes at about 200 ms, and an unset `exit` is already a quiet fade (a `v-animate` element leaves back the way it came, at half the distance). Inside a closing panel, content without its own `exit` simply leaves with the panel.
 - Leave the way it came. A toast that drops in from the top leaves through the top. A drawer slides back to its edge.
 - Don't delay a close or a hover-out. Dismissal must feel instant.
+- **Symmetric exceptions.** A motion that reads as one reversible move keeps the same timing and easing both ways: a page swap, a sliding tab or hover indicator, an accordion, an icon or text swap. Don't split those into a slow open and a fast close.
 - Hover in is quick and direct; the way back may settle more softly, on a spring. Hover states only ever follow a mouse: `states.hover` ignores touch, so a tap never sticks a hover look.
 
 ```ts
@@ -978,7 +1099,15 @@ The same goes for distance: 4 px for a text swap, 6 to 8 px for list items and s
 
 ### 9. Stagger and delay lightly
 
-30 to 80 ms between items (`stagger: 0.04`). Keep the total under about 300 ms: for long lists, shrink the stagger or animate only the first rows. Past 24 items arriving together, vael-ui shows the rest at once unless you time them. In a grid, `stagger: 'center'` spreads from the middle cell, which reads better than page order.
+30 to 80 ms between items. `stagger: true` and the words (`'end'`, `'center'`, `'edges'`, `'random'`) use the 40 ms token and stop after 7 steps, about 0.3 s: later items come in with the last one. A number you give goes as far as you say, so keep its total under about 300 ms for a long list, or animate only the first rows. Past 24 items arriving together, vael-ui shows the rest at once unless you time them.
+
+Equal gaps read as a metronome. In a grid, `stagger: 'center'` spreads from the middle cell, and `'edges'` from the corners; `(index, count) => seconds` gives each item its own start, so the lead can come first and the rest follow closer together.
+
+**One entrance per container.** If a panel animates in, its content is already there: don't also stagger its children. Two layers of entrance mean waiting through both. A menu, select or command palette opened from the keyboard keeps the built-in look and no stagger.
+
+**Give each element a role before you time it.** The lead (the title, the new view, the item acted on) moves first and furthest. Support (the rest of the list, secondary text) follows with less. Decoration (badges, dividers) only fades, or doesn't move. Everything else stays still. If two things want to lead, the layout has a hierarchy problem that motion won't fix.
+
+**Exits go together.** Everything leaves at once, shorter and simpler than it came in; never stagger a close out.
 
 A delay is right for three things only: a stagger, filtering an accidental trigger (a tooltip waits so a passing cursor doesn't open it), and sequencing on purpose (`after`). If something feels late, shorten its duration instead of adding a delay, and never delay a close.
 
@@ -1029,6 +1158,10 @@ Check feel at 2 to 5 times the duration (DevTools' Animations panel) or frame by
 - A gap where nothing shows between one view leaving and the next arriving (the exit is too slow)
 - Anything moving that people were reading
 
+### 14. A gesture is the finger first
+
+While the pointer is down, the element is the finger: 1:1, no easing, no spring. When it lifts, a spring keeps the speed. Decide from where the throw would land, bounce only after a throw, and catch it mid-flight. Link everything else (the page behind, the next card, the backdrop) to the one number the drag writes. The rules and the tools are in [Gestures](#gestures).
+
 ## Common mistakes
 
 | Mistake | Fix |
@@ -1055,3 +1188,11 @@ Check feel at 2 to 5 times the duration (DevTools' Animations panel) or frame by
 | Tests that wait with `setTimeout` | `await settled()`, or `:motion="false"` |
 | Code that waits a fixed `setTimeout` for an animation to end | `onAfterEnter` / `onAfterLeave` on what animates: the element, the state, the overlay or the list |
 | `v-animate` imported from `'vael-ui/vapor'` in a VDOM template | Import it from the build the template compiles as |
+| VueUse's `useDraggable`, or hand-written `pointermove`, with a CSS transition to settle | `useDrag` (free), `useWheel` (rests on items), `usePanZoom`, `v-draggable` (reorder) |
+| A spring or `transition` on an element while it is being dragged | None: tracking is 1:1. The composable springs it on release. |
+| Deciding a swipe from the offset alone | `projected` in `onRelease`: a flick counts |
+| A thrown card's `exit` as a plain number: it stops at the edge, then fades | `x: { value: far, spring: 'smooth' }` so it keeps its speed |
+| `v-draggable` to move one element freely, or `useDrag` to reorder | `v-draggable` / `Sortable` reorder; `useDrag` moves one element |
+| A carousel on `setInterval` and scroll-snap hacks | `useWheel`; autoplay is `wheel.step(1)` on a timer that pauses while dragging, hovered or focused |
+| Two animations for the page behind and the card (they drift apart on a reversal) | One getter reading the drag: `mapRange(drag.x.value, …)` |
+| `useAnimate()` outside a component, or plain `animate` inside one | Components: `useAnimate()`. Helpers and tests: `animate` with an element |

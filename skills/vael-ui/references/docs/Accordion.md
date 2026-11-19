@@ -77,6 +77,7 @@ _None._
 
 Name | Type | Description
 --- | --- | ---
+`el` | `HTMLElement \| null` | Root element.
 `panelEl` | `HTMLElement \| null` | Panel element, always mounted.
 `chevronEl` | `SVGSVGElement \| null` | The built-in chevron, for your own engine to turn. Null when the `#trigger` slot replaces it.
 `open` | `boolean` | Whether the item is open.

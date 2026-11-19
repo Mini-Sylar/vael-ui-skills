@@ -10,18 +10,20 @@ import { useNumberFormat } from 'vael-ui' // or 'vael-ui/vapor'
 
 Name | Type | Description
 --- | --- | ---
-`locale` | `MaybeRefOrGetter<string \| undefined>` | Defaults to the runtime locale.
-`mode` | `MaybeRefOrGetter<'decimal' \| 'currency' \| 'percent' \| undefined>` | Default `'decimal'`.
-`currency` | `MaybeRefOrGetter<string \| undefined>` | ISO code, such as `'USD'`. Defaults to `'USD'` when `mode` is `'currency'`.
-`minFractionDigits` | `MaybeRefOrGetter<number \| undefined>` | Passed to `Intl.NumberFormat` as `minimumFractionDigits`.
-`maxFractionDigits` | `MaybeRefOrGetter<number \| undefined>` | Passed to `Intl.NumberFormat` as `maximumFractionDigits`.
+`locale` | `MaybeRefOrGetter<string \| undefined>` | The locale to format for. Default: the runtime locale.
+`mode` | `MaybeRefOrGetter<'decimal' \| 'currency' \| 'percent' \| undefined>` | The format style. Default `'decimal'`.
+`currency` | `MaybeRefOrGetter<string \| undefined>` | The ISO currency code. Default `'USD'` when `mode` is `'currency'`.
+`minFractionDigits` | `MaybeRefOrGetter<number \| undefined>` | The fewest decimals to show, passed to `Intl.NumberFormat` as `minimumFractionDigits`.
+`maxFractionDigits` | `MaybeRefOrGetter<number \| undefined>` | The most decimals to show, passed to `Intl.NumberFormat` as `maximumFractionDigits`.
 `useGrouping` | `MaybeRefOrGetter<boolean \| undefined>` | Shows thousands separators. Default `true`.
-`prefix / suffix` | `MaybeRefOrGetter<string \| undefined>` | A literal affix that `Intl` doesn't handle, such as a unit label. Added on format and stripped on parse.
+`prefix / suffix` | `MaybeRefOrGetter<string \| undefined>` | Adds literal text that `Intl` doesn't handle, such as a unit label. `format` adds it and `parse` strips it.
 
 ## Returns
 
 Name | Type | Description
 --- | --- | ---
-`format` | `(value: number \| null) => string` | Returns `''` for `null` or `NaN`. Otherwise returns the full localized string, including affixes.
-`parse` | `(text: string) => number \| null` | Returns `null` for anything that isn't a complete, unambiguous number, including valid in-progress input.
+`formatOptions` | `ComputedRef<Intl.NumberFormatOptions>` | The `Intl.NumberFormat` options built from `mode`, `currency`, the fraction digits and grouping. Pass them to AnimatedNumber for the same format.
+`format` | `(value: number \| null) => string` | Turns a number into the full localized string, affixes included. Returns `''` for `null` or `NaN`.
+`parse` | `(text: string) => number \| null` | Turns typed text back into a number. Returns `null` for anything that isn't a complete, unambiguous number, including valid in-progress input.
 `isPartial` | `(text: string) => boolean` | `true` for valid in-progress input that `parse` returns `null` for. Don't reject this input.
+

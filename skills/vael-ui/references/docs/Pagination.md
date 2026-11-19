@@ -37,6 +37,7 @@ Name | Type | Description
 
 Name | Type | Description
 --- | --- | ---
+`el` | `HTMLElement \| null` | Root element.
 `listEl` | `HTMLElement \| null` | The page-number list.
 `indicatorEl` | `HTMLElement \| null` | The sliding highlight behind the current page.
 `highlightEl` | `HTMLElement \| null` | The hover and keyboard highlight, sliding between buttons. With `motion: false` it moves at once, for your own animation.

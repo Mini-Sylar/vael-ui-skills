@@ -26,7 +26,7 @@ Name | Type | Default | Description
 `forceMount` | `boolean \| undefined` | `false` | Keeps it mounted while closed, toggled with `v-show`, so its content keeps its state. vael-ui then leaves its motion to you.
 `motion` | `TooltipMotion \| undefined` |  | How it moves. `false` shows and hides it at once. An object moves it your way, like Popover's: values for the `panel` part, `{ spring }`, or `enter` / `leave` hooks. A warm open, right after another tooltip, stays instant either way.
 `teleportTo` | `string \| HTMLElement \| undefined` | `'body'` | Teleport target: a CSS selector or element.
-`ui` | `Partial<{ positioner: UiPartValue; panel: UiPartValue; }> \| undefined` |  | Class and style overrides for each part.
+`ui` | `Partial<{ positioner: UiPartValue; panel: UiPartValue; }> \| undefined` |  | Class and style overrides for each part. Set `--ui-tooltip-bg` and `--ui-tooltip-color` on `panel` to recolour it.
 `open` | `boolean \| undefined` | `false` | Whether the tooltip is open.
 
 ## Slots
