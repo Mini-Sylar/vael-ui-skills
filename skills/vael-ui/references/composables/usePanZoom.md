@@ -1,6 +1,6 @@
 # usePanZoom
 
-Pans, pinches and zooms content inside a box: an image, a map, a diagram. It moves the content with its own `translate` and `scale`, from its top left corner. One finger or the mouse pans, two fingers pinch, and a double tap zooms in and back out. Hold ctrl and scroll to zoom around the cursor. Content stays inside the box, gives a little at the edges, and keeps coasting after a flick. It sets `touch-action: none` on the box, so the page does not scroll there on touch.
+Pans, pinches and zooms content inside a box: an image, a map, a diagram. It moves the content with its own `translate` and `scale`, from its top left corner. One finger or the mouse pans, two fingers pinch, and a double tap zooms in and back out. Hold ctrl and scroll to zoom around the cursor; in Safari, a trackpad pinch does the same. Content stays inside the box, gives a little at the edges, and keeps coasting after a flick. It sets `touch-action: none` on the box, so the page does not scroll there on touch.
 
 ```ts
 import { usePanZoom } from 'vael-ui' // or 'vael-ui/vapor'

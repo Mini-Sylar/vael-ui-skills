@@ -226,7 +226,7 @@ Occasional. Feedback. Drag across empty space; the box's children are the items:
 const sel = useDragSelect({ el: useTemplateRef('box'), spring: 'bouncy' })
 ```
 
-Draw the band inside the box, `position: absolute`, `pointer-events: none`, with live `x`, `y`, `width` and `height`. `sel.stretch` is how far the corner trails the pointer, to bow the band's sides. Shift adds, ctrl or cmd toggles, Escape restores. A mouse or a pen only.
+Draw the band inside the box, `position: absolute`, `pointer-events: none`, with live `x`, `y`, `width` and `height`. `sel.stretch` is how far the corner trails the pointer, to bow the band's sides. Shift adds, ctrl or cmd toggles, Escape restores. A touch presses and holds first, then drags.
 
 ## Before you hand it over
 

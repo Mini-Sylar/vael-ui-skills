@@ -1,6 +1,6 @@
 # useDragSelect
 
-Drag across empty space in a box and everything the band touches is selected. The box's children are the items, by their position among them, so a `v-for` list needs no selectors or attributes. Shift adds to the selection, ctrl or cmd toggles, a click on empty space clears it, and Escape during a drag puts it back. Near an edge of whatever scrolls, it scrolls and the band grows with it. A mouse or a pen draws the band; a touch still scrolls the page. It is pointer only, so pair it with checkboxes or keys for everyone else.
+Drag across empty space in a box and everything the band touches is selected. The box's children are the items, by their position among them, so a `v-for` list needs no selectors or attributes. Shift adds to the selection, ctrl or cmd toggles, a click on empty space clears it, and Escape during a drag puts it back. Near an edge of whatever scrolls, it scrolls and the band grows with it. A mouse or a pen draws the band at once. A touch has to press and hold first, then drag, so a swipe still scrolls. It is pointer only, so pair it with checkboxes or keys for everyone else.
 
 ```ts
 import { useDragSelect } from 'vael-ui' // or 'vael-ui/vapor'

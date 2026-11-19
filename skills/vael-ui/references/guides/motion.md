@@ -627,7 +627,7 @@ const drag = useDrag({
 5. **Derive linked looks from the drag.** The page behind scales, the next card rises, the backdrop fades: read one number (`drag.x`, `wheel.progressOf(i)`) in getters. Two separate animations drift apart the moment a gesture is reversed.
 6. **Edges give.** A pull past the end of a wheel or a zoom stretches a little and returns; there is no hard stop. Escape mid-drag puts the element back.
 7. **A drag has no keyboard form.** Add the buttons and keys: `drag.throwTo(...)`, `wheel.step(1)`, `@keydown="wheel.onKeydown"`, `pz.zoomBy(1.5)`. Arrow-key moves settle without bounce.
-8. **Touch.** `touch-action` is set for you on `el` (along a free axis the drag owns the touch; across one axis the page scrolls). With `handle`, give the handle `touch-action: none`. `useDragSelect` is for a mouse or pen: a touch scrolls. Test on a real phone.
+8. **Touch.** `touch-action` is set for you on `el` (along a free axis the drag owns the touch; across one axis the page scrolls). With `handle`, give the handle `touch-action: none`. `useDragSelect` starts a touch band on a press and hold, so a swipe still scrolls. Test on a real phone.
 9. **Reduced motion drops the throw and the bounce; tracking stays.** It's the user's own movement.
 
 `useDrag` takes `handle` (a selector inside `el`) so only a press there drags, as a dialog's header does:
@@ -854,7 +854,7 @@ export const appMotion: MotionStyle = {
 </ConfigProvider>
 ```
 
-- **Roles** take plain values, not parts: `overlay` (with `morph`, `surface`, `exitOrder`, `swap`, `resize`), `list` (with `stagger`, `leaving`, `appear`), `reveal`, `press` (`active`, `hover`) and `content` (your targets inside components).
+- **Roles** take plain values, not parts: `overlay` (with `morph`, `surface`, `exitOrder`, `swap`, `resize`), `list` (with `stagger`, `leaving`, `appear`), `reveal`, `press` (`active`, `hover`) and `content` (your targets inside components). The `overlay` look is for centred overlays: a Drawer, or a Dialog on a side or edge, keeps its slide from the edge and takes only the `drawer` or `dialog` key and its own `motion`.
   - `overlay`: Dialog, Drawer, BottomSheet, Popover, Menu, Tooltip, and the Select, Combobox, DatePicker and TreeSelect panels
   - `list`: Toaster, Timeline, FileUpload, SpeedDial, DataTable rows, CommandPalette rows, Breadcrumb, AvatarGroup
   - `press`: Button; `reveal`: Message and your own `useMotion('reveal')`
