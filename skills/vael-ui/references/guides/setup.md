@@ -7,7 +7,7 @@ Install, the two builds, auto-import, Vapor, Nuxt, SSR, hosts and fonts. Read th
 npm install vael-ui vue
 ```
 
-Vue `^3.5.0`. The Vapor build needs Vue `^3.6.0` and `createVaporApp`; Vapor is pre-1.0, so **pin the exact prerelease** `vael-ui@0.5.5` is compiled against (`npm install vue@3.6.0-rc.15 --save-exact`). A floating `rc` tag causes compiler/runtime mismatches, often inside `<Transition>`. In Vapor a component's ref holds only what it exposes, not its element: when you pass your own component to `setTriggerEl`, `triggerEl` or `scrollEl`, give it `defineExpose({ el })`, or pass a ref to an element. Every vael-ui component with a root element exposes `el`.
+Vue `^3.5.0`. The Vapor build needs Vue `^3.6.0` and `createVaporApp`; Vapor is pre-1.0, so **pin the exact prerelease** `vael-ui@0.5.5` is compiled against (`npm install vue@3.6.0-rc.16 --save-exact`). A floating `rc` tag causes compiler/runtime mismatches, often inside `<Transition>`. In Vapor a component's ref holds only what it exposes, not its element: when you pass your own component to `setTriggerEl`, `triggerEl` or `scrollEl`, give it `defineExpose({ el })`, or pass a ref to an element. Every vael-ui component with a root element exposes `el`.
 
 ```vue
 <!-- App.vue -->

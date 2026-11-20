@@ -41,7 +41,7 @@ A Vue 3 component library: 70 components, from buttons and form fields to overla
 npm install vael-ui vue
 ```
 
-Vue `^3.5.0`. One build per app: `vael-ui` with `createApp`, or `vael-ui/vapor` (Vue `^3.6.0`, `createVaporApp`, the exact prerelease `vael-ui@0.5.5` is compiled against, `vue@3.6.0-rc.15`). Mount `<Toaster />`, `<TooltipHost />`, `<DialogHost />` and `<PopoverHost />` once, **inside** your `ConfigProvider`, when you use `toast()`, `v-tooltip`, `openDialog()` or `openPopover()`. Don't import `vael-ui/style.css`: each component loads its own CSS. Everything else (auto-import, a whole-app Vapor build and its tsconfig, Nuxt, plain Vite SSR, fonts, fields zooming on iOS) is in [Setup](./references/guides/setup.md); read it when you start an app or change how it builds.
+Vue `^3.5.0`. One build per app: `vael-ui` with `createApp`, or `vael-ui/vapor` (Vue `^3.6.0`, `createVaporApp`, the exact prerelease `vael-ui@0.5.5` is compiled against, `vue@3.6.0-rc.16`). Mount `<Toaster />`, `<TooltipHost />`, `<DialogHost />` and `<PopoverHost />` once, **inside** your `ConfigProvider`, when you use `toast()`, `v-tooltip`, `openDialog()` or `openPopover()`. Don't import `vael-ui/style.css`: each component loads its own CSS. Everything else (auto-import, a whole-app Vapor build and its tsconfig, Nuxt, plain Vite SSR, fonts, fields zooming on iOS) is in [Setup](./references/guides/setup.md); read it when you start an app or change how it builds.
 
 ### 2. Pick the component
 
